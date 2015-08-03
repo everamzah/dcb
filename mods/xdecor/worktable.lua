@@ -50,7 +50,7 @@ local function xconstruct(pos)
 
 	for i=1, #def do
 		nodebtn[#nodebtn+1] = "item_image_button["..(i-1)..
-				",0.5;1,1;xdecor:"..def[i][1].."_default_cloud;"..def[i][1]..";]"
+				",0.5;1,1;xdecor:"..def[i][1].."_cloud;"..def[i][1]..";]"
 	end
 	nodebtn = table.concat(nodebtn)
 
@@ -88,7 +88,11 @@ local function xfields(pos, formname, fields, sender)
 	for _, d in pairs(def) do
 		local nb, anz = d[1], d[2]
 		if outputstack:get_count() < 99 and fields[nb] then
-			shape = "xdecor:"..nb.."_"..string.gsub(inputstack:get_name(), "(:)", "_")   
+			if string.match(inputstack:get_name(), "(default:)") then
+				shape = "xdecor:"..nb.."_"..string.gsub(inputstack:get_name(), "(default:)", "")
+			else
+				shape = "xdecor:"..nb.."_"..string.gsub(inputstack:get_name(), "(:)", "_")
+			end
 			get = shape.." "..anz
 
 			if not minetest.registered_nodes[shape] then return end
@@ -150,8 +154,16 @@ for _, m in pairs(material) do
                 local nodename = string.gsub(m, "(_)", ":", 1)
                 local ndef = minetest.registered_nodes[nodename]
                 if not ndef then return end
-
-                xdecor.register(w[1].."_"..m, {
+		local conv = ""
+		if string.match(m, "default_") then
+			conv = w[1].."_"..string.gsub(m, "(default_)", "")
+			print(conv)
+		else
+			conv = w[1].."_"..m
+			print(conv)
+		end
+                --xdecor.register(w[1].."_"..m, {
+		xdecor.register(conv, {
                         description = string.sub(string.upper(m), 0, 1)..string.sub(m, 2).." "..
                                         string.sub(string.upper(w[1]), 0, 1)..string.sub(w[1], 2),
                         light_source = ndef.light_source,
