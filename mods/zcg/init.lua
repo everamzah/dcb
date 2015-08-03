@@ -80,7 +80,7 @@ zcg.load_crafts = function(name)
 	else
 		table.insert(zcg.itemlist,name)
 	end
-	print(dump(zcg.itemlist))
+	--print(dump(zcg.itemlist))
 end
 
 zcg.need_load_all = true

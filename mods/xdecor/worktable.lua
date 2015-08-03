@@ -157,10 +157,8 @@ for _, m in pairs(material) do
 		local conv = ""
 		if string.match(m, "default_") then
 			conv = w[1].."_"..string.gsub(m, "(default_)", "")
-			print(conv)
 		else
 			conv = w[1].."_"..m
-			print(conv)
 		end
                 --xdecor.register(w[1].."_"..m, {
 		xdecor.register(conv, {

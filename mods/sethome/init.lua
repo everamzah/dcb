@@ -99,21 +99,38 @@ minetest.register_on_joinplayer(function(player)
 	player:set_inventory_formspec(sethome.form)
 end)
 
-sethome.form = "size[8,8.5]"..
-		default.gui_bg..
-		default.gui_bg_img..
-		default.gui_slots..
-		"button_exit[0.25,-0.4;1.5,3;pm;PM]"..
-		"button_exit[0.25,0.6;1.5,3;home;Home]"..
-		"button_exit[0.25,1.6;1.5,3;spawn;Spawn]"..
-		"list[current_player;main;0,4.25;8,1;]"..
-		"list[current_player;main;0,5.5;8,3;8]"..
-		"list[current_player;craft;2,0.5;3,3;]"..
-		"list[current_player;craftpreview;6,1.5;1,1;]"..
-		"image[5,1.5;1,1;gui_furnace_arrow_bg.png^[transformR270]"..
-		"listring[current_player;main]"..
-		"listring[current_player;craft]"..
-		default.get_hotbar_bg(0,4.25)
+if minetest.setting_getbool("show_pm") then
+	sethome.form = "size[8,8.5]"..
+			default.gui_bg..
+			default.gui_bg_img..
+			default.gui_slots..
+			"button_exit[0.25,-0.4;1.5,3;pm;PM]"..
+			"button_exit[0.25,0.6;1.5,3;home;Home]"..
+			"button_exit[0.25,1.6;1.5,3;spawn;Spawn]"..
+			"list[current_player;main;0,4.25;8,1;]"..
+			"list[current_player;main;0,5.5;8,3;8]"..
+			"list[current_player;craft;2,0.5;3,3;]"..
+			"list[current_player;craftpreview;6,1.5;1,1;]"..
+			"image[5,1.5;1,1;gui_furnace_arrow_bg.png^[transformR270]"..
+			"listring[current_player;main]"..
+			"listring[current_player;craft]"..
+			default.get_hotbar_bg(0,4.25)
+	else
+	sethome.form = "size[8,8.5]"..
+			default.gui_bg..
+			default.gui_bg_img..
+			default.gui_slots..
+			"button_exit[0.25,0.6;1.5,3;home;Home]"..
+			"button_exit[0.25,1.6;1.5,3;spawn;Spawn]"..
+			"list[current_player;main;0,4.25;8,1;]"..
+			"list[current_player;main;0,5.5;8,3;8]"..
+			"list[current_player;craft;2,0.5;3,3;]"..
+			"list[current_player;craftpreview;6,1.5;1,1;]"..
+			"image[5,1.5;1,1;gui_furnace_arrow_bg.png^[transformR270]"..
+			"listring[current_player;main]"..
+			"listring[current_player;craft]"..
+			default.get_hotbar_bg(0,4.25)
+end
 
 --------------
 
@@ -205,6 +222,8 @@ local function openpm(player, pm)
 	minetest.show_formspec(player, "sethome:pm", book_formspec)
 end
 
+-----------------
+
 minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if fields.home then
 		if homepos[player:get_player_name()] then
@@ -227,7 +246,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		end
         end
 	if fields.spawn then
-		player:setpos({x = 4, y = 17, z = -1904})
+		player:setpos(minetest.setting_get_pos("static_spawnpoint"))
 		minetest.chat_send_player(player:get_player_name(), "Teleported to spawn!")
 	end
 	if fields.pm then
