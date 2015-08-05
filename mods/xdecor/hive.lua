@@ -34,7 +34,7 @@ xdecor.register("hive", {
 		"xdecor_hive_side.png",
 		"xdecor_hive_front.png",
 	},
-	groups = {snappy=3, choppy=3, flammable=1},
+	groups = {snappy=3, flammable=1},
 	on_construct = hive_construct,
 	can_dig = hive_dig,
 	on_punch = function(pos, node, puncher, pointed_thing)
@@ -42,9 +42,6 @@ xdecor.register("hive", {
 		puncher:set_hp(health-4)
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-
 		if listname == "honey" then return 0 end
 		return stack:get_count()
 	end,

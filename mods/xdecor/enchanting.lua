@@ -1,13 +1,13 @@
 local function enchconstruct(pos)
 	local meta = minetest.get_meta(pos)
 	meta:set_string("formspec", "size[8,7;]"..xdecor.fancy_gui..
-		"label[0.65,-0.15;Enchant]"..
-		"image[0.4,0.2;2,2;default_book.png]"..
-		"image[1.3,2;1,1;ench_mese_layout.png]"..
-		"list[current_name;tool;0.3,2;1,1;]"..
-		"list[current_name;mese;1.3,2;1,1;]"..
-		"image_button[2.5,0;5.3,1.5;ench_bg.png;durable;Durable]"..
-		"image_button[2.5,1.5;5.3,1.5;ench_bg.png;fast;Fast]"..
+		"label[0.85,-0.15;Enchant]"..
+		"image[0.6,0.2;2,2;xdecor_enchbook.png]"..
+		"image[1.5,2;1,1;ench_mese_layout.png]"..
+		"list[current_name;tool;0.5,2;1,1;]"..
+		"list[current_name;mese;1.5,2;1,1;]"..
+		"image_button[2.75,0;5,1.5;ench_bg.png;durable;Durable]"..
+		"image_button[2.75,1.5;5,1.5;ench_bg.png;fast;Fast]"..
 		"list[current_player;main;0,3.3;8,4;]")
 	meta:set_string("infotext", "Enchantment Table")
 
@@ -16,18 +16,28 @@ local function enchconstruct(pos)
 	inv:set_size("mese", 1)
 end
 
+local function is_allowed_tool(toolname)
+	local tdef = minetest.registered_tools[toolname]
+	if tdef and string.find(toolname, "default:") and not
+			string.find(toolname, "sword") and not
+			string.find(toolname, "stone") and not
+			string.find(toolname, "wood") then
+		return 1
+	else return 0 end
+end
+
 local function enchfields(pos, formname, fields, sender)
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 	local toolstack = inv:get_stack("tool", 1)
 	local mesestack = inv:get_stack("mese", 1)
+	local toolname = toolstack:get_name()
+	local mese = mesestack:get_count()
 	local enchs = {"durable", "fast"}
 
 	for _, e in pairs(enchs) do
-		if string.find(toolstack:get_name(), "default:") and
-				mesestack:get_count() > 0 and fields[e] then
-
-			toolstack:replace("xdecor:enchanted_"..string.sub(toolstack:get_name(), 9).."_"..e)
+		if is_allowed_tool(toolname) ~= 0 and mese > 0 and fields[e] then
+			toolstack:replace("xdecor:enchanted_"..string.sub(toolname, 9).."_"..e)
 			mesestack:take_item()
 			inv:set_stack("mese", 1, mesestack)
 			inv:set_stack("tool", 1, toolstack)
@@ -46,28 +56,17 @@ local function enchdig(pos, player)
 end
 
 local function enchput(pos, listname, index, stack, player)
-	local meta = minetest.get_meta(pos)
-	local inv = meta:get_inventory()
+	local toolname = stack:get_name()
+	local count = stack:get_count()
 
 	if listname == "mese" then
-		if stack:get_name() == "default:mese_crystal" then
-			return stack:get_count()
-		else
-			return 0
-		end
+		if toolname == "default:mese_crystal" then return count
+			else return 0 end
 	end
 	if listname == "tool" then
-		local tname = stack:get_name()
-		local tdef = minetest.registered_tools[tname]
-
-		if tdef and not string.find(stack:get_name(), "sword") and not
-				string.find(stack:get_name(), "stone") and not
-				string.find(stack:get_name(), "wood") then
-			return 1
-		else return 0 end
+		return is_allowed_tool(toolname)
 	end
-
-	return stack:get_count()
+	return count
 end
 
 xdecor.register("enchantment_table", {
@@ -89,16 +88,13 @@ xdecor.register("enchantment_table", {
 })
 
 local tools = {
-	{"axe", "choppy"},
-	{"pick", "cracky"},
-	{"shovel", "crumbly"}
+	{"axe", "choppy"}, {"pick", "cracky"}, {"shovel", "crumbly"}
 }
 local materials = {"steel", "bronze", "mese", "diamond"}
 
 for _, t in pairs(tools) do
 for _, m in pairs(materials) do
-	local tool = t[1]
-	local group = t[2]
+	local tool, group = t[1], t[2]
 	local toolname = tool.."_"..m
 
 	local registered_tool = {}
@@ -110,9 +106,9 @@ for _, m in pairs(materials) do
 	local maxlvl = registered_tool["maxlevel"]
 
 	local dig_faster, use_longer = {}, {}
-	use_longer = registered_tool["uses"] * 1.1 -- Wearing factor for enchanted tools (higher in positive means longer use).
+	use_longer = registered_tool["uses"] * 1.1 -- Wearing factor for enchanted tools (higher number = longer use).
 	for i = 1, 3 do
-		dig_faster[i] = registered_tool["times"][i] - 0.1 -- Digging factor for enchanted tools (higher in negative means faster dig).
+		dig_faster[i] = registered_tool["times"][i] - 0.1 -- Digging factor for enchanted tools (lower number = faster dig).
 	end
 
 	--- Pickaxes ---
