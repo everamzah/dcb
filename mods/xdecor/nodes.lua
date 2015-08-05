@@ -186,7 +186,11 @@ xdecor.register("cobweb", {
 	sounds = xdecor.leaves
 })
 
-local colors = {"red"} -- Add more curtains colors simply here.
+local colors = {	-- Add more curtains colors simply here.
+	"grey", "dark_grey", "black", "violet", "blue",
+	"cyan", "dark_green", "green", "yellow", "brown",
+	"orange", "red", "magenta", "pink"
+	}
 
 for _, c in ipairs(colors) do
 	xdecor.register("curtain_"..c, {
