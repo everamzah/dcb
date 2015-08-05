@@ -240,6 +240,7 @@ grounded = function(pos)
 			for nz = -1, 1, 2 do
 				local npos = { x=pos.x+nx, y=pos.y+ny, z=pos.z+nz }
 				local name = minetest.get_node(npos).name
+				if not minetest.registered_nodes[name] then return 0 end
 				if minetest.registered_nodes[name].drawtype ~= "airlike" then
 					return true
 				end
