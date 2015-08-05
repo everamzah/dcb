@@ -123,6 +123,7 @@ local function xput(pos, listname, index, stack, player)
 	if listname == "output" then return 0 end
 	if listname == "input" then
 		if (string.find(stackname, "default:") or
+			string.find(stackname, "farming:") or
 			string.find(stackname, "wool:") or
 			string.find(stackname, "xdecor:") or
 			string.find(stackname, "caverealms:")) then return count
