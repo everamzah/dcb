@@ -11,14 +11,14 @@
 --]]
 
 local post_listing = "" --"kupo,james,Kidmondo,Dragonop" -- list of playernames should be table with coords.
-local post_registry = {} --{james={x=-12,y=11,z=-1917}, kupo="-43,17,-1894"} --just use homepos[player]
+local post_registry = {}
 
 local postoffice_formspec = function(pos, player)
 	local spos = pos.x..","..pos.y..","..pos.z
 	local formspec = "size[8,9]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
 	"textlist[0,0;6.825,5;index;"..post_listing..";1]"..
 	"label[7,0;Send]"..
-	"button_exit[7,4.25;1,1;add;Add]".. -- receive field and if homepos(player) scan nodes 5r if mailbox add coords update formspec
+	"button_exit[7,4.25;1,1;add;Add]".. -- receive field and if homepos(player) scan nodes 5r if mailbox add coords update formspec -- TODO make regular button, update formspec
 	"list[nodemeta:"..spos..";send;7,0.5;1,1;]"..
 	"list[current_player;main;0,5.25;8,4;]"..
 	"listring[]"
@@ -84,9 +84,6 @@ minetest.register_node("dcb:post_office", {
 	
 })
 
-local sillytable = {["james"]={"-14,15,-1915"},["kupo"]={"-30,40,-2000"}}
-print(sillytable[1])
-
 ---[[
 minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if formname ~= "dcb:post_office" then
@@ -94,23 +91,31 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	end
 	if fields.add then
 		local p = player:get_player_name()
+		if not post_registry[p] then post_registry[p] = {["home"]="", ["mailbox"]=""} end
 		if sethome.globalhomepos[p] then
 			local home = sethome.globalhomepos[p]
 			local x = math.floor(home.x)
 			local y = math.floor(home.y)
 			local z = math.floor(home.z)
 			local home_string = x..","..y..","..z
-			if post_registry[p] == home_string then return 0 end
-			post_registry[p]=home_string
-			local itr = ""
-			for n in post_registry do
-				local itr = itr..tostring(n)..","
-				print(itr)
-			end
+			if post_registry[p]["home"] == home_string then print("already added") return 0 end
+			post_registry[p]["home"] = home_string
+
+			local positions = minetest.find_nodes_in_area(
+				{x=x-5, y=y-5, z=z-5},
+				{x=x+5, y=y+5, z=z+5},
+				{"xdecor:mailbox"})
+			if (positions[1]) then
+				post_registry[p]["mailbox"] = positions[1].x..","..positions[1].y..","..positions[1].z
+				local itr = ""
+				for n,c in pairs(post_registry) do
+					itr = itr..tostring(n)..","
+				end
 			post_listing = string.sub(itr, 0, -2)
-			print(post_listing)
+			end
+			--postoffice_formspec(pos, p)
 		end
-		--postoffice_formspec(pos, p)
+	print(dump(post_registry))
 	end
 	if fields.index then
 		print("fields.index:\n"..dump(fields.index))
