@@ -23,5 +23,12 @@
 # The radius of a TNT explosion
 #tnt_radius = 3
 
+
+
+# Enable beds setting player respawn
+#enable_bed_respawn = true
+
+
+
 # Whether to show the PM button on player inventory formspec.
-# show_pm = false
+#show_pm = false

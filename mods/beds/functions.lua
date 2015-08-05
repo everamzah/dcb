@@ -129,6 +129,13 @@ end
 
 function beds.on_rightclick(pos, player)
 	local name = player:get_player_name()
+	--beds.secondary_sleep(pos, player) -- do setup there, or do setup here?
+	--minetest.show_formspec(name, "beds:bed", beds.formspec2)
+--end
+
+--function beds.secondary_sleep(pos, player)
+	--local name = player:get_player_name()
+	---[[
 	local ppos = player:getpos()
 	local tod = minetest.get_timeofday()
 
@@ -162,6 +169,7 @@ function beds.on_rightclick(pos, player)
 		end)
 	end
 end
+	--]]
 
 
 -- callbacks
@@ -197,6 +205,11 @@ minetest.register_on_leaveplayer(function(player)
 end)
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
+	if formname == "beds:bed" then
+		if fields.sethome then print("sethome") end
+		if fields.setrespawn then print("set respawn") end
+		if fields.sleep then print("sleep") end
+	end
 	if formname ~= "beds_form" then
 		return
 	end

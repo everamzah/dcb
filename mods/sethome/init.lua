@@ -225,6 +225,7 @@ end
 -----------------
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
+	--if formname ~= whatever form i'm using here.
 	if fields.home then
 		if homepos[player:get_player_name()] then
 		    player:setpos(homepos[player:get_player_name()])

@@ -1,1 +1,5 @@
-"Drop Inventory" button on formspec.  Drops backpack.
+[no] "Drop Inventory" button on formspec.  Drops backpack. [backpack modifier]
+[no] "Craft Bench" craft modifier -- 2*2 if not in inv
+
+proper conditionals for "show_pm", "show_home", "show_spawn" buttons on formspec.
+(show_pm works, but other two do not.)
