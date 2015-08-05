@@ -86,10 +86,11 @@ minetest.register_node(
       end
    });
 
-minetest.register_craft(
-   {
-      output = "wardrobe:wardrobe",
-      recipe = { { "group:wood", "group:stick", "group:wood" },
-                 { "group:wood", "group:wool",  "group:wood" },
-                 { "group:wood", "group:wool",  "group:wood" } }
-   });
+minetest.register_craft({
+	output = "wardrobe:wardrobe",
+	recipe = {
+		{ "group:wood", "group:stick", "group:wood" },
+        	{ "group:wood", "group:wool",  "group:wood" },
+        	{ "group:wood", "group:wool",  "group:wood" }
+	}
+})

@@ -2,6 +2,3 @@ character1.png: Human Male
 character0.png: Human Female
 alien1.png: Alien Male
 alien0.png: Alien Female
-player_james.png: james
-player_kupo.png: kupo
-player_Kidmondo.png: Kidmondo

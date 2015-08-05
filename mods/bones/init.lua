@@ -1,3 +1,5 @@
+-- add hotbar, drop remainder
+
 -- Minetest 0.4 mod: bones
 -- See README.txt for licensing and other information. 
 
@@ -21,8 +23,10 @@ bones.bones_formspec =
 	"list[current_player;main;0,6.08;8,3;8]"..
 	default.get_hotbar_bg(0,4.85)
 
-local share_bones_time = tonumber(minetest.setting_get("share_bones_time") or 1200)
+local share_bones_time = tonumber(minetest.setting_get("share_bones_time") or 300)
 local share_bones_time_early = tonumber(minetest.setting_get("share_bones_time_early") or (share_bones_time/4))
+local remove_bones_time = tonumber(minetest.setting_get("remove_bones_time") or 1200) -- obj:add_velocity drop items
+local locked = true
 
 minetest.register_node("bones:bones", {
 	description = "Bones",
@@ -100,12 +104,16 @@ minetest.register_node("bones:bones", {
 	on_timer = function(pos, elapsed)
 		local meta = minetest.get_meta(pos)
 		local time = meta:get_int("time") + elapsed
-		if time >= share_bones_time then
-			meta:set_string("infotext", meta:get_string("owner").."'s old bones")
+		if time >= remove_bones_time then
+			minetest.remove_node(pos)
+			return true
+		elseif time >= share_bones_time and locked then
 			meta:set_string("owner", "")
+			locked = false
+			meta:set_int("time", time)
 		else
 			meta:set_int("time", time)
-			return true
+			--return true
 		end
 	end,
 })
@@ -204,7 +212,7 @@ minetest.register_on_dieplayer(function(player)
 	meta:set_string("owner", player_name)
 	
 	if share_bones_time ~= 0 then
-		meta:set_string("infotext", player_name.."'s fresh bones")
+		meta:set_string("infotext", player_name.."'s bones") --player_name.."'s fresh bones")
 
 		if share_bones_time_early == 0 or not minetest.is_protected(pos, player_name) then
 			meta:set_int("time", 0)
