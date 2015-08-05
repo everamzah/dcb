@@ -187,8 +187,8 @@ xdecor.register("cobweb", {
 })
 
 local colors = {	-- Add more curtains colors simply here.
-	"grey", "dark_grey", "black", "violet", "blue",
-	"cyan", "dark_green", "green", "yellow", "brown",
+	"gray", "darkgray", "black", "violet", "blue",
+	"cyan", "darkgreen", "green", "yellow", "brown",
 	"orange", "red", "magenta", "pink"
 	}
 
