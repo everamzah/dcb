@@ -5,7 +5,7 @@ xdecor.register("mailbox", {
 		"xdecor_mailbox_side.png", "xdecor_mailbox_side.png",
 		"xdecor_mailbox.png", "xdecor_mailbox.png",
 	},
-	groups = {cracky=2},
+	groups = {snappy=2, cracky=2},
 	after_place_node = function(pos, placer, itemstack)
 		local meta = minetest.get_meta(pos)
 		local owner = placer:get_player_name()
@@ -19,24 +19,28 @@ xdecor.register("mailbox", {
 	end,
 	on_rightclick = function(pos, node, clicker, itemstack)
 		local meta = minetest.get_meta(pos)
-		local playername = clicker:get_player_name()
+		local player = clicker:get_player_name()
 		local owner  = meta:get_string("owner")
 		local meta = minetest.get_meta(pos)
 
 		if owner == player then
-			minetest.show_formspec(playername, "default:chest_locked",
+			minetest.show_formspec(
+				clicker:get_player_name(),
+				"default:chest_locked",
 				xdecor.get_mailbox_formspec(pos))
-		else minetest.show_formspec(playername, "default:chest_locked",
+		else
+			minetest.show_formspec(
+				clicker:get_player_name(),
+				"default:chest_locked",
 				xdecor.get_mailbox_insert_formspec(pos))
 		end
 	end,
-	can_dig = function(pos, player)
+	can_dig = function(pos,player)
 		local meta = minetest.get_meta(pos)
 		local owner = meta:get_string("owner")
 		local inv = meta:get_inventory()
-		local playername = player:get_player_name()
 
-		return playername == owner and inv:is_empty("main")
+		return player:get_player_name() == owner and inv:is_empty("main")
 	end,
 	on_metadata_inventory_put = function(pos, listname, index, stack, player)
 		local meta = minetest.get_meta(pos)
@@ -48,15 +52,20 @@ xdecor.register("mailbox", {
 		end
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-		if listname == "main" then return 0 end
+		if listname == "main" then
+			return 0
+		end
 		if listname == "drop" then
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
 
-			if inv:room_for_item("main", stack) then return -1
-				else return 0 end
+			if inv:room_for_item("main", stack) then
+				return -1
+			else
+				return 0
+			end
 		end
-	end
+	end,
 })
 
 function xdecor.get_mailbox_formspec(pos)
