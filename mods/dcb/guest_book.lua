@@ -71,6 +71,8 @@ function dcb.guestbooklog(owner, title, text)
 	local trunc_text = string.sub(text, 1, 120)
 	local formspec = minetest.formspec_escape(owner..": "..trunc_text)
 	formspec_log = formspec..","..formspec_log -- Delimited log entry to top of log
+	formspec_log = string.sub(formspec_log, 0, -2)
+	print(formspec_log)
 	changed = true
 	if changed then
 		local output = io.open(guestbook_file, "w")
@@ -115,7 +117,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		return
 	end
 	if fields.open then
-		if formspec_log == "" then return 0 end
+		if formspec_log == "" then return 0 end --weak check, instead look for book at index.
 		minetest.show_formspec(player:get_player_name(), "dcb:guest_book", openbook(index))
 		return
 	end
