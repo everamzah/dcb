@@ -47,7 +47,11 @@ minetest.register_node("dcb:post_office", {
 		postoffice_formspec(pos, clicker:get_player_name())
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-		return -1
+		if post_listing ~= "" then
+			return -1
+		else
+			return 0
+		end
 	end,
 	on_metadata_inventory_put = function(pos, listname, index, stack, player)
 		if receiver == "" then return end
@@ -94,6 +98,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 				for i, v in pairs(post_registry) do
 					table.insert(revPlayers, i)
 				end
+				receiver = revPlayers[player_index]
 				minetest.chat_send_player(p, "Mailbox found and added.")
 			end
 		end
