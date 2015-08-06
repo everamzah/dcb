@@ -174,8 +174,12 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		end
 
 		if fields.setrespawn then
+			local name = player:get_player_name()
+			local pos = beds.bed_pointed_pos[name]
+			beds.spawn[name] = pos
+			beds.save_spawns()
 			minetest.chat_send_player(player:get_player_name(), "Respawn set.")
-			beds.set_spawns()
+			--beds.set_spawns()
 			return
 		end
 

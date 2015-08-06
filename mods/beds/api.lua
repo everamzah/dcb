@@ -23,6 +23,7 @@ function beds.register_bed(name, def)
 		after_place_node = function(pos, placer, itemstack)
 			---[[
 			local meta = minetest.get_meta(pos)
+			--meta:set_string("owner", placer:get_player_name())
 			local inv = meta:get_inventory()
 			inv:set_size("bed_trunk", 8*3)
 			--]]
@@ -53,6 +54,7 @@ function beds.register_bed(name, def)
 			end
 		end,
 		on_rightclick = function(pos, node, clicker)
+			if minetest.is_protected(pos, clicker:get_player_name()) then return end
 			beds.on_rightclick(pos, clicker)
 		end,
 		on_rotate = function(pos, node, user, mode, new_param2)
