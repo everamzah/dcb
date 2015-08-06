@@ -10,13 +10,13 @@
 
 --]]
 
-local player_index = 0
+local player_index = 1
 local revPlayers = {}
+local receiver = ""
 
 local post_listing = ""
 local post_registry = {}
 
---local dest = {}
 
 local postoffice_formspec = function(pos, player)
 	local spos = pos.x..","..pos.y..","..pos.z
@@ -50,6 +50,15 @@ minetest.register_node("dcb:post_office", {
 		return -1
 	end,
 	on_metadata_inventory_put = function(pos, listname, index, stack, player)
+		if receiver == "" then return end
+		local dest = post_registry[revPlayers[player_index]]
+		local mailbox = dest.mailbox
+		local mmeta = minetest.get_meta(minetest.string_to_pos(mailbox))
+		local minv = mmeta:get_inventory()
+		if minv:room_for_item("main", stack) then
+			minv:add_item("main", stack)
+		end
+		print(dump(minetest.get_node(minetest.string_to_pos(mailbox))))
 	end,
 })
 
@@ -85,11 +94,13 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 				for i, v in pairs(post_registry) do
 					table.insert(revPlayers, i)
 				end
+				minetest.chat_send_player(p, "Mailbox found and added.")
 			end
 		end
 	end
 	if fields.index then
 		player_index = minetest.explode_textlist_event(fields.index)["index"]
+		receiver = revPlayers[player_index]
 		print(revPlayers[player_index])
 	end
 end)

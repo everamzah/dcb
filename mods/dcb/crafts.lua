@@ -22,4 +22,4 @@ minetest.after(5, function()
 	end
 end)
 
---]
+--]]
