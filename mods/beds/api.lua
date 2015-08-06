@@ -42,12 +42,14 @@ function beds.register_bed(name, def)
 			end
 			minetest.set_node(p, {name = n.name:gsub("%_bottom", "_top"), param2 = n.param2})
 			return false
-		end,	
+		end,
+		---[[
 		can_dig = function(pos, player)
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
-			if not inv:is_empty("bed_trunk") then return end
+			return inv:is_empty("bed_trunk")
 		end,
+		--]]
 		on_destruct = function(pos)
 			local n = minetest.get_node_or_nil(pos)
 			if not n then return end
