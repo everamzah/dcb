@@ -21,6 +21,11 @@ function beds.register_bed(name, def)
 				
 		},
 		after_place_node = function(pos, placer, itemstack)
+			---[[
+			local meta = minetest.get_meta(pos)
+			local inv = meta:get_inventory()
+			inv:set_size("bed_trunk", 8*3)
+			--]]
 			local n = minetest.get_node_or_nil(pos)
 			if not n or not n.param2 then
 				minetest.remove_node(pos)

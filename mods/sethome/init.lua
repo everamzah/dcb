@@ -75,6 +75,23 @@ minetest.register_chatcommand("home", {
     end,
 })
 
+sethome.sethome = function(player)
+	local name = player:get_player_name()
+	--local player = minetest.get_player_name(name)
+	local pos = player:getpos()
+	homepos[player:get_player_name()] = pos
+	minetest.chat_send_player(name, "Home set!")
+	changed = true
+	if changed then
+		local output = io.open(homes_file, "w")
+	    for i, v in pairs(homepos) do
+		output:write(v.x.." "..v.y.." "..v.z.." "..i.."\n")
+	    end
+	    io.close(output)
+	    changed = false
+	end
+end
+
 minetest.register_chatcommand("sethome", {
     description = "Set your home point",
     privs = {home=true},

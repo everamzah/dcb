@@ -129,47 +129,9 @@ end
 
 function beds.on_rightclick(pos, player)
 	local name = player:get_player_name()
-	--beds.secondary_sleep(pos, player) -- do setup there, or do setup here?
-	--minetest.show_formspec(name, "beds:bed", beds.formspec2)
---end
-
---function beds.secondary_sleep(pos, player)
-	--local name = player:get_player_name()
-	---[[
-	local ppos = player:getpos()
-	local tod = minetest.get_timeofday()
-
-	if tod > 0.2 and tod < 0.805 then
-		if beds.player[name] then
-			lay_down(player, nil, nil, false)
-		end
-		minetest.chat_send_player(name, "You can only sleep at night.")
-		return
-	end
-
-	-- move to bed
-	if not beds.player[name] then
-		lay_down(player, ppos, pos)
-	else
-		lay_down(player, nil, nil, false)
-	end
-
-	if not is_sp then
-		update_formspecs(false)
-	end
-
-	-- skip the night and let all players stand up
-	if check_in_beds() then
-		minetest.after(2, function()
-			beds.skip_night()
-			if not is_sp then
-				update_formspecs(true)
-			end
-			beds.kick_players()
-		end)
-	end
+	beds.bed_pointed_pos[name] = pos
+	minetest.show_formspec(name, "beds:bed", beds.get_bed_formspec(pos))
 end
-	--]]
 
 
 -- callbacks
@@ -206,10 +168,65 @@ end)
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if formname == "beds:bed" then
-		if fields.sethome then print("sethome") end
-		if fields.setrespawn then print("set respawn") end
-		if fields.sleep then print("sleep") end
+		if fields.sethome then
+			sethome.sethome(player)
+			return
+		end
+
+		if fields.setrespawn then
+			minetest.chat_send_player(player:get_player_name(), "Respawn set.")
+			beds.set_spawns()
+			return
+		end
+
+		if fields.sleep then
+			local name = player:get_player_name()
+			local ppos = player:getpos()
+			local tod = minetest.get_timeofday()
+			local pos = beds.bed_pointed_pos[name]
+
+			--[[
+			if not beds.player[name] then
+				lay_down(player, ppos, beds.bed_pointed_pos[name]) --pos)
+				print(dump(beds))
+			else
+				lay_down(player, nil, nil, false)
+			end
+			--]]
+
+
+			if tod > 0.2 and tod < 0.805 then
+				if beds.player[name] then
+					lay_down(player, nil, nil, false)
+				end
+				minetest.chat_send_player(name, "You can only sleep at night.")
+				return
+			end
+
+			-- move to bed
+			if not beds.player[name] then
+				lay_down(player, ppos, pos)
+			else
+				lay_down(player, nil, nil, false)
+			end
+
+			if not is_sp then
+				update_formspecs(false)
+			end
+
+			-- skip the night and let all players stand up
+			if check_in_beds() then
+				minetest.after(2, function()
+					beds.skip_night()
+					if not is_sp then
+						update_formspecs(true)
+					end
+					beds.kick_players()
+				end)
+			end
+		end
 	end
+	--[[
 	if formname ~= "beds_form" then
 		return
 	end
@@ -223,4 +240,5 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		update_formspecs(true)
 		beds.kick_players()
 	end
+	--]]
 end)
