@@ -156,6 +156,7 @@ end)
 minetest.register_on_leaveplayer(function(player)
 	local name = player:get_player_name()
 	lay_down(player, nil, nil, false, true)
+	--beds.bed_pointed_pos[name] = nil
 	beds.player[name] = nil
 	if check_in_beds() then
 		minetest.after(2, function()
@@ -167,6 +168,7 @@ minetest.register_on_leaveplayer(function(player)
 end)
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
+	--if formname ~= "beds:bed" or formname ~= "beds_form" then return end
 	if formname == "beds:bed" then
 		if fields.sethome then
 			sethome.sethome(player)
@@ -230,19 +232,22 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			end
 		end
 	end
-	--[[
-	if formname ~= "beds_form" then
-		return
-	end
-	if fields.quit or fields.leave then
-		lay_down(player, nil, nil, false)
-		update_formspecs(false)
-	end
+	---[[
+	--if formname ~= "beds_form" then
+	if formname == "beds_form" then
+		--return
+	--end
+		if fields.quit or fields.leave then
+			lay_down(player, nil, nil, false)
+			update_formspecs(false)
+		end
 
-	if fields.force then
-		beds.skip_night()
-		update_formspecs(true)
-		beds.kick_players()
+		if fields.force then
+			beds.skip_night()
+			update_formspecs(true)
+			beds.kick_players()
+		end
+
 	end
 	--]]
 end)
