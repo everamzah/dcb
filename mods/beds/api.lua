@@ -20,10 +20,16 @@ function beds.register_bed(name, def)
 			fixed = def.selectionbox,
 				
 		},
+		--[[
+		on_construct = function(pos)
+			local meta = minetest.get_meta(pos)
+			local inv = meta:get_inventory()
+			inv:set_size("bed_trunk", 8*3)
+		end,
+		--]]
 		after_place_node = function(pos, placer, itemstack)
 			---[[
 			local meta = minetest.get_meta(pos)
-			--meta:set_string("owner", placer:get_player_name())
 			local inv = meta:get_inventory()
 			inv:set_size("bed_trunk", 8*3)
 			--]]
