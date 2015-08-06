@@ -9,6 +9,8 @@ local addr = my_instance:get("owner", "title", "text")
 --print(dump(addr))
 --]]
 
+local sstep = tonumber(minetest.setting_get("dedicated_server_step"))
+
 minetest.register_craftitem("dcb:tool", {
 	description = "Powerful multitool",
 	inventory_image = "default_tool_woodpick.png^default_obsidian_shard.png",
@@ -17,11 +19,11 @@ minetest.register_craftitem("dcb:tool", {
 	liquids_pointable = false,
 	tool_capabilities = {
 		groupcaps = {
-			snappy={times={[1]=0.2, [2]=0.2, [3]=0.2}, maxwear=0, maxlevel=3},
-			choppy={times={[1]=0.2, [2]=0.2, [3]=0.2}, maxwear=0, maxlevel=3},
-			cracky={times={[1]=0.2, [2]=0.2, [3]=0.2}, maxwear=0, maxlevel=3},
-			crumbly={times={[1]=0.2, [2]=0.2, [3]=0.2}, maxwear=0, maxlevel=3},
-			oddly_breakable_by_hand={times={[1]=0.2, [2]=0.2, [3]=0.2}, maxwear=0, maxlevel=3},
+			snappy={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxwear=0, maxlevel=3},
+			choppy={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxwear=0, maxlevel=3},
+			cracky={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxwear=0, maxlevel=3},
+			crumbly={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxwear=0, maxlevel=3},
+			oddly_breakable_by_hand={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxwear=0, maxlevel=3},
 		},
 		damage_groups = {fleshy=10},
 	},
