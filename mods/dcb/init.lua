@@ -109,7 +109,7 @@ end)
 
 dofile(minetest.get_modpath("dcb").."/overrides.lua")
 dofile(minetest.get_modpath("dcb").."/book_reader.lua")
---dofile(minetest.get_modpath("dcb").."/guest_book.lua")
+dofile(minetest.get_modpath("dcb").."/guest_book.lua")
 dofile(minetest.get_modpath("dcb").."/post_office.lua")
 dofile(minetest.get_modpath("dcb").."/crafts.lua")
 dofile(minetest.get_modpath("dcb").."/give_initial_stuff.lua")

@@ -66,8 +66,13 @@ minetest.register_node("dcb:guest_book", {
 })
 
 function dcb.guestbooklog(owner, title, text)
+	local fs_title = minetest.formspec_escape(title)
+	local fs_text = minetest.formspec_escape(text)
+	print(fs_title)
+	print(fs_text)
 	local entry = {owner, title, text}
 	table.insert(guestlog, 1, entry)
+	print(dump(guestlog))
 	local trunc_text = string.sub(text, 1, 120)
 	local formspec = minetest.formspec_escape(owner..": "..trunc_text)
 	formspec_log = formspec..","..formspec_log -- Delimited log entry to top of log
