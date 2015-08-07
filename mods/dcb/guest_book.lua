@@ -52,6 +52,9 @@ minetest.register_node("dcb:guest_book", {
 	on_metadata_inventory_put = function(pos, listname, index, stack, player)
 		local book = stack:get_metadata()
 		local data = minetest.deserialize(book)
+		if not data.owner then return end
+		if not data.title then return end
+		if not data.text then return end
 		dcb.guestbooklog(data.owner, data.title, data.text)
 		minetest.show_formspec(player:get_player_name(), "dcb:guest_book", dcb.guestbook(pos))
 	end,
@@ -66,10 +69,9 @@ minetest.register_node("dcb:guest_book", {
 })
 
 function dcb.guestbooklog(owner, title, text)
+	local fs_owner = minetest.formspec_escape(owner)
 	local fs_title = minetest.formspec_escape(title)
 	local fs_text = minetest.formspec_escape(text)
-	print(fs_title)
-	print(fs_text)
 	local entry = {owner, title, text}
 	table.insert(guestlog, 1, entry)
 	print(dump(guestlog))
