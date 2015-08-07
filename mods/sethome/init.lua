@@ -240,7 +240,9 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		end
         end
 	if fields.spawn then
-		player:setpos(minetest.setting_get_pos("static_spawnpoint"))
+		local spawnpos = minetest.setting_get_pos("static_spawnpoint")
+		if not spawnpos then return end
+		player:setpos(spawnpos)
 		minetest.chat_send_player(player:get_player_name(), "Teleported to spawn!")
 	end
 	if fields.pm then
