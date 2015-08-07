@@ -28,7 +28,7 @@ function beds.register_bed(name, def)
 		end,
 		--]]
 		after_place_node = function(pos, placer, itemstack)
-			---[[
+			--[[
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
 			inv:set_size("bed_trunk", 8*3)
@@ -49,7 +49,7 @@ function beds.register_bed(name, def)
 			minetest.set_node(p, {name = n.name:gsub("%_bottom", "_top"), param2 = n.param2})
 			return false
 		end,
-		---[[
+		--[[
 		can_dig = function(pos, player)
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()

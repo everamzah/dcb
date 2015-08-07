@@ -6,7 +6,7 @@ AFK_WARN_TIME = 20 --Number of seconds before being kicked that a player will st
 SHOW_FIRST_TIME_JOIN_MSG = false --Whether or not to show FIRST_TIME_JOIN_MSG if a new player joins
 FIRST_TIME_JOIN_MSG = " has joined the server for the first time, Welcome!" --Message to broadcast to all players when a new player joins the server, will follow the players name
 
-BROADCAST_PREFIX = "<Amhi>" --All messages sent with the /broadcast command will be prefixed with this
+BROADCAST_PREFIX = "[SERVER]" --All messages sent with the /broadcast command will be prefixed with this
 
 DISALLOWED_NODES = { --These nodes will be immediatly removed if they are placed. Players with the disallowednodes priv can place them
 	"tnt:tnt",
