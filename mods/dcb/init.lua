@@ -1,6 +1,13 @@
 dcb = {}
 
 --[[
+local thing = AreaStore()
+local aarea = thing:insert_area({x=4,y=17,z=-1904}, {x=104,y=-17,z=-1914}, "hi mom")
+print(dump(aarea))
+print(dump(thing))
+--]]
+
+--[[
 local strategies = {fs = {name="my_database", form="json", place="world"}}
 local my_instance = DB(strategies)
 my_instance:set("owner", "title", "text")
@@ -78,6 +85,8 @@ minetest.register_craftitem("dcb:dcb", {
 				minetest.remove_node(pos)
 			elseif node["name"] == "bones:bones" then --pop items around bones, including bones:bones item entity
 				minetest.remove_node(pos)
+			else
+				minetest.remove_node(pos)
 			end
 		end
 	end,
@@ -109,7 +118,7 @@ end)
 
 dofile(minetest.get_modpath("dcb").."/overrides.lua")
 dofile(minetest.get_modpath("dcb").."/book_reader.lua")
-dofile(minetest.get_modpath("dcb").."/guest_book.lua")
+--dofile(minetest.get_modpath("dcb").."/guest_book.lua")
 dofile(minetest.get_modpath("dcb").."/post_office.lua")
 dofile(minetest.get_modpath("dcb").."/crafts.lua")
 dofile(minetest.get_modpath("dcb").."/give_initial_stuff.lua")

@@ -151,11 +151,16 @@ end
 
 --------------
 
+local pm_fs_string = {[1]="", [2]="", [3]="", [4]="", [5]=""}
+
 local player_index = 1 -- selected player on the left
 local pm_index = 1 -- selected pm on the right
 
+local revPlayers = {}
+
 local chatlist = {}
 local chatlist_string = "" -- the player list formspec string filled from chatlist
+
 local function update_chatlist() --add or remove
 	local players = minetest.get_connected_players()
 	chatlist = {}
@@ -166,50 +171,21 @@ local function update_chatlist() --add or remove
 		table.insert(chatlist, n)
 	end
 	chatlist_string = string.sub(itr, 0, -2)
-
-	print(chatlist_string)
-	print("---")
-	print(dump(chatlist))
+	revPlayers = {}
+	for i, v in pairs(chatlist) do
+		revPlayers[i] = v
+		--table.insert(revPlayers, {i})
+	end
+	print(dump(revPlayers))
 end
 
------
---[[
-local revPlayers = {}
-for i,v in ipairs(chatlist) do
-	revPlayers[v] = i
-end
---]]
------
 
 local msg = "" -- the sent message string from fields.text
-local pm_fs_string = {[1]=""}
---[[local pmtable = {
-	["james"] = {
-		["james"] = {
-			"<james> test",
-			"<james> k",
-		},
-		["kupo"] = {
-			"<kupo> hi raramza",
-			"<kupo> ih",
-		},
-	},
-	["kupo"] = {
-		["james"] = {
-			"<james> hi kupo",
-			"<james> :)",
-		},
-	},
-}
---]]
+
 local pmtable = {}
 local function insertpm(from, to, pm)
-	--local t = {from, to, pm}
 	table.insert(pmtable[to][from], "<"..from.."> "..pm)
-	print(dump(pmtable))
-	pm_fs_string = {}
 	table.insert(pm_fs_string[from], "<"..from.."> "..pm)
-	print(dump(pm_fs_string))
 end
 
 --[[
@@ -284,8 +260,9 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		msg = fields.text
 	end
 	if fields.send then
-		local playername = chatlist[player_index]:get_player_name()
+		local playername = chatlist[player_index]
 		minetest.log("action", "PM from "..player:get_player_name().." to "..playername..": "..msg)
+		minetest.chat_send_player(playername, "PM from "..player:get_player_name()..": "..msg)
 		minetest.chat_send_player(player:get_player_name(), "Message sent.")
 		insertpm(player:get_player_name(), playername, msg)
 
