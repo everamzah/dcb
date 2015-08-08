@@ -8,8 +8,12 @@ SHOW_FIRST_TIME_JOIN_MSG = true --Whether or not to show FIRST_TIME_JOIN_MSG if 
 local name = minetest.setting_get("server_name") or "[SERVER]"
 FIRST_TIME_JOIN_MSG = " has joined the server for the first time!  Welcome to "..name --minetest.setting_get("server_name")
 
+<<<<<<< HEAD
 --BROADCAST_PREFIX = "[SERVER]" --All messages sent with the /broadcast command will be prefixed with this
 BROADCAST_PREFIX = minetest.setting_get("broadcast_prefix") or "[SERVER]"
+=======
+BROADCAST_PREFIX = "[SERVER]" --All messages sent with the /broadcast command will be prefixed with this
+>>>>>>> 62cc118cfd325beadf11b718e2c7f5db79308b39
 
 DISALLOWED_NODES = { --These nodes will be immediatly removed if they are placed. Players with the disallowednodes priv can place them
 	"tnt:tnt",

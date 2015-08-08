@@ -2,9 +2,18 @@ dcb = {}
 
 --[[
 local thing = AreaStore()
-local aarea = thing:insert_area({x=4,y=17,z=-1904}, {x=104,y=-17,z=-1914}, "hi mom")
-print(dump(aarea))
-print(dump(thing))
+local aarea = thing:insert_area({x=-10,y=-10,z=-10}, {x=10,y=10,z=10}, "hi mom")
+print(dump(thing:get_area(1)))
+minetest.register_chatcommand("tpos", {
+	func = function(name)
+		local player = minetest.get_player_by_name(name)
+		print(dump(player))
+		print(dump(thing:get_areas_for_pos(player:getpos())))
+		if thing:get_areas_for_pos(player:getpos()).min then
+			print("found")
+		end
+	end
+})
 --]]
 
 --[[
