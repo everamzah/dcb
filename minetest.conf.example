@@ -30,5 +30,19 @@
 
 
 
+# Broadcast prefix used when issuing /broadcast
+#broadcast_prefix = [SERVER]
+
+# Remove bones after this amount of time
+#remove_bones_time = 600
+
+# Max chat message length before kick
+#max_chat_msg_length = 400
+
+# First time join message
+#first_time_join_msg = " has joined the server for the first time!  Welcome to [SERVER]"
+
+
+
 # Whether to show the PM button on player inventory formspec.
 #show_pm = false
