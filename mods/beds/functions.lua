@@ -156,7 +156,7 @@ end)
 minetest.register_on_leaveplayer(function(player)
 	local name = player:get_player_name()
 	lay_down(player, nil, nil, false, true)
-	--beds.bed_pointed_pos[name] = nil
+	beds.bed_pointed_pos[name] = nil
 	beds.player[name] = nil
 	if check_in_beds() then
 		minetest.after(2, function()
