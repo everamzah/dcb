@@ -29,7 +29,7 @@ minetest.register_node("mini_sun:source", {
 	inventory_image = minetest.inventorycube("mini_sun.png", "mini_sun.png", "mini_sun.png"),
 	tiles = { "mini_sun.png" },
 	drawtype = "glasslike",
-	groups = { snappy=3, oddly_breakable_by_hand=3 },
+	groups = { snappy=3, oddly_breakable_by_hand=3, not_in_creative_inventory=1 },
 	sounds = default.node_sound_glass_defaults(),
 	drop = "mini_sun:source",
 	light_source = 14,
