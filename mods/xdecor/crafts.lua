@@ -215,6 +215,15 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+	output = "xdecor:lightbox",
+	recipe = {
+		{"group:stick", "default:torch", "group:stick"},
+		{"group:stick", "default:glass", "group:stick"},
+		{"group:stick", "default:torch", "group:stick"}
+	}
+})
+
+minetest.register_craft({
 	output = "xdecor:mailbox",
 	recipe = {
 		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
@@ -302,9 +311,9 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "xdecor:stonepath 16",
 	recipe = {
-		{"stairs:slab_stone", "", "stairs:slab_stone"},
-		{"", "stairs:slab_stone", ""},
-		{"stairs:slab_stone", "", "stairs:slab_stone"}
+		{"stairs:slab_cobble", "", "stairs:slab_cobble"},
+		{"", "stairs:slab_cobble", ""},
+		{"stairs:slab_cobble", "", "stairs:slab_cobble"}
 	}
 })
 

@@ -15,24 +15,20 @@ local default_inventory_size = 32
 local default_inventory_formspecs = {
 	["8"]="size[8,6]"..xdecor.fancy_gui..
 	"list[context;main;0,0;8,1;]"..
-	"list[current_player;main;0,2;8,4;]"..
-	"listring[]",
+	"list[current_player;main;0,2;8,4;]",
 
 	["16"]="size[8,7]"..xdecor.fancy_gui..
 	"list[context;main;0,0;8,2;]"..
-	"list[current_player;main;0,3;8,4;]"..
-	"listring[]",
+	"list[current_player;main;0,3;8,4;]",
 
 	["24"]="size[8,8]"..xdecor.fancy_gui..
 	"list[context;main;0,0;8,3;]"..
-	"list[current_player;main;0,4;8,4;]"..
-	"listring[]",
+	"list[current_player;main;0,4;8,4;]",
 
 	["32"]="size[8,9]"..xdecor.fancy_gui..
 	"list[context;main;0,0.3;8,4;]"..
 	"list[current_player;main;0,4.85;8,1;]"..
 	"list[current_player;main;0,6.08;8,3;8]"..
-	"listring[]"..
 	default.get_hotbar_bg(0, 4.85)
 }
 
@@ -47,11 +43,14 @@ function xdecor.register(name, def)
 	def.sounds = def.sounds or default.node_sound_defaults()
 	
 	if not (def.drawtype == "glasslike_framed" or
-			def.drawtype == "glasslike_framed_optional" or
-			def.drawtype == "plantlike" or
-			def.drawtype == "signlike" or
-			def.drawtype == "normal") then
+			def.drawtype == "glasslike_framed_optional" or def.drawtype == "plantlike" or
+			def.drawtype == "signlike" or def.drawtype == "normal") then
 		def.paramtype2 = def.paramtype2 or "facedir"
+	end
+
+	if def.drawtype == "plantlike" or def.drawtype == "torchlike" or
+			def.drawtype == "signlike" or def.drawtype == "fencelike" then
+		def.sunlight_propagates = true
 	end
 
 	local infotext = def.infotext
