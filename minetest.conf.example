@@ -24,25 +24,47 @@
 #tnt_radius = 3
 
 
-
+### Beds
 # Enable beds setting player respawn
 #enable_bed_respawn = true
 
 
+### Server Essentials
+#
+#
+#max_afk_time = 600
 
-# Broadcast prefix used when issuing /broadcast
-#broadcast_prefix = [SERVER]
+# Number of seconds between activity checks
+#afk_check_interval = 1
+--AFK_WARN_TIME = 20 --Number of seconds before being kicked that a player will start to be warned
+#afk_warn_time = 20
 
-# Remove bones after this amount of time
-#remove_bones_time = 600
+--SHOW_FIRST_TIME_JOIN_MSG = true --Whether or not to show FIRST_TIME_JOIN_MSG if a new player joins
+#show_first_time_join_msg") or true
+--FIRST_TIME_JOIN_MSG = " has joined the server for the first time, Welcome!" --Message to broadcast to all players when a new player joins the server, will follow the players name
+local name = minetest.setting_get("server_name") or "[SERVER]"
+FIRST_TIME_JOIN_MSG = " has joined the server for the first time!  Welcome to "..name --minetest.setting_get("server_name")
 
-# Max chat message length before kick
-#max_chat_msg_length = 400
-
-# First time join message
-#first_time_join_msg = " has joined the server for the first time!  Welcome to [SERVER]"
+--BROADCAST_PREFIX = "[SERVER]" --All messages sent with the /broadcast command will be prefixed with this
+BROADCAST_PREFIX = minetest.setting_get("broadcast_prefix") or "[SERVER: "..name.."]" or "[SERVER]"
 
 
+DISALLOWED_NODES = { --These nodes will be immediatly removed if they are placed. Players with the disallowednodes priv can place them
+        "tnt:tnt",
+}
 
+
+--REMOVE_BONES = false --If true, remove bones after REMOVE_BONES_TIME seconds
+REMOVE_BONES = minetest.setting_get("remove_bones") or false
+--REMOVE_BONES_TIME = 600 --Remove bones after this amount of time (seconds)
+REMOVE_BONES_TIME = minetest.setting_get("remove_bones_time") or 600
+
+--KICK_CHATSPAM = true --Ilf true, players who send a chat message longer than MAX_CHAT_MSG_LENGTH will be kicked
+KICK_CHATSPAM = minetest.setting_get("kick_chatspam") or true
+--MAX_CHAT_MSG_LENGTH = 400
+MAX_CHAT_MSG_LENGTH = minetest.setting_get("max_chat_msg_length") or 400
+
+
+## DCB
 # Whether to show the PM button on player inventory formspec.
 #show_pm = false
