@@ -16,9 +16,9 @@ function beds.get_bed_formspec(pos)
 			--default.gui_slots..
 			--"list[current_player;main;0,1.25;8,1;]"..
 			--"list[current_player;main;0,2.5;8,3;8]"..
-			"button_exit[-0.02,1.5;2.5,1;setrespawn;Set Respawn]"..
-			"button_exit[2.75,1.5;2.5,1;sleep;Sleep]"..
-			"button_exit[5.56,1.5;2.5,1;sethome;Set Home]"
+			"button_exit[-0.02,0.75;2.5,1;setrespawn;Set Respawn]"..
+			"button_exit[2.75,0.75;2.5,1;sleep;Sleep]"..
+			"button_exit[5.56,0.75;2.5,1;sethome;Set Home]"
 			--"list[current_name;bed_trunk;0,2;8,2]"..
 			--"list[nodemeta:"..spos..";bed_trunk;0,1;8,3]"..
 			--default.get_hotbar_bg(0,1.25)
