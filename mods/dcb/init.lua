@@ -1,31 +1,6 @@
 dcb = {}
 
---[[
-local thing = AreaStore()
-local aarea = thing:insert_area({x=-10,y=-10,z=-10}, {x=10,y=10,z=10}, "hi mom")
-print(dump(thing:get_area(1)))
-minetest.register_chatcommand("tpos", {
-	func = function(name)
-		local player = minetest.get_player_by_name(name)
-		print(dump(player))
-		print(dump(thing:get_areas_for_pos(player:getpos())))
-		if thing:get_areas_for_pos(player:getpos()).min then
-			print("found")
-		end
-	end
-})
---]]
-
---[[
-local strategies = {fs = {name="my_database", form="json", place="world"}}
-local my_instance = DB(strategies)
-my_instance:set("owner", "title", "text")
---print(dump(my_instance))
-local addr = my_instance:get("owner", "title", "text")
---print(dump(addr))
---]]
-
-local sstep = tonumber(minetest.setting_get("dedicated_server_step"))
+local sstep = 0.3 --tonumber(minetest.setting_get("dedicated_server_step"))
 
 minetest.register_craftitem("dcb:tool", {
 	description = "Powerful multitool",
@@ -54,15 +29,6 @@ minetest.register_craftitem("dcb:tool", {
 		end
 	end,
 })
-
---[[
-shop.spew = function(pos, stack)
-	local obj = minetest.add_item(pos, stack)
-	if obj then
-		obj:setvelocity({x=math.random(-1, 1), y=5, z=math.random(-1, 1)})
-	end
-end
---]]
 
 minetest.register_craftitem("dcb:dcb", {
 	description = "DCB Tool removes doors, chests, and bones",
@@ -101,30 +67,6 @@ minetest.register_craftitem("dcb:dcb", {
 	end,
 })
 
-minetest.register_on_punchplayer(function(player, hitter, time_from_last_punch, tool_capabilities, dir, damage)
-	if damage >= 1 then
-		local p = player
-		local h = hitter
-		local pos = p:getpos()
-		local r = 10
-	
-		local positions = minetest.find_nodes_in_area(
-			{x=pos.x-r, y=pos.y-r, z=pos.z-r},
-			{x=pos.x+r, y=pos.y+r, z=pos.z+r},
-			{"mini_sun:source"})
-		if (positions[1]) then
-			local hhp = h:get_hp()
-			p:set_hp(20)
-			h:set_hp(hhp - damage)
-			return
-		else
-			return
-		end
-	else
-		return
-	end
-end)
-
 dofile(minetest.get_modpath("dcb").."/overrides.lua")
 dofile(minetest.get_modpath("dcb").."/book_reader.lua")
 --dofile(minetest.get_modpath("dcb").."/guest_book.lua")
@@ -132,3 +74,4 @@ dofile(minetest.get_modpath("dcb").."/post_office.lua")
 dofile(minetest.get_modpath("dcb").."/crafts.lua")
 dofile(minetest.get_modpath("dcb").."/give_initial_stuff.lua")
 dofile(minetest.get_modpath("dcb").."/creative.lua")
+dofile(minetest.get_modpath("dcb").."/nopvp.lua")
