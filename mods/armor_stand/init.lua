@@ -39,7 +39,14 @@ end
 
 minetest.register_node("armor_stand:armor_stand", {
 	description = "Armor Stand",
-	tiles = {"default_wood.png^armor_stand_shield.png"},
+	tiles = {
+			"wardrobe_wardrobe_topbottom.png^wardrobe_wardrobe_front_overlay.png",
+			"wardrobe_wardrobe_topbottom.png^wardrobe_wardrobe_front_overlay.png",
+			"wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
+			"wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
+			"wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
+			"default_pinewood.png^wardrobe_wardrobe_front_overlay.png^shields_inv_shield_wood.png"
+		},
 	groups = {choppy=2,oddly_breakable_by_hand=2,flammable=3,wood=1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)

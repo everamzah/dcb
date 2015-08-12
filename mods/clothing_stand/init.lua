@@ -1,10 +1,4 @@
-
 clothing_stand = {}
-
--- Ugly workaround !
--- override armor.set_player_armor which is called when placing/removing
--- armor pieces in the inventory. We update the formspec to display the
--- dynamic preview changes if rightclick_flag is set
 
 clothing_stand.set_player_clothing = clothing.set_player_clothing
 clothing.set_player_clothing = function(self, player)
@@ -25,12 +19,9 @@ clothing_stand.set_formspec = function(name)
 	default.gui_slots..
 	"label[0,0;Clothing]"..
 	"list[detached:"..name.."_clothing;clothing;1,0.75;6,1]"..
-	--"image[2.5,0.05;2,4;"..armor.textures[name].preview.."]"..
-	--"image[2.5,0.5;2,4;"..clothing.textures[name].preview.."]"..
-	--"list[current_player;main;0,4.5;8,1;]"..
 	"list[current_player;main;0,2.1;8,4;]"..
-	"listring[]"
-	--default.get_hotbar_bg(0,3.5)
+	"listring[]"..
+	default.get_hotbar_bg(0,2.1)
 end
 
 clothing_stand.show_form = function(name)
@@ -39,7 +30,14 @@ end
 
 minetest.register_node("clothing_stand:clothing_stand", {
 	description = "Clothing Stand",
-	tiles = {"default_wood.png^clothing_inv_pants_red.png"},
+	tiles = {
+                        "wardrobe_wardrobe_topbottom.png^wardrobe_wardrobe_front_overlay.png",
+                        "wardrobe_wardrobe_topbottom.png^wardrobe_wardrobe_front_overlay.png",
+                        "wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
+                        "wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
+                        "wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
+                        "default_pinewood.png^wardrobe_wardrobe_front_overlay.png^clothing_inv_shirt_red.png"
+		},
 	groups = {choppy=2,oddly_breakable_by_hand=2,flammable=3,wood=1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
@@ -77,7 +75,7 @@ minetest.register_craft({
 	recipe = {
 		{"group:wood", "group:wood", "group:wood"},
 		-- Change to "group:clothing" if exists
-		{"group:wood", "clothing:pants_red", "group:wood"},
+		{"group:wood", "clothing:pants_shirt", "group:wood"},
 		{"group:wood", "group:wood", "group:wood"}
 	}
 })
