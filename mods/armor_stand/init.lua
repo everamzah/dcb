@@ -23,14 +23,13 @@ armor_stand.set_formspec = function(name)
 	default.gui_bg_img..
 	default.gui_slots..
 	"label[0,0;Armor]"..
-	"list[detached:"..name.."_armor;armor;1,0.75;6,1]".. -- 0,0;2,3;
-	--"image[2.5,0.5;2,4;"..armor.textures[name].preview.."]"..
+	"list[detached:"..name.."_armor;armor;1,0.75;6,1]"..
 	"label[1.5,0;Level: "..armor.def[name].level.."]"..
 	"label[3.5,0;Heal: "..armor.def[name].heal.."]"..
 	"label[5.5,0;Fire: "..armor.def[name].fire.."]"..
 	"list[current_player;main;0,2.1;8,4;]"..
-	"listring[]"
-	--default.get_hotbar_bg(0,3.5)
+	"listring[]"..
+	default.get_hotbar_bg(0,2.1)
 end
 
 armor_stand.show_form = function(name)
@@ -39,6 +38,7 @@ end
 
 minetest.register_node("armor_stand:armor_stand", {
 	description = "Armor Stand",
+	paramtype2 = "facedir",
 	tiles = {
 			"wardrobe_wardrobe_topbottom.png^wardrobe_wardrobe_front_overlay.png",
 			"wardrobe_wardrobe_topbottom.png^wardrobe_wardrobe_front_overlay.png",

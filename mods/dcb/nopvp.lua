@@ -1,22 +1,71 @@
 local nopvp = AreaStore()
-local nopvparea = nopvp:insert_area({x=-10, y=-10, z=-10}, {x=10, y=10, z=10}, "nopvp")
+local nopvp_areas = {}
+local mark_file = minetest.get_worldpath() .. "/mark"
+local input = io.open(mark_file, "r")
+if input then
+	nopvp_areas = minetest.deserialize(input:read())
+	io.close(input)
+	for _, v in pairs(nopvp_areas) do
+		nopvp:insert_area(nopvp_areas[_][1], nopvp_areas[_][2], "nopvp")
+	end
+end
+local nopvp_mark_p1 = {}
+local nopvp_mark_p2 = {}
 
---[[
-minetest.register_chatcommand("shitty", {
-        func = function(name)
-                local player = minetest.get_player_by_name(name)
-                local pos = player:getpos()
-                local shittyinfo = shitty:get_areas_for_pos(pos)
-                print(dump(shitty:get_areas_for_pos(pos)))
-                if shittyinfo[1] then print("1") end
-        end
+
+minetest.register_chatcommand("mark", {
+	description = "Mark an area explicity for inverted PVP.", -- Make general for other purposes
+	privs = {server=true},
+	params = "<p1|p2|del>",
+	func = function(name, params)
+		local player = minetest.get_player_by_name(name)
+		local pos = player:getpos()
+		local spos = {x=math.floor(pos.x), y=math.floor(pos.y), z=math.floor(pos.z)}
+
+		if params == "p1" then
+			nopvp_mark_p1[name] = spos
+			minetest.chat_send_player(name,
+				spos.x..","..spos.y..","..spos.z.." marked as position 1.")
+		elseif params == "p2" and nopvp_mark_p1[name] then
+			nopvp_mark_p2[name] = spos
+			if nopvp_mark_p1[name] and nopvp_mark_p2[name] then
+				nopvp:insert_area(nopvp_mark_p1[name], nopvp_mark_p2[name], "nopvp")
+				print("area inserted")
+				table.insert(nopvp_areas, {nopvp_mark_p1[name], nopvp_mark_p2[name]})
+				local changed = true
+			        if changed then
+			                local output = io.open(mark_file, "w")
+					output:write(minetest.serialize(nopvp_areas))
+				       	io.close(output)
+					changed = false
+				end
+
+
+				nopvp_mark_p1[name] = {}
+				nopvp_mark_p2[name] = {}
+
+				minetest.chat_send_player(name,
+					spos.x..","..spos.y..","..spos.z.." marked as position 2.")
+			end
+		elseif params == "del" then
+			local ids = nopvp:get_areas_for_pos(spos)
+			print(dump(ids[3]))
+		else
+			--print("get areas for pos:")
+			print(dump(nopvp:get_areas_for_pos(spos)))
+			--print("table:")
+			--print(dump(nopvp_areas))
+			minetest.chat_send_player(name, "Requires a p1 or p2 arguments, see /help mark.")
+		end
+	end
 })
---]]
+
 
 minetest.register_on_punchplayer(function(player, hitter, time_from_last_punch, tool_capabilities, dir, damage)
         if damage >= 0.5 then
 		local pos = player:getpos()
 		local nopvpareainfo = nopvp:get_areas_for_pos(pos)
+		print(dump(nopvpareainfo))
 
 		if nopvpareainfo[1] then 
 			local hitter_hp = hitter:get_hp()
@@ -24,29 +73,6 @@ minetest.register_on_punchplayer(function(player, hitter, time_from_last_punch, 
 			hitter:set_hp(hitter_hp - damage)
 			return
 		end
-
-
-		--[[
-                local p = player
-                local h = hitter
-                local pos = p:getpos()
-                local r = 10
-
-                local positions = minetest.find_nodes_in_area(
-                        {x=pos.x-r, y=pos.y-r, z=pos.z-r},
-                        {x=pos.x+r, y=pos.y+r, z=pos.z+r},
-                        {"mini_sun:source"})
-                if (positions[1]) then
-                        local hhp = h:get_hp()
-                        p:set_hp(20)
-                        h:set_hp(hhp - damage)
-                        return
-                else
-                        return
-                end
-        else
-                return
-	--]]
         end
 end)
 

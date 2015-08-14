@@ -70,3 +70,5 @@ minetest.register_alias("snow", "default:snow")
 
 -- Mese now comes in the form of blocks, ore, crystal and fragments
 minetest.register_alias("default:mese_block", "default:mese")
+
+minetest.register_alias("default:fence_wood", "xconnected:fence_c0")

@@ -30,6 +30,7 @@ end
 
 minetest.register_node("clothing_stand:clothing_stand", {
 	description = "Clothing Stand",
+	paramtype2 = "facedir",
 	tiles = {
                         "wardrobe_wardrobe_topbottom.png^wardrobe_wardrobe_front_overlay.png",
                         "wardrobe_wardrobe_topbottom.png^wardrobe_wardrobe_front_overlay.png",

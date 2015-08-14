@@ -1,18 +1,7 @@
--- Guest Book
-
---[[ TODO
-
-[*] Convert to db mod or consolidate or figure out just what are the best methods and options.
-[*] Store n books in table (just metadata?)
-[x] Read book button.
-
---]]
-
-
 local guestbook_file = minetest.get_worldpath().."/guestbook"
 local guestbook_db = minetest.get_worldpath().."/guestbook_db"
 
-local formspec_log = "" -- The actual log as formspec string.
+local formspec_log = ""
 local guestlog = {}
 
 local function loadguestbook()
@@ -25,6 +14,7 @@ local function loadguestbook()
 	if input_db then
 		guestlog = minetest.deserialize(input_db:read())
 		io.close(input_db)
+		print(dump(guestlog))
 	end
 end
 
@@ -72,12 +62,12 @@ function dcb.guestbooklog(owner, title, text)
 	local fs_owner = minetest.formspec_escape(owner)
 	local fs_title = minetest.formspec_escape(title)
 	local fs_text = minetest.formspec_escape(text)
-	local entry = {owner, title, text}
+	local entry = {fs_owner, fs_title, fs_text}
 	table.insert(guestlog, 1, entry)
 	print(dump(guestlog))
-	local trunc_text = string.sub(text, 1, 120)
+	local trunc_text = string.sub(fs_text, 1, 120)
 	local formspec = minetest.formspec_escape(owner..": "..trunc_text)
-	formspec_log = formspec..","..formspec_log -- Delimited log entry to top of log
+	formspec_log = formspec..","..formspec_log
 	formspec_log = string.sub(formspec_log, 0, -2)
 	print(formspec_log)
 	changed = true
@@ -124,7 +114,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		return
 	end
 	if fields.open then
-		if formspec_log == "" then return 0 end --weak check, instead look for book at index.
+		if formspec_log == "" then return 0 end
 		minetest.show_formspec(player:get_player_name(), "dcb:guest_book", openbook(index))
 		return
 	end

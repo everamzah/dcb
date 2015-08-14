@@ -1,7 +1,10 @@
 shop = {}
 
--- Privs for everything
--- Global shop price, settable by /setprice or something.
+--[[
+
+--]]
+
+-- Global privs shop price, settable by /shop
 shop.price = 1
 
 -- More gold at lower depths.
@@ -119,7 +122,7 @@ minetest.register_node("shop:privs", {
 	description = "Shop",
 	tiles = {"default_sandstone.png^shop_wings.png"},
 	is_ground_content = true,
-	groups = {cracky=3, stone=1},
+	groups = {cracky=3, stone=1, oddly_breakable_by_hand=1},
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("infotext", "Shop for privs")

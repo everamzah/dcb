@@ -1,43 +1,16 @@
 minetest.register_craftitem("shop:coin", {
 	description = "Gold Coin",
 	inventory_image = "shop_coin.png",
-
 	on_use = function(itemstack, user, pointed_thing)
 	end,
-
 	on_place = function(itemstack, placer, pointed_thing)
-		--[[
-		minetest.set_node(pointed_thing.above, {name="shop:coin_stack"})
-		itemstack:take_item()
-		return itemstack
-		--]]
 	end,
-})
-
-minetest.register_node("shop:coin_stack", {
-	description = "Coins",
-	tiles = {"default_gold_block.png"},
-	drop = "shop:coin",
-	drawtype = "nodebox",
-	paramtype = "light",
-	walkable = false,
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.125, -0.5, -0.125, 0.125, -0.4375, 0.125},
-			{-0.0625, -0.5, -0.1875, 0.0625, -0.4375, -0.125},
-			{-0.0625, -0.5, 0.125, 0.0625, -0.4375, 0.1875},
-			{0.125, -0.5, -0.0625, 0.1875, -0.4375, 0.0625},
-			{-0.1875, -0.5, -0.0625, -0.125, -0.4375, 0.0625},
-		},
-	},
-	groups = {dig_immediate=3,falling_node=1},
 })
 
 minetest.register_node("shop:register", {
 	description = "Register",
 	tiles = {"default_wood.png^shop_coin.png"},
-	groups = {cracky=2},
+	groups = {cracky=2, choppy=3, oddly_breakable_by_hand=1},
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		local meta = minetest.get_meta(pos)
 		local owner = placer:get_player_name()
@@ -191,24 +164,24 @@ shop.formspec_stock =
 minetest.register_craft({
 	output = "shop:coin 9",
 	recipe = {
-		{ "default:gold_ingot" },
+		{"default:gold_ingot"},
 	}
 })
 
 minetest.register_craft({
 	output = "default:gold_ingot",
 	recipe = {
-		{ "shop:coin", "shop:coin", "shop:coin" },
-		{ "shop:coin", "shop:coin", "shop:coin" },
-		{ "shop:coin", "shop:coin", "shop:coin" }
+		{"shop:coin", "shop:coin", "shop:coin"},
+		{"shop:coin", "shop:coin", "shop:coin"},
+		{"shop:coin", "shop:coin", "shop:coin"}
 	}
 })
 
 minetest.register_craft({
 	output = "shop:register",
 	recipe = {
-		{ "group:wood", "group:wood", "group:wood" },
-		{ "group:wood", "default:goldblock", "group:wood" },
-		{ "group:wood", "group:wood", "group:wood" }
+		{"group:wood", "group:wood", "group:wood"},
+		{"group:wood", "default:goldblock", "group:wood"},
+		{"group:wood", "group:wood", "group:wood"}
 	}
 })

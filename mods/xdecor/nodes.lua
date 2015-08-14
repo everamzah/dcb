@@ -1,4 +1,4 @@
-xpanes.register_pane("bamboo_frame", {
+xconnected.register_pane("xdecor:bamboo_frame", "xdecor_bamboo_frame.png", {
 	description = "Bamboo Frame",
 	tiles = {"xdecor_bamboo_frame.png"},
 	drawtype = "airlike",
@@ -189,8 +189,6 @@ xdecor.register("cobweb", {
 	groups = {dig_immediate=3, liquid=3, flammable=3},
 	sounds = xdecor.leaves
 })
-
---local colors = {"red"} -- Add more curtains colors simply here.
 
 local colors = {
 	"gray", "darkgray", "black", "violet", "blue",
@@ -467,7 +465,7 @@ xdecor.register("multishelf", {
 	sounds = xdecor.wood
 })
 
-xpanes.register_pane("rust_bar", {
+xconnected.register_pane("xdecor:rust_bar", "xdecor_rust_bars.png", {
 	description = "Rust Bars",
 	tiles = {"xdecor_rust_bars.png"},
 	drawtype = "airlike",

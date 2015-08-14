@@ -1,6 +1,7 @@
 minetest.register_privilege("delprotect","Ignore player protection")
 
 protector = {}
+protector.mod = "redo"
 protector.radius = (tonumber(minetest.setting_get("protector_radius")) or 5)
 
 protector.get_member_list = function(meta)
@@ -23,11 +24,11 @@ end
 protector.add_member = function(meta, name)
 	if protector.is_member(meta, name) then return end
 	local list = protector.get_member_list(meta)
-	table.insert(list,name)
+	table.insert(list, name)
 	protector.set_member_list(meta,list)
 end
 
-protector.del_member = function(meta,name)
+protector.del_member = function(meta, name)
 	local list = protector.get_member_list(meta)
 	for i, n in ipairs(list) do
 		if n == name then
@@ -35,14 +36,15 @@ protector.del_member = function(meta,name)
 			break
 		end
 	end
-	protector.set_member_list(meta,list)
+	protector.set_member_list(meta, list)
 end
 
 -- Protector Interface
 
 protector.generate_formspec = function(meta)
 
-	local formspec = "size[8,7]"..default.gui_bg..default.gui_bg_img..default.gui_slots
+	local formspec = "size[8,7]"
+		..default.gui_bg..default.gui_bg_img..default.gui_slots
 		.."label[2.5,0;-- Protector interface --]"
 		.."label[0,1;PUNCH node to show protected area or USE for area check]"
 		.."label[0,2;Members: (type player name then press Enter to add)]"

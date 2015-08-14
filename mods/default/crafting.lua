@@ -36,7 +36,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = 'default:fence_wood 2',
+	output = "xconnected:fence_c4", --wood'default:fence_wood 2',
 	recipe = {
 		{'group:stick', 'group:stick', 'group:stick'},
 		{'group:stick', 'group:stick', 'group:stick'},
