@@ -1,4 +1,4 @@
-xconnected.register_pane(":xconnected:bamboo_frame", "xdecor_bamboo_frame.png", {
+xconnected.register_pane("xdecor:bamboo_frame", "xdecor_bamboo_frame.png", {
 	description = "Bamboo Frame",
 	tiles = {"xdecor_bamboo_frame.png"},
 	drawtype = "airlike",
@@ -14,6 +14,8 @@ xconnected.register_pane(":xconnected:bamboo_frame", "xdecor_bamboo_frame.png", 
 		{"default:papyrus", "default:papyrus", "default:papyrus"}
 	}
 })
+
+minetest.register_alias("xdecor:bamboo_frame", "xdecor:bamboo_frame_c4")
 
 xdecor.register("baricade", {
 	description = "Baricade",
@@ -293,7 +295,7 @@ minetest.register_on_joinplayer(function(player)
 	inv:set_size("enderchest", 8*4)
 end)
 
-xconnected.register_fence(":xconnected:fence_wrought_iron", "xdecor_wrought_iron.png", {
+xconnected.register_fence("xdecor:fence_wrought_iron", "xdecor_wrought_iron.png", {
 	description = "Wrought Iron Fence",
 	drawtype = "fencelike",
 	groups = {cracky=2},
@@ -304,6 +306,8 @@ xconnected.register_fence(":xconnected:fence_wrought_iron", "xdecor_wrought_iron
 	},
 	inventory_image = "default_fence_overlay.png^xdecor_wrought_iron.png^default_fence_overlay.png^[makealpha:255,126,126"
 })
+
+minetest.register_alias("xdecor:fence_wrought_iron", "xdecor:fence_wrought_iron_c4")
 
 xdecor.register("fire", {
 	description = "Fancy Fire",
@@ -465,7 +469,7 @@ xdecor.register("multishelf", {
 	sounds = xdecor.wood
 })
 
-xconnected.register_pane(":xconnected:rust_bar", "xdecor_rust_bars.png", {
+xconnected.register_pane("xdecor:rust_bar", "xdecor_rust_bars.png", {
 	description = "Rust Bars",
 	tiles = {"xdecor_rust_bars.png"},
 	drawtype = "airlike",
@@ -479,6 +483,8 @@ xconnected.register_pane(":xconnected:rust_bar", "xdecor_rust_bars.png", {
 		{"xconnected:bar_c4", "default:dirt"}
 	}
 })
+
+minetest.register_alias("xdecor:rust_bar", "xdecor:rust_bar_c4")
 
 xdecor.register("stereo", {
 	description = "Stereo",

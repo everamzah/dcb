@@ -355,7 +355,6 @@ xconnected.register_fence('xconnected:fence_pine',   'default_pinewood.png')
 xconnected.register_fence('xconnected:fence_jungle', 'default_junglewood.png')
 xconnected.register_fence('xconnected:fence_acacia', 'default_acacia_wood.png')
 
---[[
 minetest.register_alias("xpanes:pane", "xconnected:pane_glass_white_c4")
 minetest.register_alias("xpanes:pane_gray", "xconnected:pane_glass_gray_c4")
 minetest.register_alias("xpanes:pane_darkgray", "xconnected:pane_glass_darkgray_c4")
@@ -371,7 +370,6 @@ minetest.register_alias("xpanes:pane_orange", "xconnected:pane_glass_orange_c4")
 minetest.register_alias("xpanes:pane_red", "xconnected:pane_glass_red_c4")
 minetest.register_alias("xpanes:pane_magenta", "xconnected:pane_glass_magenta_c4")
 minetest.register_alias("xpanes:pane_pink", "xconnected:pane_glass_pink_c4")
---]]
 
 
 --[[
