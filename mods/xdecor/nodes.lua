@@ -1,10 +1,10 @@
-xconnected.register_pane("xdecor:bamboo_frame", "xdecor_bamboo_frame.png", {
+xconnected.register_pane(":xconnected:bamboo_frame", "xdecor_bamboo_frame.png", {
 	description = "Bamboo Frame",
 	tiles = {"xdecor_bamboo_frame.png"},
 	drawtype = "airlike",
 	paramtype = "light",
 	textures = {"xdecor_bamboo_frame.png", "xdecor_bamboo_frame.png", 
-			"xpanes_space.png"},
+			"xconnected_space.png"},
 	inventory_image = "xdecor_bamboo_frame.png",
 	wield_image = "xdecor_bamboo_frame.png",
 	groups = {snappy=3, pane=1, flammable=2},
@@ -293,7 +293,7 @@ minetest.register_on_joinplayer(function(player)
 	inv:set_size("enderchest", 8*4)
 end)
 
-xdecor.register("fence_wrought_iron", {
+xconnected.register_fence(":xconnected:fence_wrought_iron", "xdecor_wrought_iron.png", {
 	description = "Wrought Iron Fence",
 	drawtype = "fencelike",
 	groups = {cracky=2},
@@ -465,18 +465,18 @@ xdecor.register("multishelf", {
 	sounds = xdecor.wood
 })
 
-xconnected.register_pane("xdecor:rust_bar", "xdecor_rust_bars.png", {
+xconnected.register_pane(":xconnected:rust_bar", "xdecor_rust_bars.png", {
 	description = "Rust Bars",
 	tiles = {"xdecor_rust_bars.png"},
 	drawtype = "airlike",
 	paramtype = "light",
 	textures = {"xdecor_rust_bars.png", "xdecor_rust_bars.png", 
-			"xpanes_space.png"},
+			"xconnected_space.png"},
 	inventory_image = "xdecor_rust_bars.png",
 	wield_image = "xdecor_rust_bars.png",
 	groups = {snappy=2, pane=1},
 	recipe = {
-		{"xpanes:bar", "default:dirt"}
+		{"xconnected:bar_c4", "default:dirt"}
 	}
 })
 
