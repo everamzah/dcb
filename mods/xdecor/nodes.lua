@@ -15,7 +15,7 @@ xconnected.register_pane("xdecor:bamboo_frame", "xdecor_bamboo_frame.png", {
 	}
 })
 
-minetest.register_alias("xdecor:bamboo_frame", "xdecor:bamboo_frame_c4")
+--minetest.register_alias("xdecor:bamboo_frame", "xdecor:bamboo_frame_c4")
 
 xdecor.register("baricade", {
 	description = "Baricade",
@@ -307,7 +307,7 @@ xconnected.register_fence("xdecor:fence_wrought_iron", "xdecor_wrought_iron.png"
 	inventory_image = "default_fence_overlay.png^xdecor_wrought_iron.png^default_fence_overlay.png^[makealpha:255,126,126"
 })
 
-minetest.register_alias("xdecor:fence_wrought_iron", "xdecor:fence_wrought_iron_c4")
+--minetest.register_alias("xdecor:fence_wrought_iron", "xdecor:fence_wrought_iron_c4")
 
 xdecor.register("fire", {
 	description = "Fancy Fire",
@@ -484,7 +484,7 @@ xconnected.register_pane("xdecor:rust_bar", "xdecor_rust_bars.png", {
 	}
 })
 
-minetest.register_alias("xdecor:rust_bar", "xdecor:rust_bar_c4")
+--minetest.register_alias("xdecor:rust_bar", "xdecor:rust_bar_c4")
 
 xdecor.register("stereo", {
 	description = "Stereo",
