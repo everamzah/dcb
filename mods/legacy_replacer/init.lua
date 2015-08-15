@@ -1,7 +1,8 @@
-if minetest.setting_get("replace_legacy_fences") then
+if minetest.setting_getbool("replace_legacy_fences") and minetest.setting_getbool("log_mods") then
+	minetest.log("action", "[legacy_replacer] Fences will be replaced.")
 	-- default:fence_wood places xconnected:fence_wood_c4
 	minetest.register_abm({
-		nodenames = {"default:fence"}
+		nodenames = {"default:fence"},
 		interval = 1,
 		chance = 1,
 		action = function(pos, node)
@@ -11,7 +12,7 @@ if minetest.setting_get("replace_legacy_fences") then
 	})
 	-- xdecor:fence_wrought_iron places xdecor:fence_wrought_iron_c4
 	minetest.register_abm({
-		nodenames = {"xdecor:fence_wrought_iron"}
+		nodenames = {"xdecor:fence_wrought_iron"},
 		interval = 1,
 		chance = 1,
 		action = function(pos, node)
@@ -24,7 +25,7 @@ if minetest.setting_get("replace_legacy_fences") then
 		nodenames = {"xpanes:bar_1", "xpanes:bar_2", "xpanes:bar_3", "xpanes:bar_4",
 			"xpanes:bar_5", "xpanes:bar_6", "xpanes:bar_7", "xpanes:bar_8",
 			"xpanes:bar_9", "xpanes:bar_10", "xpanes:bar_11", "xpanes:bar_12",
-			"xpanes:bar_13", "xpanes:bar_14", "xpanes:bar_15"}
+			"xpanes:bar_13", "xpanes:bar_14", "xpanes:bar_15"},
 		interval = 1,
 		chance = 1,
 		action = function(pos, node)
@@ -37,7 +38,7 @@ if minetest.setting_get("replace_legacy_fences") then
 		nodenames = {"xdecor:rust_bar_1", "xdecor:rust_bar_2", "xdecor:rust_bar_3", "xdecor:rust_bar_4",
 			"xdecor:rust_bar_5", "xdecor:rust_bar_6", "xdecor:rust_bar_7", "xdecor:rust_bar_8", 
 			"xdecor:rust_bar_9", "xdecor:rust_bar_10", "xdecor:rust_bar_11", "xdecor:rust_bar_12", 
-			"xdecor:rust_bar_13", "xdecor:rust_bar_14", "xdecor:rust_bar_15"}
+			"xdecor:rust_bar_13", "xdecor:rust_bar_14", "xdecor:rust_bar_15"},
 		interval = 1,
 		chance = 1,
 		action = function(pos, node)
@@ -49,7 +50,8 @@ end
 
 
 -- Panes, make for loop, etc
-if minetest.setting_get("replace_legacy_panes") then
+if minetest.setting_getbool("replace_legacy_panes") and minetest.setting_getbool("log_mods") then
+	minetest.log("action", "[legacy_replacer] Panes will be replaced.")
 	-- Glass panes white
 	local legacy_panes_white = {"xpanes:pane_1", "xpanes:pane_2", "xpanes:pane_3",
 		"xpanes:pane_4", "xpanes:pane_5", "xpanes:pane_6", "xpanes:pane_7",

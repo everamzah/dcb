@@ -29,6 +29,13 @@
 #enable_bed_respawn = true
 
 
+### Legacy Replacer
+# Replace legacy fences
+#replace_legacy_fences = false
+# Replace legacy panes
+#replace_legacy_panes = false
+
+
 ### Server Essentials
 #
 #
