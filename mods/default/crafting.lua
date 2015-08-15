@@ -36,10 +36,34 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "xconnected:fence_c4",
+	output = "xconnected:fence_c4 6",
 	recipe = {
-		{'group:stick', 'group:stick', 'group:stick'},
-		{'group:stick', 'group:stick', 'group:stick'},
+		{'default:wood', 'dcb:fence_post', 'default:wood'},
+		{'default:wood', 'dcb:fence_post', 'default:wood'}
+	}
+})
+
+minetest.register_craft({
+	output = "xconnected:fence_pine_c4 6",
+	recipe = {
+		{"default:pinewood", "dcb:fence_post", "default:pinewood"},
+		{"default:pinewood", "dcb:fence_post", "default:pinewood"}
+	}
+})
+
+minetest.register_craft({
+	output = "xconnected:fence_jungle_c4 6",
+	recipe = {
+		{"default:junglewood", "dcb:fence_post", "default:junglewood"},
+		{"default:junglewood", "dcb:fence_post", "default:junglewood"}
+	}
+})
+
+minetest.register_craft({
+	output = "xconnected:fence_acacia_c4 6",
+	recipe = {
+		{"default:acacia_wood", "dcb:fence_post", "default:acacia_wood"},
+		{"default:acacia_wood", "dcb:fence_post", "default:acacia_wood"}
 	}
 })
 
