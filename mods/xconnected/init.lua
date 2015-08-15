@@ -317,7 +317,7 @@ end
 
 -- TODO make global table, for loops, and recipes.
 
-xconnected.register_pane("xconnected:bars_iron", "xconnected_bar.png")
+xconnected.register_pane("xconnected:bar", "xconnected_bar.png")
 
 xconnected.register_pane('xconnected:pane_glass_white', 'default_glass.png')
 xconnected.register_pane("xconnected:pane_glass_gray", "default_glass.png^[colorize:gray")

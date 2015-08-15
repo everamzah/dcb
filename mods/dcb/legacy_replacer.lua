@@ -1,13 +1,13 @@
-if minetest.setting_getbool("replace_legacy_fences") and minetest.setting_getbool("log_mods") then
+if minetest.setting_getbool("replace_legacy_fences") then
 	minetest.log("action", "[legacy_replacer] Fences will be replaced.")
-	-- default:fence_wood places xconnected:fence_wood_c4
+	-- default:fence_wood places xconnected:fence_c4
 	minetest.register_abm({
-		nodenames = {"default:fence"},
+		nodenames = {"default:fence_wood"},
 		interval = 1,
 		chance = 1,
 		action = function(pos, node)
 			minetest.remove_node(pos)
-			minetest.place_node(pos, {name="xconnected:fence_wood_c4"})
+			minetest.set_node(pos, {name="xconnected:fence_c4"})
 		end,
 	})
 	-- xdecor:fence_wrought_iron places xdecor:fence_wrought_iron_c4
@@ -17,9 +17,13 @@ if minetest.setting_getbool("replace_legacy_fences") and minetest.setting_getboo
 		chance = 1,
 		action = function(pos, node)
 			minetest.remove_node(pos)
-			minetest.place_node(pos, {name="xdecor:fence_wrought_iron_c4"})
+			minetest.set_node(pos, {name="xdecor:fence_wrought_iron_c4"})
 		end,
 	})
+end
+
+if minetest.setting_getbool("replace_legacy_panes") then
+	minetest.log("action", "[legacy_replacer] Panes will be replaced.")
 	-- xpanes:bar to xconnected:bar_c4
 	minetest.register_abm({
 		nodenames = {"xpanes:bar_1", "xpanes:bar_2", "xpanes:bar_3", "xpanes:bar_4",
@@ -30,7 +34,7 @@ if minetest.setting_getbool("replace_legacy_fences") and minetest.setting_getboo
 		chance = 1,
 		action = function(pos, node)
 			minetest.remove_node(pos)
-			minetest.place_node(pos, {name="xconnected:bar_c4"})
+			minetest.set_node(pos, {name="xconnected:bar_c4"})
 		end,
 	})
 	-- xdecor:rust_bar to xdecor:rust_bar_c4
@@ -43,15 +47,25 @@ if minetest.setting_getbool("replace_legacy_fences") and minetest.setting_getboo
 		chance = 1,
 		action = function(pos, node)
 			minetest.remove_node(pos)
-			minetest.place_node(pos, {name="xdecor:rust_bar_c4"})
+			minetest.set_node(pos, {name="xdecor:rust_bar_c4"})
 		end,
 	})
-end
-
+	-- xdecor:bamboo_frame to xdecor:bamboo_frame_c4
+	minetest.register_abm({
+		nodenames = {"xdecor:bamboo_frame_1", "xdecor:bamboo_frame_2", "xdecor:bamboo_frame_3",
+			"xdecor:bamboo_frame_4", "xdecor:bamboo_frame_5", "xdecor:bamboo_frame_6",
+			"xdecor:bamboo_frame_7", "xdecor:bamboo_frame_8", "xdecor:bamboo_frame_9",
+			"xdecor:bamboo_frame_10", "xdecor:bamboo_frame_11", "xdecor:bamboo_frame_12",
+			"xdecor:bamboo_frame_13", "xdecor:bamboo_frame_14", "xdecor:bamboo_frame_15"},
+		interval = 1,
+		chance = 1,
+		action = function(pos, node)
+			minetest.remove_node(pos)
+			minetest.set_node(pos, {name="xdecor:bamboo_frame_c4"})
+		end,
+	})
 
 -- Panes, make for loop, etc
-if minetest.setting_getbool("replace_legacy_panes") and minetest.setting_getbool("log_mods") then
-	minetest.log("action", "[legacy_replacer] Panes will be replaced.")
 	-- Glass panes white
 	local legacy_panes_white = {"xpanes:pane_1", "xpanes:pane_2", "xpanes:pane_3",
 		"xpanes:pane_4", "xpanes:pane_5", "xpanes:pane_6", "xpanes:pane_7",
@@ -68,7 +82,7 @@ if minetest.setting_getbool("replace_legacy_panes") and minetest.setting_getbool
 		chance = 1,
 		action = function(pos, node)
 			minetest.remove_node(pos)
-			minetest.place_node(pos, {name="xconnected:pane_glass_white_c4"})
+			minetest.set_node(pos, {name="xconnected:pane_glass_white_c4"})
 		end,
 	})
 	-- Glass panes gray
@@ -87,7 +101,7 @@ if minetest.setting_getbool("replace_legacy_panes") and minetest.setting_getbool
 		chance = 1,
 		action = function(pos, node)
 			minetest.remove_node(pos)
-			minetest.place_node(pos, {name="xconnected:pane_glass_gray_c4"})
+			minetest.set_node(pos, {name="xconnected:pane_glass_gray_c4"})
 		end,
 	})
 	-- Glass panes darkgray
@@ -106,7 +120,7 @@ if minetest.setting_getbool("replace_legacy_panes") and minetest.setting_getbool
 		chance = 1,
 		action = function(pos, node)
 			minetest.remove_node(pos)
-			minetest.place_node(pos, {name="xconnected:pane_glass_darkgray_c4"})
+			minetest.set_node(pos, {name="xconnected:pane_glass_darkgray_c4"})
 		end,
 	})
 end
