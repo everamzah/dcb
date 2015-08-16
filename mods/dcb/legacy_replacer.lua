@@ -28,16 +28,28 @@ if minetest.setting_getbool("replace_legacy_walls") then
 	if minetest.setting_getbool("log_mods") then
 		minetest.log("action", "[DCB] Legacy walls will be replaced.")
 	end
-	-- xdecor:cobble_wall_ln to xconnected:wall_cobble_c4
+	-- xdecor:cobble_wall to xconnected:wall_cobble_c4
 	minetest.register_abm({
-		nodenames = {"xdecor:wall_cobble_ln", "xdecor:wall_cobble_c0",
-			"xdecor:wall_cobble_c1", "xdecor:wall_cobble_c2",
-			"xdecor:wall_cobble_c3", "xdecor:wall_cobble_c4"},
+		nodenames = {"xdecor:cobble_wall_ln", "xdecor:cobble_wall_c0",
+			"xdecor:cobble_wall_c1", "xdecor:cobble_wall_c2",
+			"xdecor:cobble_wall_c3", "xdecor:cobble_wall_c4"},
 		interval = 1,
 		chance = 1,
 		action = function(pos, node)
 			minetest.remove_node(pos)
 			minetest.set_node(pos, {name="xconnected:wall_cobble_c4"})
+		end,
+	})
+	-- xdecor:mossycobble_wall_* to xconnected:wall_mossycobble
+	minetest.register_abm({
+		nodenames = {"xdecor:mossycobble_wall_ln", "xdecor:mossycobble_wall_c0",
+			"xdecor:mossycobble_wall_c1", "xdecor:mossycobble_wall_c2",
+			"xdecor:mossycobble_wall_c3", "xdecor:mossycobble_wall_c4"},
+		interval = 1,
+		chance = 1,
+		action = function(pos, node)
+			minetest.remove_node(pos)
+			minetest.set_node(pos, {name="xconnected:wall_mossycobble_c4"})
 		end,
 	})
 end
