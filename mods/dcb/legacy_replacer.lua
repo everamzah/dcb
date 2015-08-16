@@ -1,5 +1,5 @@
 if minetest.setting_getbool("replace_legacy_fences") then
-	if setting_getbool("log_mods") then
+	if minetest.setting_getbool("log_mods") then
 		minetest.log("action", "[legacy_replacer] Fences will be replaced.")
 	end
 	-- default:fence_wood places xconnected:fence_c4
@@ -25,7 +25,7 @@ if minetest.setting_getbool("replace_legacy_fences") then
 end
 
 if minetest.setting_getbool("replace_legacy_panes") then
-	if minetest.setting_getbook("log_mods") then
+	if minetest.setting_getbool("log_mods") then
 		minetest.log("action", "[legacy_replacer] Panes will be replaced.")
 	end
 	-- xpanes:bar to xconnected:bar_c4
@@ -89,10 +89,10 @@ if minetest.setting_getbool("replace_legacy_panes") then
 		end,
 	})
 	-- Glass panes gray
-	local legacy_panes_gray = {"xpanes:pane_gray_1", "xpanes:pane_gray_2", "xpanes:pane_gray_3",
-		"xpanes:pane_gray_4", "xpanes:pane_gray_5", "xpanes:pane_gray_6", "xpanes:pane_gray_7",
-		"xpanes:pane_gray_8", "xpanes:pane_gray_9", "xpanes:pane_gray_10", "xpanes:pane_gray_11",
-		"xpanes:pane_gray_12", "xpanes:pane_gray_13", "xpanes:pane_gray_14", "xpanes:pane_gray_15"}
+	local legacy_panes_gray = {"xpanes:pane_grey_1", "xpanes:pane_grey_2", "xpanes:pane_grey_3",
+		"xpanes:pane_grey_4", "xpanes:pane_grey_5", "xpanes:pane_grey_6", "xpanes:pane_grey_7",
+		"xpanes:pane_grey_8", "xpanes:pane_grey_9", "xpanes:pane_grey_10", "xpanes:pane_grey_11",
+		"xpanes:pane_grey_12", "xpanes:pane_grey_13", "xpanes:pane_grey_14", "xpanes:pane_grey_15"}
 	for _, node_name in ipairs(legacy_panes_gray) do
 		minetest.register_node(":"..node_name, {
 			groups = {legacy_pane_gray=1},
@@ -108,10 +108,10 @@ if minetest.setting_getbool("replace_legacy_panes") then
 		end,
 	})
 	-- Glass panes darkgray
-	local legacy_panes_darkgray = {"xpanes:pane_darkgray_1", "xpanes:pane_darkgray_2", "xpanes:pane_darkgray_3",
-		"xpanes:pane_darkgray_4", "xpanes:pane_darkgray_5", "xpanes:pane_darkgray_6", "xpanes:pane_darkgray_7",
-		"xpanes:pane_darkgray_8", "xpanes:pane_darkgray_9", "xpanes:pane_darkgray_10", "xpanes:pane_darkgray_11",
-		"xpanes:pane_darkgray_12", "xpanes:pane_darkgray_13", "xpanes:pane_darkgray_14", "xpanes:pane_darkgray_15"}
+	local legacy_panes_darkgray = {"xpanes:pane_dark_grey_1", "xpanes:pane_dark_grey_2", "xpanes:pane_dark_grey_3",
+		"xpanes:pane_dark_grey_4", "xpanes:pane_dark_grey_5", "xpanes:pane_dark_grey_6", "xpanes:pane_dark_grey_7",
+		"xpanes:pane_dark_grey_8", "xpanes:pane_dark_grey_9", "xpanes:pane_dark_grey_10", "xpanes:pane_dark_grey_11",
+		"xpanes:pane_dark_grey_12", "xpanes:pane_dark_grey_13", "xpanes:pane_dark_grey_14", "xpanes:pane_dark_grey_15"}
 	for _, node_name in ipairs(legacy_panes_darkgray) do
 		minetest.register_node(":"..node_name, {
 			groups = {legacy_pane_darkgray=1},
@@ -203,10 +203,10 @@ if minetest.setting_getbool("replace_legacy_panes") then
 		end,
 	})
 	-- Glass panes darkgreen
-	local legacy_panes_darkgreen = {"xpanes:pane_darkgreen_1", "xpanes:pane_darkgreen_2", "xpanes:pane_darkgreen_3",
-		"xpanes:pane_darkgreen_4", "xpanes:pane_darkgreen_5", "xpanes:pane_darkgreen_6", "xpanes:pane_darkgreen_7",
-		"xpanes:pane_darkgreen_8", "xpanes:pane_darkgreen_9", "xpanes:pane_darkgreen_10", "xpanes:pane_darkgreen_11",
-		"xpanes:pane_darkgreen_12", "xpanes:pane_darkgreen_13", "xpanes:pane_darkgreen_14", "xpanes:pane_darkgreen_15"}
+	local legacy_panes_darkgreen = {"xpanes:pane_dark_green_1", "xpanes:pane_dark_green_2", "xpanes:pane_dark_green_3",
+		"xpanes:pane_dark_green_4", "xpanes:pane_dark_green_5", "xpanes:pane_dark_green_6", "xpanes:pane_dark_green_7",
+		"xpanes:pane_dark_green_8", "xpanes:pane_dark_green_9", "xpanes:pane_dark_green_10", "xpanes:pane_dark_green_11",
+		"xpanes:pane_dark_green_12", "xpanes:pane_dark_green_13", "xpanes:pane_dark_green_14", "xpanes:pane_dark_green_15"}
 	for _, node_name in ipairs(legacy_panes_darkgreen) do
 		minetest.register_node(":"..node_name, {
 			groups = {legacy_pane_darkgreen=1},
