@@ -41,12 +41,12 @@ if minetest.setting_getbool("replace_legacy_panes") then
 			minetest.set_node(pos, {name="xconnected:bar_c4"})
 		end,
 	})
-	-- xdecor:rust_bar to xdecor:rust_bar_c4
+	-- xpanes:rust_bar to xdecor:rust_bar_c4
 	minetest.register_abm({
-		nodenames = {"xdecor:rust_bar_1", "xdecor:rust_bar_2", "xdecor:rust_bar_3", "xdecor:rust_bar_4",
-			"xdecor:rust_bar_5", "xdecor:rust_bar_6", "xdecor:rust_bar_7", "xdecor:rust_bar_8", 
-			"xdecor:rust_bar_9", "xdecor:rust_bar_10", "xdecor:rust_bar_11", "xdecor:rust_bar_12", 
-			"xdecor:rust_bar_13", "xdecor:rust_bar_14", "xdecor:rust_bar_15"},
+		nodenames = {"xpanes:rust_bar_1", "xpanes:rust_bar_2", "xpanes:rust_bar_3", "xpanes:rust_bar_4",
+			"xpanes:rust_bar_5", "xpanes:rust_bar_6", "xpanes:rust_bar_7", "xpanes:rust_bar_8", 
+			"xpanes:rust_bar_9", "xpanes:rust_bar_10", "xpanes:rust_bar_11", "xpanes:rust_bar_12", 
+			"xpanes:rust_bar_13", "xpanes:rust_bar_14", "xpanes:rust_bar_15"},
 		interval = 1,
 		chance = 1,
 		action = function(pos, node)
@@ -54,13 +54,13 @@ if minetest.setting_getbool("replace_legacy_panes") then
 			minetest.set_node(pos, {name="xdecor:rust_bar_c4"})
 		end,
 	})
-	-- xdecor:bamboo_frame to xdecor:bamboo_frame_c4
+	-- xpanes:bamboo_frame to xdecor:bamboo_frame_c4
 	minetest.register_abm({
-		nodenames = {"xdecor:bamboo_frame_1", "xdecor:bamboo_frame_2", "xdecor:bamboo_frame_3",
-			"xdecor:bamboo_frame_4", "xdecor:bamboo_frame_5", "xdecor:bamboo_frame_6",
-			"xdecor:bamboo_frame_7", "xdecor:bamboo_frame_8", "xdecor:bamboo_frame_9",
-			"xdecor:bamboo_frame_10", "xdecor:bamboo_frame_11", "xdecor:bamboo_frame_12",
-			"xdecor:bamboo_frame_13", "xdecor:bamboo_frame_14", "xdecor:bamboo_frame_15"},
+		nodenames = {"xpanes:bamboo_frame_1", "xpanes:bamboo_frame_2", "xpanes:bamboo_frame_3",
+			"xpanes:bamboo_frame_4", "xpanes:bamboo_frame_5", "xpanes:bamboo_frame_6",
+			"xpanes:bamboo_frame_7", "xpanes:bamboo_frame_8", "xpanes:bamboo_frame_9",
+			"xpanes:bamboo_frame_10", "xpanes:bamboo_frame_11", "xpanes:bamboo_frame_12",
+			"xpanes:bamboo_frame_13", "xpanes:bamboo_frame_14", "xpanes:bamboo_frame_15"},
 		interval = 1,
 		chance = 1,
 		action = function(pos, node)
