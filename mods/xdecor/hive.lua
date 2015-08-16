@@ -8,7 +8,8 @@ function hive.construct(pos)
 		"image[7,0.1;1,1;flowers_viola.png]"..
 		"image[6,0;1,1;xdecor_bee.png]"..
 		"list[current_name;honey;5,0;1,1;]"..
-		"list[current_player;main;0,1.35;8,4;]")
+		"list[current_player;main;0,1.35;8,4;]"..
+		"listring[]")
 	meta:set_string("infotext", "Artificial Hive")
 	local inv = meta:get_inventory()
 	inv:set_size("honey", 1)

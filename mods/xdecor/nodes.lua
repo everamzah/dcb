@@ -285,7 +285,8 @@ xdecor.register("enderchest", {
 		meta:set_string("formspec",
 				"size[8,9]"..xdecor.fancy_gui..
 				"list[current_player;enderchest;0,0;8,4;]"..
-				"list[current_player;main;0,5;8,4;]")
+				"list[current_player;main;0,5;8,4;]"..
+				"listring[]")
 		meta:set_string("infotext", "Ender Chest")
 	end
 })

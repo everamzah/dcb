@@ -63,7 +63,8 @@ function xdecor.get_mailbox_formspec(pos)
 		"size[8,9]"..xdecor.fancy_gui..
 		"label[0,0;You received...]"..
 		"list[nodemeta:"..spos..";main;0,0.75;8,4;]"..
-		"list[current_player;main;0,5.25;8,4;]"
+		"list[current_player;main;0,5.25;8,4;]"..
+		"listring[]"
 	return formspec
 end
 
@@ -73,6 +74,7 @@ function xdecor.get_mailbox_insert_formspec(pos)
 		"size[8,5]"..xdecor.fancy_gui..
 		"label[0,0;Send your goods...]"..
 		"list[nodemeta:"..spos..";drop;3.5,0;1,1;]"..
-		"list[current_player;main;0,1.25;8,4;]"
+		"list[current_player;main;0,1.25;8,4;]"..
+		"listring[]"
 	return formspec
 end

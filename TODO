@@ -1,19 +1,29 @@
 add all materials from xdecor worktable to xconnected walls
 (add hedge (leaves) to worktable from xconnected walls)
-- crafting recipes for walls
 
-inventory images for xconnected stuff, better definitions
+crafting recipes for walls
+
+[inventory images for xconnected stuff?], better definitions
 (iron bars have default glass sound)
 
-
+---
 
 fix guestbook (use inventory with books instead of storing metadata)
 
-
+---
 
 figure out PM, without redefining on_chat or whatever
 
-
+---
 
 make nopvp areas removable, and
 make nopvp check for area id's greater than 1
+
+---
+
+Make all formspecs consistent
+
+---
+
+listring[] on everything
+infotext on all interactive objects
