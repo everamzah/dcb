@@ -320,20 +320,139 @@ end
 xconnected.register_pane("xconnected:bar", "xconnected_bar.png")
 
 xconnected.register_pane('xconnected:pane_glass_white', 'default_glass.png')
+minetest.register_craft({
+	output = "xconnected:pane_glass_white_c4 16",
+	recipe = {
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_gray", "default_glass.png^[colorize:gray")
+minetest.register_craft({
+	output = "xconnected:pane_glass_gray_c4 16",
+	recipe = {
+		{"dye:grey", "dye:grey", "dye:grey"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_darkgray", "default_glass.png^[colorize:darkgray")
+minetest.register_craft({
+	output = "xconnected:pane_glass_darkgray_c4 16",
+	recipe = {
+		{"dye:dark_grey", "dye:dark_grey", "dye:dark_grey"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_black", "default_glass.png^[colorize:black")
+minetest.register_craft({
+	output = "xconnected:pane_glass_black_c4 16",
+	recipe = {
+		{"dye:black", "dye:black", "dye:black"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_violet", "default_glass.png^[colorize:violet")
+minetest.register_craft({
+	output = "xconnected:pane_glass_violet_c4 16",
+	recipe = {
+		{"dye:violet", "dye:violet", "dye:violet"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_blue", "default_glass.png^[colorize:blue")
+minetest.register_craft({
+	output = "xconnected:pane_glass_blue_c4 16",
+	recipe = {
+		{"dye:blue", "dye:blue", "dye:blue"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_cyan", "default_glass.png^[colorize:cyan")
+minetest.register_craft({
+	output = "xconnected:pane_glass_cyan_c4 16",
+	recipe = {
+		{"dye:cyan", "dye:cyan", "dye:cyan"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_darkgreen", "default_glass.png^[colorize:darkgreen")
+minetest.register_craft({
+	output = "xconnected:pane_glass_darkgreen_c4 16",
+	recipe = {
+		{"dye:dark_green", "dye:dark_green", "dye:dark_green"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_green", "default_glass.png^[colorize:green")
+minetest.register_craft({
+	output = "xconnected:pane_glass_green_c4 16",
+	recipe = {
+		{"dye:green", "dye:green", "dye:green"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_yellow", "default_glass.png^[colorize:yellow")
+minetest.register_craft({
+	output = "xconnected:pane_glass_yellow_c4 16",
+	recipe = {
+		{"dye:yellow", "dye:yellow", "dye:yellow"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_brown", "default_glass.png^[colorize:brown")
+minetest.register_craft({
+	output = "xconnected:pane_glass_brown_c4 16",
+	recipe = {
+		{"dye:brown", "dye:brown", "dye:brown"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_orange", "default_glass.png^[colorize:orange")
+minetest.register_craft({
+	output = "xconnected:pane_glass_orange_c4 16",
+	recipe = {
+		{"dye:orange", "dye:orange", "dye:orange"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_red", "default_glass.png^[colorize:red")
+minetest.register_craft({
+	output = "xconnected:pane_glass_red_c4 16",
+	recipe = {
+		{"dye:red", "dye:red", "dye:red"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_magenta", "default_glass.png^[colorize:magenta")
+minetest.register_craft({
+	output = "xconnected:pane_glass_magenta_c4 16",
+	recipe = {
+		{"dye:magenta", "dye:magenta", "dye:magenta"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 xconnected.register_pane("xconnected:pane_glass_pink", "default_glass.png^[colorize:pink")
+minetest.register_craft({
+	output = "xconnected:pane_glass_pink_c4 16",
+	recipe = {
+		{"dye:pink", "dye:pink", "dye:pink"},
+		{"default:glass", "default:glass", "default:glass"},
+		{"default:glass", "default:glass", "default:glass"}
+	}
+})
 
 -- TODO match xdecor's worktable, add hedges to worktable
 xconnected.register_wall( 'xconnected:wall_tree',               'default_tree.png' );

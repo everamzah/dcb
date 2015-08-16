@@ -1,6 +1,6 @@
 minetest.register_craftitem("dcb:fence_post", {
 	description = "Fence Post",
-	inventory_image = "default_wood.png",
+	inventory_image = "dcb_fence_post.png",
 })
 minetest.register_craft({
 	output = "dcb:fence_post 2",
