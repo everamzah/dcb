@@ -1,6 +1,6 @@
 if minetest.setting_getbool("replace_legacy_fences") then
 	if minetest.setting_getbool("log_mods") then
-		minetest.log("action", "[legacy_replacer] Fences will be replaced.")
+		minetest.log("action", "[DCB] Legacy fences will be replaced.")
 	end
 	-- default:fence_wood places xconnected:fence_c4
 	minetest.register_abm({
@@ -24,9 +24,27 @@ if minetest.setting_getbool("replace_legacy_fences") then
 	})
 end
 
+if minetest.setting_getbool("replace_legacy_walls") then
+	if minetest.setting_getbool("log_mods") then
+		minetest.log("action", "[DCB] Legacy walls will be replaced.")
+	end
+	-- xdecor:cobble_wall_ln to xconnected:wall_cobble_c4
+	minetest.register_abm({
+		nodenames = {"xdecor:wall_cobble_ln", "xdecor:wall_cobble_c0",
+			"xdecor:wall_cobble_c1", "xdecor:wall_cobble_c2",
+			"xdecor:wall_cobble_c3", "xdecor:wall_cobble_c4"},
+		interval = 1,
+		chance = 1,
+		action = function(pos, node)
+			minetest.remove_node(pos)
+			minetest.set_node(pos, {name="xconnected:wall_cobble_c4"})
+		end,
+	})
+end
+
 if minetest.setting_getbool("replace_legacy_panes") then
 	if minetest.setting_getbool("log_mods") then
-		minetest.log("action", "[legacy_replacer] Panes will be replaced.")
+		minetest.log("action", "[DCB] Legacy panes will be replaced.")
 	end
 	-- xpanes:bar to xconnected:bar_c4
 	minetest.register_abm({

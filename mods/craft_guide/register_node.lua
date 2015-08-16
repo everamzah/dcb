@@ -52,7 +52,7 @@ minetest.register_node("craft_guide:lcd_pc", {
 		"craft_guide_pc_grey.png",
 		"craft_guide_pc_grey.png",
 		"craft_guide_pc_black.png",
-		"craft_guide_pc_screen.png",
+		"[combine:16x16:0,0=craft_guide_pc_grey.png:0,0=craft_guide_pc_screen.png",
 	},
 	paramtype = 'light',
 	paramtype2 = "facedir",

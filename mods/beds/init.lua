@@ -24,6 +24,8 @@ function beds.get_bed_formspec()
 			"button_exit[2.75,0.0;2.5,1;sleep;Sleep]"..
 			"button_exit[5.56,0.0;2.5,1;sethome;Set Home]"..
 			"list[current_player;bed_trunk;0,1;8,3]"..
+			"listring[current_player;bed_trunk]"..
+			"listring[current_player;main]"..
 			default.get_hotbar_bg(0,4.25)
 	return formspec
 end
