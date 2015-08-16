@@ -10,7 +10,7 @@ local material = {
 	"default_clay", "default_ice", "default_meselamp",
 	"default_glass", "default_obsidian_glass",
 	"default_cactus", "default_sand", "default_desert_sand",
-	"default_snowblock", "default_dirt",
+	"default_snowblock", "default_dirt", "default_leaves",
 	"default_gravel", "default_mese", "default_brick",
 
 	"farming_straw",
