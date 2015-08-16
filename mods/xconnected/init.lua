@@ -318,6 +318,13 @@ end
 -- TODO make global table, for loops, and recipes.
 
 xconnected.register_pane("xconnected:bar", "xconnected_bar.png")
+minetest.register_craft({
+	output = "xconnected:bar_c4 16",
+	recipe = {
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}
+	}
+})
 
 xconnected.register_pane('xconnected:pane_glass_white', 'default_glass.png')
 minetest.register_craft({
