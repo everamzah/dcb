@@ -506,7 +506,7 @@ xconnected.register_wall( "xconnected:wall_coal_block",         "default_coal_bl
 
 -- default:fence_wood replaced
 xconnected.register_fence('xconnected:fence',        'xdecor_wood.png')
-xconnected.register_fence('xconnected:fence_pine',   'default_pinewood.png')
+xconnected.register_fence('xconnected:fence_pine',   'default_pine_wood.png')
 xconnected.register_fence('xconnected:fence_jungle', 'default_junglewood.png')
 xconnected.register_fence('xconnected:fence_acacia', 'default_acacia_wood.png')
 

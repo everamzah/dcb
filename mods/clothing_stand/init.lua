@@ -37,7 +37,7 @@ minetest.register_node("clothing_stand:clothing_stand", {
                         "wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
                         "wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
                         "wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
-                        "default_pinewood.png^wardrobe_wardrobe_front_overlay.png^clothing_inv_shirt_red.png"
+                        "default_pine_wood.png^wardrobe_wardrobe_front_overlay.png^clothing_inv_shirt_red.png"
 		},
 	groups = {choppy=2,oddly_breakable_by_hand=2,flammable=3,wood=1},
 	sounds = default.node_sound_wood_defaults(),

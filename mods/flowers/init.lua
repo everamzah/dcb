@@ -85,23 +85,23 @@ minetest.register_abm({
 		elseif under.name ~= "default:dirt_with_grass" then
 			return
 		end
-		
+
 		local light = minetest.get_node_light(pos)
 		if not light or light < 13 then
 			return
 		end
-		
+
 		local pos0 = {x = pos.x - 4, y = pos.y - 4, z = pos.z - 4}
 		local pos1 = {x = pos.x + 4, y = pos.y + 4, z = pos.z + 4}
 		if #minetest.find_nodes_in_area(pos0, pos1, "group:flora_block") > 0 then
 			return
 		end
-		
+
 		local flowers = minetest.find_nodes_in_area(pos0, pos1, "group:flora")
 		if #flowers > 3 then
 			return
 		end
-		
+
 		local seedling = minetest.find_nodes_in_area(pos0, pos1, "default:dirt_with_grass")
 		if #seedling > 0 then
 			seedling = seedling[math.random(#seedling)]
@@ -130,7 +130,46 @@ local mushrooms_datas = {
 for _, m in pairs(mushrooms_datas) do
 	local name, nut = m[1], m[2]
 
-	-- Register mushrooms
+	-- Register fertile mushrooms
+
+	-- These are placed by mapgen and the growing ABM.
+	-- These drop an infertile mushroom, and 0 to 3 spore
+	-- nodes with an average of 1.25 per mushroom, for
+	-- a slow multiplication of mushrooms when farming.
+
+	minetest.register_node("flowers:mushroom_fertile_" .. name, {
+		description = string.sub(string.upper(name), 0, 1) ..
+			string.sub(name, 2) .. " Fertile Mushroom",
+		tiles = {"flowers_mushroom_" .. name .. ".png"},
+		inventory_image = "flowers_mushroom_" .. name .. ".png",
+		wield_image = "flowers_mushroom_" .. name .. ".png",
+		drawtype = "plantlike",
+		paramtype = "light",
+		sunlight_propagates = true,
+		walkable = false,
+		buildable_to = true,
+		groups = {snappy = 3, flammable = 3, attached_node = 1,
+			not_in_creative_inventory = 1},
+		drop = {
+			items = {
+				{items = {"flowers:mushroom_" .. name}},
+				{items = {"flowers:mushroom_spores_" .. name}, rarity = 4},
+				{items = {"flowers:mushroom_spores_" .. name}, rarity = 2},
+				{items = {"flowers:mushroom_spores_" .. name}, rarity = 2}
+			}
+		},
+		sounds = default.node_sound_leaves_defaults(),
+		on_use = minetest.item_eat(nut),
+		selection_box = {
+			type = "fixed",
+			fixed = {-0.3, -0.5, -0.3, 0.3, 0, 0.3}
+		}
+	})
+
+	-- Register infertile mushrooms
+
+	-- These do not drop spores, to avoid the use of repeated digging
+	-- and placing of a single mushroom to generate unlimited spores.
 
 	minetest.register_node("flowers:mushroom_" .. name, {
 		description = string.sub(string.upper(name), 0, 1) ..
@@ -144,14 +183,6 @@ for _, m in pairs(mushrooms_datas) do
 		walkable = false,
 		buildable_to = true,
 		groups = {snappy = 3, flammable = 3, attached_node = 1},
-		drop = {
-			items = {
-				{items = {"flowers:mushroom_spores_" .. name}, rarity = 2,},
-				{items = {"flowers:mushroom_spores_" .. name}, rarity = 2,},
-				{items = {"flowers:mushroom_spores_" .. name}, rarity = 2,},
-				{items = {"flowers:mushroom_" .. name},},
-			},
-		},
 		sounds = default.node_sound_leaves_defaults(),
 		on_use = minetest.item_eat(nut),
 		selection_box = {
@@ -197,9 +228,9 @@ minetest.register_abm({
 		if minetest.get_item_group(node_under.name, "soil") ~= 0 and
 				minetest.get_node_light(pos, nil) <= 13 then
 			if node.name == "flowers:mushroom_spores_brown" then
-				minetest.set_node(pos, {name = "flowers:mushroom_brown"})
-			else
-				minetest.set_node(pos, {name = "flowers:mushroom_red"})
+				minetest.set_node(pos, {name = "flowers:mushroom_fertile_brown"})
+			elseif node.name == "flowers:mushroom_spores_red" then
+				minetest.set_node(pos, {name = "flowers:mushroom_fertile_red"})
 			end
 		end
 	end

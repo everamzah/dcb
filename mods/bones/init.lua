@@ -1,5 +1,3 @@
--- add hotbar, drop remainder
-
 -- Minetest 0.4 mod: bones
 -- See README.txt for licensing and other information. 
 
@@ -25,8 +23,6 @@ bones.bones_formspec =
 
 local share_bones_time = tonumber(minetest.setting_get("share_bones_time") or 1200)
 local share_bones_time_early = tonumber(minetest.setting_get("share_bones_time_early") or (share_bones_time/4))
-local remove_bones_time = tonumber(minetest.setting_get("remove_bones_time") or 1200) -- obj:add_velocity drop items
-local locked = true
 
 minetest.register_node("bones:bones", {
 	description = "Bones",
@@ -104,17 +100,9 @@ minetest.register_node("bones:bones", {
 	on_timer = function(pos, elapsed)
 		local meta = minetest.get_meta(pos)
 		local time = meta:get_int("time") + elapsed
-		--[[
-		if time >= remove_bones_time then
-			minetest.remove_node(pos)
-			return true
-		--]]
-		--elseif time >= share_bones_time and locked then
 		if time >= share_bones_time then
 			meta:set_string("infotext", meta:get_string("owner").."'s old bones")
 			meta:set_string("owner", "")
-			--locked = false
-			--meta:set_int("time", time)
 		else
 			meta:set_int("time", time)
 			return true
