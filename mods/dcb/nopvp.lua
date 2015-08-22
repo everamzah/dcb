@@ -57,9 +57,11 @@ minetest.register_chatcommand("mark", {
 
 
 minetest.register_on_punchplayer(function(player, hitter, time_from_last_punch, tool_capabilities, dir, damage)
-	local pos = player:getpos()
-	local nopvpareainfo = nopvp:get_areas_for_pos(pos)
-	if nopvpareainfo[1] then return true end
+	if damage > 0 then
+		local pos = player:getpos()
+		local nopvpareainfo = nopvp:get_areas_for_pos(pos)
+		if nopvpareainfo[1] then return true end
+	end
 end)
 --[[
         if damage >= 0.5 then
