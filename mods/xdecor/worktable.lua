@@ -54,7 +54,8 @@ local function xconstruct(pos)
 	end
 	nodebtn = table.concat(nodebtn)
 
-	meta:set_string("formspec", "size[8,7;]"..--xdecor.fancy_gui..
+	local xbg = default.gui_bg..default.gui_bg_img..default.gui_slots
+	meta:set_string("formspec", "size[8,7;]"..xbg..
 		"label[0,0;Cut your material into...]"..
 		nodebtn..
 		"label[0,1.5;Input]"..

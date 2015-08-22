@@ -14,7 +14,7 @@ local nopvp_mark_p2 = {}
 
 
 minetest.register_chatcommand("mark", {
-	description = "Mark an area explicity for inverted PVP.", -- Make general for other purposes
+	description = "Mark an area for disabling of PVP.", -- Make general for other purposes
 	privs = {server=true},
 	params = "<p1|p2|del>",
 	func = function(name, params)
@@ -30,7 +30,6 @@ minetest.register_chatcommand("mark", {
 			nopvp_mark_p2[name] = spos
 			if nopvp_mark_p1[name] and nopvp_mark_p2[name] then
 				nopvp:insert_area(nopvp_mark_p1[name], nopvp_mark_p2[name], "nopvp")
-				print("area inserted")
 				table.insert(nopvp_areas, {nopvp_mark_p1[name], nopvp_mark_p2[name]})
 				local changed = true
 			        if changed then
@@ -60,7 +59,9 @@ minetest.register_on_punchplayer(function(player, hitter, time_from_last_punch, 
 	if damage > 0 then
 		local pos = player:getpos()
 		local nopvpareainfo = nopvp:get_areas_for_pos(pos)
-		if nopvpareainfo[1] then return true end
+		for i=1, #nopvpareainfo do
+			if nopvpareainfo[i] then return true end
+		end
 	end
 end)
 --[[
