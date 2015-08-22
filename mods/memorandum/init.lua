@@ -4,7 +4,7 @@ local sign  =	'\nSigned: '
 --           { s,  w, n,  e }
 local wdir = { 8, 17, 6, 15 } -- wall direction
 
-minetest.register_craftitem(":default:paper", {
+minetest.register_craftitem("memorandum:paper", { -- ":default:paper", {
 	description = "Paper",
 	inventory_image = "default_paper.png",
 	on_place = function(itemstack, placer, pointed_thing)
