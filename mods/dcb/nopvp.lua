@@ -49,12 +49,7 @@ minetest.register_chatcommand("mark", {
 			end
 		elseif params == "del" then
 			local ids = nopvp:get_areas_for_pos(spos)
-			print(dump(ids[3]))
 		else
-			--print("get areas for pos:")
-			print(dump(nopvp:get_areas_for_pos(spos)))
-			--print("table:")
-			--print(dump(nopvp_areas))
 			minetest.chat_send_player(name, "Requires a p1 or p2 arguments, see /help mark.")
 		end
 	end
@@ -65,7 +60,6 @@ minetest.register_on_punchplayer(function(player, hitter, time_from_last_punch, 
         if damage >= 0.5 then
 		local pos = player:getpos()
 		local nopvpareainfo = nopvp:get_areas_for_pos(pos)
-		print(dump(nopvpareainfo))
 
 		if nopvpareainfo[1] then 
 			local hitter_hp = hitter:get_hp()
