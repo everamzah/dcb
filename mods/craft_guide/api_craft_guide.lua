@@ -193,8 +193,8 @@ craft_guide.register_craft = function(options)
 				(recipestr==""or (options.recipe~=nil and string.find(recipestr," "..mod.."panel_")==nil 
 				and string.find(recipestr," "..mod.."stair_")==nil
 				and string.find(recipestr," "..mod.."micro_")==nil  and string.find(recipestr," "..mod.."slab_")==nil
-				and string.find(recipestr," moreblocks:panel_")==nil and string.find(recipestr," moreblocks:stair_")==nil
-				and string.find(recipestr," moreblocks:micro_")==nil  and string.find(recipestr," moreblocks:slab_")==nil)) then
+				and string.find(recipestr," xdecor:panel_")==nil and string.find(recipestr," xdecor:stair_")==nil
+				and string.find(recipestr," xdecor:micro_")==nil  and string.find(recipestr," xdecor:slab_")==nil)) then
 
 
 				--craft_guide.log("registered craft for - "..itemstack:get_name())
