@@ -2,7 +2,8 @@ local enchanting = {}
 
 function enchanting.construct(pos)
 	local meta = minetest.get_meta(pos)
-	meta:set_string("formspec", "size[8,7;]"..xdecor.fancy_gui..
+	local xbg = default.gui_bg..default.gui_bg_img..default.gui_slots
+	meta:set_string("formspec", "size[8,7;]"..xbg..
 		"label[0.85,-0.15;Enchant]".."image[0.6,0.2;2,2;xdecor_enchbook.png]"..
 		"list[current_name;tool;0.5,2;1,1;]"..
 		"list[current_name;mese;1.5,2;1,1;]".."image[1.5,2;1,1;mese_layout.png]"..
@@ -16,7 +17,7 @@ function enchanting.construct(pos)
 	inv:set_size("mese", 1)
 end
 
-function enchanting.is_allowed_tool(toolname)
+function enchanting.is_allowed(toolname)
 	local tdef = minetest.registered_tools[toolname]
 	if tdef and toolname:find("default:") and not toolname:find("sword") and not
 			toolname:find("stone") and not toolname:find("wood") then
@@ -24,7 +25,7 @@ function enchanting.is_allowed_tool(toolname)
 	else return 0 end
 end
 
-function enchanting.fields(pos, formname, fields, sender)
+function enchanting.fields(pos, _, fields, _)
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 	local toolstack = inv:get_stack("tool", 1)
@@ -32,21 +33,19 @@ function enchanting.fields(pos, formname, fields, sender)
 	local toolname = toolstack:get_name()
 	local toolwear = toolstack:get_wear()
 	local mese = mesestack:get_count()
-	local enchs = {"durable", "fast"}
+	local ench = dump(fields):match("%w+")
 
-	for i = 1, #enchs do
-		local e = enchs[i]
-		if enchanting.is_allowed_tool(toolname) ~= 0 and mese > 0 and fields[e] then
-			toolstack:replace("xdecor:enchanted_"..toolname:sub(9).."_"..e)
-			toolstack:add_wear(toolwear)
-			mesestack:take_item()
-			inv:set_stack("mese", 1, mesestack)
-			inv:set_stack("tool", 1, toolstack)
-		end
+	if enchanting.is_allowed(toolname) ~= 0 and mese > 0 and
+			fields[ench] and ench ~= "quit" then
+		toolstack:replace("xdecor:enchanted_"..toolname:sub(9).."_"..ench)
+		toolstack:add_wear(toolwear)
+		mesestack:take_item()
+		inv:set_stack("mese", 1, mesestack)
+		inv:set_stack("tool", 1, toolstack)
 	end
 end
 
-function enchanting.dig(pos, player)
+function enchanting.dig(pos, _)
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 
@@ -56,7 +55,7 @@ function enchanting.dig(pos, player)
 	return true
 end
 
-function enchanting.put(pos, listname, index, stack, player)
+function enchanting.put(_, listname, _, stack, _)
 	local toolname = stack:get_name()
 	local count = stack:get_count()
 
@@ -65,13 +64,10 @@ function enchanting.put(pos, listname, index, stack, player)
 		else return 0 end
 	end
 	if listname == "tool" then
-		return enchanting.is_allowed_tool(toolname)
+		return enchanting.is_allowed(toolname)
 	end
 	return count
 end
-
-function enchanting.move(pos, from_list, from_index, to_list, to_index, count, player)
-	return 0 end
 
 xdecor.register("enchantment_table", {
 	description = "Enchantment Table",
@@ -81,12 +77,12 @@ xdecor.register("enchantment_table", {
 		"xdecor_enchantment_side.png", "xdecor_enchantment_side.png"
 	},
 	groups = {cracky=1},
-	sounds = xdecor.stone,
+	sounds = default.node_sound_stone_defaults(),
 	can_dig = enchanting.dig,
 	on_construct = enchanting.construct,
 	on_receive_fields = enchanting.fields,
 	allow_metadata_inventory_put = enchanting.put,
-	allow_metadata_inventory_move = enchanting.move
+	allow_metadata_inventory_move = function(_,_,_,_,_,_,_) return 0 end
 })
 
 function enchanting.register_enchtools(init, m, def)
@@ -111,6 +107,7 @@ function enchanting.register_enchtools(init, m, def)
 			description = "Enchanted "..m:gsub("%l", string.upper, 1).." "..
 					t:gsub("%l", string.upper, 1).." ("..e:gsub("%l", string.upper, 1)..")",
 			inventory_image = minetest.registered_tools["default:"..t.."_"..m].inventory_image,
+			wield_image = minetest.registered_tools["default:"..t.."_"..m].wield_image,
 			groups = {not_in_creative_inventory=1},
 			tool_capabilities = {groupcaps = g, damage_groups = def.dmg}
 		})

@@ -54,7 +54,7 @@ local function xconstruct(pos)
 	end
 	nodebtn = table.concat(nodebtn)
 
-	meta:set_string("formspec", "size[8,7;]"..xdecor.fancy_gui..
+	meta:set_string("formspec", "size[8,7;]"..--xdecor.fancy_gui..
 		"label[0,0;Cut your material into...]"..
 		nodebtn..
 		"label[0,1.5;Input]"..
@@ -143,8 +143,8 @@ end
 
 xdecor.register("worktable", {
 	description = "Work Table",
-	groups = {cracky=2},
-	sounds = xdecor.wood,
+	groups = {cracky=2, choppy=2},
+	sounds = default.node_sound_wood_defaults(),
 	tiles = {
 		"xdecor_worktable_top.png", "xdecor_worktable_top.png",
 		"xdecor_worktable_sides.png", "xdecor_worktable_sides.png",
@@ -156,7 +156,7 @@ xdecor.register("worktable", {
 	allow_metadata_inventory_put = xput
 })
 
--- Craft recipes and (too many) aliases.
+-- Craft recipes and aliases for stairs and slabs.
 for _, m in pairs(material) do
 	local billy = string.gsub(m, "(_)", ":", 1)
 	local bolly = string.gsub(m, "(default_)", "")

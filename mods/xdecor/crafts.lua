@@ -57,7 +57,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "xdecor:cauldron",
 	recipe = {
-		{"default:iron_lump", "", "default:iron_lump"},
+		{"default:iron_lump", "bucket:bucket_water", "default:iron_lump"},
 		{"default:iron_lump", "bucket:bucket_water", "default:iron_lump"},
 		{"default:iron_lump", "default:iron_lump", "default:iron_lump"}
 	}
@@ -112,6 +112,14 @@ minetest.register_craft({
 		{"farming:cotton", "", "farming:cotton"},
 		{"", "farming:cotton", ""},
 		{"farming:cotton", "", "farming:cotton"}
+	}
+})
+
+minetest.register_craft({
+	output = "xdecor:desertstone_tile",
+	recipe = {
+		{"default:desert_cobble", "default:desert_cobble"},
+		{"default:desert_cobble", "default:desert_cobble"}
 	}
 })
 	
@@ -176,6 +184,14 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+	output = "xdecor:hard_clay",
+	recipe = {
+		{"default:clay", "default:clay"},
+		{"default:clay", "default:clay"}
+	}
+})
+
+minetest.register_craft({
 	output = "xdecor:hive",
 	recipe = {
 		{"group:stick", "group:stick", "group:stick"},
@@ -187,6 +203,7 @@ minetest.register_craft({
 minetest.register_craftitem("xdecor:honey", {
 	description = "Honey",
 	inventory_image = "xdecor_honey.png",
+	groups = {not_in_creative_inventory=1},
 	on_use = minetest.item_eat(2)
 })
 
@@ -201,9 +218,9 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "xdecor:japanese_door",
 	recipe = {
-		{"group:wood", "group:wood"},
-		{"default:paper", "default:paper"},
-		{"group:wood", "group:wood"}
+		{"group:wood", "default:paper"},
+		{"default:paper", "group:wood"},
+		{"group:wood", "default:paper"}
 	}
 })
 	
@@ -260,6 +277,14 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+	output = "xdecor:packed_ice",
+	recipe = {
+		{"default:ice", "default:ice"},
+		{"default:ice", "default:ice"}
+	}
+})
+
+minetest.register_craft({
 	output = "xdecor:painting",
 	recipe = {
 		{"default:sign_wall", "dye:blue"}
@@ -269,9 +294,27 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "xdecor:plant_pot",
 	recipe = {
-		{"default:clay_lump", "", "default:clay_lump"},
-		{"default:clay_lump", "default:dirt", "default:clay_lump"},
-		{"default:clay_lump", "default:clay_lump", "default:clay_lump"}
+		{"default:clay_brick", "default:dirt", "default:clay_brick"},
+		{"default:clay_brick", "default:dirt", "default:clay_brick"},
+		{"default:clay_brick", "default:clay_brick", "default:clay_brick"}
+	}
+})
+
+minetest.register_craft({
+	output = "xdecor:prison_door",
+	recipe = {
+		{"xpanes:bar", "xpanes:bar"},
+		{"xpanes:bar", "xpanes:bar"},
+		{"xpanes:bar", "xpanes:bar"}
+	}
+})
+
+minetest.register_craft({
+	output = "xdecor:prison_rust_door",
+	recipe = {
+		{"xdecor:rust_bar_c4", "xdecor:rust_bar_c4"},
+		{"xdecor:rust_bar_c4", "xdecor:rust_bar_c4"},
+		{"xdecor:rust_bar_c4", "xdecor:rust_bar_c4"}
 	}
 })
 
@@ -281,6 +324,24 @@ minetest.register_craft({
 		{"farming:string"},
 		{"farming:string"},
 		{"farming:string"}
+	}
+})
+
+minetest.register_craft({
+	output = "xdecor:screen_door",
+	recipe = {
+		{"group:wood", "group:wood"},
+		{"xpanes:chainlink", "xpanes:chainlink"},
+		{"group:wood", "group:wood"}
+	}
+})
+
+minetest.register_craft({
+	output = "xdecor:slide_door",
+	recipe = {
+		{"default:paper", "default:paper"},
+		{"default:paper", "default:paper"},
+		{"group:wood", "group:wood"}
 	}
 })
 	

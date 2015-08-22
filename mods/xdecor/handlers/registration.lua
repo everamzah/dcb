@@ -1,40 +1,35 @@
-xdecor = xdecor or {}
-
-local default_can_dig = function(pos,player)
+local default_can_dig = function(pos, _)
 	local meta = minetest.get_meta(pos)
-	return meta:get_inventory():is_empty("main")
+	local inv = meta:get_inventory()
+
+	return inv:is_empty("main")
 end
 
-xdecor.wood = default.node_sound_wood_defaults()
-xdecor.glass = default.node_sound_glass_defaults()
-xdecor.leaves = default.node_sound_leaves_defaults()
-xdecor.stone = default.node_sound_stone_defaults()
-xdecor.fancy_gui = default.gui_bg..default.gui_bg_img..default.gui_slots
+local xbg = default.gui_bg..default.gui_bg_img..default.gui_slots
 
 local default_inventory_size = 32
 local default_inventory_formspecs = {
-	["8"]="size[8,6]"..xdecor.fancy_gui..
+	["8"] = "size[8,6]"..xbg..
 	"list[context;main;0,0;8,1;]"..
 	"list[current_player;main;0,2;8,4;]"..
 	"listring[]"..
 	default.get_hotbar_bg(0,2),
 
-	["16"]="size[8,7]"..xdecor.fancy_gui..
+	["16"] = "size[8,7]"..xbg..
 	"list[context;main;0,0;8,2;]"..
 	"list[current_player;main;0,3;8,4;]"..
 	"listring[]"..
 	default.get_hotbar_bg(0,3),
 
-	["24"]="size[8,7.5]"..xdecor.fancy_gui..
+	["24"] = "size[8,7.5]"..xbg..
 	"list[context;main;0,0;8,3;]"..
-	--"list[current_player;main;0,4;8,4;]"..
 	"list[current_player;main;0,3.5;8,1;]"..
 	"list[current_player;main;0,4.75;8,3;8]"..
 	"listring[current_name;main]"..
 	"listring[current_player;main]"..
 	default.get_hotbar_bg(0,3.5),
 
-	["32"]="size[8,9]"..xdecor.fancy_gui..
+	["32"] = "size[8,9]"..xbg..
 	"list[context;main;0,0.3;8,4;]"..
 	"list[current_player;main;0,4.85;8,1;]"..
 	"listring[]"..
@@ -74,7 +69,8 @@ function xdecor.register(name, def)
 				meta:set_string("infotext", infotext)
 			end
 			local size = inventory.size or default_inventory_size
-			meta:get_inventory():set_size("main", size)
+			local inv = meta:get_inventory()
+			inv:set_size("main", size)
 			meta:set_string("formspec", inventory.formspec or get_formspec_by_size(size))
 		end
 
@@ -86,5 +82,5 @@ function xdecor.register(name, def)
 		end
 	end
 
-	minetest.register_node("xdecor:" .. name, def)
+	minetest.register_node("xdecor:".. name, def)
 end
