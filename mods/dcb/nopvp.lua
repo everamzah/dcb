@@ -59,22 +59,6 @@ minetest.register_on_punchplayer(function(player, hitter, time_from_last_punch, 
 	if damage > 0 then
 		local pos = player:getpos()
 		local nopvpareainfo = nopvp:get_areas_for_pos(pos)
-		for i=1, #nopvpareainfo do
-			if nopvpareainfo[i] then return true end
-		end
+		if nopvpareainfo[1] then return true end
 	end
 end)
---[[
-        if damage >= 0.5 then
-		local pos = player:getpos()
-		local nopvpareainfo = nopvp:get_areas_for_pos(pos)
-
-		if nopvpareainfo[1] then 
-			local hitter_hp = hitter:get_hp()
-			player:set_hp(20)
-			hitter:set_hp(hitter_hp - damage)
-			return
-		end
-        end
-end)
---]]
