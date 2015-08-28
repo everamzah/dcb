@@ -1,4 +1,5 @@
 local mailbox = {}
+local xbg = default.gui_bg..default.gui_bg_img..default.gui_slots
 
 xdecor.register("mailbox", {
 	description = "Mailbox",
@@ -7,7 +8,7 @@ xdecor.register("mailbox", {
 		"xdecor_mailbox_side.png", "xdecor_mailbox_side.png",
 		"xdecor_mailbox.png", "xdecor_mailbox.png",
 	},
-	groups = {cracky=2},
+	groups = {cracky=3},
 	after_place_node = function(pos, placer, _)
 		local meta = minetest.get_meta(pos)
 		local owner = placer:get_player_name()
@@ -25,9 +26,8 @@ xdecor.register("mailbox", {
 		local owner = meta:get_string("owner")
 
 		if owner == player then
-			minetest.show_formspec(player, "default:chest_locked",
-				mailbox.get_formspec(pos))
-		else minetest.show_formspec(player, "default:chest_locked",
+			minetest.show_formspec(player, "", mailbox.get_formspec(pos))
+		else minetest.show_formspec(player, "",
 				mailbox.get_insert_formspec(pos, owner))
 		end
 	end,
@@ -40,9 +40,7 @@ xdecor.register("mailbox", {
 		return player:get_player_name() == owner
 	end,
 	on_metadata_inventory_put = function(pos, listname, _, stack, _)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-
+		local inv = minetest.get_meta(pos):get_inventory()
 		if listname == "drop" and inv:room_for_item("main", stack) then
 			inv:remove_item("drop", stack)
 			inv:add_item("main", stack)
@@ -59,26 +57,20 @@ xdecor.register("mailbox", {
 	end
 })
 
-local xbg = default.gui_bg..default.gui_bg_img..default.gui_slots
-
 function mailbox.get_formspec(pos)
 	local spos = pos.x..","..pos.y..","..pos.z
-	local formspec =
-		"size[8,9]"..xbg..
+	local formspec = "size[8,9]"..xbg..
 		"label[0,0;You received...]"..
 		"list[nodemeta:"..spos..";main;0,0.75;8,4;]"..
-		"list[current_player;main;0,5.25;8,4;]"..
-		"listring[]"
+		"list[current_player;main;0,5.25;8,4;]"
 	return formspec
 end
 
 function mailbox.get_insert_formspec(pos, owner)
 	local spos = pos.x..","..pos.y..","..pos.z
-	local formspec =
-		"size[8,5]"..xbg..
+	local formspec = "size[8,5]"..xbg..
 		"label[0.5,0;Send your goods\nto "..owner.." :]"..
 		"list[nodemeta:"..spos..";drop;3.5,0;1,1;]"..
-		"list[current_player;main;0,1.25;8,4;]"..
-		"listring[]"
+		"list[current_player;main;0,1.25;8,4;]"
 	return formspec
 end
