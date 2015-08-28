@@ -1,22 +1,28 @@
-add all materials from xdecor worktable to xconnected walls
-(add hedge (leaves) to worktable from xconnected walls)
+Audit
 
-crafting recipes for walls
+--
+
+crafting recipes for all walls
+
+use kilbith's xwall for registration, use as a template for panes
+and fences.
 
 [inventory images for xconnected stuff?], better definitions
+
 (iron bars have default glass sound)
 
 ---
 
-fix guestbook (use inventory with books instead of storing metadata)
+fix guestbook
+
+finish PM
+
+[postoffice] add an "Add" button to mailbox instead of detecting
+one near home
 
 ---
 
-figure out PM, without redefining on_chat or whatever
-
----
-
-make nopvp areas removable, and
+make nopvp areas removable
 make nopvp check for area id's greater than 1
 
 ---
