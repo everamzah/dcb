@@ -28,11 +28,9 @@ function beds.register_bed(name, def)
 		end,
 		--]]
 		after_place_node = function(pos, placer, itemstack)
-			--[[
 			local meta = minetest.get_meta(pos)
-			local inv = meta:get_inventory()
-			inv:set_size("bed_trunk", 8*3)
-			--]]
+			meta:set_string("owner", placer:get_player_name())
+			meta:set_string("infotext", "Bed")
 			local n = minetest.get_node_or_nil(pos)
 			if not n or not n.param2 then
 				minetest.remove_node(pos)
@@ -67,7 +65,9 @@ function beds.register_bed(name, def)
 			end
 		end,
 		on_rightclick = function(pos, node, clicker)
-			if minetest.is_protected(pos, clicker:get_player_name()) then return end
+			--if minetest.is_protected(pos, clicker:get_player_name()) then return end
+			local meta = minetest.get_meta(pos)
+			if meta:get_string("owner") ~= clicker:get_player_name() then return false end
 			beds.on_rightclick(pos, clicker)
 		end,
 		on_rotate = function(pos, node, user, mode, new_param2)

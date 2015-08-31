@@ -168,7 +168,6 @@ minetest.register_on_leaveplayer(function(player)
 end)
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
-	--if formname ~= "beds:bed" or formname ~= "beds_form" then return end
 	if formname == "beds:bed" then
 		if fields.sethome then
 			sethome.sethome(player)
@@ -190,16 +189,6 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			local ppos = player:getpos()
 			local tod = minetest.get_timeofday()
 			local pos = beds.bed_pointed_pos[name]
-
-			--[[
-			if not beds.player[name] then
-				lay_down(player, ppos, beds.bed_pointed_pos[name]) --pos)
-				print(dump(beds))
-			else
-				lay_down(player, nil, nil, false)
-			end
-			--]]
-
 
 			if tod > 0.2 and tod < 0.805 then
 				if beds.player[name] then
@@ -232,11 +221,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			end
 		end
 	end
-	---[[
-	--if formname ~= "beds_form" then
 	if formname == "beds_form" then
-		--return
-	--end
 		if fields.quit or fields.leave then
 			lay_down(player, nil, nil, false)
 			update_formspecs(false)
@@ -249,5 +234,4 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		end
 
 	end
-	--]]
 end)
