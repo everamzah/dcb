@@ -26,7 +26,8 @@ minetest.register_node("oresplus:bedrock", {
 	description = "Bedrock",
 	tile_images = {"oresplus_bedrock.png"},
 	groups = {unbreakable=1},
-	sounds = default.node_sound_stone_defaults()
+	sounds = default.node_sound_stone_defaults(),
+	on_blast = function() end,
 })
 
 for _, n in pairs({"emerald", "glowstone_dust"}) do
