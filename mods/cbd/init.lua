@@ -4,6 +4,7 @@ local furniture_names = {
 		"doors:door_steel_t_1", "doors:door_steel_t_2",
 		"doors:door_steel_b_1", "doors:door_steel_b_2"}
 
+local length_of_day = minetest.setting_get("time_speed") or 72
 local lease_time = 0
 
 minetest.register_node("cbd:rental", {

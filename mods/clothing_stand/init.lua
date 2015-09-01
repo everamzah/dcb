@@ -76,7 +76,7 @@ minetest.register_craft({
 	recipe = {
 		{"group:wood", "group:wood", "group:wood"},
 		-- Change to "group:clothing" if exists
-		{"group:wood", "clothing:pants_shirt", "group:wood"},
+		{"group:wood", "clothing:shirt_red", "group:wood"},
 		{"group:wood", "group:wood", "group:wood"}
 	}
 })
