@@ -7,6 +7,40 @@ local furniture_names = {
 local length_of_day = minetest.setting_get("time_speed") or 72
 local lease_time = 0
 
+local function transfer_owner(pos, tenant_name)
+	local marked_pos1 = {x=pos.x-5, y=pos.y-6, z=pos.z-5}
+	local marked_pos2 = {x=pos.x+5, y=pos.y+4, z=pos.z+5}
+	local furnishings = minetest.find_nodes_in_area(marked_pos1, marked_pos2, furniture_names) 
+
+	for i=1, #furnishings do
+		local tenant = minetest.get_meta(furnishings[i])
+		if minetest.get_node(furnishings[i]).name == "default:chest_locked" then
+			tenant:set_string("owner", tenant_name)
+			tenant:set_string("infotext", "Locked Chest (owned by "..tenant_name..")")
+		end
+		if minetest.get_node(furnishings[i]).name == "xdecor:mailbox" then
+			tenant:set_string("owner", tenant_name)
+			tenant:set_string("infotext", tenant_name.."'s Mailbox")
+		end
+		if minetest.get_node(furnishings[i]).name == "xdecor:frame" then
+			tenant:set_string("owner", tenant_name)
+			tenant:set_string("infotext", "Item Frame (Owned by "..tenant_name..")")
+		end
+		if minetest.get_node(furnishings[i]).name == "beds:bed" or
+				minetest.get_node(furnishings[i]).name == "beds:fancy_bed" then
+			tenant:set_string("owner", tenant_name)
+			tenant:set_string("infotext", tenant_name.."'s Bed")
+		end
+		if minetest.get_node(furnishings[i]).name == "doors:door_steel_t_1" or
+				minetest.get_node(furnishings[i]).name == "doors:door_steel_t_2" or
+				minetest.get_node(furnishings[i]).name == "doors:door_steel_b_1" or
+				minetest.get_node(furnishings[i]).name == "doors:door_steel_b_2" then
+			tenant:set_string("doors_owner", tenant_name)
+			tenant:set_string("infotext", "Owned by "..tenant_name)
+		end
+	end
+end
+
 minetest.register_node("cbd:rental", {
 	description = "Property Manager",
 	tiles = {"shop_coin.png"},
@@ -50,37 +84,41 @@ minetest.register_node("cbd:rental", {
 			meta:set_string("tenant", player_name)
 			lease_time = 30
 			minetest.chat_send_player(player_name, "New tenant is "..meta:get_string("tenant"))
+			transfer_owner(npos, player_name)
+			--[[
 			local marked_pos1 = {x=npos.x-5, y=npos.y-6, z=npos.z-5}
 			local marked_pos2 = {x=npos.x+5, y=npos.y+4, z=npos.z+5}
 			local furnishings = minetest.find_nodes_in_area(marked_pos1, marked_pos2, furniture_names) 
 
 			for i=1, #furnishings do
 				local tenant = minetest.get_meta(furnishings[i])
-				if furniture_names[i] == "default:chest_locked" then
+				if minetest.get_node(furnishings[i]).name == "default:chest_locked" then
+					print("locked")
 					tenant:set_string("owner", player_name)
 					tenant:set_string("infotext", "Locked Chest (owned by "..player_name..")")
 				end
-				if furniture_names[i] == "xdecor:mailbox" then
+				if minetest.get_node(furnishings[i]).name == "xdecor:mailbox" then
 					tenant:set_string("owner", player_name)
 					tenant:set_string("infotext", player_name.."'s Mailbox")
 				end
-				if furniture_names[i] == "xdecor:frame" then
+				if minetest.get_node(furnishings[i]).name == "xdecor:frame" then
 					tenant:set_string("owner", player_name)
 					tenant:set_string("infotext", "Item Frame (Owned by "..player_name..")")
 				end
-				if furniture_names[i] == "beds:bed" or
-						furniture_names[i] == "beds:fancy_bed" then
+				if minetest.get_node(furnishings[i]).name == "beds:bed" or
+						minetest.get_node(furnishings[i]).name == "beds:fancy_bed" then
 					tenant:set_string("owner", player_name)
 					tenant:set_string("infotext", player_name.."'s Bed")
 				end
-				if furniture_names[i] == "doors:door_steel_t_1" or
-						furniture_names[i] == "doors:door_steel_t_2" or
-						furniture_names[i] == "doors:door_steel_b_1" or
-						furniture_names[i] == "doors:door_steel_b_2" then
+				if minetest.get_node(furnishings[i]).name == "doors:door_steel_t_1" or
+						minetest.get_node(furnishings[i]).name == "doors:door_steel_t_2" or
+						minetest.get_node(furnishings[i]).name == "doors:door_steel_b_1" or
+						minetest.get_node(furnishings[i]).name == "doors:door_steel_b_2" then
 					tenant:set_string("doors_owner", player_name)
 					tenant:set_string("infotext", "Owned by "..player_name)
 				end
 			end
+			--]]
 
 			minetest.get_node_timer(npos):start(10)
 		end
@@ -93,6 +131,8 @@ minetest.register_node("cbd:rental", {
 			meta:set_string("tenant", "")
 			meta:set_int("time", 0)
 			local player_name = meta:get_string("owner")
+			transfer_owner(pos, player_name)
+			--[[
 			local marked_pos1 = {x=pos.x-5, y=pos.y-6, z=pos.z-5}
 			local marked_pos2 = {x=pos.x+5, y=pos.y+4, z=pos.z+5}
 			local furnishings = minetest.find_nodes_in_area(marked_pos1, marked_pos2, furniture_names) 
@@ -124,6 +164,7 @@ minetest.register_node("cbd:rental", {
 					tenant:set_string("infotext", "Owned by "..player_name)
 				end
 			end
+			--]]
 
 			print("hello!")
 		else
