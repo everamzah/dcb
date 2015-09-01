@@ -26,8 +26,8 @@ local function transfer_owner(pos, tenant_name)
 			tenant:set_string("owner", tenant_name)
 			tenant:set_string("infotext", "Item Frame (Owned by "..tenant_name..")")
 		end
-		if minetest.get_node(furnishings[i]).name == "beds:bed" or
-				minetest.get_node(furnishings[i]).name == "beds:fancy_bed" then
+		if minetest.get_node(furnishings[i]).name == "beds:bed_bottom" or
+				minetest.get_node(furnishings[i]).name == "beds:fancy_bed_bottom" then
 			tenant:set_string("owner", tenant_name)
 			tenant:set_string("infotext", tenant_name.."'s Bed")
 		end
