@@ -4,7 +4,7 @@ local furniture_names = {
 		"doors:door_steel_t_1", "doors:door_steel_t_2",
 		"doors:door_steel_b_1", "doors:door_steel_b_2"}
 
-local length_of_day = minetest.setting_get("time_speed") or 72
+--local length_of_day = minetest.setting_get("time_speed") or 72
 local lease_time = 0
 
 local function transfer_owner(pos, tenant_name, meta)
@@ -43,11 +43,24 @@ local function transfer_owner(pos, tenant_name, meta)
 				minetest.get_node(furnishings[i]).name == "doors:door_steel_t_2" or
 				minetest.get_node(furnishings[i]).name == "doors:door_steel_b_1" or
 				minetest.get_node(furnishings[i]).name == "doors:door_steel_b_2" then
-			if tenant:get_string("owner") == meta:get_string("owner") then
+			if tenant:get_string("doors_owner") == meta:get_string("owner") then
 				tenant:set_string("doors_owner", tenant_name)
 				tenant:set_string("infotext", "Owned by "..tenant_name)
 			end
 		end
+	end
+end
+
+local function get_formspec(pos, player, owner)
+	local player_name = player:get_player_name()
+	if player_name == owner then
+		local spos = pos.x..","..pos.y..","..pos.z
+		local formspec = "size[8,9]"..
+			default.gui_bg..default.gui_bg_img..default.gui_slots..
+			"list[nodemeta:"..spos..";payment;0,0;8,4;]"..
+			"list[current_player;main;0,5;8,4;]"..
+			default.get_hotbar_bg(0, 5)
+		minetest.show_formspec(player_name, "cbd:rental", formspec)
 	end
 end
 
@@ -81,22 +94,45 @@ minetest.register_node("cbd:rental", {
 	end,
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
+		--[[
+		meta:set_string("formspec", "size[8,9]"..
+						default.gui_bg..default.gui_bg_img..default.gui_slots..
+						"list[current_name;payment;0,0;8,4;]"..
+						"list[current_player;main;0,5;8,4;]"..
+						default.get_hotbar_bg(0, 5))
+		--]]
 		meta:set_string("infotext", "Punch with coin to rent")
 		meta:set_string("tenant", "")
+		local inv = meta:get_inventory()
+		inv:set_size("payment", 8*4)
+	end,
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+		local meta = minetest.get_meta(pos)
+		local owner = meta:get_string("owner")
+		get_formspec(pos, clicker, owner)
 	end,
 	on_punch = function(pos, node, puncher, pointed_thing)
 		if puncher:get_wielded_item():get_name() == "shop:coin" then
+			local stack = puncher:get_wielded_item()
+			puncher:set_wielded_item("shop:coin "..stack:get_count() - 1)
 			local npos = minetest.get_pointed_thing_position(pointed_thing)
-			local player_name = puncher:get_player_name()
 			local meta = minetest.get_meta(npos)
+			local inv = meta:get_inventory()
+			inv:add_item("payment", "shop:coin 1")
+			local player_name = puncher:get_player_name()
 			if meta:get_string("tenant") == player_name then lease_time = lease_time + 30 return end
-			if string.len(meta:get_string("tenant")) > 0 then print("nope") return end
+			if string.len(meta:get_string("tenant")) > 0 then print("Already occupied.") return end
 			meta:set_string("tenant", player_name)
 			lease_time = 30
 			minetest.chat_send_player(player_name, "New tenant is "..meta:get_string("tenant"))
 			transfer_owner(npos, player_name, meta)
 			minetest.get_node_timer(npos):start(10)
 		end
+	  	if puncher:get_player_control().sneak then
+			minetest.remove_node(pos)
+			return
+                end
+
 	end,
 	on_timer = function(pos, elapsed)
 		local meta = minetest.get_meta(pos)

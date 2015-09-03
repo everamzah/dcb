@@ -5,8 +5,10 @@ minetest.register_craftitem("shop:coin", {
 	on_use = function(itemstack, user, pointed_thing)
 	end,
 	--]]
+	--[[
 	on_place = function(itemstack, placer, pointed_thing)
 	end,
+	--]]
 })
 
 minetest.register_node("shop:register", {
