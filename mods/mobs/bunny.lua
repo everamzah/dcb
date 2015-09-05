@@ -67,6 +67,6 @@ mobs:register_mob("mobs:bunny", {
 	damage = 5,
 })
 
-mobs:register_spawn("mobs:bunny", {"default:dirt_with_grass", "ethereal:prairie_dirt"}, 20, 10, 15000, 1, 31000)
+mobs:register_spawn("mobs:bunny", {"default:dirt_with_grass", "ethereal:prairie_dirt"}, 20, 10, 150000, 1, 31000)
 
 mobs:register_egg("mobs:bunny", "Bunny", "mobs_bunny_inv.png", 0)

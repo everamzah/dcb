@@ -75,7 +75,7 @@ mobs:register_mob("mobs:cow", {
 	end,
 })
 
-mobs:register_spawn("mobs:cow", {"default:dirt_with_grass", "ethereal:green_dirt"}, 20, 10, 15000, 1, 31000)
+mobs:register_spawn("mobs:cow", {"default:dirt_with_grass", "ethereal:green_dirt"}, 20, 10, 150000, 1, 31000)
 
 mobs:register_egg("mobs:cow", "Cow", "default_grass.png", 1)
 
