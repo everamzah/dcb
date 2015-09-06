@@ -33,4 +33,4 @@ dofile(path.."/npc.lua") -- TenPlus1
 -- Mob Items
 dofile(path.."/crafts.lua")
 
---print ("[MOD] Mobs Redo loaded")
+print ("[MOD] Mobs Redo loaded")

@@ -12,7 +12,7 @@ if minetest.get_modpath("mobs") ~= nil then
 		register_food("mobs:meat", 8)
 		register_food("mobs:meat_raw", 4)
 		register_food("mobs:rat_cooked", 4)
-		register_food("mobs:honey", 2)
+		--register_food("mobs:honey", 2)
 		register_food("mobs:pork_raw", 3, "", 3)
 		register_food("mobs:pork_cooked", 8)
 		register_food("mobs:chicken_cooked", 6)
@@ -26,6 +26,24 @@ if minetest.get_modpath("mobs") ~= nil then
 		register_food("mobs:meat_raw", 3)
 		register_food("mobs:rat_cooked", 5)
 	end
+end
+
+if minetest.get_modpath("xdecor") ~= nil then
+	register_food("xdecor:honey", 2)
+end
+
+if minetest.get_modpath("oresplus") ~= nil then
+	register_food("oresplus:golden_apple", 20)
+end
+
+if minetest.get_modpath("crops") ~= nil then
+	register_food("crops:melon_slice", 1)
+	register_food("crops:potato", 3)
+	register_food("crops:tomato", 3)
+	register_food("crops:green_bean", 1)
+	register_food("crops:corn_on_the_cob", 2)
+	register_food("crops:vegetable_stew", 8, "crops:clay_bowl")
+	register_food("crops:uncooked_vegetable_stew", 3, "crops:clay_bowl")
 end
 
 if minetest.get_modpath("moretrees") ~= nil then

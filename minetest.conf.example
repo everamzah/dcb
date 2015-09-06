@@ -75,3 +75,10 @@ MAX_CHAT_MSG_LENGTH = minetest.setting_get("max_chat_msg_length") or 400
 ## DCB
 # Whether to show the PM button on player inventory formspec.
 #show_pm = false
+
+# Whether to enable experimental features:
+#enable_experimental
+
+## CaveRealms
+# Enable falling icicles:
+#caverealms.falling_icicles = true

@@ -67,32 +67,34 @@ minetest.register_on_player_receive_fields(
    end);
 
 
-minetest.register_node(
-   "wardrobe:wardrobe",
-   {
-      description = "Wardrobe",
-      paramtype2 = "facedir",
-      tiles = {
-                 "wardrobe_wardrobe_topbottom.png^wardrobe_wardrobe_front_overlay.png",
-                 "wardrobe_wardrobe_topbottom.png^wardrobe_wardrobe_front_overlay.png",
-                 "wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
-                 "wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
-                 "wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
-                 "wardrobe_wardrobe_front.png^wardrobe_wardrobe_front_overlay.png"
-              },
-      --inventory_image = "wardrobe_wardrobe_front.png",
-      sounds = default.node_sound_wood_defaults(),
-      groups = { choppy = 3, oddly_breakable_by_hand = 2, flammable = 3 },
-      on_rightclick = function(pos, node, player, itemstack, pointedThing)
-         showForm(player, 1);
-      end
-   });
+minetest.register_node("wardrobe:wardrobe", {
+	description = "Wardrobe",
+	paramtype2 = "facedir",
+	tiles = {
+		"wardrobe_wardrobe_topbottom.png^wardrobe_wardrobe_front_overlay.png",
+		"wardrobe_wardrobe_topbottom.png^wardrobe_wardrobe_front_overlay.png",
+		"wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
+		"wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
+		"wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
+		"wardrobe_wardrobe_front.png^wardrobe_wardrobe_front_overlay.png"
+	},
+	--inventory_image = "wardrobe_wardrobe_front.png",
+	sounds = default.node_sound_wood_defaults(),
+	groups = { choppy = 3, oddly_breakable_by_hand = 2, flammable = 3 },
+	on_construct = function(pos)
+		local meta = minetest.get_meta(pos)
+		meta:set_string("infotext", "Wardrobe")
+	end,
+	on_rightclick = function(pos, node, player, itemstack, pointedThing)
+		showForm(player, 1)
+	end
+})
 
 minetest.register_craft({
 	output = "wardrobe:wardrobe",
 	recipe = {
-		{ "group:wood", "group:stick", "group:wood" },
-        	{ "group:wood", "group:wool",  "group:wood" },
-        	{ "group:wood", "group:wool",  "group:wood" }
+		{"group:wood", "group:stick", "group:wood"},
+        	{"group:wood", "group:wool",  "group:wood"},
+        	{"group:wood", "group:wool",  "group:wood"}
 	}
 })
