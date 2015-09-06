@@ -1,31 +1,29 @@
-local guestbook_file = minetest.get_worldpath().."/guestbook"
-local guestbook_db = minetest.get_worldpath().."/guestbook_db"
+local strategies = {
+	fs = {name="guestbook", form="json", place="world"}
+}
+
+local instance = DB(strategies)
 
 local formspec_log = ""
 local guestlog = {}
 
-local function loadguestbook()
-	local input = io.open(guestbook_file, "r")
-	local input_db = io.open(guestbook_db, "r")
-	if input then
-		formspec_log = input:read()
-		io.close(input)
-	end
-	if input_db then
-		guestlog = minetest.deserialize(input_db:read())
-		io.close(input_db)
-		print(dump(guestlog))
-	end
+local function get_guestbook_formspec(pos)
+	local spos = pos.x..","..pos.y..","..pos.z
+	local formspec = "size[8,9]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
+		"textlist[0,0;6.825,5;index;"..formspec_log..";1]"..
+		"label[7,0;Sign]"..
+		"list[nodemeta:"..spos..";drop;7,0.5;1,1;]"..
+		"item_image[7,0.5;1,1;default:book]"..
+		--"button[7,4.25;1,1;open;Open]"..
+		"list[current_player;main;0,5.25;8,4;]"..
+		"listring[]"
+	return formspec
 end
 
-loadguestbook()
-
-local changed = false
-
-minetest.register_node("dcb:guest_book", {
+minetest.register_node("cbd:guest_book", {
 	description = "Guest Book",
 	tiles = {"default_wood.png^default_paper.png"},
-	groups = {choppy=3, cracky=2, snappy=2, oddly_breakable_by_hand=1},
+	groups = {choppy=3, cracky=2, snappy=2, oddly_breakable_by_hand=1, not_in_creative_inventory=1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -37,7 +35,7 @@ minetest.register_node("dcb:guest_book", {
 		inv:set_size("drop", 1)
 	end,
 	on_rightclick = function(pos, node, clicker, itemstack)
-		minetest.show_formspec(clicker:get_player_name(), "dcb:guest_book", dcb.guestbook(pos))
+		minetest.show_formspec(clicker:get_player_name(), "cbd:guest_book", get_guestbook_formspec(pos))
 	end,
 	on_metadata_inventory_put = function(pos, listname, index, stack, player)
 		local book = stack:get_metadata()
@@ -45,8 +43,9 @@ minetest.register_node("dcb:guest_book", {
 		if not data.owner then return end
 		if not data.title then return end
 		if not data.text then return end
-		dcb.guestbooklog(data.owner, data.title, data.text)
-		minetest.show_formspec(player:get_player_name(), "dcb:guest_book", dcb.guestbook(pos))
+		instance:set("public", {data.owner, data.title, data.text})
+		print(dump(instance:get("public", "No guest log found.")))
+		minetest.show_formspec(player:get_player_name(), "cbd:guest_book", get_guestbook_formspec(pos))
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
 		if stack:get_name() == "default:book_written" then
@@ -58,7 +57,8 @@ minetest.register_node("dcb:guest_book", {
 	end,
 })
 
-function dcb.guestbooklog(owner, title, text)
+--[[
+local function guestbooklog(owner, title, text)
 	local fs_owner = minetest.formspec_escape(owner)
 	local fs_title = minetest.formspec_escape(title)
 	local fs_text = minetest.formspec_escape(text)
@@ -81,20 +81,9 @@ function dcb.guestbooklog(owner, title, text)
 		changed = false
 	end
 end
+--]]
 
-function dcb.guestbook(pos)
-	local spos = pos.x..","..pos.y..","..pos.z
-	local formspec = "size[8,9]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
-		"textlist[0,0;6.825,5;index;"..formspec_log..";1]"..
-		"label[7,0;Sign]"..
-		"list[nodemeta:"..spos..";drop;7,0.5;1,1;]"..
-		"item_image[7,0.5;1,1;default:book]"..
-		"button[7,4.25;1,1;open;Open]"..
-		"list[current_player;main;0,5.25;8,4;]"..
-		"listring[]"
-	return formspec
-end
-
+--[[
 local function openbook(index)
 	local owner = minetest.formspec_escape(guestlog[index][1])
 	local title = minetest.formspec_escape(guestlog[index][2])
@@ -105,6 +94,7 @@ local function openbook(index)
 		"textarea[0.5,1.5;7.5,7;;"..text..";]"
 	return formspec
 end
+--]]
 
 local index = 1
 
@@ -115,16 +105,18 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	end
 	if fields.open then
 		if formspec_log == "" then return 0 end
-		minetest.show_formspec(player:get_player_name(), "dcb:guest_book", openbook(index))
+		minetest.show_formspec(player:get_player_name(), "cbd:guest_book", openbook(index))
 		return
 	end
 end)
 
+--[[
 minetest.register_craft({
-	output = "dcb:guest_book",
+	output = "cbd:guest_book",
 	recipe = {
 		{"group:wood", "default:glass", "group:wood"},
 		{"group:wood", "default:bookshelf", "group:wood"},
 		{"group:wood", "group:wood", "group:wood"}
 	}
 })
+--]]

@@ -2,15 +2,19 @@
 --author: addi <addi at king-arhtur dot eu>
 --for doku see : https://project.king-arthur.eu/projects/db/wiki
 --license: LGPL v3
-local modpath= minetest.get_modpath("db");
+
+local modpath = minetest.get_modpath("db")
 dofile(modpath.."/playerDB.lua")
+
 DB = {}
 DB.__index = DB
+
 setmetatable(DB, {
   __call = function (cls, ...)
     return cls.new(...)
   end,
 })
+
 function DB.new(strategies)
 	local self = setmetatable({}, DB)
 	if strategies == nil then
@@ -18,10 +22,11 @@ function DB.new(strategies)
 	end
 	self.strategies = strategies or {}
 	if self.strategies.fs then
-		print("safing database to filesystem")
+		print("Saving database to filesystem")
 		local dir ="";
 		if self.strategies.fs.place == "world" then dir = minetest.get_worldpath() else dir = self.strategies.fs.place end
-		self.file = dir.."/"..self.strategies.fs.name.."."..self.strategies.fs.form
+		--self.file = dir.."/"..self.strategies.fs.name.."."..self.strategies.fs.form
+		self.file = dir..self.strategies.fs.name.."."..self.strategies.fs.form
 	end
 	if self.strategies.mysql then
 		print("using existing mysql Table is currently not ready")
@@ -52,7 +57,7 @@ end
 
 function DB:load()
 if self.strategies.fs then
-	print("loading DB from file"..self.file)
+	print("Loading DB from file "..self.file)
 	local input = io.open(self.file, "r")
 	local data = nil
 	if input then
@@ -75,7 +80,7 @@ end
 end
 
 function DB:set(key,value)
-	assert(type(key) == "string","param 1 key must be a string!");
+	assert(type(key) == "string", "param 1 key must be a string!");
 	assert(type(value) == "string" or type(value) == "number" or type(value) == "table" or type(value) == "boolean","param 2 default must be a string, number, table or a boolean value. Userdata,functions or nil is not alowed!")
 
 	self.storage[key]=value;
@@ -84,12 +89,13 @@ function DB:set(key,value)
 end
 
 
-function DB:get(player,key,default)
+function DB:get(key, default)
 	assert(type(key) == "string","param 1 key have to be a string!");
 	assert(type(default) == "string" or type(default) == "number" or type(default) == "table" or type(default) == "boolean","param 2 default must be a string, number, table or a boolean value. Userdata,functions or nil is not alowed!")
 
-	if self.storage[player] and self.storage[player][key] then
-		return self.storage[player][key]	
+	--if self.storage[player] and self.storage[player][key] then
+	if self.storage and self.storage[key] then
+		return self.storage[key]	
 	end
 	
 	print("nothing found, returning default")
