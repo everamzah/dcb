@@ -12,7 +12,7 @@ minetest.register_craftitem("shop:coin", {
 })
 
 minetest.register_node("shop:register", {
-	description = "Register",
+	description = "Shop Register",
 	tiles = {"default_wood.png^shop_coin.png"},
 	groups = {cracky=2, choppy=3, oddly_breakable_by_hand=1},
 	after_place_node = function(pos, placer, itemstack, pointed_thing)

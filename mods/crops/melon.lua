@@ -97,7 +97,7 @@ minetest.register_craft({
 --
 minetest.register_node("crops:melon", {
 	description = "Melon",
-	inventory_image = "crops_melon_inv.png",
+	--inventory_image = "crops_melon_inv.png",
 	tiles = { "crops_melon_top.png", "crops_melon_bottom.png", "crops_melon.png", "crops_melon.png", "crops_melon.png", "crops_melon.png" },
 	sunlight_propagates = false,
 	use_texture_alpha = false,

@@ -310,11 +310,12 @@ minetest.register_craft({
 })
 
 -- crop nodes, crafts, craftitems
-dofile(modpath .. "/melon.lua")
-dofile(modpath .. "/corn.lua")
-dofile(modpath .. "/tomato.lua")
-dofile(modpath .. "/potato.lua")
-dofile(modpath .. "/polebean.lua")
+dofile(modpath.."/melon.lua")
+dofile(modpath.."/corn.lua")
+dofile(modpath.."/tomato.lua")
+dofile(modpath.."/potato.lua")
+dofile(modpath.."/polebean.lua")
+dofile(modpath.."/carrot.lua")
 
 local nodenames = {}
 for i = 1,table.getn(crops.plants) do

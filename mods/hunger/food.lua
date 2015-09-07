@@ -39,6 +39,7 @@ end
 if minetest.get_modpath("crops") ~= nil then
 	register_food("crops:melon_slice", 1)
 	register_food("crops:potato", 3)
+	register_food("crops:carrot", 2)
 	register_food("crops:tomato", 3)
 	register_food("crops:green_bean", 1)
 	register_food("crops:corn_on_the_cob", 2)

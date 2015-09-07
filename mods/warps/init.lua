@@ -198,7 +198,7 @@ minetest.register_chatcommand("warp", {
 minetest.register_node("warps:warpstone", {
 	visual = "mesh",
 	mesh = "warps_warpstone.obj",
-	description = "A Warp Stone",
+	description = "Warp Stone",
 	tiles = { "warps_warpstone.png" },
 	drawtype = "mesh",
 	sunlight_propagates = true,

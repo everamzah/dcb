@@ -119,7 +119,7 @@ end
 minetest.register_alias("shop:shop", "shop:privs")
 
 minetest.register_node("shop:privs", {
-	description = "Shop",
+	description = "Privs Shop",
 	tiles = {"default_sandstone.png^shop_wings.png"},
 	is_ground_content = true,
 	groups = {cracky=3, stone=1, oddly_breakable_by_hand=1},
