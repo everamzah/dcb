@@ -472,7 +472,7 @@ minetest.register_craft({
 		{"default:stone", "default:stone", "default:stone"}
 	}
 })
-xconnected.register_wall( 'xconnected:wall_cobble',             'default_cobble.png' )
+xconnected.register_wall('xconnected:wall_cobble', 'default_cobble.png')
 minetest.register_craft({
 	output = "xconnected:wall_cobble_c4 6",
 	recipe = {

@@ -6,6 +6,7 @@ bushes?
 bushes_classic?
 cooking?
 creatures?
+crops?
 docfarming?
 dwarves?
 ethereal?
@@ -25,5 +26,7 @@ moretrees?
 mtfoods?
 mush45?
 mushroom?
+oresplus?
 pizza?
 seaplants?
+xdecor?

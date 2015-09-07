@@ -60,7 +60,7 @@ if damage_enabled then
 					if hunger[player:get_player_name()].lvl > player:get_hp() then
 						hud.change_item(player, "hunger", {number = player:get_hp()})
 						hunger[player:get_player_name()].lvl = player:get_hp()
-						print(hunger[player:get_player_name()].lvl)
+						--print(hunger[player:get_player_name()].lvl)
 					end
 				end
 		 	}
