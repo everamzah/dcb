@@ -32,7 +32,11 @@ if minetest.setting_getbool("enable_damage") then
 
 	local name = player:get_player_name()
 	hunger[name] = {}
-	hunger[name].lvl = hunger.read(player)
+	if hunger.read(player) > player:get_hp() then
+		hunger[name].lvl = player:get_hp()
+	else
+		hunger[name].lvl = hunger.read(player)
+	end
 	hunger[name].exhaus = 0
 	local lvl = hunger[name].lvl
 	if lvl > 20 then
