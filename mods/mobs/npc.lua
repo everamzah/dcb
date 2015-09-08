@@ -93,6 +93,6 @@ mobs:register_mob("mobs:npc", {
 	end,
 })
 
-mobs:register_spawn("mobs:npc", {"default:dirt_with_grass"}, 20, 0, 70000, 1, 31000)
+mobs:register_spawn("mobs:npc", {"default:dirt_with_grass"}, 20, 0, 140000, 1, 31000)
 
 mobs:register_egg("mobs:npc", "Npc", "default_brick.png", 1)
