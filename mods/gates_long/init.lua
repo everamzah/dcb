@@ -128,8 +128,9 @@ gates_long.register_gate = function( type_name, desc, tiles, craft_from)
 end
 
 
-gates_long.register_gate( 'wood',      'wooden',    {'default_wood.png'},        "default:wood" )
-gates_long.register_gate( 'junglewood','junglewood',{'default_junglewood.png'},  "default:junglewood" )
-gates_long.register_gate( 'pine',      'pine',      {'default_pine_wood.png'},   "default:pine_wood" )
-gates_long.register_gate( 'acacia',    'acacia',    {'default_acacia_wood.png'}, "default:acacia_wood" )
-gates_long.register_gate( 'tree',      'tree',      {'default_tree.png^[transformR90'}, "default:tree" )
+gates_long.register_gate("wood", "wooden", {"default_wood.png"}, "default:wood")
+gates_long.register_gate("junglewood", "junglewood", {"default_junglewood.png"}, "default:junglewood")
+gates_long.register_gate("pine", "pine", {"default_pine_wood.png"}, "default:pine_wood")
+gates_long.register_gate("acacia", "acacia", {"default_acacia_wood.png"}, "default:acacia_wood")
+gates_long.register_gate("tree", "tree", {"default_tree.png^[transformR90"}, "default:tree")
+gates_long.register_gate("wrought_iron", "wrought", {"xdecor_wrought_iron.png"}, "xdecor:fence_wrought_iron_c4")
