@@ -34,10 +34,10 @@ if minetest.setting_getbool("enable_damage") then
 	hunger[name] = {}
 	if hunger.read(player) > player:get_hp() then
 		hunger[name].lvl = player:get_hp()
-		hunger.update_hunger(player, hunger[name].lvl)
+		--hunger.update_hunger(player, hunger[name].lvl)
 	else
 		hunger[name].lvl = hunger.read(player)
-		hunger.update_hunger(player, hunger[name].lvl)	
+		--hunger.update_hunger(player, hunger[name].lvl)	
 	end
 	hunger[name].exhaus = 0
 	local lvl = hunger[name].lvl
