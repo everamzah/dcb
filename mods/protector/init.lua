@@ -178,7 +178,7 @@ end
 
 minetest.register_node("protector:protect", {
 	description = "Protection Block",
-	tiles = {"moreblocks_circle_stone_bricks.png","moreblocks_circle_stone_bricks.png","moreblocks_circle_stone_bricks.png^protector_logo.png"},
+	tiles = {"xdecor_stone_rune.png","xdecor_stone_rune.png","xdecor_stone_rune.png^protector_logo.png"},
 	sounds = default.node_sound_stone_defaults(),
 	groups = {dig_immediate=2,unbreakable=1},
 	drawtype = "nodebox",
