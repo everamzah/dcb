@@ -65,9 +65,9 @@ function beds.register_bed(name, def)
 			end
 		end,
 		on_rightclick = function(pos, node, clicker)
-			--if minetest.is_protected(pos, clicker:get_player_name()) then return end
-			local meta = minetest.get_meta(pos)
-			if meta:get_string("owner") ~= clicker:get_player_name() then return false end
+			if minetest.is_protected(pos, clicker:get_player_name()) then return end
+			--local meta = minetest.get_meta(pos)
+			--if meta:get_string("owner") ~= clicker:get_player_name() then return false end
 			beds.on_rightclick(pos, clicker)
 		end,
 		on_rotate = function(pos, node, user, mode, new_param2)
