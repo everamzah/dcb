@@ -18,6 +18,7 @@ dofile(path.."/kitten.lua") -- Jordach/BFD
 -- Monsters
 
 dofile(path.."/goblins.lua") -- FeelsLikeGNU
+dofile(path.."/zombie.lua") -- BlockMen
 --dofile(path.."/dirtmonster.lua") -- PilzAdam
 --dofile(path.."/dungeonmaster.lua")
 --dofile(path.."/oerkki.lua")
