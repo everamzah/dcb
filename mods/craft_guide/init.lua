@@ -33,5 +33,5 @@ dofile(minetest.get_modpath("craft_guide").."/register_craft.lua")
 
 -- log that we started
 if minetest.setting_get("log_mods") then
-	minetest.debug("[Craft Pack] Loaded!") --minetest.log("action", "[MOD]"..minetest.get_current_modname().." -- loaded from "..minetest.get_modpath(minetest.get_current_modname()))
+	minetest.log("action", "[craft_guide] loaded") --minetest.log("action", "[MOD]"..minetest.get_current_modname().." -- loaded from "..minetest.get_modpath(minetest.get_current_modname()))
 end

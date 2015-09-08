@@ -35,4 +35,6 @@ dofile(path.."/npc.lua") -- TenPlus1
 -- Mob Items
 dofile(path.."/crafts.lua")
 
-print ("[MOD] Mobs Redo loaded")
+if minetest.setting_get("log_mods") then
+	minetest.log("action", "[mobs] loaded")
+end

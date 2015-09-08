@@ -385,6 +385,6 @@ minetest.register_craft({
 })
 
 if minetest.setting_get("log_mods") then
-	minetest.debug("[TNT] Loaded!")
+	minetest.log("action", "[tnt] loaded")
 end
 

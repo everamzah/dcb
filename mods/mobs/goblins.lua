@@ -897,7 +897,3 @@ mobs:spawn_specific("goblins:goblin_gold", {"default:stone_with_gold", "default:
 mobs:spawn_specific("goblins:goblin_diamond", {"default:stone_with_diamond", "default:mossycobble" }, "air", 0, 50, 1,2, 3, -30000, -80)
 mobs:spawn_specific("goblins:goblin_king", {"default:mossycobble",},"air", 0, 50, 1, 10, 3, -30000, -100)
 --]]
-
-if minetest.setting_get("log_mods") then
-	minetest.log("action", "[mobs] Goblins loaded")
-end

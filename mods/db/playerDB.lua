@@ -47,7 +47,9 @@ end
 
 function playerDB:load()
 if self.strategies.fs then
-	print("loading playerDB from file"..self.file)
+	if minetest.setting_get("log_mods") then
+		minetest.log("action", "[db] Loading playerDB file: "..self.file)
+	end
 	local input = io.open(self.file, "r")
 	local data = nil
 	if input then

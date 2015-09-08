@@ -415,4 +415,6 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local chugent = math.ceil((os.clock() - t1) * 1000) --grab how long it took
 	print ("[caverealms] "..chugent.." ms") --tell people how long
 end)
-print("[caverealms] loaded!")
+if minetest.setting_get("log_mods") then
+	minetest.log("action", "[caverealms] loaded")
+end
