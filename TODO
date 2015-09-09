@@ -1,35 +1,45 @@
-Audit
+GENERAL
 
---
+[ ] Audit
+[ ] Make all formspecs consistent
+[ ] All inventory forms with listring[]
+[ ] All interactive objects with infotext, possibly dynamic
 
-crafting recipes for all walls
 
-use kilbith's xwall for registration, use as a template for panes
-and fences.
+-[ xdecor, xconnected ]-
 
-[inventory images for xconnected stuff?], better definitions
+[ ] crafting recipes for all walls
+[ ] use kilbith's xwall for registration, use as a template for panes
+    and fences.
+[ ] inventory images for xconnected stuff, better definitions
+[?] iron bars have default glass sound
 
-(iron bars have default glass sound)
 
----
+-[ cbd ]-
 
-fix guestbook
+[ ] fix guestbook
+[ ] finish PM
+[ ] Add an "Add" button to mailbox instead of detecting one near home
+[ ] rental node
 
-finish PM
 
-[postoffice] add an "Add" button to mailbox instead of detecting
-one near home
+-[ dcb ]-
 
----
+[ ] make nopvp areas removable, and listable
 
-make nopvp areas removable
-make nopvp check for area id's greater than 1
 
----
+-[ mobs ]-
 
-Make all formspecs consistent
+  When an NPC mob is felled, have them enter a lay-down state (animation frame?)
+and if not damaged further, give a chance of spawning a zombie.  After that,
+eliminate zombies auto-spawning, optionally increasing rate of NPC spawn.
+  If NPC is in lay-down (dead) state, and received damage, destroy the body and
+eliminate chance of zombie.
 
----
+  Possibly spawn a zombie as fresh bones turn old, or at some point when players
+being punching bones left by players.
 
-listring[] on everything
-infotext on all interactive objects
+
+-[ bones ]-
+
+'nuff said
