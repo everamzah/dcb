@@ -313,12 +313,14 @@ minetest.register_abm({
 	end})
 
 local setting = minetest.setting_getbool("enable_tnt")
+--[[
 if setting == true then
 	print("enable_tnt = true")
 else
 	print("enable_tnt ~= true")
 end
-if (not singleplayer and setting ~= true) or (singleplayer and setting == false) then
+--]]
+if (not minetest.is_singleplayer() and setting ~= true) or (minetest.is_singleplayer() and setting == false) then
 	-- wimpier trap for non-tnt settings
 	minetest.register_abm({
 		nodenames = {"mobs:stone_with_diamond_trap"},
