@@ -6,6 +6,12 @@ GENERAL
 [ ] All interactive objects with infotext, possibly dynamic
 
 
+-[ craft_guide ]-
+
+[ ] Convert to minetest.get_all_craft_recipes() and redo interface
+    based on Zeg9 craft guide.
+
+
 -[ xdecor, xconnected ]-
 
 [ ] crafting recipes for all walls
@@ -13,6 +19,7 @@ GENERAL
     and fences.
 [ ] inventory images for xconnected stuff, better definitions
 [?] iron bars have default glass sound
+[ ] Place wrought iron fences somewhere else, as it has been removed from upstream.  09/09/15
 
 
 -[ cbd ]-
