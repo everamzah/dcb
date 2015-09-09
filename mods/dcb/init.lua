@@ -77,3 +77,6 @@ dofile(minetest.get_modpath("dcb").."/creative.lua")
 dofile(minetest.get_modpath("dcb").."/nopvp.lua")
 dofile(minetest.get_modpath("dcb").."/legacy_replacer.lua")
 dofile(minetest.get_modpath("dcb").."/crafting.lua") -- Fence post
+if minetest.setting_getbool("enable_experimental") then
+	dofile(minetest.get_modpath("dcb").."/backpack.lua")
+end
