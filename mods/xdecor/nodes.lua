@@ -27,7 +27,7 @@ xdecor.register("baricade", {
 	walkable = false,
 	inventory_image = "xdecor_baricade.png",
 	tiles = {"xdecor_baricade.png"},
-	groups = {snappy=3, flammable=2},
+	groups = {snappy=3, flammable=3},
 	damage_per_second = 4,
 	selection_box = xdecor.nodebox.slab_y(0.3)
 })
@@ -37,34 +37,34 @@ xdecor.register("barrel", {
 	inventory = {size=24},
 	infotext = "Barrel",
 	tiles = {"xdecor_barrel_top.png", "xdecor_barrel_sides.png"},
-	groups = {choppy=3, flammable=2},
+	groups = {choppy=3, flammable=3},
 	sounds = sound.wood
 })
 
 xdecor.register("cabinet", {
-	description = "Cabinet",
+	description = "Wood Cabinet",
 	inventory = {size=24},
-	infotext = "Cabinet",
-	groups = {choppy=3, flammable=2},
+	infotext = "Wood Cabinet",
+	groups = {choppy=3, flammable=3},
 	sounds = sound.wood,
 	tiles = {
-		"default_wood.png", "default_wood.png",
-		"default_wood.png", "default_wood.png",
-		"default_wood.png", "xdecor_cabinet_front.png"
+		"xdecor_cabinet_sides.png", "xdecor_cabinet_sides.png",
+		"xdecor_cabinet_sides.png", "xdecor_cabinet_sides.png",
+		"xdecor_cabinet_sides.png", "xdecor_cabinet_front.png"
 	}
 })
 
 xdecor.register("cabinet_half", {
-	description = "Half Cabinet",
+	description = "Half Wood Cabinet",
 	inventory = {size=8},
-	infotext = "Half Cabinet",
+	infotext = "Half Wood Cabinet",
 	groups = {choppy=3, flammable=3},
 	sounds = sound.wood,
 	node_box = xdecor.nodebox.slab_y(0.5, 0.5),
 	tiles = {
-		"default_wood.png", "default_wood.png",
-		"default_wood.png", "default_wood.png",
-		"default_wood.png", "xdecor_cabinet_half_front.png"
+		"xdecor_cabinet_sides.png", "xdecor_cabinet_sides.png",
+		"xdecor_half_cabinet_sides.png", "xdecor_half_cabinet_sides.png",
+		"xdecor_half_cabinet_sides.png", "xdecor_half_cabinet_front.png"
 	}
 })
 
@@ -109,7 +109,7 @@ xdecor.register("cardboard_box", {
 
 xdecor.register("cauldron", {
 	description = "Cauldron",
-	groups = {cracky=1},
+	groups = {cracky=2},
 	tiles = {
 		{ name = "xdecor_cauldron_top_anim.png",
 			animation = {type="vertical_frames", length=3.0} },
@@ -162,7 +162,7 @@ xdecor.register("chair", {
 	description = "Chair",
 	tiles = {"xdecor_wood.png"},
 	sounds = sound.wood,
-	groups = {choppy=3, flammable=2},
+	groups = {choppy=3, flammable=3},
 	sunlight_propagates = true,
 	node_box = {
 		type = "fixed",
