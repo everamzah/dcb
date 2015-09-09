@@ -30,7 +30,7 @@ mobs:register_mob("mobs:zombie", {
 	view_range = 10,
 	drops = {
 		{name = "mobs:rotten_flesh",
-		chance = 2, min = 3, max = 5,},
+		chance = 1, min = 2, max = 3,},
 	},
 	water_damage = 0,
 	lava_damage = 1,
@@ -49,7 +49,7 @@ mobs:register_spawn("mobs:zombie", {"default:stone", "default:dirt_with_grass"},
 mobs:register_egg("mobs:zombie", "Zombie", "zombie_head.png", 0)
 
 minetest.register_craftitem("mobs:rotten_flesh", {
-	description = "Rotten Flesh",
+	description = "Zombie Meat",
 	inventory_image = "mobs_rotten_flesh.png",
 	on_use = minetest.item_eat(1),
 })

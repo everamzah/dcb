@@ -21,6 +21,8 @@ if minetest.get_modpath("mobs") ~= nil then
 		if minetest.get_modpath("bucket") then 
 			register_food("mobs:bucket_milk", 3, "bucket:bucket_empty")
 		end
+		--register_food("mobs:rotten_flesh", 1, "", 5)
+		register_food("mobs:rotten_flesh", 0, "bones:bone", 5)
 	else
 		register_food("mobs:meat", 6)
 		register_food("mobs:meat_raw", 3)

@@ -110,6 +110,16 @@ minetest.register_node("bones:bones", {
 	end,
 })
 
+minetest.register_craftitem("bones:bone", {
+	description = "Single Bone",
+	inventory_image = "bones_bone.png"
+})
+
+minetest.register_craft({
+	output = "bones:bones",
+	recipe = {{"bones:bone", "bones:bone"}}
+})
+
 local function may_replace(pos, player)
 	local node_name = minetest.get_node(pos).name
 	local node_definition = minetest.registered_nodes[node_name]
