@@ -10,6 +10,11 @@ minetest.register_on_newplayer(function(player)
 		player:get_inventory():add_item('main', 'wool:green')
 		player:get_inventory():add_item('main', 'wool:blue')
 		player:get_inventory():add_item('main', 'default:goldblock')
+		--[[
+		if minetest.setting_getbool("enable_experimental") then
+			minetest.get_inventory({type="detached", name="backpack"}):add_item("main", "dcb:backpack")
+		end
+		--]]
 		--player:get_inventory():add_item('clothing', 'clothing:cape_pink')
 	end
 end)

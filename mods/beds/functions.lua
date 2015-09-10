@@ -170,7 +170,7 @@ end)
 minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if formname == "beds:bed" then
 		if fields.sethome then
-			sethome.sethome(player)
+			dcb.sethome(player)
 			return
 		end
 
