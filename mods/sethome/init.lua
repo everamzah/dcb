@@ -116,11 +116,12 @@ minetest.register_on_joinplayer(function(player)
 	player:set_inventory_formspec(sethome.form)
 end)
 
-if minetest.setting_getbool("show_pm") then
+if minetest.setting_getbool("enable_experimental") then
 	sethome.form = "size[8,8.5]"..
 			default.gui_bg..
 			default.gui_bg_img..
 			default.gui_slots..
+			"list[detached:backpack;main;0,0;1,1;]"..
 			"button_exit[0.25,-0.4;1.5,3;pm;PM]"..
 			"button_exit[0.25,0.6;1.5,3;home;Home]"..
 			"button_exit[0.25,1.6;1.5,3;spawn;Spawn]"..
