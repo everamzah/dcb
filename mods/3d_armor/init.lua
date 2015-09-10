@@ -164,6 +164,33 @@ if ARMOR_MATERIALS.gold then
 	})
 end
 
+if ARMOR_MATERIALS.obsidian then
+	minetest.register_tool("3d_armor:helmet_obsidian", {
+		description = "Obsidian Helmet",
+		inventory_image = "3d_armor_inv_helmet_steel.png^[colorize:black:191",
+		groups = {armor_head=5, armor_heal=3, armor_use=50, armor_fire=1},
+		wear = 0,
+	})
+	minetest.register_tool("3d_armor:chestplate_obsidian", {
+		description = "Obsidian Chestplate",
+		inventory_image = "3d_armor_inv_chestplate_steel.png^[colorize:black:191",
+		groups = {armor_torso=10, armor_heal=3, armor_use=50, armor_fire=1},
+		wear = 0
+	})
+	minetest.register_tool("3d_armor:leggings_obsidian", {
+		description = "Obsidian Leggings",
+		inventory_image = "3d_armor_inv_leggings_steel.png^[colorize:black:191",
+		groups = {armor_legs=10, armor_heal=3, armor_use=50, armor_fire=1},
+		wear = 0
+	})
+	minetest.register_tool("3d_armor:boots_obsidian", {
+		description = "Obsidian Boots",
+		inventory_image = "3d_armor_inv_boots_steel.png^[colorize:black:191",
+		groups = {armor_feet=5, armor_heal=3, armor_use=50, armor_fire=1},
+		wear = 0
+	})
+end
+
 if ARMOR_MATERIALS.mithril then
 	minetest.register_tool("3d_armor:helmet_mithril", {
 		description = "Mithril Helmet",

@@ -112,10 +112,40 @@ minetest.register_chatcommand("sethome", {
     end,
 })
 
+local formspec_storage = {}
+local function get_formspec(player)
+	local formspec = "size[8,8.5]"..
+			default.gui_bg..
+			default.gui_bg_img..
+			default.gui_slots..
+			"button_exit[0.25,0.6;1.5,3;home;Home]"..
+			"button_exit[0.25,1.6;1.5,3;spawn;Spawn]"..
+			"list[current_player;main;0,4.25;8,1;]"..
+			"list[current_player;craft;2,0.5;3,3;]"..
+			"list[current_player;craftpreview;6,1.5;1,1;]"..
+			"image[5,1.5;1,1;gui_furnace_arrow_bg.png^[transformR270]"..
+			"listring[current_player;main]"..
+			"listring[current_player;craft]"..
+			default.get_hotbar_bg(0,4.25)
+	if minetest.setting_getbool("enable_experimental") then
+		formspec = formspec..
+		"button_exit[0.25,-0.4;1.5,3;pm;PM]"..
+		"list[detached:backpack;main;0,0;1,1;]"
+		if minetest.get_inventory({type="detached", name="backpack"}):contains_item("main", {name="dcb:backpack"}) then
+			formspec = formspec.."list[detached:backpack;contents;0,5.5;8,3;]"
+		end
+	else
+		formspec = formspec..
+		"list[current_player;main;0,5.5;8,3;8]"
+	end
+	return formspec
+end
+
 minetest.register_on_joinplayer(function(player)
-	player:set_inventory_formspec(sethome.form)
+	player:set_inventory_formspec(get_formspec(player))
 end)
 
+--[[
 if minetest.setting_getbool("enable_experimental") then
 	sethome.form = "size[8,8.5]"..
 			default.gui_bg..
@@ -126,7 +156,8 @@ if minetest.setting_getbool("enable_experimental") then
 			"button_exit[0.25,0.6;1.5,3;home;Home]"..
 			"button_exit[0.25,1.6;1.5,3;spawn;Spawn]"..
 			"list[current_player;main;0,4.25;8,1;]"..
-			"list[current_player;main;0,5.5;8,3;8]"..
+			--"list[current_player;main;0,5.5;8,3;8]"..
+			"list[detached:backpack;contents;5.5;8,3]"..
 			"list[current_player;craft;2,0.5;3,3;]"..
 			"list[current_player;craftpreview;6,1.5;1,1;]"..
 			"image[5,1.5;1,1;gui_furnace_arrow_bg.png^[transformR270]"..
@@ -149,6 +180,7 @@ if minetest.setting_getbool("enable_experimental") then
 			"listring[current_player;craft]"..
 			default.get_hotbar_bg(0,4.25)
 end
+--]]
 
 --------------
 

@@ -91,6 +91,15 @@ if ARMOR_MATERIALS.gold then
 	})
 end
 
+if ARMOR_MATERIALS.obsidian then
+	minetest.register_tool("shields:shield_obsidian", {
+		description = "Obsidian Shield",
+		inventory_image = "shields_inv_shield_steel.png^[colorize:black:191",
+		groups = {armor_shield=10, armor_heal=6, armor_use=50},
+		wear = 0,
+	})
+end
+
 if ARMOR_MATERIALS.mithril then
 	minetest.register_tool("shields:shield_mithril", {
 		description = "Mithril Shield",
