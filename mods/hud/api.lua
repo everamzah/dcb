@@ -5,7 +5,7 @@ hud.breath_events = {}
 
 -- keep id handling internal
 local hud_id = {}	-- hud item ids
-local sb_bg = {}	-- statbar background ids
+--local sb_bg = {}	-- statbar background ids
 
 -- localize often used table
 local items = hud.registered_items
@@ -37,6 +37,7 @@ function hud.register(name, def)
 
 	-- actually register
 	-- add background first since draworder is based on id :\
+	--[[
 	if def.hud_elem_type == "statbar" and def.background ~= nil then
 		sb_bg[name] = table.copy(def)
 		sb_bg[name].text = def.background
@@ -44,6 +45,7 @@ function hud.register(name, def)
 			sb_bg[name].number = def.max
 		end
 	end
+	--]]
 	-- add item itself
 	items[name] = def
 
@@ -123,7 +125,7 @@ function hud.change_item(player, name, def)
 	local i_name = player:get_player_name().."_"..name
 	local elem = hud_id[i_name]
 	if not elem then
-		throw_error("Given HUD element " .. dump(name) .. " does not exist".." hהההה")
+		throw_error("Given HUD element " .. dump(name) .. " does not exist")
 		return false
 	end
 
@@ -215,7 +217,6 @@ local function add_hud_item(player, name, def)
 end
 
 minetest.register_on_joinplayer(function(player)
-
 	-- first: hide the default statbars
 	local hud_flags = player:hud_get_flags()
 	hud_flags.healthbar = false
@@ -223,19 +224,23 @@ minetest.register_on_joinplayer(function(player)
 	player:hud_set_flags(hud_flags)
 
 	-- now add the backgrounds for statbars
+	--[[
 	for _,item in pairs(sb_bg) do
 		add_hud_item(player, _.."_bg", item)
 	end
+	--]]
 	-- and finally the actual HUD items
 	for _,item in pairs(items) do
 		add_hud_item(player, _, item)
 	end
 
 	-- fancy hotbar (only when no crafting mod present)
+	--[[
 	if minetest.get_modpath("crafting") == nil then
 	    minetest.after(0.5, function()
 		player:hud_set_hotbar_image("gui_hotbar.png")
 		player:hud_set_hotbar_selected_image("gui_hotbar_selected.png")
 	    end)
 	end
+	--]]
 end)
