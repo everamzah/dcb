@@ -16,6 +16,7 @@ minetest.register_on_joinplayer(function(player)
 	local inv = player:get_inventory()
 	inv:set_size("backpack", 8*3)
 	inv:set_size("modifiers", 1)
+	inv:set_size("main", 8)
 end)
 
 minetest.register_globalstep(function(dtime)

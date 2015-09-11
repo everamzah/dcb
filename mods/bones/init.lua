@@ -63,14 +63,14 @@ minetest.register_node("bones:bones", {
 		end
 		return 0
 	end,
-	
+--[[	
 	on_metadata_inventory_take = function(pos, listname, index, stack, player)
 		local meta = minetest.get_meta(pos)
 		if meta:get_inventory():is_empty("main") then
 			minetest.remove_node(pos)
 		end
 	end,
-	
+	--]]
 	on_punch = function(pos, node, player)
 		if(not is_owner(pos, player:get_player_name())) then
 			return
@@ -94,6 +94,7 @@ minetest.register_node("bones:bones", {
 		-- remove bones if player emptied them
 		if has_space then
 			minetest.remove_node(pos)
+			minetest.add_item(pos, "bones:bone")
 		end
 	end,
 	

@@ -102,20 +102,20 @@ minetest.register_chatcommand("sethome", {
 
 dcb.get_formspec = function(player)
 	local formspec = "size[8,8.5]"..
-			default.gui_bg..
-			default.gui_bg_img..
-			default.gui_slots..
-			"button_exit[0.25,0.6;1.5,3;home;Home]"..
-			"button_exit[0.25,1.6;1.5,3;spawn;Spawn]"..
-			"list[current_player;main;0,4.25;8,1;]"..
-			"list[current_player;craft;2,0.5;3,3;]"..
-			"list[current_player;craftpreview;6,1.5;1,1;]"..
-			"image[5,1.5;1,1;gui_furnace_arrow_bg.png^[transformR270]"..
-			"listring[current_player;main]"..
-			"listring[current_player;craft]"..
-			default.get_hotbar_bg(0,4.25)
+		default.gui_bg..
+		default.gui_bg_img..
+		default.gui_slots..
+		"button_exit[0.25,0.6;1.5,3;home;Home]"..
+		"button_exit[0.25,1.6;1.5,3;spawn;Spawn]"..
+		"list[current_player;main;0,4.25;8,1;]"..
+		"list[current_player;craft;2,0.5;3,3;]"..
+		"list[current_player;craftpreview;6,1.5;1,1;]"..
+		"image[5,1.5;1,1;gui_furnace_arrow_bg.png^[transformR270]"..
+		"listring[current_player;main]"..
+		"listring[current_player;craft]"..
+		default.get_hotbar_bg(0,4.25)
 	if minetest.setting_getbool("enable_experimental") then
-		formspec = formspec..
+		formspec = formspec.."size[8,5.5]"..
 		"button_exit[0.25,-0.4;1.5,3;pm;PM]"..
 		"list[current_player;modifiers;7,0;1,1;]"
 		if player:get_inventory():contains_item("modifiers", {name="dcb:backpack"}) then
