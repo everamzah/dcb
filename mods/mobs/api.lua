@@ -1,4 +1,4 @@
--- Mobs Api (8th September 2015)
+-- Mobs Api (9th September 2015)
 mobs = {}
 mobs.mod = "redo"
 
@@ -322,7 +322,9 @@ function mobs:register_mob(name, def)
 
 				-- lava or fire
 				if self.lava_damage ~= 0
-				and (nodef.groups.lava or nod.name == "fire:basic_flame") then
+				and (nodef.groups.lava
+					or nod.name == "fire:basic_flame"
+					or nod.name == "xanadu:safe_fire") then
 					self.object:set_hp(self.object:get_hp() - self.lava_damage)
 					effect(pos, 5, "fire_basic_flame.png")
 					if check_for_death(self) then return end
@@ -519,23 +521,23 @@ function mobs:register_mob(name, def)
 				for i,obj in ipairs(ents) do
 					ent = obj:get_luaentity()
 
-				-- check for same animal with different colour
-				local canmate = false
-				if ent then
-					if ent.name == self.name then
-						canmate = true
-					else
-						local entname = string.split(ent.name,":")
-						local selfname = string.split(self.name,":")
-						if entname[1] == selfname[1] then
-							entname = string.split(entname[2],"_")
-							selfname = string.split(selfname[2],"_")
+					-- check for same animal with different colour
+					local canmate = false
+					if ent then
+						if ent.name == self.name then
+							canmate = true
+						else
+							local entname = string.split(ent.name,":")
+							local selfname = string.split(self.name,":")
 							if entname[1] == selfname[1] then
-								canmate = true
+								entname = string.split(entname[2],"_")
+								selfname = string.split(selfname[2],"_")
+								if entname[1] == selfname[1] then
+									canmate = true
+								end
 							end
 						end
 					end
-				end
 
 					if ent
 					and canmate == true
@@ -640,7 +642,7 @@ function mobs:register_mob(name, def)
 						self.object:setyaw(yaw)
 
 						-- anyone but standing npc's can move along
-						if dist > 2
+						if dist > 3 -- was 2
 						and self.order ~= "stand" then
 							if (self.jump
 							and self.get_velocity(self) <= 0.5
@@ -1478,7 +1480,7 @@ function mobs:register_arrow(name, def)
 			end
 
 			local engage = 10 - (self.velocity / 2) -- clear entity before arrow becomes active
-			local node = minetest.get_node_or_nil(self.object:getpos())
+			local node = minetest.get_node_or_nil(pos)
 			if node then node = node.name else node = "air" end
 
 			if self.hit_node
