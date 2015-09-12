@@ -1647,9 +1647,11 @@ function mobs:feed_tame(self, clicker, feed_count, breed, tame)
 			hp = hp + 4
 			if hp >= self.hp_max then
 				hp = self.hp_max
+				---[[
 				minetest.chat_send_player(clicker:get_player_name(),
 					self.name:split(":")[2]
 					.. " at full health")
+				--]]
 			end
 			self.object:set_hp(hp)
 			self.health = hp

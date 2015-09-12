@@ -42,7 +42,7 @@ mobs:register_mob("mobs:pumba", {
 		punch_end = 100,
 	},
 	on_rightclick = function(self, clicker)
-		mobs:feed_tame(self, clicker, 8, true)
+		mobs:feed_tame(self, clicker, 8, true, true)
 		mobs:capture_mob(self, clicker, 0, 5, 50, false, nil)
 	end,
 })

@@ -61,7 +61,7 @@ mobs:register_mob("mobs:npc", {
 	on_rightclick = function(self, clicker)
 
 		-- feed to heal npc
-		if not mobs:feed_tame(self, clicker, 8, true) then
+		if not mobs:feed_tame(self, clicker, 8, true, true) then
 			local item = clicker:get_wielded_item()
 			local name = clicker:get_player_name()
 
