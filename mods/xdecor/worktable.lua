@@ -19,6 +19,7 @@ local material = {
 
 	"xdecor_coalstone_tile", "xdecor_moonbrick", "xdecor_stone_rune",
 	"xdecor_stone_tile", "xdecor_wood_tile", "xdecor_woodframed_glass",
+	"xdecor_hard_clay", "xdecor_desertstone_tile", "xdecor_packed_ice",
 
 	"wool_black", "wool_brown", "wool_dark_green", "wool_green",
 	"wool_magenta", "wool_pink", "wool_violet", "wool_yellow",
@@ -239,7 +240,7 @@ local function shady(w)
 end
 
 local function tiles(m, ndef)
-	if m:find("glass") then return {"default_"..m..".png"} end
+	if m:find("glass") then return {m..".png"} end --{"default_"..m..".png"} end
 	return ndef.tiles
 end
 
