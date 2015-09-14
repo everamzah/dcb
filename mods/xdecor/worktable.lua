@@ -249,12 +249,9 @@ for m = 1, #material do
 	local x = ""
 	if string.find(material[m], "default_") then
 		x = string.gsub(material[m], "(default_)", "")
-	--elseif string.find(material[m], "wool_") then
 	else
 		x = material[m]
 	end
-	print(x)
-	--local nodename = "default:"..x
 	local nodename = string.gsub(material[m], "_", ":", 1)
 	local ndef = minetest.registered_nodes[nodename]
 	if not ndef then break end
@@ -270,6 +267,35 @@ for m = 1, #material do
 		on_place = minetest.rotate_node
 	})
 end
+end
+
+-- Register craft recipes and aliases for stairs and slabs.
+for _, m in pairs(material) do
+        local billy = string.gsub(m, "(_)", ":", 1)
+        local bolly = string.gsub(m, "(default_)", "")
+        minetest.register_alias("stairs:stair_"..bolly, "xdecor:stair_"..bolly)
+        minetest.register_craft({
+                output="xdecor:stair_"..bolly.." 6",
+                recipe={{billy, "", ""},
+                        {billy, billy, ""},
+                        {billy, billy, billy}
+                }
+        })
+        minetest.register_craft({
+                output="xdecor:stair_"..bolly.." 6",
+                recipe={{"", "", billy},
+                        {"", billy, billy},
+                        {billy, billy, billy}
+                }
+        })
+        minetest.register_alias("stairs:slab_"..bolly, "xdecor:slab_"..bolly)
+        minetest.register_craft({
+                output="xdecor:slab_"..bolly.." 3",
+                recipe={{"", "", ""},
+                        {"", "", ""},
+                        {billy, billy, billy}
+                }
+        })
 end
 
 minetest.register_abm({
