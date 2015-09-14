@@ -1,4 +1,6 @@
 default
+oresplus
+bones
 doors
 bucket
 xconnected

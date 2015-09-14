@@ -18,6 +18,10 @@ local material = {
 
 	"farming_straw",
 
+	"bones_bones",
+
+	"oresplus_emerald_block", "oresplus_glowstone",
+
 	"xdecor_coalstone_tile", "xdecor_moonbrick", "xdecor_stone_rune",
 	"xdecor_stone_tile", "xdecor_wood_tile", "xdecor_woodframed_glass",
 	"xdecor_hard_clay", "xdecor_desertstone_tile", "xdecor_packed_ice",
@@ -123,6 +127,8 @@ function worktable.put(_, listname, _, stack, _)
 	if listname == "input" then
 		if stn:find("default:") and mat:match(stn:sub(9)) or
 			stn:find("farming:") and mat:match(stn:sub(9)) or
+			stn:find("bones:") and mat:match(stn:sub(7)) or
+			stn:find("oresplus:") and mat:match(stn:sub(10)) or
 			stn:find("xdecor:") and mat:match(stn:sub(8)) or
 			stn:find("wool:") and mat:match(stn:sub(6)) or
 			stn:find("caverealms:") and mat:match(stn:sub(12)) then return count end
@@ -166,6 +172,10 @@ local function update_inventory(inv, inputstack)
 		if string.match(inputstack:get_name(), "default:") then
 			mat = inputstack:get_name():match("%a+:(.+)")
 		elseif string.match(inputstack:get_name(), "farming:") then
+			mat = inputstack:get_name():gsub(":", "_", 1)
+		elseif string.match(inputstack:get_name(), "bones:") then
+			mat = inputstack:get_name():gsub(":", "_", 1)
+		elseif string.match(inputstack:get_name(), "oresplus:") then
 			mat = inputstack:get_name():gsub(":", "_", 1)
 		elseif string.match(inputstack:get_name(), "xdecor:") then
 			mat = inputstack:get_name():gsub(":", "_", 1)
@@ -242,7 +252,8 @@ end
 
 local function tiles(m, ndef)
 	if m:find("glass") and (not m:find("wood")) then return {"default_"..m..".png"}
-	elseif m:find("woodglass") then return {m..".png"} end
+	elseif m:find("woodglass") then return {m..".png"}
+	elseif m:find("bones") then return {"bones_top.png", "bones_bottom.png", "bones_side.png", "bones_side.png", "bones_rear.png", "bones_front.png"} end
 	return ndef.tiles
 end
 
