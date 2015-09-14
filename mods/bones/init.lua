@@ -63,7 +63,7 @@ minetest.register_node("bones:bones", {
 		end
 		return 0
 	end,
---[[	
+	--[[	
 	on_metadata_inventory_take = function(pos, listname, index, stack, player)
 		local meta = minetest.get_meta(pos)
 		if meta:get_inventory():is_empty("main") then
@@ -71,6 +71,15 @@ minetest.register_node("bones:bones", {
 		end
 	end,
 	--]]
+	on_construct = function(pos)
+		local meta = minetest.get_meta(pos)
+		meta:set_string("owner", "")
+	end,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		local meta = minetest.get_meta(pos)
+		local owner = placer:get_player_name()
+		meta:set_string("owner", owner)
+	end,
 	on_punch = function(pos, node, player)
 		if(not is_owner(pos, player:get_player_name())) then
 			return
@@ -94,7 +103,10 @@ minetest.register_node("bones:bones", {
 		-- remove bones if player emptied them
 		if has_space then
 			minetest.remove_node(pos)
-			minetest.add_item(pos, "bones:bone")
+			if player_inv:room_for_item("main", "bones:bone") then
+				player_inv:add_item("main", "bones:bone")
+			end
+			--minetest.add_item(pos, "bones:bone")
 		end
 	end,
 	
@@ -117,8 +129,9 @@ minetest.register_craftitem("bones:bone", {
 })
 
 minetest.register_craft({
+	type = "shapeless",
 	output = "bones:bones",
-	recipe = {{"bones:bone", "bones:bone"}}
+	recipe = {"bones:bone", "bones:bone"}
 })
 
 local function may_replace(pos, player)
