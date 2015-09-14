@@ -240,7 +240,8 @@ local function shady(w)
 end
 
 local function tiles(m, ndef)
-	if m:find("glass") then return {m..".png"} end --{"default_"..m..".png"} end
+	if m:find("glass") and (not m:find("wood")) then return {"default_"..m..".png"}
+	elseif m:find("woodglass") then return {m..".png"} end
 	return ndef.tiles
 end
 
