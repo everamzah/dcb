@@ -4,6 +4,7 @@ local xbg = default.gui_bg..default.gui_bg_img..default.gui_slots
 local material = {
 	"default_wood", "default_junglewood", "default_pinewood", "default_acacia_wood",
 	"default_tree", "default_jungletree", "default_pinetree", "default_acacia_tree",
+	"default_pine_wood", "default_pine_tree",
 	"default_cobble", "default_mossycobble", "default_desert_cobble",
 	"default_stone", "default_sandstone", "default_desert_stone", "default_obsidian",
 	"default_stonebrick", "default_sandstonebrick", "default_desert_stonebrick", "default_obsidianbrick",
@@ -15,7 +16,7 @@ local material = {
 	"default_snowblock", "default_dirt", "default_leaves",
 	"default_gravel", "default_mese", "default_brick",
 
-	"farming_straw",
+	"farming_straw", "bones_bones",
 
 	"xdecor_coalstone_tile", "xdecor_moonbrick", "xdecor_stone_rune",
 	"xdecor_stone_tile", "xdecor_wood_tile", "xdecor_woodframed_glass",
@@ -122,6 +123,7 @@ function worktable.put(_, listname, _, stack, _)
 	if listname == "input" then
 		if stn:find("default:") and mat:match(stn:sub(9)) or
 			stn:find("farming:") and mat:match(stn:sub(9)) or
+			stn:find("bones:") and mat:match(stn:sub(7)) or
 			stn:find("xdecor:") and mat:match(stn:sub(8)) or
 			stn:find("wool:") and mat:match(stn:sub(6)) or
 			stn:find("caverealms:") and mat:match(stn:sub(12)) then return count end
@@ -164,6 +166,8 @@ local function update_inventory(inv, inputstack)
 		local mat = ""
 		if string.match(inputstack:get_name(), "default:") then
 			mat = inputstack:get_name():match("%a+:(.+)")
+		elseif string.match(inputstack:get_name(), "bones:") then
+			mat = inputstack:get_name():gsub(":", "_", 1)
 		elseif string.match(inputstack:get_name(), "farming:") then
 			mat = inputstack:get_name():gsub(":", "_", 1)
 		elseif string.match(inputstack:get_name(), "xdecor:") then
@@ -241,7 +245,7 @@ end
 
 local function tiles(m, ndef)
 	if m:find("glass") and (not m:find("wood")) then return {"default_"..m..".png"}
-	elseif m:find("woodglass") then return {m..".png"} end
+	elseif m:find("woodglass") then return {"xdecor_woodframed_glass.png"} end --{m..".png"} end
 	return ndef.tiles
 end
 
