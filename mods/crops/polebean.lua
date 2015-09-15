@@ -148,7 +148,7 @@ minetest.register_node("crops:beanpole_top", {
 })
 
 minetest.register_node("crops:beanpoles", {
-	description = "beanpoles",
+	description = "Beanpoles",
 	inventory_image = "crops_beanpole_top.png",
 	wield_image = "crops_beanpole_top.png",
 	tiles = { "crops_beanpole_base.png" },
@@ -179,7 +179,7 @@ minetest.register_node("crops:beanpoles", {
 })
 
 minetest.register_craftitem("crops:green_bean_seed", {
-	description = "green bean seed",
+	description = "Green Bean Seed",
 	inventory_image = "crops_green_bean_seed.png",
 	wield_image = "crops_green_bean_seed.png",
 
@@ -211,7 +211,7 @@ minetest.register_craftitem("crops:green_bean_seed", {
 
 for stage = 1,6 do
 minetest.register_node("crops:beanpole_plant_base_" .. stage, {
-	description = "green bean plant",
+	description = "Green Bean Plant",
 	tiles = { "crops_beanpole_plant_base_" .. stage .. ".png" },
 	drawtype = "plantlike",
 	sunlight_propagates = true,
@@ -228,7 +228,7 @@ end
 
 for stage = 1,4 do
 minetest.register_node("crops:beanpole_plant_top_" .. stage, {
-	description = "green bean plant",
+	description = "Green Bean Plant",
 	tiles = { "crops_beanpole_plant_top_" .. stage .. ".png" },
 	drawtype = "plantlike",
 	sunlight_propagates = true,

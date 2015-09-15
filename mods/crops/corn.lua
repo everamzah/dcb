@@ -11,7 +11,7 @@ of the license, or (at your option) any later version.
 --]]
 
 minetest.register_node("crops:corn", {
-	description = "corn",
+	description = "Corn",
 	inventory_image = "crops_corn.png",
 	wield_image = "crops_corn.png",
 	tiles = { "crops_corn_base_seed.png" },
@@ -64,7 +64,7 @@ minetest.register_craft({
 
 minetest.register_node("crops:corn_base_seed", {
 	visual = "mesh",
-	description = "corn plant",
+	description = "Corn Plant",
 	drawtype = "mesh",
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_base_seed.png" },
@@ -96,7 +96,7 @@ minetest.register_abm({
 
 minetest.register_node("crops:corn_base_1", {
 	visual = "mesh",
-	description = "corn plant",
+	description = "Corn Plant",
 	drawtype = "mesh",
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_base_1.png" },
@@ -133,7 +133,7 @@ minetest.register_abm({
 
 minetest.register_node("crops:corn_base_2", {
 	visual = "mesh",
-	description = "corn plant",
+	description = "Corn Plant",
 	drawtype = "mesh",
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_base_2.png" },
@@ -172,7 +172,7 @@ minetest.register_node("crops:corn_base_2", {
 
 minetest.register_node("crops:corn_base_3", {
 	visual = "mesh",
-	description = "corn plant",
+	description = "Corn Plant",
 	drawtype = "mesh",
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_base_3.png" },
@@ -194,7 +194,7 @@ minetest.register_node("crops:corn_base_3", {
 
 minetest.register_node("crops:corn_top_1", {
 	visual = "mesh",
-	description = "corn plant",
+	description = "Corn Plant",
 	drawtype = "mesh",
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_base_1.png" },
@@ -230,7 +230,7 @@ minetest.register_abm({
 
 minetest.register_node("crops:corn_top_2", {
 	visual = "mesh",
-	description = "corn plant",
+	description = "Corn Plant",
 	drawtype = "mesh",
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_top_1.png" },
@@ -268,7 +268,7 @@ minetest.register_abm({
 
 minetest.register_node("crops:corn_top_3", {
 	visual = "mesh",
-	description = "corn plant",
+	description = "Corn Plant",
 	drawtype = "mesh",
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_top_2.png" },
@@ -298,7 +298,7 @@ minetest.register_node("crops:corn_top_3", {
 
 minetest.register_node("crops:corn_top_4", {
 	visual = "mesh",
-	description = "corn plant",
+	description = "Corn Plant",
 	drawtype = "mesh",
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_top_3.png" },

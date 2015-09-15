@@ -18,7 +18,7 @@ local faces = {
 }
 
 minetest.register_node("crops:melon_seed", {
-	description = "melon seed",
+	description = "Melon Seed",
 	inventory_image = "crops_melon_seed.png",
 	wield_image = "crops_melon_seed.png",
 	tiles = { "crops_melon_plant_1.png" },
@@ -45,7 +45,7 @@ minetest.register_node("crops:melon_seed", {
 
 for stage = 1, 6 do
 minetest.register_node("crops:melon_plant_" .. stage , {
-	description = "melon plant",
+	description = "Melon Plant",
 	tiles = { "crops_melon_plant_" .. stage .. ".png" },
 	drawtype = "plantlike",
 	waving = 1,
@@ -66,7 +66,7 @@ end
 minetest.register_node("crops:melon_plant_5_attached", {
 	visual = "mesh",
 	mesh = "crops_plant_extra_face.obj",
-	description = "melon plant",
+	description = "Melon Plant",
 	tiles = { "crops_melon_stem.png", "crops_melon_plant_4.png" },
 	drawtype = "mesh",
 	paramtype2 = "facedir",
@@ -81,7 +81,7 @@ minetest.register_node("crops:melon_plant_5_attached", {
 
 
 minetest.register_craftitem("crops:melon_slice", {
-	description = "Melon slice",
+	description = "Melon Slice",
 	inventory_image = "crops_melon_slice.png",
 	on_use = minetest.item_eat(1)
 })
