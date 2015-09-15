@@ -17,7 +17,7 @@ local goblin_sounds = {
 	distance = 15,
 }
 
-local debugging_goblins = true
+local debugging_goblins = false
 
 -- local routine for do_custom so that api doesn't need changed
 local search_replace2 = function(

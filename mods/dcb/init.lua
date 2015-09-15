@@ -69,7 +69,7 @@ minetest.register_craftitem("dcb:dcb", {
 
 if minetest.setting_getbool("print_fields") then
 	minetest.register_on_player_receive_fields(function(player, formname, fields)
-		print(player:get_player_name().." on form "..formname.." sends these fields:\n"..dump(fields))
+		print(player:get_player_name().." on form \""..formname.."\" sends these fields:\n"..dump(fields))
 	end)
 end
 
