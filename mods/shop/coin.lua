@@ -13,7 +13,12 @@ minetest.register_craftitem("shop:coin", {
 
 minetest.register_node("shop:register", {
 	description = "Shop Register",
-	tiles = {"default_wood.png^shop_coin.png"},
+	tiles = {"xdecor_barrel_top.png^shop_coin.png^[transformR270",
+		"xdecor_barrel_top.png",
+		"xdecor_barrel_top.png^shop_coin.png",
+		"xdecor_barrel_top.png^shop_coin.png",
+		"xdecor_barrel_top.png^shop_coin.png",
+		"xdecor_barrel_top.png^shop_coin.png"},
 	groups = {cracky=2, choppy=3, oddly_breakable_by_hand=1},
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		local meta = minetest.get_meta(pos)
@@ -41,19 +46,19 @@ minetest.register_node("shop:register", {
 		local pinv = sender:get_inventory()
 
 		if fields.register then
-			if player ~= owner then
+			if player ~= owner and (not minetest.check_player_privs(player, {server=true})) then
 				minetest.chat_send_player(player, "Only the shop owner can open the register.")
 				return
 			else
-				minetest.show_formspec(player, "shop:reg", shop.formspec_register)
+				minetest.show_formspec(player, "shop:register", shop.formspec_register)
 			end
 		elseif fields.stock then
-			minetest.show_formspec(player, "shop:reg", shop.formspec_stock)
+			minetest.show_formspec(player, "shop:register", shop.formspec_stock)
 			return
 		elseif fields.ok then
 			if not inv:is_empty("sell") then
 				if not inv:is_empty("buy") then
-					if player ~= owner then
+					if player ~= owner and (not minetest.check_player_privs(player, {server=true})) then
 						if pinv:contains_item("main", b[1]) then
 							if inv:room_for_item("register", b[1]) then
 								if not inv:is_empty("stock") then
@@ -74,7 +79,7 @@ minetest.register_node("shop:register", {
 								minetest.chat_send_player(player, "Shop closed.  Register full.")
 							end
 						else
-							minetest.chat_send_player(player, "Not enough credits.")
+							minetest.chat_send_player(player, "You lack the required item(s).")
 						end
 					elseif not inv:is_empty("stock") then
 						if inv:room_for_item("register", b[1]) then
@@ -99,8 +104,8 @@ minetest.register_node("shop:register", {
 		local inv = meta:get_inventory()
 		local s = inv:get_list("sell")
 		local n = stack:get_name()
-
-		if player:get_player_name() ~= owner then
+		local playername = player:get_player_name()
+		if playername ~= owner and (not minetest.check_player_privs(playername, {server=true})) then
 			return 0
 		else
 			return 99
@@ -109,8 +114,8 @@ minetest.register_node("shop:register", {
 	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
 		local meta = minetest.get_meta(pos)
 		local owner = meta:get_string("owner")
-
-		if player:get_player_name() ~= owner then
+		local playername = player:get_player_name()
+		if playername ~= owner and (not minetest.check_player_privs(playername, {server=true}))then
 			return 0
 		else
 			return 99
@@ -119,7 +124,8 @@ minetest.register_node("shop:register", {
 	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 		local meta = minetest.get_meta(pos)
 		local owner = meta:get_string("owner")
-		if player:get_player_name() ~= owner then
+		local playername = player:get_player_name()
+		if playername ~= owner and (not minetest.check_player_privs(playername, {server=true}))then
 			return 0
 		else
 			return 99
@@ -129,7 +135,6 @@ minetest.register_node("shop:register", {
                 local meta = minetest.get_meta(pos) 
                 local owner = meta:get_string("owner") 
                 local inv = meta:get_inventory() 
- 
                 return player:get_player_name() == owner and inv:is_empty("register") and inv:is_empty("stock") and inv:is_empty("buy") and inv:is_empty("sell")
 	end,
 
