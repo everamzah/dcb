@@ -1,3 +1,12 @@
+minetest.register_craft({
+	output = "xdecor:bamboo_frame_c4",
+	recipe = {
+		{"default:papyrus", "default:papyrus", "default:papyrus"},
+		{"default:papyrus", "farming:cotton", "default:papyrus"},
+		{"default:papyrus", "default:papyrus", "default:papyrus"}
+	}
+})
+
 minetest.register_craft({ 
 	output = "xdecor:baricade",
 	recipe = {
@@ -36,6 +45,15 @@ minetest.register_craft({
 	output = "xdecor:cabinet_half 2",
 	recipe = {
 		{"xdecor:cabinet"}
+	}
+})
+
+minetest.register_craft({
+	output = "xdecor:chainlink_c4",
+	recipe = {
+		{"default:steel_ingot", "", "default:steel_ingot"},
+		{"", "default:steel_ingot", ""},
+		{"default:steel_ingot", "", "default:steel_ingot"}
 	}
 })
 
@@ -81,7 +99,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "xdecor:coalstone_tile 8",
+	output = "xdecor:coalstone_tile 4",
 	recipe = {
 		{"default:coalblock", "default:stone"},
 		{"default:stone", "default:coalblock"}
@@ -178,7 +196,6 @@ minetest.register_craft({
 	output = "xdecor:hammer",
 	recipe = {
 		{"default:steel_ingot", "group:stick", "default:steel_ingot"},
-		{"", "group:stick", ""},
 		{"", "group:stick", ""}
 	}
 })
@@ -208,7 +225,7 @@ minetest.register_craftitem("xdecor:honey", {
 })
 
 minetest.register_craft({
-	output = "xdecor:ivy 2",
+	output = "xdecor:ivy 4",
 	recipe = {
 		{"group:leaves"},
 		{"group:leaves"}
@@ -303,9 +320,9 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "xdecor:prison_door",
 	recipe = {
-		{"xpanes:bar", "xpanes:bar"},
-		{"xpanes:bar", "xpanes:bar"},
-		{"xpanes:bar", "xpanes:bar"}
+		{"xconnected:bar_c4", "xconnected:bar_c4"},
+		{"xconnected:bar_c4", "xconnected:bar_c4"},
+		{"xconnected:bar_c4", "xconnected:bar_c4"}
 	}
 })
 
