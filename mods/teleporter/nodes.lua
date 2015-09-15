@@ -56,10 +56,10 @@ minetest.register_node("teleporter:teleporter", {
 })
 
 minetest.register_node("teleporter:teleporter_active", {
-	description = "Teleporter Pad (cheater!)",
+	description = "Teleporter Pad (Active)",
 	tiles = {
-		"default_mese_block.png^teleporter_active.png",
-		"default_mese_block.png","default_mese_block.png"
+		"default_mese_block.png^[colorize:indigo:223^teleporter_active.png",
+		"default_mese_block.png^[colorize:indigo:223","default_mese_block.png^[colorize:indigo:223"
 
 	},
 	drawtype = "nodebox",
@@ -110,10 +110,10 @@ minetest.register_node("teleporter:receiver", {
 })
 
 minetest.register_node("teleporter:receiver_active", {
-	description = "Receiver Pad (cheater!)",
+	description = "Receiver Pad (Active)",
 	tiles = {
-		"default_mese_block.png^teleporter_receiver_active.png",
-		"default_mese_block.png","default_mese_block.png"
+		"default_mese_block.png^[colorize:indigo:223^teleporter_receiver_active.png",
+		"default_mese_block.png^[colorize:indigo:223","default_mese_block.png^[colorize:indigo:223"
 	},
 	drawtype = "nodebox",
 	paramtype = "light",

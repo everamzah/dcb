@@ -1121,7 +1121,7 @@ end
 
 			-- remove mob when out of range unless tamed
 			if mobs.remove and self.remove_ok and not self.tamed then
-				print ("REMOVED", self.remove_ok, self.name)
+				--print ("REMOVED", self.remove_ok, self.name)
 				self.object:remove()
 			end
 			self.remove_ok = true

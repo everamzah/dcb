@@ -1,3 +1,4 @@
+-- wurde = was
 
 playerDB = {}
 playerDB.__index = playerDB
@@ -98,14 +99,14 @@ function playerDB:del(player,key)
 	self.storage[player] = {};
 	end
 	self.storage[player][key]=nil;
-	print("db:wurde geloescht")
+	--print("db:wurde geloescht") --was deleted
 	self:save();
 	return true;
 end
 
 function playerDB:get(player,key,default)
 
---print("db:get wurde aufgerufen")
+--print("db:get wurde aufgerufen") --was
 	assert(type(player) == "string" or player:is_player(),"param 1 player must be the playername or a player object!");
 	assert(type(key) == "string","param 2 key have to be a string!");
 	assert(type(default) == "string" or type(default) == "number" or type(default) == "table" or type(default) == "boolean","param 3 default must be a string, number, table or a boolean value. Userdata,functions or nil is not alowed!")

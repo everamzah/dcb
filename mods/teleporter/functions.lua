@@ -204,7 +204,7 @@ function teleporter.received_fields(pos, formname, fields, sender)
 	local meta = minetest.get_meta(pos);
 	local name = meta:get_string("owner");
 	if teleporter.can_access(pos,sender) then
-		print(dump(fields));
+		--print(dump(fields));
 
 		
 		
