@@ -13,13 +13,14 @@ minetest.register_craftitem("shop:coin", {
 
 minetest.register_node("shop:register", {
 	description = "Shop Register",
-	tiles = {"xdecor_barrel_top.png^shop_coin.png^[transformR270",
+	tiles = {"xdecor_barrel_top.png^shop_coin.png",
 		"xdecor_barrel_top.png",
 		"xdecor_barrel_top.png^shop_coin.png",
 		"xdecor_barrel_top.png^shop_coin.png",
 		"xdecor_barrel_top.png^shop_coin.png",
 		"xdecor_barrel_top.png^shop_coin.png"},
 	groups = {cracky=2, choppy=3, oddly_breakable_by_hand=1},
+	paramtype2 = "facedir",
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		local meta = minetest.get_meta(pos)
 		local owner = placer:get_player_name()
