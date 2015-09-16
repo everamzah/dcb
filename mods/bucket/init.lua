@@ -180,7 +180,8 @@ bucket.register_liquid(
 	"default:lava_flowing",
 	"bucket:bucket_lava",
 	"bucket_lava.png",
-	"Lava Bucket"
+	"Lava Bucket",
+	{lava_bucket = 1}
 )
 
 minetest.register_craft({

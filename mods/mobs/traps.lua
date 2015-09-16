@@ -108,7 +108,7 @@ minetest.register_node("mobs:stone_with_diamond_trap", {
 
 minetest.register_node("mobs:molten_gold_source", {
 	description = "Molten Gold Source",
-	inventory_image = minetest.inventorycube("default_lava.png"),
+	inventory_image = minetest.inventorycube("mobs_molten_gold.png"),
 	drawtype = "liquid",
 	tiles = {
 		{
@@ -202,7 +202,14 @@ minetest.register_node("mobs:molten_gold_flowing", {
 	groups = {lava=3, liquid=2, hot=3, igniter=1, not_in_creative_inventory=1},
 })
 
-
+bucket.register_liquid(
+	"mobs:molten_gold_source",
+	"mobs:molten_gold_flowing",
+	"mobs:bucket_molten_gold",
+	"mobs_bucket_molten_gold.png",
+	"Molten Gold Bucket",
+	{lava_bucket = 1}
+)
 
 --[[ too bad we can't keep track of what physics are set too by other mods...]]
 minetest.register_abm({
