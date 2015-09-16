@@ -106,7 +106,7 @@ xdecor.register("cauldron", {
 	}
 })
 
-if minetest.get_modpath("bucket") then
+--[[if minetest.get_modpath("bucket") then
 	local original_bucket_on_use = minetest.registered_items["bucket:bucket_empty"].on_use
 	minetest.override_item("bucket:bucket_empty", {
 		on_use = function(itemstack, user, pointed_thing)
@@ -127,7 +127,7 @@ if minetest.get_modpath("bucket") then
 		end
 	end
 	})
-end
+end--]]
 
 xconnected.register_pane("xdecor:chainlink", "xdecor_chainlink.png", {
 	description = "Chain Link",
