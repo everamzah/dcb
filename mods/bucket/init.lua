@@ -120,6 +120,40 @@ minetest.register_craftitem("bucket:bucket_empty", {
 		local liquiddef = bucket.liquids[node.name]
 		local item_count = user:get_wielded_item():get_count()
 
+		-- Try for xdecor:cauldron
+		if node.name == "xdecor:cauldron" then
+			if check_protection(pointed_thing.under,
+				user:get_player_name(),
+				"take ".. node.name) then
+				return
+			end
+
+			-- default set to return filled bucket
+			local giving_back = "bucket:bucket_river_water"
+
+			-- check if holding more than 1 empty bucket
+			if item_count > 1 then
+
+				-- if space in inventory add filled bucked, otherwise drop as item
+				local inv = user:get_inventory()
+				if inv:room_for_item("main", {name="bucket:bucket_river_water"}) then
+					inv:add_item("main", "bucket:bucket_river_water")
+				else
+					local pos = user:getpos()
+					pos.y = math.floor(pos.y + 0.5)
+					core.add_item(pos, "bucket:bucket_river_water")
+				end
+
+				-- set to return empty buckets minus 1
+				giving_back = "bucket:bucket_empty "..tostring(item_count-1)
+
+			end
+
+			--minetest.add_node(pointed_thing.under, {name="air"})
+
+			return ItemStack(giving_back)
+		end
+
 		if liquiddef ~= nil
 		and liquiddef.itemname ~= nil
 		and node.name == liquiddef.source then
