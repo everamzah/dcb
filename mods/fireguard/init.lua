@@ -48,7 +48,7 @@ minetest.override_item("fire:basic_flame",{
 -- [lava_restricted]
 minetest.register_privilege("fglava", "Player can use lava bucket")
 
--- normal players can now only get lava_source via a givme
+-- Normal players can now only get lava_source via a giveme
 minetest.override_item("default:lava_source",{
         groups = {lava=3, liquid=2, hot=3, igniter=1, not_in_creative_inventory=1},
 })

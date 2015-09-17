@@ -3,7 +3,7 @@ local clothes = {
 	["pants"] = {"clothing:pants_blue", "clothing:pants_cyan"}
 }
 
-print(clothes.shirt[math.random(1, #clothes.shirt)])
+--print(clothes.shirt[math.random(1, #clothes.shirt)])
 
 minetest.register_on_newplayer(function(player)
 	--print("on_newplayer")
@@ -18,7 +18,7 @@ minetest.register_on_newplayer(function(player)
 		player:get_inventory():add_item('main', 'wool:green')
 		player:get_inventory():add_item('main', 'wool:blue')
 		player:get_inventory():add_item('main', 'default:goldblock')
-		if minetest.setting_getbool("enable_experimental") then
+		if minetest.setting_getbool("enable_experimental_feature_newplayerclothing") then
 			minetest.after(0, function()
 				local shirt = clothes.shirt[math.random(1, #clothes.shirt)]
 				local pants = clothes.pants[math.random(1, #clothes.pants)]

@@ -1,3 +1,5 @@
+-- This file includes the rental unit
+
 local furniture_names = {
 		"default:chest_locked", "xdecor:mailbox", "xdecor:frame",
 		"beds:bed", "beds:fancy_bed",
@@ -6,6 +8,19 @@ local furniture_names = {
 
 --local length_of_day = minetest.setting_get("time_speed") or 72
 local lease_time = 0
+
+local function get_formspec(pos, player, owner)
+	local player_name = player:get_player_name()
+	if player_name == owner then
+		local spos = pos.x..","..pos.y..","..pos.z
+		local formspec = "size[8,9]"..
+			default.gui_bg..default.gui_bg_img..default.gui_slots..
+			"list[nodemeta:"..spos..";payment;0,0;8,4;]"..
+			"list[current_player;main;0,5;8,4;]"..
+			default.get_hotbar_bg(0, 5)
+		minetest.show_formspec(player_name, "cbd:rental", formspec)
+	end
+end
 
 local function transfer_owner(pos, tenant_name, meta)
 	local marked_pos1 = {x=pos.x-5, y=pos.y-6, z=pos.z-5}
@@ -48,19 +63,6 @@ local function transfer_owner(pos, tenant_name, meta)
 				tenant:set_string("infotext", "Owned by "..tenant_name)
 			end
 		end
-	end
-end
-
-local function get_formspec(pos, player, owner)
-	local player_name = player:get_player_name()
-	if player_name == owner then
-		local spos = pos.x..","..pos.y..","..pos.z
-		local formspec = "size[8,9]"..
-			default.gui_bg..default.gui_bg_img..default.gui_slots..
-			"list[nodemeta:"..spos..";payment;0,0;8,4;]"..
-			"list[current_player;main;0,5;8,4;]"..
-			default.get_hotbar_bg(0, 5)
-		minetest.show_formspec(player_name, "cbd:rental", formspec)
 	end
 end
 

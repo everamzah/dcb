@@ -114,9 +114,10 @@ dcb.get_formspec = function(player)
 		"listring[current_player;main]"..
 		"listring[current_player;craft]"..
 		default.get_hotbar_bg(0,4.25)
-	if minetest.setting_getbool("enable_experimental") then
+	if minetest.setting_getbool("enable_experimental_feature_pm") then
+		formspec = formspec.."button_exit[0.25,-0.4;1.5,3;pm;PM]"
+	elseif minetest.setting_getbool("enable_experimental_feature_backpack") then
 		formspec = formspec.."size[8,5.5]"..
-		"button_exit[0.25,-0.4;1.5,3;pm;PM]"..
 		"list[current_player;modifiers;7,0;1,1;]"
 		if player:get_inventory():contains_item("modifiers", {name="dcb:backpack"}) then
 			formspec = formspec.."list[current_player;backpack;0,5.5;8,3;]"
@@ -134,8 +135,8 @@ end)
 
 -------------- BEGIN PM
 
-if minetest.setting_getbool("enable_experimental") then
-	print("experimental PM block")
+if minetest.setting_getbool("enable_experimental_feature_pm") then
+	print("experimental PM block loaded")
 	local pm_fs_string = {[1]="", [2]="", [3]="", [4]="", [5]=""}
 
 	local player_index = 1 -- selected player on the left
@@ -232,7 +233,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		minetest.chat_send_player(player:get_player_name(), "Teleported to spawn!")
 	end
 	-- PM BEGIN
-	if minetest.setting_getbool("enable_experimental") then
+	if minetest.setting_getbool("enable_experimental_feature_pm") then
 		if fields.pm then
 			update_chatlist()
 			pmform(player:get_player_name(), player_index)
