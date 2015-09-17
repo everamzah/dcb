@@ -115,11 +115,14 @@ minetest.register_node("cbd:lease_register", {
 			minetest.show_formspec(player, "cbd:lease_register", formspec_lease_stock)
 			return
 		end
-		if fields.purchase then
+		if fields.purchase and s[1] then
 			local numpurchases = meta:get_int("player_"..player) or 0
 			local maxleases = meta:get_int("maxleases")
 			if maxleases > 0 and numpurchases < maxleases then
-				if pinv:contains_item("main", b[1]) and inv:contains_item("stock", "cbd:lease") then
+				if pinv:contains_item("main", b[1]) and
+				    (not inv:is_empty("sell")) and
+				    inv:contains_item("stock", "cbd:lease") and
+				    inv:room_for_item("register", b[1]) then
 					pinv:remove_item("main", b[1])
 					inv:add_item("register", b[1])
 					meta:set_int("player_"..player, numpurchases + 1)
@@ -131,7 +134,11 @@ minetest.register_node("cbd:lease_register", {
 					new_stack:set_metadata(lease)
 					inv:remove_item("stock", "cbd:lease")
 					pinv:add_item("main", new_stack)
+				else
+					minetest.chat_send_player(player, "Lease shop closed for maintenance.")
 				end
+			else
+				minetest.chat_send_player(player, "Maximum allotment filled.")
 			end
 			return
 		end
