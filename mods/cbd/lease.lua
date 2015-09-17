@@ -77,7 +77,7 @@ minetest.register_node("cbd:lease_register", {
 		meta:set_string("owner", owner)
 		meta:set_string("infotext", "Lease Shop\nOwned by "..owner)
 		meta:set_string("formspec", get_register_formspec(pos))
-		meta:set_int("maxleases", 0)
+		meta:set_int("maxleases", 1) -- Default maximum number of leases per player.
 
 		local inv = meta:get_inventory()
 		inv:set_size("buy", 1)
@@ -89,13 +89,13 @@ minetest.register_node("cbd:lease_register", {
 		local meta = minetest.get_meta(pos)
 		local owner = meta:get_string("owner")
 		local player = sender:get_player_name()
-		--local inv = meta:get_inventory()
-		--local s = inv:get_list("sell")
-		--local b = inv:get_list("buy")
-		--local stk = inv:get_list("stock")
+		local inv = meta:get_inventory()
+		local s = inv:get_list("sell")
+		local b = inv:get_list("buy")
+		local stk = inv:get_list("stock")
 		--local reg = inv:get_list("register")
-		--local pinv = sender:get_inventory()
-		if fields.numtenant then
+		local pinv = sender:get_inventory()
+		if fields.numtenant and player == owner then
 			--print(fields.numtenant)
 			meta:set_int("maxleases", math.abs(tonumber(fields.numtenant) or 0))
 			meta:set_string("formspec", get_register_formspec(pos))
@@ -103,7 +103,7 @@ minetest.register_node("cbd:lease_register", {
 		if fields.register then
 			--print("reg")
 			if player ~= owner and (not minetest.check_player_privs(player, {server=true})) then
-				minetest.chat_send_player(player, "Only the lease owner can open the register.")
+				minetest.chat_send_player(player, "Only the property owner can open the register.")
 				return
 			else
 				minetest.show_formspec(player, "cbd:lease_register", formspec_lease_register)
@@ -119,9 +119,19 @@ minetest.register_node("cbd:lease_register", {
 			local numpurchases = meta:get_int("player_"..player) or 0
 			local maxleases = meta:get_int("maxleases")
 			if maxleases > 0 and numpurchases < maxleases then
-				meta:set_int("player_"..player, numpurchases + 1)
-				print("here you go")
-				--print(dump(meta:to_table()))
+				if pinv:contains_item("main", b[1]) and inv:contains_item("stock", "cbd:lease") then
+					pinv:remove_item("main", b[1])
+					inv:add_item("register", b[1])
+					meta:set_int("player_"..player, numpurchases + 1)
+					local old_stack = inv:get_stack("sell", 1)
+					local lease = minetest.deserialize(old_stack:get_metadata())
+					lease.tenant = player
+					lease = minetest.serialize(lease)
+					local new_stack = ItemStack("cbd:lease_written")
+					new_stack:set_metadata(lease)
+					inv:remove_item("stock", "cbd:lease")
+					pinv:add_item("main", new_stack)
+				end
 			end
 			return
 		end
