@@ -44,7 +44,7 @@ mobs:register_mob("mobs:zombie", {
 	},
 })
 
-mobs:register_spawn("mobs:zombie", {"default:stone", "default:dirt_with_grass"}, 3, 0, 500000, 1, 31000)
+mobs:register_spawn("mobs:zombie", {"default:dirt_with_snow", "default:dirt_with_grass"}, 3, 0, 500000, 1, 31000)
 
 mobs:register_egg("mobs:zombie", "Zombie", "zombie_head.png", 0)
 
