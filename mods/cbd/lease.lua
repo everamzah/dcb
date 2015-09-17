@@ -14,19 +14,22 @@ local formspec_lease_stock =
 	"list[current_player;main;0,5.25;8,4;]"..
 	"listring[]"
 
+--local maxleases = 0
+
 local function get_register_formspec(pos)
 	local meta = minetest.get_meta(pos)
+	local maxleases = meta:get_int("maxleases")
 	local spos = pos.x..","..pos.y..","..pos.z
 	local formspec =
 		"size[8,6.5]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
 		"label[2,0;Lease]"..
 		"label[4,0;Price]"..
 		"label[0,0;Limit]"..
-		"field[0.25,1;1,0.35;numtenant;;0]"..
+		"field[0.25,1;1,0.35;numtenant;;"..maxleases.."]"..
 		"label[0,1.25;Per Player]"..
 		"button[6.2,0;1.75,1;stock;Leases]"..
 		"button[6.2,0.75;1.75,1;register;Register]".. -- 6.25, 1.5
-		"button[6.2,1.5;1.75,1;quit;Close]"..
+		"button[6.2,1.5;1.75,1;purchase;Purchase]"..
 		"list[nodemeta:"..spos..";sell;2,0.5;1,1;]"..
 		"list[nodemeta:"..spos..";buy;4,0.5;1,1;]"..
 		"list[current_player;main;0,2.75;8,4;]"
@@ -74,6 +77,7 @@ minetest.register_node("cbd:lease_register", {
 		meta:set_string("owner", owner)
 		meta:set_string("infotext", "Lease Shop\nOwned by "..owner)
 		meta:set_string("formspec", get_register_formspec(pos))
+		meta:set_int("maxleases", 0)
 
 		local inv = meta:get_inventory()
 		inv:set_size("buy", 1)
@@ -85,65 +89,41 @@ minetest.register_node("cbd:lease_register", {
 		local meta = minetest.get_meta(pos)
 		local owner = meta:get_string("owner")
 		local player = sender:get_player_name()
-		local inv = meta:get_inventory()
-		local s = inv:get_list("sell")
-		local b = inv:get_list("buy")
-		local stk = inv:get_list("stock")
-		local reg = inv:get_list("register")
-		local pinv = sender:get_inventory()
-
+		--local inv = meta:get_inventory()
+		--local s = inv:get_list("sell")
+		--local b = inv:get_list("buy")
+		--local stk = inv:get_list("stock")
+		--local reg = inv:get_list("register")
+		--local pinv = sender:get_inventory()
+		if fields.numtenant then
+			--print(fields.numtenant)
+			meta:set_int("maxleases", math.abs(tonumber(fields.numtenant) or 0))
+			meta:set_string("formspec", get_register_formspec(pos))
+		end
 		if fields.register then
+			--print("reg")
 			if player ~= owner and (not minetest.check_player_privs(player, {server=true})) then
 				minetest.chat_send_player(player, "Only the lease owner can open the register.")
 				return
 			else
 				minetest.show_formspec(player, "cbd:lease_register", formspec_lease_register)
+				return
 			end
-		elseif fields.stock then
+		end
+		if fields.stock then
+			--print("stock")
 			minetest.show_formspec(player, "cbd:lease_register", formspec_lease_stock)
 			return
-		--elseif fields.ok then
-			--[[if not inv:is_empty("sell") then
-				if not inv:is_empty("buy") then
-					if player ~= owner and (not minetest.check_player_privs(player, {server=true})) then
-						if pinv:contains_item("main", b[1]) then
-							if inv:room_for_item("register", b[1]) then
-								if not inv:is_empty("stock") then
-									if inv:contains_item("stock", s[1]) then
-										if pinv:room_for_item("main", s[1]) then
-											pinv:remove_item("main", b[1])
-											inv:add_item("register", b[1])
-											inv:remove_item("stock", s[1])
-											pinv:add_item("main", s[1])
-										else
-											minetest.chat_send_player(player, "Your inventory is full.")
-										end
-									end
-								else
-									minetest.chat_send_player(player, "Further leasing unavailable.")
-								end
-							else
-								minetest.chat_send_player(player, "Further leasing unavailable.")
-							end
-						else
-							minetest.chat_send_player(player, "You lack the required item(s).")
-						end
-					elseif not inv:is_empty("stock") then
-						if inv:room_for_item("register", b[1]) then
-							minetest.chat_send_player(player, "Lease register is setup!")
-						else
-							minetest.chat_send_player(player, "Register is full!")
-						end
-					else
-						minetest.chat_send_player(player, "Error: No leasing available.")
-					end
-				else
-					minetest.chat_send_player(player, "Error: No lease cost set.")
-				end
-			else
-				minetest.chat_send_player(player, "Error: No leasing available.")
-			end--]]
-			--return
+		end
+		if fields.purchase then
+			local numpurchases = meta:get_int("player_"..player) or 0
+			local maxleases = meta:get_int("maxleases")
+			if maxleases > 0 and numpurchases < maxleases then
+				meta:set_int("player_"..player, numpurchases + 1)
+				print("here you go")
+				--print(dump(meta:to_table()))
+			end
+			return
 		end
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
