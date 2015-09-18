@@ -47,7 +47,16 @@ minetest.register_chatcommand("mark", {
 					spos.x..","..spos.y..","..spos.z.." marked as position 2.")
 			end
 		elseif params == "del" then
-			local ids = nopvp:get_areas_for_pos(spos)
+			print("Size of nopvp_areas table: "..#nopvp_areas)
+			print("Contents of nopvp:get_areas_for_pos():\n"..dump(nopvp:get_areas_for_pos(pos)))
+			print("Size of nopvp:get_areas_for_pos():")
+			print(#nopvp:get_areas_for_pos(pos))
+			print("For i in #nopvp_areas do print dump nopvp:get_areas_for_pos(pos)[i]:\n")
+			for i=1, #nopvp_areas do
+				if nopvp:get_areas_for_pos(pos)[i] and nopvp:get_areas_for_pos(pos)[i].min then
+					print(dump(nopvp:get_areas_for_pos(pos)[i]))
+				end
+			end
 		else
 			minetest.chat_send_player(name, "Requires a p1 or p2 arguments, see /help mark.")
 		end
@@ -59,6 +68,11 @@ minetest.register_on_punchplayer(function(player, hitter, time_from_last_punch, 
 	if damage > 0 then
 		local pos = player:getpos()
 		local nopvpareainfo = nopvp:get_areas_for_pos(pos)
-		if #nopvpareainfo > 0 then return true end
+
+		for i=1, #nopvp_areas do
+			if nopvpareainfo[i] and nopvpareainfo[i].min then
+				return true
+			end
+		end
 	end
 end)
