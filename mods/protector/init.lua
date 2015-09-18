@@ -184,6 +184,7 @@ local function after_place_node(pos, placer)
 	meta:set_string("infotext", "Protection owned by "..meta:get_string("owner"))
 	meta:set_string("members", "")
 	meta:set_string("property", "")
+	meta:set_string("tenant", "")
 	local inv = meta:get_inventory()
 	inv:set_size("main", 1)
 end
@@ -203,7 +204,9 @@ local function on_rightclick(pos, node, clicker, itemstack)
 			local inv = meta:get_inventory()
 			local player_name = clicker:get_player_name()
 			local data = minetest.deserialize(itemstack:get_metadata())
-			if data.property == meta:get_string("property") then
+			if data.property == meta:get_string("property") and
+			    meta:get_string("tenant") == "" then
+				meta:set_string("tenant", player_name)
 				protector.add_member(meta, player_name)
 				itemstack:clear()
 			end
@@ -233,6 +236,7 @@ local function on_metadata_inventory_put(pos, listname, index, stack, player)
 	meta:set_string("property", property)
 	meta:set_string("infotext", property.."\nOwned by "..player_name)
 	if tenant then
+		meta:set_string("tenant", tenant)
 		protector.add_member(meta, tenant)
 	end
 	minetest.show_formspec(player_name, "protector:node_"..minetest.pos_to_string(pos), protector.generate_formspec(pos))
@@ -249,6 +253,7 @@ local function on_metadata_inventory_take(pos, listname, index, stack, player)
 	meta:set_string("property", "")
 	meta:set_string("infotext", "Protection owned by "..player_name)
 	if tenant then
+		meta:set_string("tenant", "")
 		protector.del_member(meta, tenant)
 	end
 	minetest.show_formspec(player_name, "protector:node_"..minetest.pos_to_string(pos), protector.generate_formspec(pos))
