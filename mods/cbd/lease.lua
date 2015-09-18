@@ -45,12 +45,12 @@ local function lease_on_use(itemstack, user, pointed_thing)
         end
         local formspec
         if owner == player_name then
-                formspec = "size[8,8]"..default.gui_bg..
-                        "field[0.5,1;5,0;property;Property:;"..
+                formspec = "size[3.25,4]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
+                        "field[0.3,1;3.25,0;property;Property:;"..
                                 minetest.formspec_escape(property).."]"..
-                        "field[0.5,2;5,0;tenant;Tenant:;"..
+                        "field[0.3,2.25;3.25,0;tenant;Tenant:;"..
                                 minetest.formspec_escape(tenant).."]"..
-                        "button_exit[2.5,7.5;3,1;save;Save]"
+                        "button_exit[1.75,3.5;1.5,1;save;Save]"
         else
                 formspec = "size[8,8]"..default.gui_bg..
                         "label[0.5,0;"..owner.."]"..
@@ -76,8 +76,8 @@ minetest.register_node("cbd:lease_register", {
 
 		meta:set_string("owner", owner)
 		meta:set_string("infotext", "Lease Shop\nOwned by "..owner)
-		meta:set_string("formspec", get_register_formspec(pos))
 		meta:set_int("maxleases", 1) -- Default maximum number of leases per player.
+		meta:set_string("formspec", get_register_formspec(pos))
 
 		local inv = meta:get_inventory()
 		inv:set_size("buy", 1)

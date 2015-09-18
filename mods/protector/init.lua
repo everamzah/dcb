@@ -45,8 +45,8 @@ protector.generate_formspec = function(pos)
 	local spos = pos.x..","..pos.y..","..pos.z
 	local formspec = "size[8,9]"..
 		default.gui_bg..default.gui_bg_img..default.gui_slots..
-		"label[0,-0.1;Lease:]"..
-		"list[nodemeta:"..spos..";main;0.04,0.5;1,1;]"..
+		--"label[0,-0.1;Lease:]"..
+		"list[nodemeta:"..spos..";main;0.04,0;1,1;]"..
 		"label[0,1.25;Members:]"..
 		"list[current_player;main;0,5;8,4;]"
 
