@@ -247,7 +247,13 @@ minetest.register_craft({
 	output = "cbd:lease_register",
 	recipe = {
 		{"group:wood", "dye:black", "group:wood"},
-		{"cbd:lease", "cbd:lease", "cbd:lease"},
-		{"group:wood", "default:paper", "group:wood"}
+		{"cbd:lease", "default:goldblock", "cbd:lease"},
+		{"group:wood", "dye:black", "group:wood"}
 	}
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "cbd:lease",
+	recipe = {"default:paper", "dye:black"}
 })
