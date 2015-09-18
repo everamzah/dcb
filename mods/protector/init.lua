@@ -359,6 +359,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
 		for field, value in pairs(fields) do
 			if string.sub(field, 0, string.len("protector_del_member_")) == "protector_del_member_" then
+				meta:set_string("tenant", "")
 				protector.del_member(meta, string.sub(field, string.len("protector_del_member_") + 1))
 				local inv = meta:get_inventory()
 				local stack = inv:get_stack("main", 1)
