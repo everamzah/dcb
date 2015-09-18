@@ -1,4 +1,4 @@
-minetest.register_privilege("delprotect","Ignore player protection")
+minetest.register_privilege("delprotect", "Ignore player protection")
 
 protector = {}
 protector.mod = "redo"
@@ -25,7 +25,7 @@ protector.add_member = function(meta, name)
 	if protector.is_member(meta, name) then return end
 	local list = protector.get_member_list(meta)
 	table.insert(list, name)
-	protector.set_member_list(meta,list)
+	protector.set_member_list(meta, list)
 end
 
 protector.del_member = function(meta, name)
@@ -46,7 +46,8 @@ protector.generate_formspec = function(pos)
 	local formspec = "size[8,9]"..
 		default.gui_bg..default.gui_bg_img..default.gui_slots..
 		--"label[0,-0.1;Lease:]"..
-		"list[nodemeta:"..spos..";main;0.04,0;1,1;]"..
+		"item_image[0,0;1,1;cbd:lease_written]"..
+		"list[nodemeta:"..spos..";main;0,0;1,1;]"..
 		"label[0,1.25;Members:]"..
 		"list[current_player;main;0,5;8,4;]"
 
@@ -177,7 +178,88 @@ end
 
 -- END
 
---= Protection Block
+local function after_place_node(pos, placer)
+	local meta = minetest.get_meta(pos)
+	meta:set_string("owner", placer:get_player_name() or "")
+	meta:set_string("infotext", "Protection owned by "..meta:get_string("owner"))
+	meta:set_string("members", "")
+	meta:set_string("property", "")
+	local inv = meta:get_inventory()
+	inv:set_size("main", 1)
+end
+
+local function on_use(itemstack, user, pointed_thing)
+	if pointed_thing.type ~= "node" then return end
+	protector.can_dig(protector.radius, pointed_thing.under, user:get_player_name(), false, 2)
+end
+
+local function on_rightclick(pos, node, clicker, itemstack)
+	if protector.can_dig(1, pos, clicker:get_player_name(), true, 1) then
+		minetest.show_formspec(clicker:get_player_name(), 
+		"protector:node_"..minetest.pos_to_string(pos), protector.generate_formspec(pos))
+	else
+		if clicker:get_wielded_item():get_name() == "cbd:lease_written" then
+			local meta = minetest.get_meta(pos)
+			local inv = meta:get_inventory()
+			local player_name = clicker:get_player_name()
+			local data = minetest.deserialize(itemstack:get_metadata())
+			if data.property == meta:get_string("property") then
+				protector.add_member(meta, player_name)
+				itemstack:clear()
+			end
+		end
+	end
+end
+
+local function on_punch(pos, node, puncher)
+	if not protector.can_dig(1, pos, puncher:get_player_name(), true, 1) then
+		return
+	end
+	minetest.add_entity(pos, "protector:display")
+end
+
+local function can_dig(pos, player)
+	return protector.can_dig(1, pos, player:get_player_name(), true, 1)
+end
+
+local function on_metadata_inventory_put(pos, listname, index, stack, player)
+	local player_name = player:get_player_name()
+	local data = minetest.deserialize(stack:get_metadata())
+	local property, tenant, owner = "", "", player_name
+	if data then
+		property, tenant, owner = data.property, data.tenant, data.owner
+	end
+	local meta = minetest.get_meta(pos)
+	meta:set_string("property", property)
+	meta:set_string("infotext", property.."\nOwned by "..player_name)
+	if tenant then
+		protector.add_member(meta, tenant)
+	end
+	minetest.show_formspec(player_name, "protector:node_"..minetest.pos_to_string(pos), protector.generate_formspec(pos))
+end
+
+local function on_metadata_inventory_take(pos, listname, index, stack, player)
+	local player_name = player:get_player_name()
+	local data = minetest.deserialize(stack:get_metadata())
+	local property, tenant, owner = "", "", player_name
+	if data then
+		property, tenant, owner = data.property, data.tenant, data.owner
+	end
+	local meta = minetest.get_meta(pos)
+	meta:set_string("property", "")
+	meta:set_string("infotext", "Protection owned by "..player_name)
+	if tenant then
+		protector.del_member(meta, tenant)
+	end
+	minetest.show_formspec(player_name, "protector:node_"..minetest.pos_to_string(pos), protector.generate_formspec(pos))
+end
+
+local function allow_metadata_inventory_put(pos, listname, index, stack, player)
+	if stack:get_name() == "cbd:lease_written" then
+		return 1
+	end
+	return 0
+end
 
 minetest.register_node("protector:protect", {
 	description = "Protection Block",
@@ -193,49 +275,15 @@ minetest.register_node("protector:protect", {
 	paramtype = "light",
 	light_source = 2,
 
-	after_place_node = function(pos, placer)
-		local meta = minetest.get_meta(pos)
-		meta:set_string("owner", placer:get_player_name() or "")
-		meta:set_string("infotext", "Protection owned by "..meta:get_string("owner"))
-		meta:set_string("members", "")
-		local inv = meta:get_inventory()
-		inv:set_size("main", 1)
-	end,
-
-	on_use = function(itemstack, user, pointed_thing)
-		if pointed_thing.type ~= "node" then return end
-		protector.can_dig(protector.radius,pointed_thing.under,user:get_player_name(),false,2)
-	end,
-
-	on_rightclick = function(pos, node, clicker, itemstack)
-		if protector.can_dig(1, pos, clicker:get_player_name(), true, 1) then
-			minetest.show_formspec(clicker:get_player_name(), 
-			"protector:node_"..minetest.pos_to_string(pos), protector.generate_formspec(pos))
-		end
-	end,
-
-	on_punch = function(pos, node, puncher)
-		if not protector.can_dig(1, pos, puncher:get_player_name(), true, 1) then
-			return
-		end
-		minetest.add_entity(pos, "protector:display")
-	end,
-
-	can_dig = function(pos, player)
-		return protector.can_dig(1, pos, player:get_player_name(), true, 1)
-	end,
+	after_place_node = after_place_node,
+	on_use = on_use,
+	on_rightclick = on_rightclick,
+	on_punch = on_punch,
+	can_dig = can_dig,
+	on_metadata_inventory_put = on_metadata_inventory_put,
+	on_metadata_inventory_take = on_metadata_inventory_take,
+	allow_metadata_inventory_put = allow_metadata_inventory_put
 })
-
-minetest.register_craft({
-	output = "protector:protect 4",
-	recipe = {
-		{"default:stone","default:stone","default:stone"},
-		{"default:stone","default:steel_ingot","default:stone"},
-		{"default:stone","default:stone","default:stone"},
-	}
-})
-
---= Protection Logo
 
 minetest.register_node("protector:protect2", {
 	description = "Protection Logo",
@@ -257,86 +305,23 @@ minetest.register_node("protector:protect2", {
 		wall_side   = {-0.5, -0.5, -0.375, -0.4375, 0.5, 0.375},
 	},
 	selection_box = {type = "wallmounted"},
+	after_place_node = after_place_node,
+	on_use = on_use,
+	on_rightclick = on_rightclick,
+	on_punch = on_punch,
+	can_dig = can_dig,
+	on_metadata_inventory_put = on_metadata_inventory_put,
+	on_metadata_inventory_take = on_metadata_inventory_take,
+	allow_metadata_inventory_put = allow_metadata_inventory_put
+})
 
-	after_place_node = function(pos, placer)
-		local meta = minetest.get_meta(pos)
-		meta:set_string("owner", placer:get_player_name() or "")
-		meta:set_string("infotext", "Protection owned by "..meta:get_string("owner"))
-		meta:set_string("members", "")
-		meta:set_string("property", "")
-		local inv = meta:get_inventory()
-		inv:set_size("main", 1)
-	end,
-
-	on_use = function(itemstack, user, pointed_thing)
-		if pointed_thing.type ~= "node" then return end
-		protector.can_dig(protector.radius,pointed_thing.under,user:get_player_name(),false,2)
-	end,
-
-	on_rightclick = function(pos, node, clicker, itemstack)
-		if protector.can_dig(1, pos, clicker:get_player_name(), true, 1) then
-			minetest.show_formspec(clicker:get_player_name(), 
-			"protector:node_"..minetest.pos_to_string(pos), protector.generate_formspec(pos))
-		else
-			if clicker:get_wielded_item():get_name() == "cbd:lease_written" then
-				local meta = minetest.get_meta(pos)
-				local inv = meta:get_inventory()
-				local player_name = clicker:get_player_name()
-				local data = minetest.deserialize(itemstack:get_metadata())
-				if data.property == meta:get_string("property") then
-					protector.add_member(meta, player_name)
-					itemstack:clear()
-				end
-			end
-		end
-	end,
-
-	on_punch = function(pos, node, puncher)
-		if not protector.can_dig(1, pos, puncher:get_player_name(), true, 1) then
-			return
-		end
-		minetest.add_entity(pos, "protector:display")
-	end,
-
-	can_dig = function(pos, player)
-		return protector.can_dig(1, pos, player:get_player_name(), true, 1)
-	end,
-	on_metadata_inventory_put = function(pos, listname, index, stack, player)
-		local player_name = player:get_player_name()
-		local data = minetest.deserialize(stack:get_metadata())
-		local property, tenant, owner = "", "", player_name
-		if data then
-			property, tenant, owner = data.property, data.tenant, data.owner
-		end
-		local meta = minetest.get_meta(pos)
-		meta:set_string("property", property)
-		meta:set_string("infotext", property.."\nOwned by "..player_name)
-		if tenant then
-			protector.add_member(meta, tenant)
-		end
-		minetest.show_formspec(player_name, "protector:node_"..minetest.pos_to_string(pos), protector.generate_formspec(pos))
-	end,
-	on_metadata_inventory_take = function(pos, listname, index, stack, player)
-		local player_name = player:get_player_name()
-		local data = minetest.deserialize(stack:get_metadata())
-		local property, tenant, owner = "", "", player_name
-		if data then
-			property, tenant, owner = data.property, data.tenant, data.owner
-		end
-		local meta = minetest.get_meta(pos)
-		meta:set_string("property", "")
-		meta:set_string("infotext", "Protection owned by "..player_name)
-		if tenant then
-			protector.del_member(meta, tenant)
-		end
-		minetest.show_formspec(player_name, "protector:node_"..minetest.pos_to_string(pos), protector.generate_formspec(pos))
-	end,
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-		if stack:get_name() == "cbd:lease_written" then
-			return 1
-		end
-		return 0
-	end
+minetest.register_craft({
+	output = "protector:protect 4",
+	recipe = {
+		{"default:stone","default:stone","default:stone"},
+		{"default:stone","default:steel_ingot","default:stone"},
+		{"default:stone","default:stone","default:stone"},
+	}
 })
 
 minetest.register_craft({
