@@ -1,7 +1,5 @@
-
----- Strawberry block ----
-
 --[[
+---- Strawberry block ----
 minetest.register_node("foodblock:strawberryblock", {
 	description = "StrawberryBlock",
 	tiles = {"foodblock_strawberryblock_top.png","foodblock_strawberryblock_bottom.png","foodblock_strawberryblock_side.png"},
@@ -32,6 +30,7 @@ minetest.register_craft({
 		{"farming_plus:strawberry_item","farming_plus:strawberry_item"}
 	}
 })
+
 minetest.register_craft({
 	output = "foodblock:strawberryblock",
 	recipe = {
@@ -127,11 +126,13 @@ minetest.register_craft({
 	recipe = {"foodblock:strawberryblock_slab" , "ethereal:strawberry"},
 })--]]
 
----- Tomato block ----
-
+---- Tomato Block ----
 minetest.register_node("foodblock:tomatoblock", {
-	description = "TomatoBlock",
-	tiles = {"foodblock_tomatoblock_top.png","foodblock_tomatoblock_bottom.png","foodblock_tomatoblock_side.png"},
+	description = "Tomato Block",
+	tiles = {"foodblock_tomatoblock_top.png",
+		"foodblock_tomatoblock_bottom.png",
+		"foodblock_tomatoblock_side.png"
+	},
 	groups = {crumbly=2},
 	sounds = default.node_sound_dirt_defaults(),
 })
@@ -140,7 +141,10 @@ minetest.register_node("foodblock:tomatoblock_slab", {
 	description = "Half Tomatoblock",
 	drawtype = "nodebox",
 	paramtype = "light",
-	tiles = {"foodblock_tomato_htop.png","foodblock_appleblock_bottom.png","foodblock_appleblock_side.png"},
+	tiles = {"foodblock_tomato_htop.png",
+		"foodblock_appleblock_bottom.png",
+		"foodblock_appleblock_side.png"
+	},
 	node_box = {
 		type = "fixed",
 		fixed = {-1/2, -1/2, -1/2, 1/2, 0, 1/2},
@@ -163,15 +167,6 @@ minetest.register_craft({
 		{"foodblock:tomatoblock_slab"}
 	}
 })
-
---[[
-minetest.register_craft({
-	output = "foodblock:tomatoblock",
-	recipe = {
-		{"farming_plus:tomato_item","farming_plus:tomato_item"},
-		{"farming_plus:tomato_item","farming_plus:tomato_item"}
-	}
-})--]]
 
 minetest.register_craft({
 	output = "foodblock:tomatoblock",
@@ -204,10 +199,8 @@ minetest.register_craft({
 	recipe = {"foodblock:tomatoblock_slab" , "farming:tomato"},
 })
 
-
 --[[
 ---- Orange block ----
-
 minetest.register_node("foodblock:orangeblock", {
 	description = "OrangeBlock",
 	tiles = {"foodblock_orange_top.png","foodblock_orange_bottom.png","foodblock_orange_side.png"},
@@ -302,12 +295,14 @@ minetest.register_craft({
 	recipe = {"foodblock:orangeblock_slab" , "ethereal:orange"},
 })--]]
 
-
 --- Carrot block ----
 
 minetest.register_node("foodblock:carrotblock", {
 	description = "CarrotBlock",
-	tiles = {"foodblock_carrot_top.png","foodblock_carrot_bottom.png","foodblock_carrot_side.png"},
+	tiles = {"foodblock_carrot_top.png",
+		"foodblock_carrot_bottom.png",
+		"foodblock_carrot_side.png"
+	},
 	groups = {crumbly=2},
 	sounds = default.node_sound_dirt_defaults(),
 })
@@ -316,7 +311,10 @@ minetest.register_node("foodblock:carrotblock_slab", {
 	description = "Half Tomatoblock",
 	drawtype = "nodebox",
 	paramtype = "light",
-	tiles = {"foodblock_carrot_htop.png","foodblock_carrot_bottom.png","foodblock_carrot_side.png"},
+	tiles = {"foodblock_carrot_htop.png",
+		"foodblock_carrot_bottom.png",
+		"foodblock_carrot_side.png"
+	},
 	node_box = {
 		type = "fixed",
 		fixed = {-1/2, -1/2, -1/2, 1/2, 0, 1/2},
@@ -372,9 +370,7 @@ minetest.register_craft({
 	recipe = {"foodblock:carrotblock_slab" , "farming:carrot"},
 })
 
-
---- potato block ----
-
+--- Potato Block ----
 minetest.register_node("foodblock:potatoblock", {
 	description = "Potato Block",
 	tiles = {"foodblock_potato.png","foodblock_potato.png","foodblock_potato.png"},
@@ -386,7 +382,10 @@ minetest.register_node("foodblock:potatoblock_slab", {
 	description = "Potato Block Half",
 	drawtype = "nodebox",
 	paramtype = "light",
-	tiles = {"foodblock_potato_htop.png","foodblock_potato.png","foodblock_potato.png"},
+	tiles = {"foodblock_potato_htop.png",
+		"foodblock_potato.png",
+		"foodblock_potato.png"
+	},
 	node_box = {
 		type = "fixed",
 		fixed = {-1/2, -1/2, -1/2, 1/2, 0, 1/2},
@@ -413,59 +412,31 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "foodblock:potatoblock",
 	recipe = {
-		{"farming_plus:potato_item","farming_plus:potato_item"},
-		{"farming_plus:potato_item","farming_plus:potato_item"}
+		{"crops:potato","crops:potato"},
+		{"crops:potato","crops:potato"}
 	}
 })
+
+--Uncraft Potato Block
 minetest.register_craft({
-	output = "foodblock:potatoblock",
-	recipe = {
-		{"farming:potato","farming:potato"},
-		{"farming:potato","farming:potato"}
-	}
+	output = 'crops:potato 4',
+	recipe = {{"foodblock:potatoblock"}},
 })
 
-
---Uncraft Potatoblock
-if minetest.get_modpath("farming_plus") then
-	minetest.register_craft({
-		output = 'farming_plus:potato_item 4',
-		recipe = {{"foodblock:potatoblock"}},
-	})
-	minetest.register_craft({
-		output = 'farming_plus:potato_item 2',
-		recipe = {{"foodblock:potatoblock_slab"}},
-	})
-else
-	minetest.register_craft({
-		output = 'farming:potato 4',
-		recipe = {{"foodblock:potatoblock"}},
-	})
-	minetest.register_craft({
-		output = 'farming:potato 2',
-		recipe = {{"foodblock:potatoblock_slab"}},
-	})
-end
+minetest.register_craft({
+	output = 'crops:potato 2',
+	recipe = {{"foodblock:potatoblock_slab"}},
+})
 
 -- Specified Uncraft
 minetest.register_craft({
 	type = "shapeless",
-	output = "farming_plus:potato_item 5",
-	recipe = {"foodblock:potatoblock" , "farming_plus:potato_item"},
-})
-minetest.register_craft({
-	type = "shapeless",
-	output = "farming_plus:potato_item 3",
-	recipe = {"foodblock:potatoblock_slab" , "farming_plus:potato_item"},
-})
-minetest.register_craft({
-	type = "shapeless",
-	output = "farming:potato 5",
+	output = "crops:potato 5",
 	recipe = {"foodblock:potatoblock" , "farming:potato"},
 })
+
 minetest.register_craft({
 	type = "shapeless",
-	output = "farming:potato 3",
+	output = "crops:potato 3",
 	recipe = {"foodblock:potatoblock_slab" , "farming:potato"},
 })
-

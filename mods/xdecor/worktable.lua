@@ -1,57 +1,58 @@
 local worktable = {}
 local xbg = default.gui_bg..default.gui_bg_img..default.gui_slots
 
-local material = {
-	"default_wood", "default_junglewood", "default_pinewood", "default_acacia_wood",
-	"default_tree", "default_jungletree", "default_pinetree", "default_acacia_tree",
-	"default_pine_wood", "default_pine_tree",
-	"default_cobble", "default_mossycobble", "default_desert_cobble",
-	"default_stone", "default_sandstone", "default_desert_stone", "default_obsidian",
-	"default_stonebrick", "default_sandstonebrick", "default_desert_stonebrick", "default_obsidianbrick",
-	"default_coalblock", "default_copperblock", "default_bronzeblock",
-	"default_goldblock", "default_steelblock", "default_diamondblock",
-	"default_clay", "default_ice", "default_meselamp",
-	"default_glass", "default_obsidian_glass",
-	"default_cactus", "default_sand", "default_desert_sand",
-	"default_snowblock", "default_dirt", "default_leaves",
-	"default_gravel", "default_mese", "default_brick",
+local nodes = { -- Nodes allowed to be cut.
+	"default:wood", "default:junglewood", "default:pine_wood", "default:acacia_wood",
+	"default:tree", "default:jungletree", "default:pine_tree", "default:acacia_tree",
+	"default:pinewood", "default:pinetree",
+	"default:cobble", "default:mossycobble", "default:desert_cobble",
+	"default:stone", "default:sandstone", "default:desert_stone", "default:obsidian",
+	"default:stonebrick", "default:sandstonebrick", "default:desert_stonebrick", "default:obsidianbrick",
+	"default:coalblock", "default:copperblock", "default:steelblock", "default:goldblock", 
+	"default:bronzeblock", "default:mese", "default:diamondblock",
+	"default:brick", "default:cactus", "default:ice", "default:meselamp",
+	"default:glass", "default:obsidian_glass", "default:gravel",
+	"default:leaves", "default:dirt", "default:snowblock", "default:sand",
+	"default:desert_sand", "default:clay",
 
-	"farming_straw",
+	"farming:straw",
 
-	"bones_bones",
+	"bones:bones",
 
-	"oresplus_emerald_block", "oresplus_glowstone",
+	"oresplus:emerald_block", "oresplus:glowstone",
 
-	"xdecor_coalstone_tile", "xdecor_moonbrick", "xdecor_stone_rune",
-	"xdecor_stone_tile", "xdecor_wood_tile", "xdecor_woodframed_glass",
-	"xdecor_hard_clay", "xdecor_desertstone_tile", "xdecor_packed_ice",
+	"xdecor:coalstone_tile", "xdecor:desertstone_tile", "xdecor:stone_rune", "xdecor:stone_tile",
+	"xdecor:hard_clay", "xdecor:packed_ice", "xdecor:moonbrick",
+	"xdecor:woodframed_glass", "xdecor:wood_tile",
 
-	"wool_black", "wool_brown", "wool_dark_green", "wool_green",
-	"wool_magenta", "wool_pink", "wool_violet", "wool_yellow",
-	"wool_blue", "wool_cyan", "wool_dark_grey", "wool_grey",
-	"wool_orange", "wool_red", "wool_white",
+        "wool:black", "wool:brown", "wool:dark_green", "wool:green",
+        "wool:magenta", "wool:pink", "wool:violet", "wool:yellow",
+        "wool:blue", "wool:cyan", "wool:dark_grey", "wool:grey",
+        "wool:orange", "wool:red", "wool:white",
 
-	"caverealms_glow_crystal", "caverealms_glow_emerald", "caverealms_glow_mese",
-	"caverealms_glow_ruby", "caverealms_glow_amethyst", "caverealms_glow_ore",
-	"caverealms_glow_emerald_ore", "caverealms_glow_ruby_ore", "caverealms_glow_amethyst_ore",
-	"caverealms_thin_ice", "caverealms_salt_crystal", "caverealms_mushroom_cap",
-	"caverealms_mushroom_stem", "caverealms_stone_with_salt", "caverealms_hot_cobble",
-	"caverealms_glow_obsidian", "caverealms_glow_obsidian_2", "caverealms_coal_dust"
+        "caverealms:glow_crystal", "caverealms:glow_emerald", "caverealms:glow_mese",
+        "caverealms:glow_ruby", "caverealms:glow_amethyst", "caverealms:glow_ore",
+        "caverealms:glow_emerald_ore", "caverealms:glow_ruby_ore", "caverealms:glow_amethyst_ore",
+        "caverealms:thin_ice", "caverealms:salt_crystal", "caverealms:mushroom_cap",
+        "caverealms:mushroom_stem", "caverealms:stone_with_salt", "caverealms:hot_cobble",
+        "caverealms:glow_obsidian", "caverealms:glow_obsidian_2", "caverealms:coal_dust",
+
+	"foodblock:appleblock", "foodblock:breadblock", "foodblock:carrotblock"
 }
 
-local def = { -- Node name, nodebox shape.
-	{"nanoslab", {-.5,-.5,-.5,0,-.4375,0}},
-	{"micropanel", {-.5,-.5,-.5,.5,-.4375,0}},
-	{"microslab", {-.5,-.5,-.5,.5,-.4375,.5}},
-	{"thinstair", {{-.5,-.0625,-.5,.5,0,0},{-.5,.4375,0,.5,.5,.5}}},
-	{"cube", {-.5,-.5,0,0,0,.5}},
-	{"panel", {-.5,-.5,-.5,.5,0,0}},
-	{"slab", {-.5,-.5,-.5,.5,0,.5}},
-	{"doublepanel", {{-.5,-.5,-.5,.5,0,0},{-.5,0,0,.5,.5,.5}}},
-	{"halfstair", {{-.5,-.5,-.5,0,0,.5},{-.5,0,0,0,.5,.5}}},
-	{"outerstair", {{-.5,-.5,-.5,.5,0,.5},{-.5,0,0,0,.5,.5}}},
-	{"stair", {{-.5,-.5,-.5,.5,0,.5},{-.5,0,0,.5,.5,.5}}},
-	{"innerstair", {{-.5,-.5,-.5,.5,0,.5},{-.5,0,0,.5,.5,.5},{-.5,0,-.5,0,.5,0}}}
+local def = { -- Nodebox name, anzhal, definition.
+	{"nanoslab", 16, {-.5,-.5,-.5,0,-.4375,0}},
+	{"micropanel", 16, {-.5,-.5,-.5,.5,-.4375,0}},
+	{"microslab", 8, {-.5,-.5,-.5,.5,-.4375,.5}},
+	{"thinstair", 8, {{-.5,-.0625,-.5,.5,0,0},{-.5,.4375,0,.5,.5,.5}}},
+	{"cube", 4, {-.5,-.5,0,0,0,.5}},
+	{"panel", 4, {-.5,-.5,-.5,.5,0,0}},
+	{"slab", 2, {-.5,-.5,-.5,.5,0,.5}},
+	{"doublepanel", 2, {{-.5,-.5,-.5,.5,0,0},{-.5,0,0,.5,.5,.5}}},
+	{"halfstair", 2, {{-.5,-.5,-.5,0,0,.5},{-.5,0,0,0,.5,.5}}},
+	{"outerstair", 1, {{-.5,-.5,-.5,.5,0,.5},{-.5,0,0,0,.5,.5}}},
+	{"stair", 1, {{-.5,-.5,-.5,.5,0,.5},{-.5,0,0,.5,.5,.5}}},
+	{"innerstair", 1, {{-.5,-.5,-.5,.5,0,.5},{-.5,0,0,.5,.5,.5},{-.5,0,-.5,0,.5,0}}}
 }
 
 function worktable.crafting(pos)
@@ -121,17 +122,11 @@ end
 function worktable.put(_, listname, _, stack, _)
 	local stn = stack:get_name()
 	local count = stack:get_count()
-	local mat = table.concat(material)
+	local mat = table.concat(nodes)
 
 	if listname == "forms" then return 0 end
 	if listname == "input" then
-		if stn:find("default:") and mat:match(stn:sub(9)) or
-			stn:find("farming:") and mat:match(stn:sub(9)) or
-			stn:find("bones:") and mat:match(stn:sub(7)) or
-			stn:find("oresplus:") and mat:match(stn:sub(10)) or
-			stn:find("xdecor:") and mat:match(stn:sub(8)) or
-			stn:find("wool:") and mat:match(stn:sub(6)) or
-			stn:find("caverealms:") and mat:match(stn:sub(12)) then return count end
+		if mat:match(stn) then return count end
 		return 0
 	end
 	if listname == "hammer" then
@@ -155,39 +150,16 @@ function worktable.move(_, from_list, _, to_list, _, count, _)
 		return count else return 0 end
 end
 
-local function anz(n)
-	if n == "nanoslab" or n == "micropanel" then return 16
-	elseif n == "microslab" or n == "thinstair" then return 8
-	elseif n == "panel" or n == "cube" then return 4
-	elseif n == "slab" or n == "halfstair" or n == "doublepanel" then return 2
-	else return 1 end
-end
-
 local function update_inventory(inv, inputstack)
 	if inv:is_empty("input") then inv:set_list("forms", {}) return end
-
 	local output = {}
-	for _, n in pairs(def) do
-		local mat = ""
-		if string.match(inputstack:get_name(), "default:") then
-			mat = inputstack:get_name():match("%a+:(.+)")
-		elseif string.match(inputstack:get_name(), "farming:") then
-			mat = inputstack:get_name():gsub(":", "_", 1)
-		elseif string.match(inputstack:get_name(), "bones:") then
-			mat = inputstack:get_name():gsub(":", "_", 1)
-		elseif string.match(inputstack:get_name(), "oresplus:") then
-			mat = inputstack:get_name():gsub(":", "_", 1)
-		elseif string.match(inputstack:get_name(), "xdecor:") then
-			mat = inputstack:get_name():gsub(":", "_", 1)
-		elseif string.match(inputstack:get_name(), "wool:") then
-			mat = inputstack:get_name():gsub(":", "_", 1)
-		elseif string.match(inputstack:get_name(), "caverealms:") then
-			mat = inputstack:get_name():gsub(":", "_", 1)
-		end
-		local input = inv:get_stack("input", 1)
-		local count = math.min(anz(n[1]) * input:get_count(), inputstack:get_stack_max())
 
-		output[#output+1] = string.format("xdecor:%s_%s %d", n[1], mat, count)
+	for _, n in pairs(def) do
+		local mat = inputstack:get_name()
+		local input = inv:get_stack("input", 1)
+		local count = math.min(n[2] * input:get_count(), inputstack:get_stack_max())
+
+		output[#output+1] = string.format("%s_%s %d", mat, n[1], count)
 	end
 	inv:set_list("forms", output)
 end
@@ -199,15 +171,13 @@ function worktable.on_put(pos, listname, _, stack, _)
 	end
 end
 
-function worktable.on_take(pos, listname, _, stack, _)
+function worktable.on_take(pos, listname, index, stack, _)
 	local inv = minetest.get_meta(pos):get_inventory()
 	if listname == "input" then
 		update_inventory(inv, stack)
 	elseif listname == "forms" then
-		local nodebox = stack:get_name():match("%a+:(%a+)_%a+")
 		local inputstack = inv:get_stack("input", 1)
-
-		inputstack:take_item(math.ceil(stack:get_count() / anz(nodebox)))
+		inputstack:take_item(math.ceil(stack:get_count() / def[index][2]))
 		inv:set_stack("input", 1, inputstack)
 		update_inventory(inv, inputstack)
 	end
@@ -232,84 +202,56 @@ xdecor.register("worktable", {
 	allow_metadata_inventory_move = worktable.move
 })
 
-local function description(m, w)
-	local d = m:gsub("%W", "")
-	return d:gsub("^%l", string.upper).." "..w:gsub("^%l", string.upper)
+local function description(node, shape)
+	local desc = node:gsub("%w+:", " "):gsub("_", " "):gsub(" %l", string.upper):sub(2)..
+		" "..shape:gsub("^%l", string.upper)
+	return desc
 end
 
-local function groups(m)
-	if m:find("tree") or m:find("wood") or m == "cactus" then
+local function groups(node)
+	if node:find("tree") or node:find("wood") or node:find("cactus") then
 		return {choppy=3, not_in_creative_inventory=1}
 	end
 	return {cracky=3, not_in_creative_inventory=1}
 end
 
-local function shady(w)
-	if w == "stair" or w == "slab" or w == "innerstair" or
-			w == "outerstair" then return false end
+local function shady(shape)
+	if shape == "stair" or shape == "slab" or shape == "innerstair" or
+			shape == "outerstair" then return false end
 	return true
 end
 
-local function tiles(m, ndef)
-	if m:find("glass") and (not m:find("wood")) then return {"default_"..m..".png"}
-	elseif m:find("woodglass") then return {m..".png"}
-	elseif m:find("bones") then return {"bones_top.png", "bones_bottom.png", "bones_side.png", "bones_side.png", "bones_rear.png", "bones_front.png"} end
+local function tiles(node, ndef)
+	if node:find("glass") then return {node:gsub(":", "_")..".png"} end
 	return ndef.tiles
 end
 
-for n = 1, #def do
-for m = 1, #material do
-	local w = def[n]
-	local x = ""
-	if string.find(material[m], "default_") then
-		x = string.gsub(material[m], "(default_)", "")
-	else
-		x = material[m]
+for _, d in pairs(def) do
+for _, n in pairs(nodes) do
+	local ndef = minetest.registered_nodes[n]
+	if ndef then
+		minetest.register_node(":"..n.."_"..d[1], {
+			description = description(n, d[1]),
+			paramtype = "light",
+			paramtype2 = "facedir",
+			drawtype = "nodebox",
+			light_source = ndef.light_source,
+			sounds = ndef.sounds,
+			tiles = tiles(n, ndef),
+			groups = groups(n),
+			node_box = {type = "fixed", fixed = d[3]},
+			sunlight_propagates = shady(d[1]),
+			on_place = minetest.rotate_node
+		})
 	end
-	local nodename = string.gsub(material[m], "_", ":", 1)
-	local ndef = minetest.registered_nodes[nodename]
-	if not ndef then break end
-
-	xdecor.register(w[1].."_"..x, {
-		description = description(x, w[1]),
-		light_source = ndef.light_source,
-		sounds = ndef.sounds,
-		tiles = tiles(x, ndef),
-		groups = groups(x),
-		node_box = {type = "fixed", fixed = w[2]},
-		sunlight_propagates = shady(w[1]),
-		on_place = minetest.rotate_node
-	})
+	if n:match("default:") then
+		minetest.register_alias("xdecor:"..d[1].."_"..n:match(":(.+)"), n.."_"..d[1])
+		--print("xdecor:"..d[1].."_"..n:match(":(.+)"), n.."_"..d[1])
+	else
+		minetest.register_alias("xdecor:"..d[1].."_"..n:gsub(":", "_", 1), n.."_"..d[1])
+		--print("xdecor:"..d[1].."_"..n:gsub(":", "_", 1), n.."_"..d[1])
+	end
 end
-end
-
--- Register craft recipes and aliases for stairs and slabs.
-for _, m in pairs(material) do
-        local billy = string.gsub(m, "(_)", ":", 1)
-        local bolly = string.gsub(m, "(default_)", "")
-        minetest.register_alias("stairs:stair_"..bolly, "xdecor:stair_"..bolly)
-        minetest.register_craft({
-                output="xdecor:stair_"..bolly.." 6",
-                recipe={{billy, "", ""},
-                        {billy, billy, ""},
-                        {billy, billy, billy}
-                }
-        })
-        minetest.register_craft({
-                output="xdecor:stair_"..bolly.." 6",
-                recipe={{"", "", billy},
-                        {"", billy, billy},
-                        {billy, billy, billy}
-                }
-        })
-        minetest.register_alias("stairs:slab_"..bolly, "xdecor:slab_"..bolly)
-        minetest.register_craft({
-                output="xdecor:slab_"..bolly.." 3",
-                recipe={{"", "", ""},
-                        {"", "", ""},
-                        {billy, billy, billy}
-                }
-        })
 end
 
 minetest.register_abm({
@@ -323,9 +265,9 @@ minetest.register_abm({
 
 		if tool:is_empty() or hammer:is_empty() or wear == 0 then return end
 
-		-- Wear : 0-65535	0 = new condition.
+		-- Wear : 0-65535 | 0 = new condition.
 		tool:add_wear(-500)
-		hammer:add_wear(250)
+		hammer:add_wear(300)
 
 		inv:set_stack("tool", 1, tool)
 		inv:set_stack("hammer", 1, hammer)

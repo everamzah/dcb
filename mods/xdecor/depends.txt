@@ -4,3 +4,6 @@ bones
 doors
 bucket
 xconnected
+foodblock
+farming
+caverealms

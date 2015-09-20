@@ -1,6 +1,9 @@
 minetest.register_node("foodblock:breadblock", {
 	description = "Bread Block",
-	tiles = {"foodblock_breadblock_top.png", "foodblock_breadblock_bottom.png", "foodblock_breadblock_side.png"},
+	tiles = {"foodblock_breadblock_top.png",
+		"foodblock_breadblock_bottom.png",
+		"foodblock_breadblock_side.png"
+	},
 	groups = {crumbly=2},
 	sounds = default.node_sound_dirt_defaults(),
 })

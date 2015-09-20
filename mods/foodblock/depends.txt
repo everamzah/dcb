@@ -1,12 +1,3 @@
 default
 farming?
-farming_plus?
-plants_lib?
 mobs?
-creatures?
-ccmobs?
-spidermob?
-food?
-moretree?
-ethereal?
-xdecor?

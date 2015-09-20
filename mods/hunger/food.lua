@@ -6,6 +6,13 @@ if minetest.get_modpath("farming") ~= nil then
 	register_food("farming:bread", 4)
 end
 
+if minetest.get_modpath("foodblock") ~= nil then
+	register_food("foodblock:pudding_item", 5)
+	register_food("foodblock:applepie_item", 4)
+	register_food("foodblock:pancake_item", 5)
+	register_food("foodblock:hambuger_item", 8)
+end
+
 if minetest.get_modpath("mobs") ~= nil then
 	if mobs.mod ~= nil and mobs.mod == "redo" then
 		register_food("mobs:cheese", 4)
@@ -49,6 +56,7 @@ if minetest.get_modpath("crops") ~= nil then
 	register_food("crops:uncooked_vegetable_stew", 3, "crops:clay_bowl")
 end
 
+--[[
 if minetest.get_modpath("moretrees") ~= nil then
 	register_food("moretrees:coconut_milk", 1)
 	register_food("moretrees:raw_coconut", 2)
@@ -327,3 +335,4 @@ if minetest.get_modpath("pizza") ~= nil then
 	register_food("pizza:pizza", 30, "", nil, 30)
 	register_food("pizza:pizzaslice", 5, "", nil, 5)
 end
+--]]

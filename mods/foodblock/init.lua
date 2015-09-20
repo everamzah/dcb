@@ -1,16 +1,21 @@
 -- Global foodblock namespace
 foodblock = {}
-foodblock.path = minetest.get_modpath("foodblock")
+-- foodblock.path = minetest.get_modpath("foodblock")
+local modpath = minetest.get_modpath("foodblock")
 
 -- Load files
-dofile(foodblock.path .. "/foodblock.lua")
---dofile(foodblock.path .. "/farmplus.lua")
---dofile(foodblock.path .. "/plantlife.lua")
-dofile(foodblock.path .. "/mobsfood.lua")
---dofile(foodblock.path .. "/foodfood.lua")
---dofile(foodblock.path .. "/moretree.lua")
---dofile(foodblock.path .. "/berrys.lua")
---dofile(foodblock.path .. "/ethereal.lua")
---dofile(foodblock.path .. "/farmredo.lua")
 
-dofile(foodblock.path .. "/cooking.lua")
+-- Food support
+dofile(modpath.."/foodblock.lua")
+dofile(modpath.."/mobsfood.lua")
+dofile(modpath.."/crops.lua")
+--dofile(modpath.."/farmplus.lua")
+--dofile(modpath.."/plantlife.lua")
+--dofile(modpath.."/foodfood.lua")
+--dofile(modpath.."/moretree.lua")
+--dofile(modpath.."/berrys.lua")
+--dofile(modpath.."/ethereal.lua")
+--dofile(modpath.."/farmredo.lua")
+
+-- Cooking?
+dofile(modpath.."/cooking.lua")

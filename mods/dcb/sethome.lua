@@ -1,8 +1,9 @@
 --sethome = {}
 
-local homes_file = minetest.get_worldpath() .. "/homes"
+local homes_file = minetest.get_worldpath().."/homes"
 local homepos = {}
-dcb.globalhomepos = {}
+
+dcb.globalhomepos = {} -- Used in beds mod.
 
 local function loadhomes()
     local input = io.open(homes_file, "r")
@@ -42,23 +43,27 @@ minetest.register_chatcommand("home", {
         end
 
 	if param ~= "" and minetest.check_player_privs(name, {teleport=true}) then
-	    --print("true")
 	    if homepos[param] then
 		player:setpos(homepos[param])
-		minetest.chat_send_player(name, "Teleported to "..param.."'s home.")
-	        return
+		-- minetest.chat_send_player(name, "Teleported to "..param.."'s home.")
+	        return true, "Teleported to "..param.."'s home."
 	    else
-		minetest.chat_send_player(name, param.." has no home.")
-		return
+		-- minetest.chat_send_player(name, param.." has no home.")
+		return false, param.." has no home set."
 	    end
 	else
             if homepos[player:get_player_name()] then
 	        player:setpos(homepos[player:get_player_name()])
-	        minetest.chat_send_player(name, "Teleported to home!")
-		return
+	        -- minetest.chat_send_player(name, "Teleported to home!")
+		return true, "Teleported to home!"
 	    else
-	        minetest.chat_send_player(name, "Set a home using /sethome")
-		return
+	        -- minetest.chat_send_player(name, "Set a home using /sethome")
+		-- return
+		-- "Chat commands should return true when succeeding
+		-- "and allow a second return value as message to be
+		-- "printed, which makes the extra chat_send_players redundant."
+		-- t4im in regard to sethome tweaks in minetest_game pr #669
+		return false, "Set a home using /sethome"
 	    end
 	end
     end,
