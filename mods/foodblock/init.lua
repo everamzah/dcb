@@ -1,5 +1,5 @@
 -- Global foodblock namespace
-foodblock = {}
+-- foodblock = {}
 -- foodblock.path = minetest.get_modpath("foodblock")
 local modpath = minetest.get_modpath("foodblock")
 

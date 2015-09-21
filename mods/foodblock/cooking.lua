@@ -16,16 +16,6 @@ minetest.register_craft({
 	}
 })
 
---[[
-minetest.register_craft({
-	type = "shapeless",
-	output = "foodblock:pudding",
-	recipe = {"foodblock:eggblock" , "ccmobs:bucket_milk"},
-	replacements = {
-		{"ccmobs:bucket_milk","bucket:bucket_empty"},
-	}
-})--]]
-
 --Custard Pudding Item
 minetest.register_node("foodblock:pudding_item", {
 	description = "Custard Pudding",
@@ -38,7 +28,6 @@ minetest.register_node("foodblock:pudding_item", {
 	sounds = default.node_sound_dirt_defaults(),
 	on_use = minetest.item_eat(5),
 })
-
 
 minetest.register_craft({
 	output = "foodblock:pudding_item 4",
@@ -59,8 +48,13 @@ minetest.register_node("foodblock:applepie", {
 	drawtype = "nodebox",
 	paramtype2 = "facedir",
 	paramtype = "light",
-	tiles = {"foodblock_applepie_top.png","foodblock_applepie_bottom.png","foodblock_applepie_side.png^[transformFX",
-			"foodblock_applepie_side2.png","foodblock_applepie_side2.png","foodblock_applepie_side.png"},
+	tiles = {"foodblock_applepie_top.png",
+		"foodblock_applepie_bottom.png",
+		"foodblock_applepie_side.png^[transformFX",
+		"foodblock_applepie_side2.png",
+		"foodblock_applepie_side2.png",
+		"foodblock_applepie_side.png"
+	},
 	node_box = {
 		type = "fixed",
 		fixed = {-1/2, -1/2, -1/2, 1/2, 0, 1/2},
@@ -117,7 +111,10 @@ minetest.register_node("foodblock:pancake_slab", {
 		fixed = {-1/2, -1/2, -1/2, 1/2, 0, 1/2},
 	},
 	paramtype = "light",
-	tiles = {"foodblock_pancake_top.png","foodblock_pancake_bottom.png","foodblock_pancake_side.png"},
+	tiles = {"foodblock_pancake_top.png",
+		"foodblock_pancake_bottom.png",
+		"foodblock_pancake_side.png"
+	},
 	groups = {crumbly=2},
 	sounds = default.node_sound_dirt_defaults(),
 })
@@ -126,22 +123,18 @@ minetest.register_node("foodblock:pancake_slab", {
 minetest.register_node("foodblock:pancake", {
 	description = "Double Pancake Block",
 	paramtype = "light",
-	tiles = {"foodblock_pancake_top.png","foodblock_pancake_bottom.png","foodblock_pancake_side.png"},
+	tiles = {"foodblock_pancake_top.png",
+		"foodblock_pancake_bottom.png",
+		"foodblock_pancake_side.png"
+	},
 	groups = {crumbly=2},
 	sounds = default.node_sound_dirt_defaults(),
 })
 
---[[
 minetest.register_craft({
 	type = "shapeless",
 	output = "foodblock:pancake_slab 2",
-	recipe = {"foodblock:eggblock" , "foodblock:breadblock" , "mobs:honey"},
-})--]]
-
-minetest.register_craft({
-	type = "shapeless",
-	output = "foodblock:pancake_slab 2",
-	recipe = {"foodblock:eggblock" , "foodblock:breadblock" , "xdecor:honey"},
+	recipe = {"foodblock:eggblock", "foodblock:breadblock", "xdecor:honey"},
 })
 
 minetest.register_craft({
@@ -159,7 +152,7 @@ minetest.register_craft({
 	}
 })
 
---pancake Item
+-- Pancake Item
 minetest.register_node("foodblock:pancake_item", {
 	description = "pancake",
 	drawtype = "plantlike",
@@ -171,7 +164,6 @@ minetest.register_node("foodblock:pancake_item", {
 	sounds = default.node_sound_dirt_defaults(),
 	on_use = minetest.item_eat(5),
 })
-
 
 minetest.register_craft({
 	output = "foodblock:pancake_item 4",
@@ -198,16 +190,19 @@ minetest.register_craft({
 	},
 })
 
---Hamburger Block
+-- Hamburger Block
 minetest.register_node("foodblock:hamburger", {
 	description = "Hamburger Block",
 	paramtype = "light",
-	tiles = {"foodblock_breadblock_top.png","foodblock_breadblock_bottom.png","foodblock_hamburger_side.png"},
+	tiles = {"foodblock_breadblock_top.png",
+		"foodblock_breadblock_bottom.png",
+		"foodblock_hamburger_side.png"
+	},
 	groups = {crumbly=2},
 	sounds = default.node_sound_dirt_defaults(),
 })
 
---pancake Item
+-- Pancake Item
 minetest.register_node("foodblock:hamburger_item", {
 	description = "Hamburger",
 	drawtype = "plantlike",
