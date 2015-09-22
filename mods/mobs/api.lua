@@ -190,7 +190,7 @@ function mobs:register_mob(name, def)
 			end
 
 			-- if lifetimer run out and not npc; tamed or attacking then remove mob
-			if self.type ~= "npc"
+			--if self.type ~= "npc"
 			and not self.tamed then
 				self.lifetimer = self.lifetimer - dtime
 				if self.lifetimer <= 0
@@ -201,7 +201,7 @@ function mobs:register_mob(name, def)
 					self.object:remove()
 					return
 				end
-			end
+			--end
 
 			-- check for mob drop/replace (used for chicken egg and sheep eating grass/wheat)
 			if self.replace_rate

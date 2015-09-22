@@ -858,20 +858,73 @@ mobs:register_mob("mobs:goblin_king", {
 })
 mobs:register_egg("mobs:goblin_king", "Goblin King Egg", "default_mossycobble.png", 1)
 
--- spawn at or below 0 near ore and dungeons and goblin lairs (areas of mossy cobble), except diggers that will dig out caves from stone and cobble goblins who create goblin lairs near stone.
 
+-- register_spawn(name, nodes, max_light, min_light, chance, active_object_count, max_height)
 
---function mobs_goblins:register_spawn(name, nodes, max_light, min_light, chance, active_object_count, max_height)
----[[
-mobs:register_spawn("mobs:goblin_cobble", {"group:stone"}, 100, 0, 500000, 4, 0)
-mobs:register_spawn("mobs:goblin_digger", {"group:stone"}, 100, 0, 500000, 4, 0)
-mobs:register_spawn("mobs:goblin_coal", {"default:stone_with_coal"}, 100, 0, 250000, 3, 0)
-mobs:register_spawn("mobs:goblin_iron", {"default:stone_with_iron"}, 100, 0, 250000, 3, -20)
-mobs:register_spawn("mobs:goblin_copper", {"default:stone_with_copper","default:mossycobble"}, 100, 0, 250000, 3, -30)
-mobs:register_spawn("mobs:goblin_gold", {"default:stone_with_gold" }, 100, 0, 250000, 2, -40)
-mobs:register_spawn("mobs:goblin_diamond", {"default:stone_with_diamond"}, 100, 0, 250000, 2, -60)
-mobs:register_spawn("mobs:goblin_king", {"default:stone_with_mese","default:mossycobble", }, 100, 0, 1000000, 1, -100)
---]]
+mobs:register_spawn("mobs:goblin_cobble", {
+	"default:cobble",
+	--"default:mossycobble",
+	--"default:desert_cobble"
+	},
+	0, 0, 500000, 4, -16
+)
+
+mobs:register_spawn("mobs:goblin_digger", {
+	--"default:cobblestone",
+	"default:mossycobble",
+	--"default:desert_cobble"
+	},
+	0, 0, 500000, 4, -16
+)
+
+mobs:register_spawn("mobs:goblin_coal", {
+	"default:stone_with_coal",
+	--"default:mossycobble",
+	--"default:desert_cobble"
+	},
+	0, 0, 500000, 3, -16
+)
+
+mobs:register_spawn("mobs:goblin_iron", {
+	"default:stone_with_iron",
+	--"default:mossycobble",
+	--"default:desert_cobble"
+	},
+	0, 0, 500000, 3, -16
+)
+
+mobs:register_spawn("mobs:goblin_copper", {
+	"default:stone_with_copper",
+	--"default:mossycobble",
+	--"default:desert_cobble"
+	},
+	0, 0, 500000, 3, -16
+)
+
+mobs:register_spawn("mobs:goblin_gold", {
+	"default:stone_with_gold",
+	--"default:mossycobble",
+	--"default:desert_cobble"
+	},
+	0, 0, 500000, 2, -64
+)
+
+mobs:register_spawn("mobs:goblin_diamond", {
+	"default:stone_with_diamond",
+	--"default:mossycobble",
+	--"default:desert_cobble"
+	},
+	0, 0, 500000, 2, -128
+)
+
+mobs:register_spawn("mobs:goblin_king", {
+	"default:stone_with_mese",
+	--"default:mossycobble",
+	--"default:desert_cobble"
+	},
+	0, 0, 500000, 1, -64
+)
+
 
 
 --[[ function mobs_goblins:spawn_specific(
