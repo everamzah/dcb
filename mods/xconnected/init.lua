@@ -462,9 +462,23 @@ minetest.register_craft({
 })
 
 -- TODO match xdecor's worktable, add hedges to worktable
-xconnected.register_wall( 'xconnected:wall_tree',               'default_tree.png' )
-xconnected.register_wall( 'xconnected:wall_wood',               'default_wood.png' )
-xconnected.register_wall( 'xconnected:wall_stone',              'default_stone.png' )
+xconnected.register_wall('xconnected:wall_tree', 'default_tree.png')
+minetest.register_craft({
+	output = "xconnected:wall_tree_c4 6",
+	recipe = {
+		{"default:tree", "default:tree", "default:tree"},
+		{"default:tree", "default:tree", "default:tree"}
+	}
+})
+xconnected.register_wall('xconnected:wall_wood', 'default_wood.png')
+minetest.register_craft({
+	output = "xconnected:wall_wood_c4 6",
+	recipe = {
+		{"default:wood", "default:wood", "default:wood"},
+		{"default:wood", "default:wood", "default:wood"}
+	}
+})
+xconnected.register_wall('xconnected:wall_stone', 'default_stone.png')
 minetest.register_craft({
 	output = "xconnected:wall_stone_c4 6",
 	recipe = {
@@ -488,7 +502,7 @@ minetest.register_craft({
 		{"default:mossycobble", "default:mossycobble", "default:mossycobble"}
 	}
 })
-xconnected.register_wall( "xconnected:wall_brick",              "default_brick.png" )
+xconnected.register_wall("xconnected:wall_brick", "default_brick.png")
 minetest.register_craft({
 	output = "xconnected:wall_brick_c4 6",
 	recipe = {
@@ -496,13 +510,62 @@ minetest.register_craft({
 		{"default:brick", "default:brick", "default:brick"}
 	}
 })
-xconnected.register_wall( "xconnected:wall_stone_brick",        "default_stone_brick.png" )
-xconnected.register_wall( "xconnected:wall_sandstone_brick",    "default_sandstone_brick.png" )
-xconnected.register_wall( "xconnected:wall_desert_stone_brick", "default_desert_stone_brick.png" )
-xconnected.register_wall( "xconnected:wall_obsidian_brick",     "default_obsidian_brick.png" )
-xconnected.register_wall( "xconnected:wall_hedge",              "default_leaves.png" )
-xconnected.register_wall( "xconnected:wall_clay",               "default_clay.png" )
-xconnected.register_wall( "xconnected:wall_coal_block",         "default_coal_block.png" )
+xconnected.register_wall("xconnected:wall_stone_brick", "default_stone_brick.png")
+minetest.register_craft({
+	output = "xconnected:wall_stone_brick_c4 6",
+	recipe = {
+		{"default:stonebrick", "default:stonebrick", "default:stonebrick"},
+		{"default:stonebrick", "default:stonebrick", "default:stonebrick"}
+	}
+})
+xconnected.register_wall("xconnected:wall_sandstone_brick", "default_sandstone_brick.png")
+minetest.register_craft({
+	output = "xconnected:wall_sandstone_brick_c4 6",
+	recipe = {
+		{"default:sandstonebrick", "default:sandstonebrick", "default:sandstonebrick"},
+		{"default:sandstonebrick", "default:sandstonebrick", "default:sandstonebrick"}
+	}
+})
+xconnected.register_wall("xconnected:wall_desert_stone_brick", "default_desert_stone_brick.png")
+minetest.register_craft({
+	output = "xconnected:wall_desert_stone_brick_c4 6",
+	recipe = {
+		{"default:desert_stonebrick", "default:desert_stonebrick", "default:desert_stonebrick"},
+		{"default:desert_stonebrick", "default:desert_stonebrick", "default:desert_stonebrick"}
+	}
+})
+xconnected.register_wall("xconnected:wall_obsidian_brick", "default_obsidian_brick.png")
+minetest.register_craft({
+	output = "xconnected:wall_obsidian_brick_c4 6",
+	recipe = {
+		{"default:obsidianbrick", "default:obsidianbrick", "default:obsidianbrick"},
+		{"default:obsidianbrick", "default:obsidianbrick", "default:obsidianbrick"}
+	}
+})
+xconnected.register_wall( "xconnected:wall_hedge", "default_leaves.png")
+minetest.register_craft({
+	output = "xconnected:wall_hedge_c4 6",
+	recipe = {
+		{"group:leaves", "group:leaves", "group:leaves"},
+		{"group:leaves", "group:leaves", "group:leaves"}
+	}
+})
+xconnected.register_wall( "xconnected:wall_clay", "default_clay.png")
+minetest.register_craft({
+	output = "xconnected:wall_clay_c4 6",
+	recipe = {
+		{"default:clay", "default:clay", "default:clay"},
+		{"default:clay", "default:clay", "default:clay"}
+	}
+})
+xconnected.register_wall("xconnected:wall_coal_block", "default_coal_block.png")
+minetest.register_craft({
+	output = "xconnected:wall_coal_block_c4 6",
+	recipe = {
+		{"default:coalblock", "default:coalblock", "default:coalblock"},
+		{"default:coalblock", "default:coalblock", "default:coalblock"}
+	}
+})
 
 -- default:fence_wood replaced
 xconnected.register_fence('xconnected:fence',        'xdecor_wood.png')
