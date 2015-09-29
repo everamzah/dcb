@@ -190,7 +190,7 @@ function mobs:register_mob(name, def)
 			end
 
 			-- if lifetimer run out and not npc; tamed or attacking then remove mob
-			--if self.type ~= "npc"
+			if self.type ~= "npc"
 			and not self.tamed then
 				self.lifetimer = self.lifetimer - dtime
 				if self.lifetimer <= 0
@@ -201,7 +201,7 @@ function mobs:register_mob(name, def)
 					self.object:remove()
 					return
 				end
-			--end
+			end
 
 			-- check for mob drop/replace (used for chicken egg and sheep eating grass/wheat)
 			if self.replace_rate
@@ -1144,6 +1144,7 @@ end
 		on_punch = function(self, hitter, tflp, tool_capabilities, dir)
 			-- weapon wear
 			local weapon = hitter:get_wielded_item()
+			--print(dump(tool_capabilities))
 			local punch_interval = tool_capabilities.full_punch_interval or 1.4
 			if weapon:get_definition().tool_capabilities ~= nil then
 				local wear = (punch_interval / 75) * 9000
@@ -1183,6 +1184,7 @@ end
 				local kb = self.knock_back
 				local r = self.recovery_time
 				local v = self.object:getvelocity()
+				--print("what")
 				if tflp < tool_capabilities.full_punch_interval then
 					if kb > 0 then
 						kb = kb * ( tflp / tool_capabilities.full_punch_interval )
