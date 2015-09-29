@@ -103,7 +103,11 @@ xdecor.register("cauldron", {
 		{ name = "xdecor_cauldron_top_anim.png",
 			animation = {type="vertical_frames", length=3.0} },
 		"xdecor_cauldron_sides.png"
-	}
+	},
+	on_construct = function(pos)
+		local meta = minetest.get_meta(pos)
+		meta:set_string("infotext", "Cauldron")
+	end
 })
 
 --[[if minetest.get_modpath("bucket") then

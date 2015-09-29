@@ -252,6 +252,37 @@ for _, n in pairs(nodes) do
 end
 end
 
+-- Register craft recipes and aliases for stairs and slabs.
+for _, n in pairs(nodes) do
+        local bolly = string.gsub(n, "(default_)", "")
+        minetest.register_alias("stairs:stair_"..bolly, "xdecor:stair_"..bolly)
+        minetest.register_craft({
+                output = bolly.."_stair 6",
+                recipe = {
+			{n, "", ""},
+                        {n, n, ""},
+                        {n, n, n}
+                }
+        })
+        minetest.register_craft({
+                output = bolly.."_stair 6",
+                recipe = {
+			{"", "", n},
+                        {"", n, n},
+                        {n, n, n}
+                }
+        })
+        minetest.register_alias("stairs:slab_"..bolly, "xdecor:slab_"..bolly)
+        minetest.register_craft({
+                output = bolly.."_slab 3",
+                recipe = {
+			{"", "", ""},
+                        {"", "", ""},
+                        {n, n, n}
+                }
+        })
+end
+
 minetest.register_abm({
 	nodenames = {"xdecor:worktable"},
 	interval = 3, chance = 1,

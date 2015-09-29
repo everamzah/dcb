@@ -38,11 +38,12 @@ minetest.register_node("clothing:loom", {
 			{-0.5,-0.5,-0.5,0.5,0.5,0.5}
 		},
 	},
+	--[[
 	after_place_node = function(pos, placer)
 		local meta = minetest.env:get_meta(pos)
 		meta:set_string("owner", (placer:get_player_name() or ""))
 		meta:set_string("infotext", "Loom (owned by " .. (placer:get_player_name() or "") .. ")")
-	end,
+	end,--]]
 	can_dig = function(pos,player)
 		local meta = minetest.env:get_meta(pos)
 		local inv = meta:get_inventory()
@@ -53,8 +54,7 @@ minetest.register_node("clothing:loom", {
 	end,
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
-		meta:set_string("formspec", "size[8,8;]".. --invsize[10,11;]
-			--"background[-0.15,-0.25;10.40,11.75;clothing_loom_background.png]"..
+		meta:set_string("formspec", "size[8,8;]"..
 			"bgcolor[#080808BB;true]"..
 			"background[5,5;1,1;gui_formbg.png;true]"..
 			"listcolors[#00000069;#5A5A5A;#141318;#30434C;#FFF]"..
@@ -62,14 +62,9 @@ minetest.register_node("clothing:loom", {
 			"list[current_name;output;6.5,2;1,1;]"..
 			"label[0.5,0.5;Wool]"..
 			"label[6.5,3;Clothing]"..
-			--"label[0,0;Clothing Loom:]"..
-			--"label[1.5,1.5;Hat]"..
 			"image_button[3,1;1,1;clothing_inv_hat_grey.png;hat;]"..
-			--"label[4,1.5;Shirt]"..
 			"image_button[4,1;1,1;clothing_inv_shirt_grey.png;shirt;]"..
-			--"label[1.5,3;Pants]"..
 			"image_button[3,2;1,1;clothing_inv_pants_grey.png;pants;]"..
-			--"label[4,3;Cape]"..
 			"image_button[4,2;1,1;clothing_inv_cape_grey.png;cape;]"..
 			"list[current_player;main;0,4;8,4;]")
 		meta:set_string("infotext", "Loom")
