@@ -99,15 +99,12 @@ xdecor.register("cardboard_box", {
 xdecor.register("cauldron", {
 	description = "Cauldron",
 	groups = {cracky=2},
+	infotext = "Cauldron",
 	tiles = {
 		{ name = "xdecor_cauldron_top_anim.png",
 			animation = {type="vertical_frames", length=3.0} },
 		"xdecor_cauldron_sides.png"
-	},
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		meta:set_string("infotext", "Cauldron")
-	end
+	}
 })
 
 --[[if minetest.get_modpath("bucket") then
