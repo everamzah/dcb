@@ -35,9 +35,7 @@ local nodes = { -- Nodes allowed to be cut.
         "caverealms:glow_emerald_ore", "caverealms:glow_ruby_ore", "caverealms:glow_amethyst_ore",
         "caverealms:thin_ice", "caverealms:salt_crystal", "caverealms:mushroom_cap",
         "caverealms:mushroom_stem", "caverealms:stone_with_salt", "caverealms:hot_cobble",
-        "caverealms:glow_obsidian", "caverealms:glow_obsidian_2", "caverealms:coal_dust",
-
-	"foodblock:appleblock", "foodblock:breadblock", "foodblock:carrotblock"
+        "caverealms:glow_obsidian", "caverealms:glow_obsidian_2", "caverealms:coal_dust"
 }
 
 local def = { -- Nodebox name, anzhal, definition.
