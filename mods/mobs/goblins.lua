@@ -860,7 +860,7 @@ mobs:register_egg("mobs:goblin_king", "Goblin King Egg", "default_mossycobble.pn
 
 
 -- register_spawn(name, nodes, max_light, min_light, chance, active_object_count, max_height)
-
+--[[
 mobs:register_spawn("mobs:goblin_cobble", {
 	"default:cobble",
 	--"default:mossycobble",
@@ -924,6 +924,7 @@ mobs:register_spawn("mobs:goblin_king", {
 	},
 	0, 0, 500000, 1, -64
 )
+--]]
 
 
 

@@ -34,7 +34,7 @@ mobs:register_mob("mobs:rat", {
 ]]
 })
 
-mobs:register_spawn("mobs:rat", {"default:stone"}, 20, 5, 150000, 1, 0)
+--mobs:register_spawn("mobs:rat", {"default:stone"}, 20, 5, 150000, 1, 0)
 
 mobs:register_egg("mobs:rat", "Rat", "mobs_rat_inventory.png", 0)
 	
