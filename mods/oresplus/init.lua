@@ -15,8 +15,8 @@ for _, o in pairs(ores_datas) do
 		clust_scarcity = o[3],
 		clust_num_ores = o[4],
 		clust_size = o[5],
-		height_min = o[6],
-		height_max = o[7]
+		y_min = o[6],
+		y_max = o[7]
 	})
 end
 
@@ -24,7 +24,7 @@ end
 
 minetest.register_node("oresplus:bedrock", {
 	description = "Bedrock",
-	tile_images = {"oresplus_bedrock.png"},
+	tiles = {"oresplus_bedrock.png"},
 	groups = {unbreakable=1},
 	sounds = default.node_sound_stone_defaults(),
 	on_blast = function() end,

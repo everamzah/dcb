@@ -20,8 +20,8 @@ minetest.register_ore({
 	clust_scarcity = MEZE_FREQUENCY,
 	clust_num_ores = 3,
 	clust_size     = 2,
-	height_min     = 0,
-	height_max     = 64,
+	y_min     = 0,
+	y_max     = 64,
 })
 
 minetest.register_ore({
@@ -31,8 +31,8 @@ minetest.register_ore({
 	clust_scarcity = MEZE_FREQUENCY,
 	clust_num_ores = 3,
 	clust_size     = 2,
-	height_min     = 0,
-	height_max     = 64,
+	y_min     = 0,
+	y_max     = 64,
 })
 
 local function die_later(digger)

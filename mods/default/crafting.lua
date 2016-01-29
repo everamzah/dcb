@@ -29,6 +29,13 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+	output = 'default:aspen_wood 4',
+	recipe = {
+		{'default:aspen_tree'},
+	}
+})
+
+minetest.register_craft({
 	output = 'default:stick 4',
 	recipe = {
 		{'group:wood'},
@@ -36,34 +43,10 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "xconnected:fence_c4 6",
+	output = 'default:fence_wood 2',
 	recipe = {
-		{'default:wood', 'dcb:fence_post', 'default:wood'},
-		{'default:wood', 'dcb:fence_post', 'default:wood'}
-	}
-})
-
-minetest.register_craft({
-	output = "xconnected:fence_pine_c4 6",
-	recipe = {
-		{"default:pinewood", "dcb:fence_post", "default:pinewood"},
-		{"default:pinewood", "dcb:fence_post", "default:pinewood"}
-	}
-})
-
-minetest.register_craft({
-	output = "xconnected:fence_jungle_c4 6",
-	recipe = {
-		{"default:junglewood", "dcb:fence_post", "default:junglewood"},
-		{"default:junglewood", "dcb:fence_post", "default:junglewood"}
-	}
-})
-
-minetest.register_craft({
-	output = "xconnected:fence_acacia_c4 6",
-	recipe = {
-		{"default:acacia_wood", "dcb:fence_post", "default:acacia_wood"},
-		{"default:acacia_wood", "dcb:fence_post", "default:acacia_wood"}
+		{'group:stick', 'group:stick', 'group:stick'},
+		{'group:stick', 'group:stick', 'group:stick'},
 	}
 })
 
@@ -765,13 +748,11 @@ minetest.register_craft({
 	burntime = 30,
 })
 
---[[
 minetest.register_craft({
 	type = "fuel",
 	recipe = "default:fence_wood",
 	burntime = 15,
 })
---]]
 
 minetest.register_craft({
 	type = "fuel",

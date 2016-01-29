@@ -9,11 +9,11 @@ minetest.register_craftitem("dcb:tool", {
 	groups = {not_in_creative_inventory=1},
 	tool_capabilities = {
 		groupcaps = {
-			snappy={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxwear=0, maxlevel=3},
-			choppy={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxwear=0, maxlevel=3},
-			cracky={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxwear=0, maxlevel=3},
-			crumbly={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxwear=0, maxlevel=3},
-			oddly_breakable_by_hand={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxwear=0, maxlevel=3},
+			snappy={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxlevel=3},
+			choppy={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxlevel=3},
+			cracky={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxlevel=3},
+			crumbly={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxlevel=3},
+			oddly_breakable_by_hand={times={[1]=sstep, [2]=sstep, [3]=sstep}, maxlevel=3},
 		},
 		damage_groups = {fleshy=10},
 	},
