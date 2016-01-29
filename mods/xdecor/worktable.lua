@@ -1,195 +1,418 @@
 local worktable = {}
-local xbg = default.gui_bg..default.gui_bg_img..default.gui_slots
+screwdriver = screwdriver or {}
 
-local nodes = { -- Nodes allowed to be cut.
-	"default:wood", "default:junglewood", "default:pine_wood", "default:acacia_wood",
-	"default:tree", "default:jungletree", "default:pine_tree", "default:acacia_tree",
-	"default:pinewood", "default:pinetree",
-	"default:cobble", "default:mossycobble", "default:desert_cobble",
-	"default:stone", "default:sandstone", "default:desert_stone", "default:obsidian",
-	"default:stonebrick", "default:sandstonebrick", "default:desert_stonebrick", "default:obsidianbrick",
-	"default:coalblock", "default:copperblock", "default:steelblock", "default:goldblock", 
-	"default:bronzeblock", "default:mese", "default:diamondblock",
-	"default:brick", "default:cactus", "default:ice", "default:meselamp",
-	"default:glass", "default:obsidian_glass", "default:gravel",
-	"default:leaves", "default:dirt", "default:snowblock", "default:sand",
-	"default:desert_sand", "default:clay",
+-- Nodes allowed to be cut.
+-- Registration format: [mod name] = [[ node names ]].
+worktable.nodes = {
+	["default"] = [[
+		wood junglewood pine_wood acacia_wood
+                tree jungletree pine_tree acacia_tree
+		pinewood pinetree
+		cobble mossycobble desert_cobble
+		stone sandstone desert_stone obsidian
+		stonebrick sandstonebrick desert_stonebrick obsidianbrick
+		coalblock copperblock steelblock goldblock
+		bronzeblock mese diamondblock
+		brick cactus ice meselamp glass obsidian_glass
+		clay desert_sand sand snowblock dirt
+		leaves gravel
+	]],
 
-	"farming:straw",
+	["xdecor"] = [[
+		coalstone_tile desertstone_tile stone_rune stone_tile
+		cactusbrick hard_clay packed_ice moonbrick
+		woodframed_glass wood_tile
+	]],
 
-	"bones:bones",
+	["oresplus"] = [[
+		emerald_block glowstone
+	]],
 
-	"oresplus:emerald_block", "oresplus:glowstone",
+	["farming"] = "straw",
 
-	"xdecor:coalstone_tile", "xdecor:desertstone_tile", "xdecor:stone_rune", "xdecor:stone_tile",
-	"xdecor:hard_clay", "xdecor:packed_ice", "xdecor:moonbrick",
-	"xdecor:woodframed_glass", "xdecor:wood_tile",
+	["bones"] = "bones",
 
-        "wool:black", "wool:brown", "wool:dark_green", "wool:green",
-        "wool:magenta", "wool:pink", "wool:violet", "wool:yellow",
-        "wool:blue", "wool:cyan", "wool:dark_grey", "wool:grey",
-        "wool:orange", "wool:red", "wool:white",
+	["wool"] = [[
+		black brown dark_green green
+		magenta pink violet yellow
+		blue cyan dark_grey grey
+		orange red white
+	]],
 
-        "caverealms:glow_crystal", "caverealms:glow_emerald", "caverealms:glow_mese",
-        "caverealms:glow_ruby", "caverealms:glow_amethyst", "caverealms:glow_ore",
-        "caverealms:glow_emerald_ore", "caverealms:glow_ruby_ore", "caverealms:glow_amethyst_ore",
-        "caverealms:thin_ice", "caverealms:salt_crystal", "caverealms:mushroom_cap",
-        "caverealms:mushroom_stem", "caverealms:stone_with_salt", "caverealms:hot_cobble",
-        "caverealms:glow_obsidian", "caverealms:glow_obsidian_2", "caverealms:coal_dust"
+	["caverealms"] = [[
+		glow_crystal glow_emerald glow_mese
+		glow_ruby glow_amethyst glow_ore
+		glow_emerald_ore glow_ruby_ore glow_amethyst_ore
+		thin_ice salt_crystal mushroom_cap
+		mushroom_stem stone_with_salt hot_cobble
+		glow_obsidian glow_obsidian_2 coal_dust
+	]]
 }
 
-local def = { -- Nodebox name, anzhal, definition.
-	{"nanoslab", 16, {-.5,-.5,-.5,0,-.4375,0}},
-	{"micropanel", 16, {-.5,-.5,-.5,.5,-.4375,0}},
-	{"microslab", 8, {-.5,-.5,-.5,.5,-.4375,.5}},
-	{"thinstair", 8, {{-.5,-.0625,-.5,.5,0,0},{-.5,.4375,0,.5,.5,.5}}},
-	{"cube", 4, {-.5,-.5,0,0,0,.5}},
-	{"panel", 4, {-.5,-.5,-.5,.5,0,0}},
-	{"slab", 2, {-.5,-.5,-.5,.5,0,.5}},
-	{"doublepanel", 2, {{-.5,-.5,-.5,.5,0,0},{-.5,0,0,.5,.5,.5}}},
-	{"halfstair", 2, {{-.5,-.5,-.5,0,0,.5},{-.5,0,0,0,.5,.5}}},
-	{"outerstair", 1, {{-.5,-.5,-.5,.5,0,.5},{-.5,0,0,0,.5,.5}}},
-	{"stair", 1, {{-.5,-.5,-.5,.5,0,.5},{-.5,0,0,.5,.5,.5}}},
-	{"innerstair", 1, {{-.5,-.5,-.5,.5,0,.5},{-.5,0,0,.5,.5,.5},{-.5,0,-.5,0,.5,0}}}
+-- Nodeboxes definitions.
+worktable.defs = {
+	-- Name       Yield   X  Y   Z  W   H  L
+	{"nanoslab",	16, { 0, 0,  0, 8,  1, 8  }},
+	{"micropanel",	16, { 0, 0,  0, 16, 1, 8  }},
+	{"microslab",	8,  { 0, 0,  0, 16, 1, 16 }},
+	{"thinstair",	8,  { 0, 7,  0, 16, 1, 8  },
+			    { 0, 15, 8, 16, 1, 8  }},
+	{"cube", 	4,  { 0, 0,  0, 8,  8, 8  }},
+	{"panel",	4,  { 0, 0,  0, 16, 8, 8  }},
+	{"slab", 	2,  nil			  },
+	{"doublepanel", 2,  { 0, 0,  0, 16, 8, 8  },
+			    { 0, 8,  8, 16, 8, 8  }},
+	{"halfstair",	2,  { 0, 0,  0, 8,  8, 16 },
+			    { 0, 8,  8, 8,  8, 8  }},
+	{"outerstair",	1,  { 0, 0,  0, 16, 8, 16 },
+			    { 0, 8,  8, 8,  8, 8  }},
+	{"stair",	1,  nil			  },
+	{"innerstair",	1,  { 0, 0,  0, 16, 8, 16 },
+			    { 0, 8,  8, 16, 8, 8  },
+			    { 0, 8,  0, 8,  8, 8  }}
 }
 
-function worktable.crafting(pos)
-	local meta = minetest.get_meta(pos)
-	return "size[8,7;]"..xbg..
-		"list[current_player;main;0,3.3;8,4;]"..
-		"image[5,1;1,1;gui_furnace_arrow_bg.png^[transformR270]"..
-		"list[current_player;craft;2,0;3,3;]"..
-		"list[current_player;craftpreview;6,1;1,1;]"
+function worktable.get_recipe(item)
+	if item:find("^group:") then
+		if item:find("wool$") or item:find("dye$") then
+			item = item:sub(7)..":white"
+		elseif minetest.registered_items["default:"..item:sub(7)] then
+			item = item:gsub("group:", "default:")
+		else
+			for node, def in pairs(minetest.registered_items) do
+				if def.groups[item:match("[^,:]+$")] then
+					item = node
+				end
+			end
+		end
+	end
+	return item
 end
 
-function worktable.storage(pos)
-	local inv = minetest.get_meta(pos):get_inventory()
-	local f = "size[8,7]"..xbg..
-		"list[context;storage;0,0;8,2;]list[current_player;main;0,3.25;8,4;]"
-	inv:set_size("storage", 8*2)
-	return f
+function worktable.craftguide_formspec(meta, pagenum, item, recipe_num, filter, tab_id)
+	local inv_size = meta:get_int("inv_size")
+	local npp, i, s = 8*3, 0, 0
+	local pagemax = math.floor((inv_size - 1) / npp + 1)
+
+	if pagenum > pagemax then
+		pagenum = 1
+	elseif pagenum == 0 then
+		pagenum = pagemax
+	end
+
+	local formspec = [[ size[8,6.6;]
+			tablecolumns[color;text;color;text]
+			tableoptions[background=#00000000;highlight=#00000000;border=false]
+			button[5.5,0;0.7,1;prev;<]
+			button[7.3,0;0.7,1;next;>]
+			button[4,0.2;0.7,0.5;search;?]
+			button[4.6,0.2;0.7,0.5;clearfilter;X]
+			button[0,0;1.5,1;backcraft;< Back]
+			tooltip[search;Search]
+			tooltip[clearfilter;Reset] ]]
+			.."tabheader[0,0;tabs;All,Nodes,Tools,Items;"..tostring(tab_id)..";true;false]"..
+			"table[6.1,0.2;1.1,0.5;pagenum;#FFFF00,"..tostring(pagenum)..
+			",#FFFFFF,/ "..tostring(pagemax).."]"..
+			"field[1.8,0.32;2.6,1;filter;;"..filter.."]"..xbg
+
+	for _, name in pairs(worktable.craftguide_main_list(meta, filter, tab_id)) do
+		if s < (pagenum - 1) * npp then
+			s = s + 1
+		else
+			if i >= npp then break end
+			formspec = formspec.."item_image_button["..(i%8)..","..
+					(math.floor(i/8)+1)..";1,1;"..name..";"..name..";]"
+			i = i + 1
+		end
+	end
+
+	if item and minetest.registered_items[item] then
+		--print(dump(minetest.get_all_craft_recipes(item)))
+		local items_num = #minetest.get_all_craft_recipes(item)
+		if recipe_num > items_num then recipe_num = 1 end
+
+		if items_num > 1 then
+			formspec = formspec.."button[0,6;1.6,1;alternate;Alternate]"..
+					"label[0,5.5;Recipe "..recipe_num.." of "..items_num.."]"
+		end
+		
+		local type = minetest.get_all_craft_recipes(item)[recipe_num].type
+		if type == "cooking" then
+			formspec = formspec.."image[3.75,4.6;0.5,0.5;default_furnace_fire_fg.png]"
+		end
+
+		local items = minetest.get_all_craft_recipes(item)[recipe_num].items
+		local width = minetest.get_all_craft_recipes(item)[recipe_num].width
+		local yield = minetest.get_all_craft_recipes(item)[recipe_num].output:match("%s(%d+)") or ""
+		if width == 0 then width = math.min(3, #items) end
+		local rows = math.ceil(table.maxn(items) / width)
+
+		local function is_group(item)
+			if item:find("^group:") then return "G" end
+			return ""
+		end
+
+		for i, v in pairs(items) do
+			formspec = formspec.."item_image_button["..((i-1) % width + 4.5)..","..
+				(math.floor((i-1) / width + (6 - math.min(2, rows))))..";1,1;"..
+				worktable.get_recipe(v)..";"..worktable.get_recipe(v)..";"..is_group(v).."]"
+		end
+
+		formspec = formspec.."item_image_button[2.5,5;1,1;"..item..";"..item..";"..yield.."]"..
+				"image[3.5,5;1,1;gui_furnace_arrow_bg.png^[transformR90]"
+	end
+
+	meta:set_string("formspec", formspec)
 end
+
+local function tab_category(tab_id)
+	local id_category = {
+		minetest.registered_items,
+		minetest.registered_nodes,
+		minetest.registered_tools,
+		minetest.registered_craftitems
+	}
+
+	return id_category[tab_id] or id_category[1]
+end
+
+function worktable.craftguide_main_list(meta, filter, tab_id)
+	local items_list = {}
+	for name, def in pairs(tab_category(tab_id)) do
+		if not (def.groups.not_in_creative_inventory == 1) and
+				minetest.get_craft_recipe(name).items and
+				def.description and def.description ~= "" and
+				(not filter or def.name:find(filter, 1, true)) then
+			items_list[#items_list+1] = name
+		end
+	end
+
+	meta:set_int("inv_size", #items_list)
+	table.sort(items_list)
+	return items_list
+end
+
+worktable.formspecs = {
+	crafting = function(meta)
+		meta:set_string("formspec", [[ size[8,7;]
+			image[5,1;1,1;gui_furnace_arrow_bg.png^[transformR270]
+			image[0.06,2.12;0.8,0.8;trash_icon.png]
+			button[0,0;1.5,1;back;< Back]
+			button[0,0.85;1.5,1;craftguide;Guide]
+			list[context;trash;0,2;1,1;]
+			list[current_player;main;0,3.3;8,4;]
+			list[current_player;craft;2,0;3,3;]
+			list[current_player;craftpreview;6,1;1,1;]
+			listring[current_player;main]
+			listring[current_player;craft] ]]
+			..xbg..default.get_hotbar_bg(0,3.3))
+	end,
+	storage = function(meta)
+		meta:set_string("formspec", [[ size[8,7]
+			image[7.06,0.12;0.8,0.8;trash_icon.png]
+			list[context;trash;7,0;1,1;]
+			list[context;storage;0,1;8,2;]
+			list[current_player;main;0,3.25;8,4;]
+			listring[context;storage]
+			listring[current_player;main]
+			button[0,0;1.5,1;back;< Back] ]]
+			..xbg..default.get_hotbar_bg(0,3.25))
+	end,
+	main = function(meta)
+		meta:set_string("formspec", [[ size[8,7;]
+			label[0.9,1.23;Cut]
+			label[0.9,2.23;Repair]
+			box[-0.05,1;2.05,0.9;#555555]
+			box[-0.05,2;2.05,0.9;#555555]
+			image[3,1;1,1;gui_furnace_arrow_bg.png^[transformR270]
+			image[0,1;1,1;worktable_saw.png]
+			image[0,2;1,1;worktable_anvil.png]
+			image[3,2;1,1;hammer_layout.png]
+			list[context;input;2,1;1,1;]
+			list[context;tool;2,2;1,1;]
+			list[context;hammer;3,2;1,1;]
+			list[context;forms;4,0;4,3;]
+			list[current_player;main;0,3.25;8,4;]
+			button[0,0;2,1;craft;Crafting]
+			button[2,0;2,1;storage;Storage] ]]
+			..xbg..default.get_hotbar_bg(0,3.25))
+	end
+}
 
 function worktable.construct(pos)
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 
-	inv:set_size("forms", 4*3)
-	inv:set_size("input", 1)
 	inv:set_size("tool", 1)
+	inv:set_size("trash", 1)
+	inv:set_size("input", 1)
 	inv:set_size("hammer", 1)
-
-	local formspec = "size[8,7;]"..xbg..
-		"list[context;forms;4,0;4,3;]" ..
-		"label[0.95,1.23;Cut]box[-0.05,1;2.05,0.9;#555555]"..
-		"image[3,1;1,1;gui_furnace_arrow_bg.png^[transformR270]"..
-		"label[0.95,2.23;Repair]box[-0.05,2;2.05,0.9;#555555]"..
-		"image[0,1;1,1;xdecor_saw.png]image[0,2;1,1;xdecor_anvil.png]"..
-		"image[3,2;1,1;hammer_layout.png]"..
-		"list[current_name;input;2,1;1,1;]"..
-		"list[current_name;tool;2,2;1,1;]list[current_name;hammer;3,2;1,1;]"..
-		"button[0,0;2,1;craft;Crafting]"..
-		"button[2,0;2,1;storage;Storage]"..
-		"list[current_player;main;0,3.25;8,4;]"
-
-	meta:set_string("formspec", formspec)
+	inv:set_size("forms", 4*3)
+	inv:set_size("storage", 8*2)
 	meta:set_string("infotext", "Work Table")
+
+	worktable.formspecs.main(meta)
 end
 
-function worktable.fields(pos, _, fields, sender)
-	local player = sender:get_player_name()
+function worktable.fields(pos, _, fields)
+	if fields.quit then return end
+	local meta = minetest.get_meta(pos)
+	local formspec = meta:to_table().fields.formspec
+	local filter = formspec:match("filter;;([%w_:]+)") or ""
+	local pagenum = tonumber(formspec:match("#FFFF00,(%d+)")) or 1
+	local tab_id = tonumber(formspec:match("tabheader%[.*;(%d+)%;.*%]")) or 1
+
+	if fields.back then
+		worktable.formspecs.main(meta)
+	elseif fields.craft or fields.backcraft then
+		worktable.formspecs.crafting(meta)
+	elseif fields.storage then
+		worktable.formspecs.storage(meta)
+	elseif fields.craftguide or fields.clearfilter then
+		worktable.craftguide_main_list(meta, nil, tab_id)
+		worktable.craftguide_formspec(meta, 1, nil, 1, "", tab_id)
+	elseif fields.alternate then
+		local item = formspec:match("item_image_button%[.*;([%w_:]+);.*%]") or ""
+		local recipe_num = tonumber(formspec:match("Recipe%s(%d+)")) or 1
+		recipe_num = recipe_num + 1
+		worktable.craftguide_formspec(meta, pagenum, item, recipe_num, filter, tab_id)
+	elseif fields.search then
+		worktable.craftguide_main_list(meta, fields.filter:lower(), tab_id)
+		worktable.craftguide_formspec(meta, 1, nil, 1, fields.filter:lower(), tab_id)
+	elseif fields.tabs then
+		worktable.craftguide_main_list(meta, filter, tonumber(fields.tabs))
+		worktable.craftguide_formspec(meta, 1, nil, 1, filter, tonumber(fields.tabs))
+	elseif fields.prev or fields.next then
+		if fields.prev then
+			pagenum = pagenum - 1
+		else
+			pagenum = pagenum + 1
+		end
+		worktable.craftguide_formspec(meta, pagenum, nil, 1, filter, tab_id)
+	else
+		for item in pairs(fields) do
+			if item:match(".-:") and minetest.get_craft_recipe(item).items then
+				worktable.craftguide_formspec(meta, pagenum, item, 1, filter, tab_id)
+			end
+		end
+	end
+end
+
+function worktable.dig(pos)
 	local inv = minetest.get_meta(pos):get_inventory()
-
-	if fields.storage then
-		minetest.show_formspec(player, "", worktable.storage(pos))
-	end
-	if fields.craft then
-		minetest.show_formspec(player, "", worktable.crafting(pos))
-	end
+	return inv:is_empty("input") and inv:is_empty("hammer") and
+		inv:is_empty("tool") and inv:is_empty("storage")
 end
 
-function worktable.dig(pos, _)
+function worktable.allowed(mod, node)
+	if not mod then return end
+	for it in mod:gmatch("[%w_]+") do
+		if it == node then return true end
+	end
+	return false
+end
+
+local function trash_delete(pos)
 	local inv = minetest.get_meta(pos):get_inventory()
-	if not inv:is_empty("input") or not inv:is_empty("hammer") or not
-			inv:is_empty("tool") or not inv:is_empty("storage") then
-		return false
-	end
-	return true
+	minetest.after(0, function()
+		inv:set_stack("trash", 1, "")
+	end)
 end
 
-function worktable.put(_, listname, _, stack, _)
-	local stn = stack:get_name()
-	local count = stack:get_count()
-	local mat = table.concat(nodes)
+function worktable.put(pos, listname, _, stack)
+	local stackname = stack:get_name()
+	local mod, node = stackname:match("(.*):(.*)")
+	local allowed_tools = "pick, axe, shovel, sword, hoe, armor"
 
-	if listname == "forms" then return 0 end
-	if listname == "input" then
-		if mat:match(stn) then return count end
+	for v in allowed_tools:gmatch("[%w_]+") do
+		if listname == "tool" and stack:get_wear() > 0 and stackname:find(v) then
+			return stack:get_count()
+		end
+	end
+	if (listname == "input" and worktable.allowed(worktable.nodes[mod], node)) or
+			(listname == "hammer" and stackname == "xdecor:hammer") or
+			listname == "storage" or listname == "trash" then
+		if listname == "trash" then trash_delete(pos) end
+		return stack:get_count()
+	end
+
+	return 0
+end
+
+function worktable.take(_, listname, _, stack, player)
+	if listname == "forms" then
+		local inv = player:get_inventory()
+		if inv:room_for_item("main", stack:get_name()) then
+			return -1
+		end
 		return 0
 	end
-	if listname == "hammer" then
-		if stn ~= "xdecor:hammer" then return 0 end
-	end
-	if listname == "tool" then
-		local tdef = minetest.registered_tools[stn]
-		local twear = stack:get_wear()
-		if not (tdef and twear > 0) then return 0 end
-	end
-	return count
-end
-
-function worktable.take(_, listname, _, stack, _)
-	if listname == "forms" then return -1 end
 	return stack:get_count()
 end
 
-function worktable.move(_, from_list, _, to_list, _, count, _)
-	if from_list == "storage" and to_list == "storage" then
-		return count else return 0 end
+function worktable.move(pos, _, _, to_list, _, count)
+	if to_list == "storage" then
+		return count
+	elseif to_list == "trash" then
+		trash_delete(pos)
+		return count
+	end
+	return 0
 end
 
-local function update_inventory(inv, inputstack)
-	if inv:is_empty("input") then inv:set_list("forms", {}) return end
-	local output = {}
-
-	for _, n in pairs(def) do
-		local mat = inputstack:get_name()
-		local input = inv:get_stack("input", 1)
-		local count = math.min(n[2] * input:get_count(), inputstack:get_stack_max())
-
-		output[#output+1] = string.format("%s_%s %d", mat, n[1], count)
+function worktable.get_output(inv, input, name)
+	if inv:is_empty("input") then
+		inv:set_list("forms", {})
+		return
 	end
+
+	local output = {}
+	for _, n in pairs(worktable.defs) do
+		local count = math.min(n[2] * input:get_count(), input:get_stack_max())
+		local item = name.."_"..n[1]
+		if not n[3] then item = "stairs:"..n[1].."_"..name:match(":(.*)") end
+
+		output[#output+1] = item.." "..count
+	end
+
 	inv:set_list("forms", output)
 end
 
-function worktable.on_put(pos, listname, _, stack, _)
+function worktable.on_put(pos, listname, _, stack)
 	if listname == "input" then
 		local inv = minetest.get_meta(pos):get_inventory()
-		update_inventory(inv, stack)
+		local input = inv:get_stack("input", 1)
+		worktable.get_output(inv, input, stack:get_name())
 	end
 end
 
-function worktable.on_take(pos, listname, index, stack, _)
+function worktable.on_take(pos, listname, index, stack)
 	local inv = minetest.get_meta(pos):get_inventory()
+	local input = inv:get_stack("input", 1)
+
 	if listname == "input" then
-		update_inventory(inv, stack)
+		if stack:get_name() == input:get_name() then
+			worktable.get_output(inv, input, stack:get_name())
+		else
+			inv:set_list("forms", {})
+		end
 	elseif listname == "forms" then
-		local inputstack = inv:get_stack("input", 1)
-		inputstack:take_item(math.ceil(stack:get_count() / def[index][2]))
-		inv:set_stack("input", 1, inputstack)
-		update_inventory(inv, inputstack)
+		input:take_item(math.ceil(stack:get_count() / worktable.defs[index][2]))
+		inv:set_stack("input", 1, input)
+		worktable.get_output(inv, input, input:get_name())
 	end
 end
 
 xdecor.register("worktable", {
 	description = "Work Table",
-	groups = {cracky=2, choppy=2},
+	groups = {cracky=2, choppy=2, oddly_breakable_by_hand=1},
 	sounds = default.node_sound_wood_defaults(),
 	tiles = {
 		"xdecor_worktable_top.png", "xdecor_worktable_top.png",
 		"xdecor_worktable_sides.png", "xdecor_worktable_sides.png",
 		"xdecor_worktable_front.png", "xdecor_worktable_front.png"
 	},
+	on_rotate = screwdriver.rotate_simple,
 	can_dig = worktable.dig,
 	on_construct = worktable.construct,
 	on_receive_fields = worktable.fields,
@@ -200,105 +423,125 @@ xdecor.register("worktable", {
 	allow_metadata_inventory_move = worktable.move
 })
 
-local function description(node, shape)
-	local desc = node:gsub("%w+:", " "):gsub("_", " "):gsub(" %l", string.upper):sub(2)..
-		" "..shape:gsub("^%l", string.upper)
-	return desc
-end
+for _, d in pairs(worktable.defs) do
+for mod, n in pairs(worktable.nodes) do
+for name in n:gmatch("[%w_]+") do
+	local ndef = minetest.registered_nodes[mod..":"..name]
+	if ndef and d[3] then
+		local groups, tiles, light = {}, {}, 0
+		groups.not_in_creative_inventory = 1
 
-local function groups(node)
-	if node:find("tree") or node:find("wood") or node:find("cactus") then
-		return {choppy=3, not_in_creative_inventory=1}
-	end
-	return {cracky=3, not_in_creative_inventory=1}
-end
+		for k, v in pairs(ndef.groups) do
+			if k ~= "wood" and k ~= "stone" and k ~= "level" then
+				groups[k] = v
+			end
+		end
 
-local function shady(shape)
-	if shape == "stair" or shape == "slab" or shape == "innerstair" or
-			shape == "outerstair" then return false end
-	return true
-end
+		if #ndef.tiles > 1 and not ndef.drawtype:find("glass") then
+			tiles = ndef.tiles
+		else
+			tiles = {ndef.tiles[1]}
+		end
 
-local function tiles(node, ndef)
-	if node:find("glass") then return {node:gsub(":", "_")..".png"} end
-	return ndef.tiles
-end
+		stairs.register_stair_and_slab(name, mod..":"..name, groups, tiles,
+			ndef.description.." Stair", ndef.description.." Slab", ndef.sounds)
 
-for _, d in pairs(def) do
-for _, n in pairs(nodes) do
-	local ndef = minetest.registered_nodes[n]
-	if ndef then
-		minetest.register_node(":"..n.."_"..d[1], {
-			description = description(n, d[1]),
+		if ndef.light_source > 3 then
+			light = ndef.light_source - 1
+			minetest.override_item("stairs:slab_"..name, {light_source=light})
+			minetest.override_item("stairs:stair_"..name, {light_source=light})
+		end
+
+		minetest.register_node(":"..mod..":"..name.."_"..d[1], {
+			description = ndef.description.." "..d[1]:gsub("^%l", string.upper),
 			paramtype = "light",
 			paramtype2 = "facedir",
 			drawtype = "nodebox",
-			light_source = ndef.light_source,
+			light_source = light,
 			sounds = ndef.sounds,
-			tiles = tiles(n, ndef),
-			groups = groups(n),
-			node_box = {type = "fixed", fixed = d[3]},
-			sunlight_propagates = shady(d[1]),
-			on_place = minetest.rotate_node
+			tiles = tiles,
+			groups = groups,
+			node_box = xdecor.pixelnodebox(16, {d[3], d[4], d[5]}),
+			sunlight_propagates = true,
+			on_place = minetest.rotate_node,
+			on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+				local pointed_nodebox = minetest.get_node(pos).name:match("(%w+)$")
+				local wield_item = clicker:get_wielded_item():get_name()
+				local player_name = clicker:get_player_name()
+				local newnode = ""
+
+				if minetest.is_protected(pos, player_name) then
+					minetest.record_protection_violation(pos, player_name)
+					return
+				end
+
+				local T = {
+					{"nanoslab",   nil,	     2},
+					{"micropanel", nil,	     3},
+					{"cube",       nil,	     6},
+					{"cube",       "panel",      9},
+					{"cube",       "outerstair", 11},
+					{"cube",       "halfstair",  7},
+					{"cube",       "innerstair", nil},
+					{"panel",      nil,          7},
+					{"panel",      "outerstair", 12},
+					{"halfstair",  nil,	     11},
+					{"halfstair",  "outerstair", nil}
+				}
+
+				for _, x in pairs(T) do
+					if wield_item == mod..":"..name.."_"..x[1] then
+						if not x[2] then x[2] = x[1] end
+						if x[2] == pointed_nodebox then
+							if not x[3] then
+								newnode = mod..":"..name
+							else
+								newnode = mod..":"..name.."_"..worktable.defs[x[3]][1]
+							end
+						end
+					end
+				end
+
+				if clicker:get_player_control().sneak then
+					if not minetest.registered_nodes[newnode] then return end
+					minetest.set_node(pos, {name=newnode, param2=node.param2})
+				else
+					minetest.item_place_node(ItemStack(wield_item), clicker, pointed_thing)
+				end
+
+				if not minetest.setting_getbool("creative_mode") then
+					itemstack:take_item()
+				end
+
+				return itemstack
+			end
 		})
 	end
-	if n:match("default:") then
-		minetest.register_alias("xdecor:"..d[1].."_"..n:match(":(.+)"), n.."_"..d[1])
-		--print("xdecor:"..d[1].."_"..n:match(":(.+)"), n.."_"..d[1])
-	else
-		minetest.register_alias("xdecor:"..d[1].."_"..n:gsub(":", "_", 1), n.."_"..d[1])
-		--print("xdecor:"..d[1].."_"..n:gsub(":", "_", 1), n.."_"..d[1])
+	if not d[3] then
+		minetest.register_alias(mod..":"..name.."_"..d[1], "stairs:"..d[1].."_"..name)
 	end
 end
 end
-
--- Register craft recipes and aliases for stairs and slabs.
-for _, n in pairs(nodes) do
-        local bolly = string.gsub(n, "(default_)", "")
-        minetest.register_alias("stairs:stair_"..bolly, "xdecor:stair_"..bolly)
-        minetest.register_craft({
-                output = bolly.."_stair 6",
-                recipe = {
-			{n, "", ""},
-                        {n, n, ""},
-                        {n, n, n}
-                }
-        })
-        minetest.register_craft({
-                output = bolly.."_stair 6",
-                recipe = {
-			{"", "", n},
-                        {"", n, n},
-                        {n, n, n}
-                }
-        })
-        minetest.register_alias("stairs:slab_"..bolly, "xdecor:slab_"..bolly)
-        minetest.register_craft({
-                output = bolly.."_slab 3",
-                recipe = {
-			{"", "", ""},
-                        {"", "", ""},
-                        {n, n, n}
-                }
-        })
 end
 
 minetest.register_abm({
 	nodenames = {"xdecor:worktable"},
 	interval = 3, chance = 1,
-	action = function(pos, _, _, _)
+	action = function(pos)
 		local inv = minetest.get_meta(pos):get_inventory()
 		local tool = inv:get_stack("tool", 1)
 		local hammer = inv:get_stack("hammer", 1)
-		local wear = tool:get_wear()
 
-		if tool:is_empty() or hammer:is_empty() or wear == 0 then return end
+		if tool:is_empty() or hammer:is_empty() or tool:get_wear() == 0 then
+			return
+		end
 
 		-- Wear : 0-65535 | 0 = new condition.
 		tool:add_wear(-500)
-		hammer:add_wear(300)
+		hammer:add_wear(700)
 
 		inv:set_stack("tool", 1, tool)
 		inv:set_stack("hammer", 1, hammer)
 	end
 })
+
