@@ -20,7 +20,7 @@ minetest.register_craftitem("dcb:tool", {
 	after_use = function(itemstack, user, node, digparams)
 		local player = user:get_player_name()
 		if not minetest.check_player_privs(player, {ban=true}) then
-			minetest.kick_player(player, "You may not use this tool.")
+			--minetest.kick_player(player, "You may not use this tool.")
 			minetest.log("action", player.." used the DCB multitool without the ban priv.")
 			return "default:paper" -- yellow card
 		else
