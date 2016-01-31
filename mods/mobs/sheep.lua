@@ -133,7 +133,7 @@ for _, col in ipairs(all_colours) do
 
 end
 
---mobs:register_spawn("mobs:sheep_white", {"default:dirt_with_grass", "ethereal:green_dirt"}, 20, 10, 150000, 1, 31000)
+mobs:register_spawn("mobs:sheep_white", {"default:dirt_with_grass"}, 20, 10, 15000, 2, 31000)
 
 -- compatibility (item and entity)
 minetest.register_alias("mobs:sheep", "mobs:sheep_white")
