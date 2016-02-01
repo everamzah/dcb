@@ -234,6 +234,9 @@ function craftguide.on_take(pos, listname, index, stack)
 	end
 end
 
+minetest.register_alias("craft_guide:sign_wall", "xdecor:craftguide")
+minetest.register_alias("craft_guide:lcd_pc", "xdecor:craftguide_pc")
+
 xdecor.register("craftguide", {
 	description = "Craft Guide (Sign)",
 	drawtype = "nodebox",
