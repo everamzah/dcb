@@ -439,6 +439,24 @@ minetest.register_craft({
 		{"group:wood", "group:wood", "group:wood"}
 	}
 })
+
+minetest.register_craft({
+	output = "xdecor:craftguide",
+	recipe = {
+		{"group:stick", "group:stick"},
+		{"group:stick", "group:stick"},
+		{"group:stick", ""}
+	}
+})
+
+minetest.register_craft({
+	output = "xdecor:craftguide_pc",
+	recipe = {
+		{"xdecor:craftguide"},
+		{"default:glass"},
+		{"stairs:slab_stone"}
+	}
+})
 	
 minetest.register_craft({
 	output = "xdecor:woodframed_glass",
