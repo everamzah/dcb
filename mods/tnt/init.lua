@@ -219,6 +219,10 @@ minetest.register_node("tnt:tnt", {
 	groups = {dig_immediate=2, mesecon=2},
 	sounds = default.node_sound_wood_defaults(),
 	on_punch = function(pos, node, puncher)
+		if puncher:get_wielded_item():get_name() == "dcb:pick_admin" then
+			dcb.kill_node(pos, node, puncher)
+			return
+		end
 		if puncher:get_wielded_item():get_name() == "default:torch" then
 			minetest.sound_play("tnt_ignite", {pos=pos})
 			minetest.set_node(pos, {name="tnt:tnt_burning"})
@@ -283,6 +287,10 @@ minetest.register_node("tnt:gunpowder", {
 	sounds = default.node_sound_leaves_defaults(),
 	
 	on_punch = function(pos, node, puncher)
+		if puncher:get_wielded_item():get_name() == "dcb:pick_admin" then
+			dcb.kill_node(pos, node, puncher)
+			return
+		end
 		if puncher:get_wielded_item():get_name() == "default:torch" then
 			burn(pos)
 		end

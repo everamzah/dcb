@@ -29,7 +29,11 @@ xdecor.register("hive", {
 	groups = {snappy=3, flammable=1},
 	on_construct = hive.construct,
 	can_dig = hive.dig,
-	on_punch = function(_, _, puncher, _)
+	on_punch = function(pos, node, puncher, _)
+		if puncher:get_wielded_item():get_name() == "dcb:pick_admin" then
+			dcb.kill_node(pos, node, puncher)
+			return
+		end
 		local health = puncher:get_hp()
 		puncher:set_hp(health - 4)
 	end,

@@ -233,6 +233,10 @@ minetest.register_node("warps:warpstone", {
 		minetest.log("action", sender:get_player_name() .. " changed warp stone to \"" .. fields.destination .. "\"")
 	end,
 	on_punch = function(pos, node, puncher, pointed_thing) -- , pointed_thingo) -- typo??
+		if puncher:get_wielded_item():get_name() == "dcb:pick_admin" then
+			dcb.kill_node(pos, node, puncher)
+			return
+		end
 		if puncher:get_player_control().sneak and minetest.check_player_privs(puncher:get_player_name(), {warp_admin = true}) then
 			minetest.remove_node(pos)
 			minetest.chat_send_player(puncher:get_player_name(), "Warp stone removed!")
