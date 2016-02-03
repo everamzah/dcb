@@ -420,6 +420,10 @@ minetest.register_node("default:tree", {
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
 	sounds = default.node_sound_wood_defaults(),
 
+	after_dig_node = function(pos, node, metadata, digger)
+		default.dig_up(pos, node, digger)
+	end,
+
 	on_place = minetest.rotate_node
 })
 
@@ -516,6 +520,10 @@ minetest.register_node("default:jungletree", {
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
 	sounds = default.node_sound_wood_defaults(),
 
+	after_dig_node = function(pos, node, metadata, digger)
+		default.dig_up(pos, node, digger)
+	end,
+
 	on_place = minetest.rotate_node
 })
 
@@ -578,6 +586,10 @@ minetest.register_node("default:pine_tree", {
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
 	sounds = default.node_sound_wood_defaults(),
 
+	after_dig_node = function(pos, node, metadata, digger)
+		default.dig_up(pos, node, digger)
+	end,
+
 	on_place = minetest.rotate_node
 })
 
@@ -639,6 +651,10 @@ minetest.register_node("default:acacia_tree", {
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
 	sounds = default.node_sound_wood_defaults(),
 
+	after_dig_node = function(pos, node, metadata, digger)
+		default.dig_up(pos, node, digger)
+	end,
+
 	on_place = minetest.rotate_node
 })
 
@@ -698,6 +714,10 @@ minetest.register_node("default:aspen_tree", {
 	is_ground_content = false,
 	groups = {tree = 1, choppy = 2, oddly_breakable_by_hand = 1, flammable = 2},
 	sounds = default.node_sound_wood_defaults(),
+
+	after_dig_node = function(pos, node, metadata, digger)
+		default.dig_up(pos, node, digger)
+	end,
 
 	on_place = minetest.rotate_node
 })
