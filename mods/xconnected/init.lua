@@ -568,13 +568,13 @@ minetest.register_craft({
 })
 
 -- default:fence_wood replaced
-xconnected.register_fence('xconnected:fence_wood',   'xdecor_wood.png')
+xconnected.register_fence('xconnected:fence',   'xdecor_wood.png')
 xconnected.register_fence('xconnected:fence_pine',   'default_pine_wood.png')
 xconnected.register_fence('xconnected:fence_jungle', 'default_junglewood.png')
 xconnected.register_fence('xconnected:fence_acacia', 'default_acacia_wood.png')
 
 minetest.register_craft({
-	output = "xconnected:fence_wood_c4",
+	output = "xconnected:fence_c4",
 	recipe = {
 		{"default:wood", "dcb:fence_post", "default:wood"},
 		{"default:wood", "dcb:fence_post", "default:wood"}
