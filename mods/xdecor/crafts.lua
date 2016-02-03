@@ -169,7 +169,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "xdecor:fence_wrought_iron 2",
+	output = "xdecor:fence_wrought_iron_c4 2",
 	recipe = {
 		{"default:iron_lump", "default:iron_lump", "default:iron_lump"},
 		{"default:iron_lump", "default:iron_lump", "default:iron_lump"}
