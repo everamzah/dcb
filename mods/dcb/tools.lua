@@ -28,7 +28,7 @@ function dcb.kill_node(pos, node, puncher)
 				puncher:get_player_name(), {server=true}) then
 			puncher:set_wielded_item("")
 			minetest.log("action", puncher:get_player_name() ..
-			" tried to use an admin pick.")
+			" tried to use an Admin Pickaxe.")
 			return
 		end
 
