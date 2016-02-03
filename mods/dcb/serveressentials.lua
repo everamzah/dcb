@@ -7,7 +7,7 @@ distributed without any warranty.
 ]]
 
 -- Automatically kick idling players
-AFK_CHECK = minetest.setting_getbool("afk_check") or false
+AFK_CHECK = false --minetest.setting_getbool("afk_check") or false
 MAX_AFK_TIME = 300 --Max time allowed afk before kick 
 AFK_CHECK_INTERVAL = 10 --Number of seconds between activity checks
 AFK_WARN_TIME = 10 --Number of seconds before being kicked that a player will start to be warned
@@ -26,7 +26,7 @@ REMOVE_BONES = false --If true, remove bones after REMOVE_BONES_TIME seconds
 REMOVE_BONES_TIME = 1800 --Remove bones after this amount of time (seconds)
 
 -- Kick on chat length greater than MAX_CHAT_MSG_LENGTH
-KICK_CHATSPAM = minetest.setting_getbool("kick_chatspam") or false
+KICK_CHATSPAM = false --minetest.setting_getbool("kick_chatspam") or false
 MAX_CHAT_MSG_LENGTH = 400
 
 players = {}
