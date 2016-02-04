@@ -69,7 +69,7 @@ end;
 if not updateSkin then
    error("No wardrobe skin update method registered.  Check skinMethods.lua.");
 end;
-
+--[[
 minetest.register_chatcommand("skin", {
 	description = "Set public or unique skin. Shows list when run without params.",
 	privs = {},
@@ -98,3 +98,4 @@ minetest.register_chatcommand("skin", {
 		end
 	end,
 })
+--]]
