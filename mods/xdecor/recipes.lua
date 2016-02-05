@@ -343,6 +343,12 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+	type = "shapeless",
+	output = "xdecor:rust_bar_c4",
+	recipe = {"default:dirt", "xconnected:bar_c4"}
+})
+
+minetest.register_craft({
 	output = "xdecor:rope",
 	recipe = {
 		{"farming:string"},
