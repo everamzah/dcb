@@ -7,7 +7,7 @@ worktable.nodes = {
 	["default"] = [[
 		wood junglewood pine_wood acacia_wood
                 tree jungletree pine_tree acacia_tree
-		pinewood pinetree
+		pinewood pinetree aspen_wood aspen_tree
 		cobble mossycobble desert_cobble
 		stone sandstone desert_stone obsidian
 		stonebrick sandstonebrick desert_stonebrick obsidianbrick
