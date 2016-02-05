@@ -3,7 +3,7 @@ local modpath = minetest.get_modpath("xdecor")
 
 dofile(modpath.."/handlers/nodeboxes.lua")
 dofile(modpath.."/handlers/registration.lua")
-dofile(modpath.."/crafts.lua")
+dofile(modpath.."/recipes.lua")
 dofile(modpath.."/enchanting.lua")
 dofile(modpath.."/hive.lua")
 dofile(modpath.."/itemframe.lua")

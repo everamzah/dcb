@@ -1,3 +1,5 @@
+screwdriver = screwdriver or {}
+
 xconnected.register_pane("xdecor:bamboo_frame", "xdecor_bamboo_frame.png", {
 	description = "Bamboo Frame",
 	tiles = {"xdecor_bamboo_frame.png"},
@@ -6,7 +8,7 @@ xconnected.register_pane("xdecor:bamboo_frame", "xdecor_bamboo_frame.png", {
 	textures = {"xdecor_bamboo_frame.png", "xdecor_bamboo_frame.png", "xconnected_space.png"},
 	inventory_image = "xdecor_bamboo_frame.png",
 	wield_image = "xdecor_bamboo_frame.png",
-	groups = {snappy=3, pane=1, flammable=2},
+	groups = {choppy=3, oddly_breakable_by_hand=2, pane=1, flammable=2},
 	--[[recipe = {
 		{"default:papyrus", "default:papyrus", "default:papyrus"},
 		{"default:papyrus", "farming:cotton", "default:papyrus"},
@@ -20,7 +22,7 @@ xdecor.register("baricade", {
 	walkable = false,
 	inventory_image = "xdecor_baricade.png",
 	tiles = {"xdecor_baricade.png"},
-	groups = {snappy=3, flammable=3},
+	groups = {choppy=2, oddly_breakable_by_hand=1, flammable=3},
 	damage_per_second = 4,
 	selection_box = xdecor.nodebox.slab_y(0.3)
 })
@@ -30,7 +32,7 @@ xdecor.register("barrel", {
 	inventory = {size=24},
 	infotext = "Barrel",
 	tiles = {"xdecor_barrel_top.png", "xdecor_barrel_sides.png"},
-	groups = {choppy=3, flammable=3},
+	groups = {choppy=2, oddly_breakable_by_hand=1, flammable=3},
 	sounds = default.node_sound_wood_defaults()
 })
 
@@ -38,8 +40,9 @@ xdecor.register("cabinet", {
 	description = "Wood Cabinet",
 	inventory = {size=24},
 	infotext = "Wood Cabinet",
-	groups = {choppy=3, flammable=3},
+	groups = {choppy=2, oddly_breakable_by_hand=1, flammable=3},
 	sounds = default.node_sound_wood_defaults(),
+	on_rotate = screwdriver.rotate_simple,
 	tiles = {
 		"xdecor_cabinet_sides.png", "xdecor_cabinet_sides.png",
 		"xdecor_cabinet_sides.png", "xdecor_cabinet_sides.png",
@@ -51,7 +54,7 @@ xdecor.register("cabinet_half", {
 	description = "Half Wood Cabinet",
 	inventory = {size=8},
 	infotext = "Half Wood Cabinet",
-	groups = {choppy=3, flammable=3},
+	groups = {choppy=3, oddly_breakable_by_hand=2, flammable=3},
 	sounds = default.node_sound_wood_defaults(),
 	node_box = xdecor.nodebox.slab_y(0.5, 0.5),
 	tiles = {
@@ -74,11 +77,14 @@ xdecor.register("candle", {
 	tiles = {
 		{ name = "xdecor_candle_floor.png",
 			animation = {type="vertical_frames", length=1.5} },
+		{ name = "xdecor_candle_ceiling.png",
+			animation = {type="vertical_frames", length=1.5} },
 		{ name = "xdecor_candle_wall.png",
 			animation = {type="vertical_frames", length=1.5} }
 	},
 	selection_box = {
 		type = "wallmounted",
+		wall_top = {-0.3, -0.4, -0.3, 0.3, 0.5, 0.3},
 		wall_bottom = {-0.25, -0.5, -0.25, 0.25, 0.1, 0.25},
 		wall_side = {-0.5, -0.35, -0.15, -0.15, 0.4, 0.15}
 	}
@@ -207,7 +213,7 @@ for _, c in pairs(colors) do
 		paramtype2 = "wallmounted",
 		groups = {dig_immediate=3, flammable=3},
 		selection_box = {type="wallmounted"},
-		on_rightclick = function(pos, node, _, _)
+		on_rightclick = function(pos, node)
 			minetest.set_node(pos, {name="xdecor:curtain_open_"..c, param2=node.param2})
 		end
 	})
@@ -220,7 +226,7 @@ for _, c in pairs(colors) do
 		groups = {dig_immediate=3, flammable=3, not_in_creative_inventory=1},
 		selection_box = {type="wallmounted"},
 		drop = "xdecor:curtain_"..c,
-		on_rightclick = function(pos, node, _, _)
+		on_rightclick = function(pos, node)
 			minetest.set_node(pos, {name="xdecor:curtain_"..c, param2=node.param2})
 		end
 	})
@@ -233,6 +239,15 @@ for _, c in pairs(colors) do
 		}
 	})
 end
+
+xdecor.register("crate", {
+	description = "Crate",
+	inventory = {size=24},
+	infotext = "Crate",
+	tiles = {"xdecor_crate.png"},
+	groups = {choppy=2, oddly_breakable_by_hand=1, flammable=3},
+	sounds = default.node_sound_wood_defaults()
+})
 
 xdecor.register("cushion", {
 	description = "Cushion",
@@ -285,11 +300,12 @@ xdecor.register("enderchest", {
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
-		local xbg = default.gui_bg..default.gui_bg_img..default.gui_slots
-		meta:set_string("formspec", "size[8,9]"..xbg..
-				"list[current_player;enderchest;0,0;8,4;]"..
-				"list[current_player;main;0,5;8,4;]"..
-				"listring[]")
+		meta:set_string("formspec", [[ size[8,9]
+				list[current_player;enderchest;0,0;8,4;]
+				list[current_player;main;0,5;8,4;]
+				listring[current_player;enderchest]
+				listring[current_player;main] ]]
+				..xbg..default.get_hotbar_bg(0,5))
 		meta:set_string("infotext", "Ender Chest")
 	end
 })
@@ -392,13 +408,17 @@ xdecor.register("lantern", {
 	}
 })
 
-xdecor.register("lightbox", {
-	description = "Light Box",
-	tiles = {"xdecor_lightbox.png"},
-	groups = {cracky=3},
-	light_source = 13,
-	sounds = default.node_sound_glass_defaults()
-})
+for _, l in pairs({"iron", "wooden"}) do
+	xdecor.register(l.."_lightbox", {
+		description = l:gsub("^%l", string.upper).." Light Box",
+		tiles = {"xdecor_"..l.."_lightbox.png"},
+		groups = {cracky=3, choppy=3, oddly_breakable_by_hand=2},
+		light_source = 13,
+		sounds = default.node_sound_glass_defaults()
+	})
+end
+
+minetest.register_alias("xdecor:lightbox", "xdecor:wooden_lightbox")
 
 xdecor.register("packed_ice", {
 	drawtype = "normal",

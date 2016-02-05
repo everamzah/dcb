@@ -217,6 +217,15 @@ minetest.register_craft({
 	}
 })
 
+minetest.register_craft({
+	output = "xdecor:iron_lightbox",
+	recipe = {
+		{"xconnected:bar_c4", "default:torch", "xconnected:bar_c4"},
+		{"xconnected:bar_c4", "default:glass", "xconnected:bar_c4"},
+		{"xconnected:bar_c4", "default:torch", "xconnected:bar_c4"}
+	}
+})
+
 minetest.register_craftitem("xdecor:honey", {
 	description = "Honey",
 	inventory_image = "xdecor_honey.png",
@@ -247,15 +256,6 @@ minetest.register_craft({
 		{"default:iron_lump"},
 		{"default:torch"},
 		{"default:iron_lump"}
-	}
-})
-
-minetest.register_craft({
-	output = "xdecor:lightbox",
-	recipe = {
-		{"group:stick", "default:torch", "group:stick"},
-		{"group:stick", "default:glass", "group:stick"},
-		{"group:stick", "default:torch", "group:stick"}
 	}
 })
 
@@ -434,9 +434,8 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "xdecor:worktable",
 	recipe = {
-		{"group:wood", "group:wood", "group:wood"},
-		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
-		{"group:wood", "group:wood", "group:wood"}
+		{"group:wood", "group:wood"},
+		{"group:wood", "group:wood"}
 	}
 })
 
@@ -470,8 +469,18 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "xdecor:wood_tile 2",
 	recipe = {
-		{"group:wood", "group:wood"},
-		{"group:wood", "group:wood"}
+		{"", "group:wood", ""},
+		{"group:wood", "", "group:wood"},
+		{"", "group:wood", ""}
+	}
+})
+
+minetest.register_craft({
+	output = "xdecor:wooden_lightbox",
+	recipe = {
+		{"group:stick", "default:torch", "group:stick"},
+		{"group:stick", "default:glass", "group:stick"},
+		{"group:stick", "default:torch", "group:stick"}
 	}
 })
 
