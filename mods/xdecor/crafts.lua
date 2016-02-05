@@ -400,7 +400,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "xdecor:table",
 	recipe = {
-		{"xdecor:slab_wood", "xdecor:slab_wood", "xdecor:slab_wood"},
+		{"stairs:slab_wood", "stairs:slab_wood", "stairs:slab_wood"},
 		{"", "group:stick", ""},
 		{"", "group:stick", ""}
 	}
