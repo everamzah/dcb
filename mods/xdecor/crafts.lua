@@ -348,7 +348,7 @@ minetest.register_craft({
 	output = "xdecor:screen_door",
 	recipe = {
 		{"group:wood", "group:wood"},
-		{"xpanes:chainlink", "xpanes:chainlink"},
+		{"xdecor:chainlink_c4", "xdecor:chainlink_c4"},
 		{"group:wood", "group:wood"}
 	}
 })
