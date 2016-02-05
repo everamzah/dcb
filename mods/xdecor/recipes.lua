@@ -105,7 +105,6 @@ minetest.register_craft({
 		{"default:stone", "default:coalblock"}
 	}
 })
-
 --[[
 minetest.register_craft({
 	output = "xdecor:cobble_wall_ln 6",
@@ -123,6 +122,14 @@ minetest.register_craft({
 	}
 })
 --]]
+minetest.register_craft({
+	output = "xdecor:crate",
+	recipe = {
+		{"group:wood", "group:wood", "group:stick"},
+		{"group:wood", "group:stick", "group:wood"},
+		{"group:stick", "group:wood", "group:wood"}
+	}
+})
 
 minetest.register_craft({
 	output = "xdecor:cobweb",
