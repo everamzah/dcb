@@ -568,13 +568,14 @@ minetest.register_craft({
 })
 
 -- default:fence_wood replaced
-xconnected.register_fence('xconnected:fence',   'xdecor_wood.png')
-xconnected.register_fence('xconnected:fence_pine',   'default_pine_wood.png')
+xconnected.register_fence('xconnected:fence', 'default_wood.png')
+xconnected.register_fence('xconnected:fence_pine', 'default_pine_wood.png')
 xconnected.register_fence('xconnected:fence_jungle', 'default_junglewood.png')
 xconnected.register_fence('xconnected:fence_acacia', 'default_acacia_wood.png')
+xconnected.register_fence('xconnected:fence_aspen', 'default_aspen_wood.png')
 
 minetest.register_craft({
-	output = "xconnected:fence_c4",
+	output = "xconnected:fence_c4 6",
 	recipe = {
 		{"default:wood", "dcb:fence_post", "default:wood"},
 		{"default:wood", "dcb:fence_post", "default:wood"}
@@ -582,7 +583,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "xconnected:fence_pine_c4",
+	output = "xconnected:fence_pine_c4 6",
 	recipe = {
 		{"default:pine_wood", "dcb:fence_post", "default:pine_wood"},
 		{"default:pine_wood", "dcb:fence_post", "default:pine_wood"}
@@ -590,7 +591,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "xconnected:fence_jungle_c4",
+	output = "xconnected:fence_jungle_c4 6",
 	recipe = {
 		{"default:junglewood", "dcb:fence_post", "default:junglewood"},
 		{"default:junglewood", "dcb:fence_post", "default:junglewood"}
@@ -598,10 +599,18 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "xconnected:fence_acacia_c4",
+	output = "xconnected:fence_acacia_c4 6",
 	recipe = {
 		{"default:acacia_wood", "dcb:fence_post", "default:acacia_wood"},
 		{"default:acacia_wood", "dcb:fence_post", "default:acacia_wood"}
+	}
+})
+
+minetest.register_craft({
+	output = "xconnected:fence_aspen_c4 6",
+	recipe = {
+		{"default:aspen_wood", "dcb:fence_post", "default:aspen_wood"},
+		{"default:aspen_wood", "dcb:fence_post", "default:aspen_wood"}
 	}
 })
 
