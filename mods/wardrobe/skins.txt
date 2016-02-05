@@ -1,7 +1,7 @@
-human_male.png: Human Male
-human_female.png: Human Female
-alien_male.png: Alien Male
-alien_female.png: Alien Female
+character1.png: Human Male
+character0.png: Human Female
+alien1.png: Alien Male
+alien0.png: Alien Female
 character_1.png: Sam 0
 character_2.png: Sam I
 character_3.png: Sam II
