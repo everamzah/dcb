@@ -532,7 +532,7 @@ xconnected.register_pane("xdecor:rust_bar", "xdecor_rust_bars.png", {
 	},
 	inventory_image = "xdecor_rust_bars.png",
 	wield_image = "xdecor_rust_bars.png",
-	groups = {snappy=3, pane=1},
+	groups = {cracky=3, oddly_breakable_by_hand=1, pane=1},
 	sounds = default.node_sound_stone_defaults()
 })
 

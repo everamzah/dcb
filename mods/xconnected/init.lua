@@ -328,7 +328,7 @@ xconnected.register_pane("xconnected:bar", "xconnected_bar.png", {
 	},
 	inventory_image = "xconnected_bar.png",
 	wield_image = "xconnected_bar.png",
-	groups = {snappy=2, pane=1},
+	groups = {cracky=2, oddly_breakable_by_hand=1, pane=1},
 	sounds = default.node_sound_stone_defaults()
 })
 
