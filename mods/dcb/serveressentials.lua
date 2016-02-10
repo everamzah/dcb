@@ -283,7 +283,7 @@ minetest.register_on_newplayer(function(player)
 	end
 end)
 
-minetest.register_on_placenode(function(pos, newNode, placer, oldnode, itemStack, pointed_thing)
+--[[minetest.register_on_placenode(function(pos, newNode, placer, oldnode, itemStack, pointed_thing)
 
 	for _,nodeName in pairs(DISALLOWED_NODES) do
 		if nodeName == newNode["name"] then
@@ -296,7 +296,7 @@ minetest.register_on_placenode(function(pos, newNode, placer, oldnode, itemStack
 		end
 	end
 	return
-end)
+end)--]]
 --[[
 minetest.register_on_chat_message(function(name, message)
 	if KICK_CHATSPAM and not minetest.check_player_privs(name, {chatspam=true}) and string.len(message) > MAX_CHAT_MSG_LENGTH then

@@ -219,6 +219,11 @@ minetest.register_node("tnt:tnt", {
 	groups = {dig_immediate=2, mesecon=2},
 	sounds = default.node_sound_wood_defaults(),
 	on_punch = function(pos, node, puncher)
+		if not minetest.check_player_privs(puncher:get_player_name(), {disallowednodes=true}) then
+			minetest.chat_send_player(puncher:get_player_name(),
+				"You need the disallowednodes priv to ignite TNT")
+			return
+		end
 		if puncher:get_wielded_item():get_name() == "dcb:pick_admin" then
 			dcb.kill_node(pos, node, puncher)
 			return
