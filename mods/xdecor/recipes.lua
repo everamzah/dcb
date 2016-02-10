@@ -352,7 +352,6 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	type = "shapeless",
 	output = "xdecor:rust_bar_c4 16",
 	recipe = {
 		{"", "default:dirt", ""},
