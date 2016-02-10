@@ -567,12 +567,88 @@ minetest.register_craft({
 	}
 })
 
--- default:fence_wood replaced
-xconnected.register_fence('xconnected:fence', 'default_wood.png')
-xconnected.register_fence('xconnected:fence_pine', 'default_pine_wood.png')
-xconnected.register_fence('xconnected:fence_jungle', 'default_junglewood.png')
-xconnected.register_fence('xconnected:fence_acacia', 'default_acacia_wood.png')
-xconnected.register_fence('xconnected:fence_aspen', 'default_aspen_wood.png')
+-- Fences
+xconnected.register_fence("xconnected:fence", "default_wood.png", {
+	description = "Wood Fence",
+	textures = {"default_wood.png"},
+	is_ground_content = false,
+	sunlight_propagates = true,
+	sounds = default.node_sound_wood_defaults(),
+	inventory_image = "default_fence_overlay.png^default_wood.png^default_fence_overlay.png^[makealpha:255,126,126",
+	groups = {
+		snappy=2,
+		cracky=3,
+		oddly_breakable_by_hand=2,
+		pane=1,
+		flammable=2
+	}
+})
+
+xconnected.register_fence("xconnected:fence_pine", "default_pine_wood.png", {
+	description = "Wood Fence",
+	textures = {"default_pine_wood.png"},
+	is_ground_content = false,
+	sunlight_propagates = true,
+	sounds = default.node_sound_wood_defaults(),
+	inventory_image = "default_fence_overlay.png^default_pine_wood.png^default_fence_overlay.png^[makealpha:255,126,126",
+	groups = {
+		snappy=2,
+		cracky=3,
+		oddly_breakable_by_hand=2,
+		pane=1,
+		flammable=2
+	}
+})
+
+xconnected.register_fence("xconnected:fence_jungle", "default_junglewood.png", {
+	description = "Wood Fence",
+	textures = {"default_junglewood.png"},
+	is_ground_content = false,
+	sunlight_propagates = true,
+	sounds = default.node_sound_wood_defaults(),
+	inventory_image = "default_fence_overlay.png^default_junglewood.png^default_fence_overlay.png^[makealpha:255,126,126",
+	groups = {
+		snappy=2,
+		cracky=3,
+		oddly_breakable_by_hand=2,
+		pane=1,
+		flammable=2
+	}
+})
+
+xconnected.register_fence("xconnected:fence_acacia", "default_acacia_wood.png", {
+	description = "Wood Fence",
+	textures = {"default_acacia_wood.png"},
+	is_ground_content = false,
+	sunlight_propagates = true,
+	sounds = default.node_sound_wood_defaults(),
+	inventory_image = "default_fence_overlay.png^default_acacia_wood.png^default_fence_overlay.png^[makealpha:255,126,126",
+	groups = {
+		snappy=2,
+		cracky=3,
+		oddly_breakable_by_hand=2,
+		pane=1,
+		flammable=2
+	}
+})
+
+xconnected.register_fence("xconnected:fence_aspen", "default_aspen_wood.png", {
+	description = "Wood Fence",
+	textures = {"default_aspen_wood.png"},
+	is_ground_content = false,
+	sunlight_propagates = true,
+	sounds = default.node_sound_wood_defaults(),
+	inventory_image = "default_fence_overlay.png^default_aspen_wood.png^default_fence_overlay.png^[makealpha:255,126,126",
+	groups = {
+		snappy=2,
+		cracky=3,
+		oddly_breakable_by_hand=2,
+		pane=1,
+		flammable=2
+	}
+})
+
+-- Crafts
 
 minetest.register_craft({
 	output = "xconnected:fence_c4 6",

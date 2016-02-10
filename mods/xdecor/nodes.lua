@@ -1,19 +1,35 @@
 screwdriver = screwdriver or {}
 
+xconnected.register_pane("xdecor:wood_frame", "xdecor_wood_frame.png", {
+	description = "Wood Frame",
+	tiles = {"xdecor_wood_frame.png"},
+	drawtype = "airlike",
+	paramtype = "light",
+	textures = {
+		"xdecor_wood_frame.png",
+		"xdecor_wood_frame.png",
+		"xconnected_space.png"
+	},
+	inventory_image = "xdecor_wood_frame.png",
+	wield_image = "xdecor_wood_frame.png",
+	groups = {choppy=3, oddly_breakable_by_hand=2, pane=1, flammable=3},
+	sounds = default.node_sound_wood_defaults()
+})
+
 xconnected.register_pane("xdecor:bamboo_frame", "xdecor_bamboo_frame.png", {
 	description = "Bamboo Frame",
 	tiles = {"xdecor_bamboo_frame.png"},
 	drawtype = "airlike",
 	paramtype = "light",
-	textures = {"xdecor_bamboo_frame.png", "xdecor_bamboo_frame.png", "xconnected_space.png"},
+	textures = {
+		"xdecor_bamboo_frame.png",
+		"xdecor_bamboo_frame.png",
+		"xconnected_space.png"
+	},
 	inventory_image = "xdecor_bamboo_frame.png",
 	wield_image = "xdecor_bamboo_frame.png",
 	groups = {choppy=3, oddly_breakable_by_hand=2, pane=1, flammable=2},
-	--[[recipe = {
-		{"default:papyrus", "default:papyrus", "default:papyrus"},
-		{"default:papyrus", "farming:cotton", "default:papyrus"},
-		{"default:papyrus", "default:papyrus", "default:papyrus"}
-	}--]]
+	sounds = default.node_sound_leaves_defaults()
 })
 
 xdecor.register("baricade", {
@@ -141,15 +157,15 @@ xconnected.register_pane("xdecor:chainlink", "xdecor_chainlink.png", {
 	tiles = {"xdecor_chainlink.png"},
 	drawtype = "airlike",
 	paramtype = "light",
-	textures = {"xdecor_chainlink.png", "xdecor_chainlink.png", "xconnected_space.png"},
+	textures = {
+		"xdecor_chainlink.png",
+		"xdecor_chainlink.png",
+		"xconnected_space.png"
+	},
 	inventory_image = "xdecor_chainlink.png",
 	wield_image = "xdecor_chainlink.png",
 	groups = {snappy=3, pane=1},
-	--[[recipe = {
-		{"default:steel_ingot", "", "default:steel_ingot"},
-		{"", "default:steel_ingot", ""},
-		{"default:steel_ingot", "", "default:steel_ingot"}
-	}--]]
+	sounds = default.node_sound_stone_defaults()
 })
 
 xdecor.register("chair", {
@@ -509,15 +525,15 @@ xconnected.register_pane("xdecor:rust_bar", "xdecor_rust_bars.png", {
 	tiles = {"xdecor_rust_bars.png"},
 	drawtype = "airlike",
 	paramtype = "light",
-	textures = {"xdecor_rust_bars.png", "xdecor_rust_bars.png", "xconnected_space.png"},
+	textures = {
+		"xdecor_rust_bars.png",
+		"xdecor_rust_bars.png",
+		"xconnected_space.png"
+	},
 	inventory_image = "xdecor_rust_bars.png",
 	wield_image = "xdecor_rust_bars.png",
 	groups = {snappy=3, pane=1},
-	recipe = {
-		{"", "default:dirt", ""},
-		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
-		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}
-	}
+	sounds = default.node_sound_stone_defaults()
 })
 
 xdecor.register("stereo", {

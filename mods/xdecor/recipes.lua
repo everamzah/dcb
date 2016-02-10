@@ -1,5 +1,14 @@
 minetest.register_craft({
-	output = "xdecor:bamboo_frame_c4",
+	output = "xdecor:wood_frame_c4 16",
+	recipe = {
+		{"group:wood", "group:stick", "group:wood"},
+		{"group:stick", "group:stick", "group:stick"},
+		{"group:wood", "group:stick", "group:wood"}
+	}
+})
+
+minetest.register_craft({
+	output = "xdecor:bamboo_frame_c4 16",
 	recipe = {
 		{"default:papyrus", "default:papyrus", "default:papyrus"},
 		{"default:papyrus", "farming:cotton", "default:papyrus"},
@@ -49,7 +58,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "xdecor:chainlink_c4",
+	output = "xdecor:chainlink_c4 16",
 	recipe = {
 		{"default:steel_ingot", "", "default:steel_ingot"},
 		{"", "default:steel_ingot", ""},
@@ -344,8 +353,12 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "xdecor:rust_bar_c4",
-	recipe = {"default:dirt", "xconnected:bar_c4"}
+	output = "xdecor:rust_bar_c4 16",
+	recipe = {
+		{"", "default:dirt", ""},
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}
+	}
 })
 
 minetest.register_craft({
