@@ -14,6 +14,8 @@ loss_prob["default:cobble"] = 3
 loss_prob["default:dirt"] = 4
 
 local radius = tonumber(minetest.setting_get("tnt_radius") or 3)
+local tnt_requires_priv = minetest.is_yes(
+		minetest.setting_get("tnt_requires_priv"))
 
 -- Fill a list with data for content IDs, after all nodes are registered
 local cid_data = {}
@@ -219,7 +221,7 @@ minetest.register_node("tnt:tnt", {
 	groups = {dig_immediate=2, mesecon=2},
 	sounds = default.node_sound_wood_defaults(),
 	on_punch = function(pos, node, puncher)
-		if not minetest.check_player_privs(puncher:get_player_name(), {disallowednodes=true}) then
+		if tnt_requires_priv and not minetest.check_player_privs(puncher:get_player_name(), {disallowednodes=true}) then
 			minetest.chat_send_player(puncher:get_player_name(),
 				"You need the disallowednodes priv to ignite TNT")
 			return
