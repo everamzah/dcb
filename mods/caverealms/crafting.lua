@@ -37,9 +37,9 @@ minetest.register_craft({
 
 --thin ice to water
 minetest.register_craft({
-	output = "default:water_source",
+	output = "bucket:bucket_water",
 	type = "shapeless",
-	recipe = {"caverealms:thin_ice"}
+	recipe = {"caverealms:thin_ice", "bucket:bucket_empty"}
 })
 
 --use for coal dust
