@@ -634,7 +634,7 @@ minetest.register_craft({
 })
 
 xconnected.register_fence("xconnected:fence_pine", "default_pine_wood.png", {
-	description = "Wood Fence",
+	description = "Pine Wood Fence",
 	textures = {"default_pine_wood.png"},
 	is_ground_content = false,
 	sunlight_propagates = true,
@@ -658,7 +658,7 @@ minetest.register_craft({
 })
 
 xconnected.register_fence("xconnected:fence_jungle", "default_junglewood.png", {
-	description = "Wood Fence",
+	description = "Jungle Wood Fence",
 	textures = {"default_junglewood.png"},
 	is_ground_content = false,
 	sunlight_propagates = true,
@@ -682,7 +682,7 @@ minetest.register_craft({
 })
 
 xconnected.register_fence("xconnected:fence_acacia", "default_acacia_wood.png", {
-	description = "Wood Fence",
+	description = "Acacia Wood Fence",
 	textures = {"default_acacia_wood.png"},
 	is_ground_content = false,
 	sunlight_propagates = true,
@@ -706,7 +706,7 @@ minetest.register_craft({
 })
 
 xconnected.register_fence("xconnected:fence_aspen", "default_aspen_wood.png", {
-	description = "Wood Fence",
+	description = "Aspen Wood Fence",
 	textures = {"default_aspen_wood.png"},
 	is_ground_content = false,
 	sunlight_propagates = true,
