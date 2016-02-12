@@ -1,8 +1,4 @@
--- Global mod namespace
-fireguard = {}
-
--- support for bucket.check_protection
-fireguard.check_protection = function(pos, name, text)
+check_protection = function(pos, name, text)
 	if minetest.is_protected(pos, name) then
 		minetest.log("action", (name ~= "" and name or "A mod")
 			.. " tried to " .. text
@@ -15,33 +11,29 @@ fireguard.check_protection = function(pos, name, text)
 	return false
 end
 
-fireguard.mod_name = minetest.get_current_modname()
-fireguard.mod_path = minetest.get_modpath(fireguard.mod_name)
-
-local mod_name = fireguard.mod_name
-local mod_path = fireguard.mod_path
-
 -- [fire_restricted]
 minetest.register_privilege("fgfire", "Player can place fire")
 
-minetest.override_item("fire:basic_flame",{
+minetest.override_item("fire:basic_flame", {
         on_construct = nil,
         on_place = function(itemstack, placer, pointed_thing)
-                -- the standard fire behaviour is not altered
-                -- Only privilefed players can place the dangerous fire
+                -- The standard fire behaviour is not altered
+                -- Only privilefed players can place fire
                 local name = placer:get_player_name()
                 local pos = minetest.get_pointed_thing_position(pointed_thing, true)
 
                 if minetest.check_player_privs(name, {fgfire=true}) then
-                        minetest.set_node(pos,{name="fire:basic_flame"})
+                        minetest.set_node(pos, {name="fire:basic_flame"})
                         fire.update_sounds_around(pos)
                 else
                         minetest.remove_node(pos)
-                        minetest.log("info",name.." tried to place fire at "..minetest.pos_to_string(pos))
-                        minetest.chat_send_player(name,"You lack required priv: fgfire")
+                        minetest.log("info", name ..
+					" tried to place fire at " ..
+					minetest.pos_to_string(pos))
+                        minetest.chat_send_player(name, "You lack required priv: fgfire")
                 end
         end,
-        -- normal players can now only get fire:basic_flame via a givme
+        -- Normal players can now only get fire:basic_flame via a giveme
         groups = {igniter=2, dig_immediate=3, not_in_creative_inventory=1},
 })
 
@@ -49,7 +41,7 @@ minetest.override_item("fire:basic_flame",{
 minetest.register_privilege("fglava", "Player can use lava bucket")
 
 -- Normal players can now only get lava_source via a giveme
-minetest.override_item("default:lava_source",{
+minetest.override_item("default:lava_source", {
         groups = {lava=3, liquid=2, hot=3, igniter=1, not_in_creative_inventory=1},
 })
 
@@ -65,7 +57,7 @@ minetest.override_item("bucket:bucket_lava",{
                 
                 if lava_requires_priv and not minetest.check_player_privs(name, {fglava=true}) then
                         minetest.remove_node(pos)
-                        minetest.log("info", name.." tried to place lava at "..minetest.pos_to_string(pos))
+                        minetest.log("info", name .. " tried to place lava at " .. minetest.pos_to_string(pos))
                         minetest.chat_send_player(name, "You lack the required priv: fglava")
                         return {name="bucket:bucket_lava"}
 		end
@@ -81,18 +73,19 @@ minetest.override_item("bucket:bucket_lava",{
 			ndef = minetest.registered_nodes[node.name]
 		end
 		-- Call on_rightclick if the pointed node defines it
-		if ndef and ndef.on_rightclick and
-		   placer and not placer:get_player_control().sneak then
+		if ndef and ndef.on_rightclick
+				and placer and not placer:get_player_control().sneak then
 			return ndef.on_rightclick(
-				pointed_thing.under,
-				node, placer,
-				itemstack) or itemstack
+					pointed_thing.under, node, placer, itemstack)
+					or itemstack
 		end
 
+		local giving_back = "bucket:bucket_empty"
 		local place_liquid = function(pos, node, source, flowing)
-			if fireguard.check_protection(pos,
-				placer and placer:get_player_name() or "",
-				"place "..source) then
+			if check_protection(pos, placer
+					and placer:get_player_name()
+					or "", "place " .. source) then
+				giving_back = "bucket:bucket_lava"
 				return
 			end
 			minetest.add_node(pos, {name=source})
@@ -100,22 +93,19 @@ minetest.override_item("bucket:bucket_lava",{
 
 		-- Check if pointing to a buildable node
 		if ndef and ndef.buildable_to then
-			-- buildable; replace the node
-			place_liquid(pointed_thing.under, node,
-					source, flowing)
+			-- Buildable; replace the node
+			place_liquid(pointed_thing.under, node,	source, flowing)
 		else
-		       -- not buildable to; place the liquid above
-			-- check if the node above can be replaced
+			-- Not buildable to; place the liquid above
+			-- Check if the node above can be replaced
 			local node = minetest.get_node_or_nil(pointed_thing.above)
 			if node and minetest.registered_nodes[node.name].buildable_to then
-				place_liquid(pointed_thing.above,
-					node, source,
-						flowing)
+				place_liquid(pointed_thing.above, node, source,	flowing)
 			else
-				-- do not remove the bucket with the liquid
+				-- Do not remove the bucket with the liquid
 				return
 			end
-			return {name="bucket:bucket_empty"}
 		end
+		return {name=giving_back}
         end,
 })
