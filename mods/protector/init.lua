@@ -196,6 +196,11 @@ end
 
 local function on_rightclick(pos, node, clicker, itemstack)
 	if protector.can_dig(1, pos, clicker:get_player_name(), true, 1) then
+		local meta = minetest.get_meta(pos)
+		local inv = meta:get_inventory()
+		if inv:is_empty("main") then
+			inv:set_size("main", 1)
+		end
 		minetest.show_formspec(clicker:get_player_name(), 
 		"protector:node_"..minetest.pos_to_string(pos), protector.generate_formspec(pos))
 	else
