@@ -53,6 +53,9 @@ minetest.override_item("default:lava_source",{
         groups = {lava=3, liquid=2, hot=3, igniter=1, not_in_creative_inventory=1},
 })
 
+
+local lava_requires_priv = minetest.is_yes(minetest.setting_get("lava_requires_priv"))
+
 minetest.override_item("bucket:bucket_lava",{
         on_place = function(itemstack, placer, pointed_thing)
                 local name = placer:get_player_name()
@@ -60,61 +63,59 @@ minetest.override_item("bucket:bucket_lava",{
                 local source = "default:lava_source"
                 local flowing = "default:lava_flowing"
                 
-                if minetest.check_player_privs(name, {fglava=true}) then
-                        -- original bucket function --
-                        -- Must be pointing to node
-                        if pointed_thing.type ~= "node" then
-                                return
-                        end
-                        
-                        local node = minetest.get_node_or_nil(pointed_thing.under)
-                        local ndef
-                        if node then
-                                ndef = minetest.registered_nodes[node.name]
-                        end
-                        -- Call on_rightclick if the pointed node defines it
-                        if ndef and ndef.on_rightclick and
-                           placer and not placer:get_player_control().sneak then
-                                return ndef.on_rightclick(
-                                        pointed_thing.under,
-                                        node, placer,
-                                        itemstack) or itemstack
-                        end
-
-                        local place_liquid = function(pos, node, source, flowing)
-                                if fireguard.check_protection(pos,
-                                        placer and placer:get_player_name() or "",
-                                        "place "..source) then
-                                        return
-                                end
-                                minetest.add_node(pos, {name=source})
-                        end
-
-                        -- Check if pointing to a buildable node
-                        if ndef and ndef.buildable_to then
-                                -- buildable; replace the node
-                                place_liquid(pointed_thing.under, node,
-                                                source, flowing)
-                        else
-                               -- not buildable to; place the liquid above
-                                -- check if the node above can be replaced
-                                local node = minetest.get_node_or_nil(pointed_thing.above)
-                                if node and minetest.registered_nodes[node.name].buildable_to then
-                                        place_liquid(pointed_thing.above,
-                                                node, source,
-                                                        flowing)
-                                else
-                                        -- do not remove the bucket with the liquid
-                                        return
-                                end
-                                return {name="bucket:bucket_empty"}
-                        end
-                        -- end original bucket code --
-                else
+                if lava_requires_priv and not minetest.check_player_privs(name, {fglava=true}) then
                         minetest.remove_node(pos)
                         minetest.log("info", name.." tried to place lava at "..minetest.pos_to_string(pos))
-                        minetest.chat_send_player(name, "You lack required priv: fglava")
-                        return {name="bucket:bucket_empty"}
-                end
+                        minetest.chat_send_player(name, "You lack the required priv: fglava")
+                        return {name="bucket:bucket_lava"}
+		end
+
+		-- Must be pointing to node
+		if pointed_thing.type ~= "node" then
+			return
+		end
+		
+		local node = minetest.get_node_or_nil(pointed_thing.under)
+		local ndef
+		if node then
+			ndef = minetest.registered_nodes[node.name]
+		end
+		-- Call on_rightclick if the pointed node defines it
+		if ndef and ndef.on_rightclick and
+		   placer and not placer:get_player_control().sneak then
+			return ndef.on_rightclick(
+				pointed_thing.under,
+				node, placer,
+				itemstack) or itemstack
+		end
+
+		local place_liquid = function(pos, node, source, flowing)
+			if fireguard.check_protection(pos,
+				placer and placer:get_player_name() or "",
+				"place "..source) then
+				return
+			end
+			minetest.add_node(pos, {name=source})
+		end
+
+		-- Check if pointing to a buildable node
+		if ndef and ndef.buildable_to then
+			-- buildable; replace the node
+			place_liquid(pointed_thing.under, node,
+					source, flowing)
+		else
+		       -- not buildable to; place the liquid above
+			-- check if the node above can be replaced
+			local node = minetest.get_node_or_nil(pointed_thing.above)
+			if node and minetest.registered_nodes[node.name].buildable_to then
+				place_liquid(pointed_thing.above,
+					node, source,
+						flowing)
+			else
+				-- do not remove the bucket with the liquid
+				return
+			end
+			return {name="bucket:bucket_empty"}
+		end
         end,
 })
