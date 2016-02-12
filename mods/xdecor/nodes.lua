@@ -301,7 +301,7 @@ xdecor.register("empty_shelf", {
 	inventory = {size=24},
 	infotext = "Empty Shelf",
 	tiles = {"default_wood.png", "default_wood.png^xdecor_empty_shelf.png"},
-	groups = {choppy=3, flammable=3},
+	groups = {choppy=2, oddly_breakable_by_hand=1, flammable=3},
 	sounds = default.node_sound_wood_defaults()
 })
 
@@ -312,7 +312,7 @@ xdecor.register("enderchest", {
 		"xdecor_enderchest_side.png", "xdecor_enderchest_side.png",
 		"xdecor_enderchest_side.png", "xdecor_enderchest_front.png"
 	},
-	groups = {cracky=2},
+	groups = {cracky=1, choppy=1, oddly_breakable_by_hand=1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -352,7 +352,7 @@ xdecor.register("fire", {
 		{ name = "xdecor_fire_anim.png",
 		animation = {type="vertical_frames", length=1.5} }
 	},
-	damage_per_second = 2,
+	damage_per_second = 4,
 	drop = "",
 	selection_box = {
 		type = "fixed", fixed = {-0.3, -0.5, -0.3, 0.3, -0.3, 0.3}
@@ -440,12 +440,12 @@ xdecor.register("packed_ice", {
 	drawtype = "normal",
 	description = "Packed Ice",
 	tiles = {"xdecor_packed_ice.png"},
-	groups = {cracky=2},
+	groups = {cracky=1, puts_out_fire=1},
 	sounds = default.node_sound_glass_defaults()
 })
 
-local flowers = {"dandelion_white", "dandelion_yellow", "geranium",
-		"rose", "tulip", "viola"}
+local flowers = {"dandelion_white", "dandelion_yellow", "geranium", "rose",
+		 "tulip", "viola"}
 
 for _, f in pairs(flowers) do
 	xdecor.register("potted_"..f, {
@@ -491,13 +491,30 @@ xdecor.register("plant_pot", {
 	sounds = default.node_sound_stone_defaults()
 })
 
-xdecor.register("moonbrick", {
+for _, b in pairs({{"cactus", "cactus"}, {"moon", "stone"}}) do
+	xdecor.register(b[1] .. "brick", {
+		drawtype = "normal",
+		description = b[1]:gsub("^%l", string.upper) .. " Brick",
+		tiles = {"xdecor_" .. b[1] .. "brick.png"},
+		groups = {cracky=2},
+		sounds = default.node_sound_stone_defaults()
+	})
+
+	minetest.register_craft({
+		output = "xdecor:" .. b[1] .. "brick",
+		recipe = {
+			{"default:brick", "default:" .. b[2]}
+		}
+	})
+end
+
+--[[xdecor.register("moonbrick", {
 	drawtype = "normal",
 	description = "Moon Brick",
 	tiles = {"xdecor_moonbrick.png"},
 	groups = {cracky=2},
 	sounds = default.node_sound_stone_defaults(),
-})
+})--]]
 
 xdecor.register("metal_cabinet", {
 	description = "Metal Cabinet",
