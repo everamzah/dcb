@@ -82,10 +82,10 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "xdecor:cauldron",
+	output = "xdecor:cauldron_empty",
 	recipe = {
-		{"default:iron_lump", "bucket:bucket_water", "default:iron_lump"},
-		{"default:iron_lump", "bucket:bucket_water", "default:iron_lump"},
+		{"default:iron_lump", "", "default:iron_lump"},
+		{"default:iron_lump", "", "default:iron_lump"},
 		{"default:iron_lump", "default:iron_lump", "default:iron_lump"}
 	}
 })

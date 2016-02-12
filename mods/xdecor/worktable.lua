@@ -461,7 +461,7 @@ for name in n:gmatch("[%w_]+") do
 			sounds = ndef.sounds,
 			tiles = tiles,
 			groups = groups,
-			node_box = xdecor.pixelnodebox(16, {d[3], d[4], d[5]}),
+			node_box = xdecor.pixelbox(16, {d[3], d[4], d[5]}),
 			sunlight_propagates = true,
 			on_place = minetest.rotate_node,
 			on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)

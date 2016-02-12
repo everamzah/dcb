@@ -118,7 +118,7 @@ xdecor.register("cardboard_box", {
 	}
 })
 
-xdecor.register("cauldron", {
+--[[xdecor.register("cauldron", {
 	description = "Cauldron",
 	groups = {cracky=2},
 	infotext = "Cauldron",
@@ -127,7 +127,7 @@ xdecor.register("cauldron", {
 			animation = {type="vertical_frames", length=3.0} },
 		"xdecor_cauldron_sides.png"
 	}
-})
+})--]]
 
 --[[if minetest.get_modpath("bucket") then
 	local original_bucket_on_use = minetest.registered_items["bucket:bucket_empty"].on_use

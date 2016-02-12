@@ -18,7 +18,7 @@ xdecor.nodebox = {
 	null = { type = "fixed", fixed = { 0, 0, 0, 0, 0, 0 } }
 }
 
-xdecor.pixelnodebox = function(size, boxes)
+xdecor.pixelbox = function(size, boxes)
 	local fixed = {}
 	for _, box in pairs(boxes) do
 		local x, y, z, w, h, l = unpack(box)
