@@ -20,7 +20,7 @@ local function fill_water_bucket(pos, node, clicker, itemstack)
 	end
 end
 	
-
+minetest.register_alias("xdecor:cauldron", "xdecor:cauldron_empty")
 xdecor.register("cauldron_empty", {
 	description = "Cauldron",
 	groups = {cracky=2, oddly_breakable_by_hand=1},
