@@ -7,23 +7,6 @@ end
 
 -- helper functions
 
-function beds.get_bed_formspec()
-	local formspec = "size[8,8.5]" ..
-			default.gui_bg ..
-			default.gui_bg_img ..
-			default.gui_slots ..
-			"list[current_player;main;0,4.25;8,1;]" ..
-			"list[current_player;main;0,5.5;8,3;8]" ..
-			"button_exit[-0.02,0.0;2.5,1;setrespawn;Set Respawn]" ..
-			"button_exit[2.75,0.0;2.5,1;sleep;Sleep]" ..
-			"button_exit[5.56,0.0;2.5,1;sethome;Set Home]" ..
-			"list[current_player;bed_trunk;0,1;8,3]" ..
-			"listring[current_player;bed_trunk]" ..
-			"listring[current_player;main]" ..
-			default.get_hotbar_bg(0, 4.25)
-	return formspec
-end
-
 local function get_look_yaw(pos)
 	local n = minetest.get_node(pos)
 	if n.param2 == 1 then
@@ -131,6 +114,23 @@ end
 
 -- public functions
 
+function beds.get_bed_formspec()
+	local formspec = "size[8,8.5]" ..
+			default.gui_bg ..
+			default.gui_bg_img ..
+			default.gui_slots ..
+			"list[current_player;main;0,4.25;8,1;]" ..
+			"list[current_player;main;0,5.5;8,3;8]" ..
+			"button_exit[-0.02,0.0;2.5,1;setrespawn;Set Respawn]" ..
+			"button_exit[2.75,0.0;2.5,1;sleep;Sleep]" ..
+			"button_exit[5.56,0.0;2.5,1;sethome;Set Home]" ..
+			"list[current_player;bed_trunk;0,1;8,3]" ..
+			"listring[current_player;bed_trunk]" ..
+			"listring[current_player;main]" ..
+			default.get_hotbar_bg(0, 4.25)
+	return formspec
+end
+
 function beds.kick_players()
 	for name,_ in pairs(beds.player) do
 		local player = minetest.get_player_by_name(name)
@@ -148,7 +148,6 @@ function beds.on_rightclick(pos, player)
 	beds.bed_pointed_pos[name] = pos
 	minetest.show_formspec(name, "beds:bed", beds.get_bed_formspec(pos))
 end
-
 
 -- callbacks
 
