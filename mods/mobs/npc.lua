@@ -32,12 +32,9 @@ mobs:register_mob("mobs:npc", {
 	run_velocity = 3,
 	jump = true,
 	drops = {
-		{name = "default:wood",
-		chance = 1, min = 1, max = 3},
-		{name = "default:apple",
-		chance = 2, min = 1, max = 2},
-		{name = "default:axe_stone",
-		chance = 5, min = 1, max = 1},
+		{name = "default:wood", chance = 1, min = 1, max = 3},
+		{name = "default:apple", chance = 2, min = 1, max = 2},
+		{name = "default:axe_stone", chance = 5, min = 1, max = 1},
 	},
 	water_damage = 0,
 	lava_damage = 2,
@@ -46,6 +43,7 @@ mobs:register_mob("mobs:npc", {
 	view_range = 15,
 	owner = "",
 	order = "follow",
+	fear_height = 3,
 	animation = {
 		speed_normal = 30,
 		speed_run = 30,
@@ -61,38 +59,48 @@ mobs:register_mob("mobs:npc", {
 	on_rightclick = function(self, clicker)
 
 		-- feed to heal npc
-		if not mobs:feed_tame(self, clicker, 8, true, true) then
-			local item = clicker:get_wielded_item()
-			local name = clicker:get_player_name()
+		if mobs:feed_tame(self, clicker, 8, true, true) then
+			return
+		end
 
-			-- right clicking with gold lump drops random item from mobs.npc_drops
-			if item:get_name() == "default:gold_lump" then
-				if not minetest.setting_getbool("creative_mode") then
-					item:take_item()
-					clicker:set_wielded_item(item)
-				end
-				local pos = self.object:getpos()
-				pos.y = pos.y + 0.5
-				minetest.add_item(pos, {
-					name = mobs.npc_drops[math.random(1, #mobs.npc_drops)]
-				})
-				return
+		local item = clicker:get_wielded_item()
+
+		-- right clicking with gold lump drops random item from mobs.npc_drops
+		if item:get_name() == "default:gold_lump" then
+
+			if not minetest.setting_getbool("creative_mode") then
+				item:take_item()
+				clicker:set_wielded_item(item)
+			end
+
+			local pos = self.object:getpos()
+
+			pos.y = pos.y + 0.5
+
+			minetest.add_item(pos, {
+				name = mobs.npc_drops[math.random(1, #mobs.npc_drops)]
+			})
+
+			return
+		end
+
+		-- capture npc with net or lasso
+		mobs:capture_mob(self, clicker, 0, 5, 80, false, nil)
+
+		-- by right-clicking owner can switch npc between follow and stand
+		if self.owner and self.owner == clicker:get_player_name() then
+
+			if self.order == "follow" then
+				self.order = "stand"
 			else
-				-- if owner switch between follow and stand
-				if self.owner and self.owner == clicker:get_player_name() then
-					if self.order == "follow" then
-						self.order = "stand"
-					else
-						self.order = "follow"
-					end
-				end
+				self.order = "follow"
 			end
 		end
 
-		mobs:capture_mob(self, clicker, 0, 5, 80, false, nil)
 	end,
 })
 
---mobs:register_spawn("mobs:npc", {"default:dirt_with_grass"}, 20, 0, 300000, 1, 31000)
+--mobs:register_spawn("mobs:npc", {"default:dirt_with_grass"}, 20, 0, 7000, 1, 31000)
+--mobs:spawn_specific("mobs:npc", {"default:brick"}, {"air"}, 0, 15, 1, 1, 1, 0, 200, true)
 
 mobs:register_egg("mobs:npc", "Npc", "default_brick.png", 1)
