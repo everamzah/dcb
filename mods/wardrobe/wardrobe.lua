@@ -6,7 +6,6 @@ local function showForm(player, page)
    local playerName = player:get_player_name();
    if not playerName or playerName == "" then return; end
 
-   ---[[
    local n = #wardrobe.skins;
    if n <= 0 then return; end
    local nPages = math.ceil(n/SKINS_PER_PAGE);
@@ -30,14 +29,6 @@ local function showForm(player, page)
    if page < nPages then
       fs = fs.."button_exit[4,9;1,1;n:p"..(page+1)..";next]";
    end
-   --]]
-
-   --[[local fs = "size[3,5]"..default.gui_bg..default.gui_bg_img..
-	"label[0,0;Appearance]"..
-	"button_exit[0,1;3,1;s:character1.png;Human Male]"..
-	"button_exit[0,2;3,1;s:character0.png;Human Female]"..
-	"button_exit[0,3;3,1;s:alien1.png;Alien Male]"..
-	"button_exit[0,4;3,1;s:alien0.png;Alien Female]"--]]
 
    minetest.show_formspec(playerName, FORM_NAME, fs);
 end
