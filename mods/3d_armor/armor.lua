@@ -23,9 +23,10 @@ ARMOR_FIRE_NODES = {
 	{"default:lava_source",     5, 4},
 	{"default:lava_flowing",    5, 4},
 	{"fire:basic_flame",        3, 4},
-	{"ethereal:crystal_spike",  2, 1},
-	{"bakedclay:safe_fire",     2, 1},
+	{"fire:permanent_flame",    3, 4},
 	{"default:torch",           1, 1},
+	{"xdecor:fire", 1, 1},
+	{"caverealms:constant_flame", 1, 1}
 }
 
 -- Load Armor Configs
@@ -152,7 +153,7 @@ armor.set_player_armor = function(self, player)
 				if v == false then
 					local level = def.groups["armor_"..k]
 					if level then
-						local texture = item:gsub("%:", "_")
+						local texture = def.texture or item:gsub("%:", "_")
 						table.insert(textures, texture..".png")
 						preview = preview.."^"..texture.."_preview.png"
 						armor_level = armor_level + level
