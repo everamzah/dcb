@@ -188,6 +188,7 @@ for enchant in tooldef[2]:gmatch("[%w_]+") do
 					full_punch_interval = full_punch_interval, max_drop_level = max_drop_level
 				}
 			})
+			minetest.register_alias("xdecor:enchanted_"..tool.."_"..material.."_"..enchant, ":"..mod..":enchanted_"..tool.."_"..material.."_"..enchant)
 		end
 
 		if mod == "3d_armor" then
@@ -219,4 +220,3 @@ end
 end
 end
 end
-
