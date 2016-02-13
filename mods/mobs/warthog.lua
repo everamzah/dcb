@@ -5,6 +5,8 @@ mobs:register_mob("mobs:pumba", {
 	type = "animal",
 	passive = false,
 	attack_type = "dogfight",
+	group_attack = true,
+	reach = 2,
 	damage = 2,
 	hp_min = 5,
 	hp_max = 15,
@@ -23,15 +25,15 @@ mobs:register_mob("mobs:pumba", {
 	walk_velocity = 2,
 	run_velocity = 3,
 	jump = true,
-	follow = {"default:apple", "farming:potato"},
+	follow = {"default:apple", "crops:potato"},
 	view_range = 10,
 	drops = {
-		{name = "mobs:pork_raw",
-		chance = 1, min = 2, max = 3},
+		{name = "mobs:pork_raw", chance = 1, min = 1, max = 3},
 	},
 	water_damage = 1,
 	lava_damage = 5,
 	light_damage = 0,
+	fear_height = 2,
 	animation = {
 		speed_normal = 15,
 		stand_start = 25,
@@ -42,12 +44,17 @@ mobs:register_mob("mobs:pumba", {
 		punch_end = 100,
 	},
 	on_rightclick = function(self, clicker)
-		mobs:feed_tame(self, clicker, 8, true, true)
+
+		if mobs:feed_tame(self, clicker, 8, true, true) then
+			return
+		end
+
 		mobs:capture_mob(self, clicker, 0, 5, 50, false, nil)
 	end,
 })
 
---mobs:register_spawn("mobs:pumba", {"default:dirt_with_grass"}, 20, 10, 150000, 1, 31000)
+mobs:register_spawn("mobs:pumba",
+	{"default:dirt_with_grass"}, 20, 10, 15000, 2, 31000, true)
 
 mobs:register_egg("mobs:pumba", "Warthog", "wool_pink.png", 1)
 

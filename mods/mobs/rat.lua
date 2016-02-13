@@ -19,10 +19,13 @@ mobs:register_mob("mobs:rat", {
 		random = "mobs_rat",
 	},
 	walk_velocity = 1,
+	run_velocity = 2,
+	runaway = true,
 	jump = true,
 	water_damage = 0,
 	lava_damage = 4,
 	light_damage = 0,
+	fear_height = 2,
 	on_rightclick = function(self, clicker)
 		mobs:capture_mob(self, clicker, 25, 80, 0, true, nil)
 	end,
@@ -31,13 +34,13 @@ mobs:register_mob("mobs:rat", {
 		local pos = self.object:getpos()
 		print("rat pos", pos.x, pos.y, pos.z)
 	end,
-]]
+--]]
 })
 
---mobs:register_spawn("mobs:rat", {"default:stone"}, 20, 5, 150000, 1, 0)
+mobs:register_spawn("mobs:rat", {"default:stone"}, 20, 5, 15000, 2, 0)
 
 mobs:register_egg("mobs:rat", "Rat", "mobs_rat_inventory.png", 0)
-	
+
 -- cooked rat, yummy!
 minetest.register_craftitem("mobs:rat_cooked", {
 	description = "Cooked Rat",
