@@ -1,13 +1,12 @@
-
 -----------------------------------------------------------------------
 -- xconnected.lua contains the actual code and api for xconnected nodes
 -----------------------------------------------------------------------
-dofile(minetest.get_modpath("xconnected").."/xconnected.lua");
+dofile(minetest.get_modpath("xconnected") .. "/xconnected.lua");
 
 
 
 -- XPane Steel Bar
-xconnected.register_pane("xconnected:bar", "xconnected_bar.png", {
+xconnected.register_pane("xconnected:bar", "xconnected_bar.png", "default_steel_ingot", {
 	description = "Steel Bar",
 	tiles = {"xconnected_bar.png"},
 	drawtype = "airlike",
@@ -23,25 +22,10 @@ xconnected.register_pane("xconnected:bar", "xconnected_bar.png", {
 	sounds = default.node_sound_stone_defaults()
 })
 
-minetest.register_craft({
-	output = "xconnected:bar_c4 16",
-	recipe = {
-		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
-		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}
-	}
-})
-
 -- XPane Glass Pines
-xconnected.register_pane('xconnected:pane_glass_white', 'default_glass.png')
-minetest.register_craft({
-	output = "xconnected:pane_glass_white_c4 16",
-	recipe = {
-		{"default:glass", "default:glass", "default:glass"},
-		{"default:glass", "default:glass", "default:glass"}
-	}
-})
+xconnected.register_pane("xconnected:pane_glass_white", "default_glass.png", "default:glass")
 
-xconnected.register_pane("xconnected:pane_glass_gray", "default_glass.png^[colorize:gray")
+xconnected.register_pane("xconnected:pane_glass_gray", "default_glass.png^[colorize:gray:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_gray_c4 16",
 	recipe = {
@@ -51,7 +35,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_pane("xconnected:pane_glass_darkgray", "default_glass.png^[colorize:darkgray")
+xconnected.register_pane("xconnected:pane_glass_darkgray", "default_glass.png^[colorize:darkgray:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_darkgray_c4 16",
 	recipe = {
@@ -61,7 +45,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_pane("xconnected:pane_glass_black", "default_glass.png^[colorize:black")
+xconnected.register_pane("xconnected:pane_glass_black", "default_glass.png^[colorize:black:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_black_c4 16",
 	recipe = {
@@ -71,7 +55,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_pane("xconnected:pane_glass_violet", "default_glass.png^[colorize:violet")
+xconnected.register_pane("xconnected:pane_glass_violet", "default_glass.png^[colorize:violet:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_violet_c4 16",
 	recipe = {
@@ -81,7 +65,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_pane("xconnected:pane_glass_blue", "default_glass.png^[colorize:blue")
+xconnected.register_pane("xconnected:pane_glass_blue", "default_glass.png^[colorize:blue:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_blue_c4 16",
 	recipe = {
@@ -91,7 +75,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_pane("xconnected:pane_glass_cyan", "default_glass.png^[colorize:cyan")
+xconnected.register_pane("xconnected:pane_glass_cyan", "default_glass.png^[colorize:cyan:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_cyan_c4 16",
 	recipe = {
@@ -101,7 +85,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_pane("xconnected:pane_glass_darkgreen", "default_glass.png^[colorize:darkgreen")
+xconnected.register_pane("xconnected:pane_glass_darkgreen", "default_glass.png^[colorize:darkgreen:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_darkgreen_c4 16",
 	recipe = {
@@ -111,7 +95,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_pane("xconnected:pane_glass_green", "default_glass.png^[colorize:green")
+xconnected.register_pane("xconnected:pane_glass_green", "default_glass.png^[colorize:green:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_green_c4 16",
 	recipe = {
@@ -121,7 +105,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_pane("xconnected:pane_glass_yellow", "default_glass.png^[colorize:yellow")
+xconnected.register_pane("xconnected:pane_glass_yellow", "default_glass.png^[colorize:yellow:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_yellow_c4 16",
 	recipe = {
@@ -131,7 +115,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_pane("xconnected:pane_glass_brown", "default_glass.png^[colorize:brown")
+xconnected.register_pane("xconnected:pane_glass_brown", "default_glass.png^[colorize:brown:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_brown_c4 16",
 	recipe = {
@@ -141,7 +125,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_pane("xconnected:pane_glass_orange", "default_glass.png^[colorize:orange")
+xconnected.register_pane("xconnected:pane_glass_orange", "default_glass.png^[colorize:orange:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_orange_c4 16",
 	recipe = {
@@ -151,7 +135,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_pane("xconnected:pane_glass_red", "default_glass.png^[colorize:red")
+xconnected.register_pane("xconnected:pane_glass_red", "default_glass.png^[colorize:red:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_red_c4 16",
 	recipe = {
@@ -161,7 +145,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_pane("xconnected:pane_glass_magenta", "default_glass.png^[colorize:magenta")
+xconnected.register_pane("xconnected:pane_glass_magenta", "default_glass.png^[colorize:magenta:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_magenta_c4 16",
 	recipe = {
@@ -171,7 +155,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_pane("xconnected:pane_glass_pink", "default_glass.png^[colorize:pink")
+xconnected.register_pane("xconnected:pane_glass_pink", "default_glass.png^[colorize:pink:191")
 minetest.register_craft({
 	output = "xconnected:pane_glass_pink_c4 16",
 	recipe = {
@@ -182,125 +166,22 @@ minetest.register_craft({
 })
 
 -- XConnected Walls
-xconnected.register_wall('xconnected:wall_tree', 'default_tree.png')
-minetest.register_craft({
-	output = "xconnected:wall_tree_c4 6",
-	recipe = {
-		{"default:tree", "default:tree", "default:tree"},
-		{"default:tree", "default:tree", "default:tree"}
-	}
-})
-
-xconnected.register_wall('xconnected:wall_wood', 'default_wood.png')
-minetest.register_craft({
-	output = "xconnected:wall_wood_c4 6",
-	recipe = {
-		{"default:wood", "default:wood", "default:wood"},
-		{"default:wood", "default:wood", "default:wood"}
-	}
-})
-
-xconnected.register_wall('xconnected:wall_stone', 'default_stone.png')
-minetest.register_craft({
-	output = "xconnected:wall_stone_c4 6",
-	recipe = {
-		{"default:stone", "default:stone", "default:stone"},
-		{"default:stone", "default:stone", "default:stone"}
-	}
-})
-
-xconnected.register_wall('xconnected:wall_cobble', 'default_cobble.png')
-minetest.register_craft({
-	output = "xconnected:wall_cobble_c4 6",
-	recipe = {
-		{"default:cobble", "default:cobble", "default:cobble"},
-		{"default:cobble", "default:cobble", "default:cobble"}
-	}
-})
-
-xconnected.register_wall("xconnected:wall_mossycobble", "default_mossycobble.png")
-minetest.register_craft({
-	output = "xconnected:wall_mossycobble_c4 6",
-	recipe = {
-		{"default:mossycobble", "default:mossycobble", "default:mossycobble"},
-		{"default:mossycobble", "default:mossycobble", "default:mossycobble"}
-	}
-})
-
-xconnected.register_wall("xconnected:wall_brick", "default_brick.png")
-minetest.register_craft({
-	output = "xconnected:wall_brick_c4 6",
-	recipe = {
-		{"default:brick", "default:brick", "default:brick"},
-		{"default:brick", "default:brick", "default:brick"}
-	}
-})
-
-xconnected.register_wall("xconnected:wall_stone_brick", "default_stone_brick.png")
-minetest.register_craft({
-	output = "xconnected:wall_stone_brick_c4 6",
-	recipe = {
-		{"default:stonebrick", "default:stonebrick", "default:stonebrick"},
-		{"default:stonebrick", "default:stonebrick", "default:stonebrick"}
-	}
-})
-
-xconnected.register_wall("xconnected:wall_sandstone_brick", "default_sandstone_brick.png")
-minetest.register_craft({
-	output = "xconnected:wall_sandstone_brick_c4 6",
-	recipe = {
-		{"default:sandstonebrick", "default:sandstonebrick", "default:sandstonebrick"},
-		{"default:sandstonebrick", "default:sandstonebrick", "default:sandstonebrick"}
-	}
-})
-
-xconnected.register_wall("xconnected:wall_desert_stone_brick", "default_desert_stone_brick.png")
-minetest.register_craft({
-	output = "xconnected:wall_desert_stone_brick_c4 6",
-	recipe = {
-		{"default:desert_stonebrick", "default:desert_stonebrick", "default:desert_stonebrick"},
-		{"default:desert_stonebrick", "default:desert_stonebrick", "default:desert_stonebrick"}
-	}
-})
-
-xconnected.register_wall("xconnected:wall_obsidian_brick", "default_obsidian_brick.png")
-minetest.register_craft({
-	output = "xconnected:wall_obsidian_brick_c4 6",
-	recipe = {
-		{"default:obsidianbrick", "default:obsidianbrick", "default:obsidianbrick"},
-		{"default:obsidianbrick", "default:obsidianbrick", "default:obsidianbrick"}
-	}
-})
-
-xconnected.register_wall( "xconnected:wall_hedge", "default_leaves.png")
-minetest.register_craft({
-	output = "xconnected:wall_hedge_c4 6",
-	recipe = {
-		{"group:leaves", "group:leaves", "group:leaves"},
-		{"group:leaves", "group:leaves", "group:leaves"}
-	}
-})
-
-xconnected.register_wall( "xconnected:wall_clay", "default_clay.png")
-minetest.register_craft({
-	output = "xconnected:wall_clay_c4 6",
-	recipe = {
-		{"default:clay", "default:clay", "default:clay"},
-		{"default:clay", "default:clay", "default:clay"}
-	}
-})
-
-xconnected.register_wall("xconnected:wall_coal_block", "default_coal_block.png")
-minetest.register_craft({
-	output = "xconnected:wall_coal_block_c4 6",
-	recipe = {
-		{"default:coalblock", "default:coalblock", "default:coalblock"},
-		{"default:coalblock", "default:coalblock", "default:coalblock"}
-	}
-})
+xconnected.register_wall("xconnected:wall_tree", "default_tree.png", "default:tree")
+xconnected.register_wall("xconnected:wall_wood", "default_wood.png", "default:wood")
+xconnected.register_wall("xconnected:wall_stone", "default_stone.png", "default:stone")
+xconnected.register_wall("xconnected:wall_cobble", "default_cobble.png", "default:cobble")
+xconnected.register_wall("xconnected:wall_mossycobble", "default_mossycobble.png", "default:mossycobble")
+xconnected.register_wall("xconnected:wall_brick", "default_brick.png", "default:brick")
+xconnected.register_wall("xconnected:wall_stone_brick", "default_stone_brick.png", "default:stonebrick")
+xconnected.register_wall("xconnected:wall_sandstone_brick", "default_sandstone_brick.png", "default:sandstonebrick")
+xconnected.register_wall("xconnected:wall_desert_stone_brick", "default_desert_stone_brick.png", "default:desert_stonebrick")
+xconnected.register_wall("xconnected:wall_obsidian_brick", "default_obsidian_brick.png", "default:obsidianbrick")
+xconnected.register_wall( "xconnected:wall_hedge", "default_leaves.png", "group:leaves")
+xconnected.register_wall( "xconnected:wall_clay", "default_clay.png", "default:clay")
+xconnected.register_wall("xconnected:wall_coal_block", "default_coal_block.png", "default:coalblock")
 
 -- Fences
-xconnected.register_fence("xconnected:fence", "default_wood.png", {
+xconnected.register_fence("xconnected:fence", "default_wood.png", "", {
 	description = "Wood Fence",
 	textures = {"default_wood.png"},
 	is_ground_content = false,
@@ -324,7 +205,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_fence("xconnected:fence_pine", "default_pine_wood.png", {
+xconnected.register_fence("xconnected:fence_pine", "default_pine_wood.png", "", {
 	description = "Pine Wood Fence",
 	textures = {"default_pine_wood.png"},
 	is_ground_content = false,
@@ -348,7 +229,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_fence("xconnected:fence_jungle", "default_junglewood.png", {
+xconnected.register_fence("xconnected:fence_jungle", "default_junglewood.png", "", {
 	description = "Jungle Wood Fence",
 	textures = {"default_junglewood.png"},
 	is_ground_content = false,
@@ -372,7 +253,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_fence("xconnected:fence_acacia", "default_acacia_wood.png", {
+xconnected.register_fence("xconnected:fence_acacia", "default_acacia_wood.png", "", {
 	description = "Acacia Wood Fence",
 	textures = {"default_acacia_wood.png"},
 	is_ground_content = false,
@@ -396,7 +277,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_fence("xconnected:fence_aspen", "default_aspen_wood.png", {
+xconnected.register_fence("xconnected:fence_aspen", "default_aspen_wood.png", "", {
 	description = "Aspen Wood Fence",
 	textures = {"default_aspen_wood.png"},
 	is_ground_content = false,
@@ -436,46 +317,3 @@ minetest.register_alias("xpanes:pane_orange", "xconnected:pane_glass_orange_c4")
 minetest.register_alias("xpanes:pane_red", "xconnected:pane_glass_red_c4")
 minetest.register_alias("xpanes:pane_magenta", "xconnected:pane_glass_magenta_c4")
 minetest.register_alias("xpanes:pane_pink", "xconnected:pane_glass_pink_c4")
-
-
---[[
------------------------------------------------------------------------
--- register some example panes, walls and fences
------------------------------------------------------------------------
-
--- for comparison: xpanes
-xconnected.register_pane( 'xconnected:pane_glass',              'default_glass.png',          'default:glass');
-xconnected.register_pane( 'xconnected:pane_obsidian_glass',     'default_obsidian_glass.png', 'default:obsidian_glass');
-
--- diffrent types of walls
-xconnected.register_wall( 'xconnected:wall_tree',               'default_tree.png',               'default:tree' );
-xconnected.register_wall( 'xconnected:wall_wood',               'default_wood.png',               'default:fence_wood' ); 
-xconnected.register_wall( 'xconnected:wall_stone',              'default_stone.png',              'default:stone' );
-xconnected.register_wall( 'xconnected:wall_cobble',             'default_cobble.png',             'default:cobble' );
-xconnected.register_wall( 'xconnected:wall_brick',              'default_brick.png',              'default:brick' );
-xconnected.register_wall( 'xconnected:wall_stone_brick',        'default_stone_brick.png',        'default:stonebrick' );
-xconnected.register_wall( 'xconnected:wall_sandstone_brick',    'default_sandstone_brick.png',    'default:sandstonebrick' );
-xconnected.register_wall( 'xconnected:wall_desert_stone_brick', 'default_desert_stone_brick.png', 'default:desert_stonebrick' );
-xconnected.register_wall( 'xconnected:wall_obsidian_brick',     'default_obsidian_brick.png',     'default:obsidianbrick' );
-xconnected.register_wall( 'xconnected:wall_hedge',              'default_leaves.png',             'default:leaves' );
-xconnected.register_wall( 'xconnected:wall_clay',               'default_clay.png',               'default:clay' );
-xconnected.register_wall( 'xconnected:wall_coal_block',         'default_coal_block.png',         'default:coalblock' );
-
--- xfences can also be emulated
-xconnected.register_fence('xconnected:fence',        'default_wood.png',        'default:wood');
-xconnected.register_fence('xconnected:fence_pine',   'default_pine_wood.png',   'default:pine_wood');
-xconnected.register_fence('xconnected:fence_jungle', 'default_junglewood.png',  'default:junglewood');
-xconnected.register_fence('xconnected:fence_acacia', 'default_acacia_wood.png', 'default:acacia_wood');
-
--- this innocent loop creates quite a lot of nodes - but only if you have the stained_glass mod installed
-if(    minetest.get_modpath( "stained_glass" )
-   and minetest.global_exists( stained_glass_hues)
-   and minetest.global_exists( stained_glass_shade)) then
-
-	for _,hue in ipairs( stained_glass_hues ) do
-		for _,shade in ipairs( stained_glass_shade ) do
-			xconnected.register_pane( 'xconnected:pane_'..shade[1]..hue[1], 'stained_glass_'..shade[1]..hue[1]..'.png');
-		end
-	end
-end
---]]
