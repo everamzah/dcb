@@ -1,4 +1,4 @@
-# This file contains settings of minetest_game [dcb] that can be changed in
+# This file contains settings of DCB that can be changed in
 # minetest.conf
 #
 # By default, all the settings are commented and not functional.
@@ -17,49 +17,33 @@
 # Whether steel tools, wool, and gold should be given to new players
 #give_initial_stuff = false
 
-
-
-### TNT
-## Whether the TNT mod should be enabled
+# Whether the TNT mod should be enabled
 #enable_tnt = <true in singleplayer, false in multiplayer>
 
-## The radius of a TNT explosion
+# The radius of a TNT explosion
 #tnt_radius = 3
 
-
-### Beds
-## Enable beds setting player respawn
-#enable_bed_respawn = true
-
-
-### Xconnected
-## Replace legacy fences (deprecated)
-#replace_legacy_fences = false
-
-## Replace legacy panes (deprecated)
-#replace_legacy_panes = false
-
-## Replace legacy walls (deprecated)
-#replace_legacy_walls = false
-
-
-### Server Essentials
-
-
-### DCB
-## Check for disallowednodes priv when igniting TNT
+# Check for disallowednodes priv when igniting TNT
 #tnt_requires_priv = false
 
 ## Check for fglava priv when placing lava bucket
 #lava_requires_priv = false
 
+# Enable beds setting player respawn
+#enable_bed_respawn = true
 
-### CaveRealms
-## Enable falling icicles
+# Replace legacy fences (deprecated)
+#replace_legacy_fences = false
+
+# Replace legacy panes (deprecated)
+#replace_legacy_panes = false
+
+# Replace legacy walls (deprecated)
+#replace_legacy_walls = false
+
+# Enable falling icicles
 #caverealms.falling_icicles = true
 
-
-### Player Effects
-
-## Write playereffects database file periodically (0 to disable)
+# Write playereffects database file periodically (0 to disable)
+# Setting this value to 20, would save the file to disk every 20 seconds.
 #playereffects_autosave = 0
