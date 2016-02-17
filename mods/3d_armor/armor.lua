@@ -15,16 +15,15 @@ ARMOR_MATERIALS = {
 	bronze = "default:bronze_ingot",
 	diamond = "default:diamond",
 	gold = "default:gold_ingot",
-	mithril = "moreores:mithril_ingot",
-	crystal = "ethereal:crystal_ingot",
+	obsidian = "default:obsidian"
 }
 ARMOR_FIRE_PROTECT = minetest.get_modpath("ethereal") ~= nil
 ARMOR_FIRE_NODES = {
-	{"default:lava_source",     5, 4},
-	{"default:lava_flowing",    5, 4},
-	{"fire:basic_flame",        3, 4},
-	{"fire:permanent_flame",    3, 4},
-	{"default:torch",           1, 1},
+	{"default:lava_source", 5, 4},
+	{"default:lava_flowing", 5, 4},
+	{"fire:basic_flame", 3, 4},
+	{"fire:permanent_flame", 3, 4},
+	{"default:torch", 1, 1},
 	{"xdecor:fire", 1, 1},
 	{"caverealms:constant_flame", 1, 1}
 }
@@ -33,26 +32,20 @@ ARMOR_FIRE_NODES = {
 
 local modpath = minetest.get_modpath(ARMOR_MOD_NAME)
 local worldpath = minetest.get_worldpath()
-local input = io.open(modpath.."/armor.conf", "r")
+local input = io.open(modpath .. "/armor.conf", "r")
 if input then
-	dofile(modpath.."/armor.conf")
+	dofile(modpath .. "/armor.conf")
 	input:close()
 	input = nil
 end
-input = io.open(worldpath.."/armor.conf", "r")
+input = io.open(worldpath .. "/armor.conf", "r")
 if input then
-	dofile(worldpath.."/armor.conf")
+	dofile(worldpath .. "/armor.conf")
 	input:close()
 	input = nil
-end
-if not minetest.get_modpath("moreores") then
-	ARMOR_MATERIALS.mithril = nil
-end
-if not minetest.get_modpath("ethereal") then
-	ARMOR_MATERIALS.crystal = nil
 end
 
--- override hot nodes so they do not hurt player anywhere but mod
+-- Override hot nodes so they do not hurt player anywhere but mod
 if ARMOR_FIRE_PROTECT == true then
 	for _, row in ipairs(ARMOR_FIRE_NODES) do
 		if minetest.registered_nodes[row[1]] then
@@ -69,54 +62,21 @@ local time = 0
 armor = {
 	player_hp = {},
 	elements = {"head", "torso", "legs", "feet"},
-	physics = {"jump","speed","gravity"},
-	formspec = "size[8,8.5]list[detached:player_name_armor;armor;0,1;2,3;]"
-		.."image[2,0.75;2,4;armor_preview]"
-		.."list[current_player;main;0,4.5;8,4;]"
-		.."list[current_player;craft;4,1;3,3;]"
-		.."list[current_player;craftpreview;7,2;1,1;]",
+	physics = {"jump", "speed", "gravity"},
+	formspec = "size[8,8.5]list[detached:player_name_armor;armor;0,1;2,3;]" ..
+		"image[2,0.75;2,4;armor_preview]" ..
+		"list[current_player;main;0,4.5;8,4;]" ..
+		"list[current_player;craft;4,1;3,3;]" ..
+		"list[current_player;craftpreview;7,2;1,1;]",
 	textures = {},
 	def = {state=0, count = 0},
-	version = "0.4.4",
+	version = "0.4.4.1"
 }
 
 if minetest.get_modpath("inventory_plus") then
 	inv_mod = "inventory_plus"
-	armor.formspec = "size[8,8.5]button[0,0;2,0.5;main;Back]"
-		.."list[detached:player_name_armor;armor;0,1;2,3;]"
-		.."image[2.5,0.75;2,4;armor_preview]"
-		.."label[5,1;Level: armor_level]"
-		.."label[5,1.5;Heal:  armor_heal]"
-		.."label[5,2;Fire:  armor_fire]"
-		.."list[current_player;main;0,4.5;8,4;]"
 elseif minetest.get_modpath("unified_inventory") then
 	inv_mod = "unified_inventory"
-	unified_inventory.register_button("armor", {
-		type = "image",
-		image = "inventory_plus_armor.png",
-	})
-	unified_inventory.register_page("armor", {
-		get_formspec = function(player)
-			local name = player:get_player_name()
-			local formspec = "background[0.06,0.99;7.92,7.52;3d_armor_ui_form.png]"
-				.."label[0,0;Armor]"
-				.."list[detached:"..name.."_armor;armor;0,1;2,3;]"
-				.."image[2.5,0.75;2,4;"..armor.textures[name].preview.."]"
-				.."label[5,1;Level: "..armor.def[name].level.."]"
-				.."label[5,1.5;Heal:  "..armor.def[name].heal.."]"
-				.."label[5,2;Fire:  "..armor.def[name].fire.."]"
-			if minetest.setting_getbool("unified_inventory_lite") then
-				formspec = "background[0.06,0.49;7.92,7.52;3d_armor_ui_form.png]"
-					.."label[0,0;Armor]"
-					.."list[detached:"..name.."_armor;armor;0,0.5;2,3;]"
-					.."image[2.5,0.25;2,4;"..armor.textures[name].preview.."]"
-					.."label[5,0.5;Level: "..armor.def[name].level.."]"
-					.."label[5,1;Heal:  "..armor.def[name].heal.."]"
-					.."label[5,1.5;Fire:  "..armor.def[name].fire.."]"
-			end
-			return {formspec=formspec}
-		end,
-	})
 elseif minetest.get_modpath("inventory_enhanced") then
 	inv_mod = "inventory_enhanced"
 end
@@ -278,6 +238,7 @@ armor.update_armor = function(self, player)
 	self.player_hp[name] = hp
 end
 
+---[[
 armor.get_armor_formspec = function(self, name)
 	if not armor.textures[name] then
 		minetest.log("error", "3d_armor: Player texture["..name.."] is nil [get_armor_formspec]")
@@ -294,7 +255,9 @@ armor.get_armor_formspec = function(self, name)
 	formspec = formspec:gsub("armor_fire", armor.def[name].fire)
 	return formspec
 end
+--]]
 
+---[[
 armor.update_inventory = function(self, player)
 	local name = armor:get_valid_player(player, "[set_player_armor]")
 	if not name or inv_mod == "inventory_enhanced" then
@@ -316,6 +279,7 @@ armor.update_inventory = function(self, player)
 		end
 	end
 end
+--]]
 
 armor.get_valid_player = function(self, player, msg)
 	msg = msg or ""
@@ -347,7 +311,7 @@ end
 -- Register Callbacks
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
-	local name = armor:get_valid_player(player, "[on_player_receive_fields]")
+	--[[local name = armor:get_valid_player(player, "[on_player_receive_fields]")
 	if not name or inv_mod == "inventory_enhanced" then
 		return
 	end
@@ -355,14 +319,14 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		local formspec = armor:get_armor_formspec(name)
 		inventory_plus.set_inventory_formspec(player, formspec)
 		return
-	end
+	end--]]
 end)
 
 minetest.register_on_joinplayer(function(player)
 	multiskin:init(player)
 	local name = player:get_player_name()
 	local player_inv = player:get_inventory()
-	local armor_inv = minetest.create_detached_inventory(name.."_armor", {
+	local armor_inv = minetest.create_detached_inventory(name .. "_armor", {
 		on_put = function(inv, listname, index, stack, player)
 			player:get_inventory():set_stack(listname, index, stack)
 			armor:set_player_armor(player)
@@ -382,35 +346,39 @@ minetest.register_on_joinplayer(function(player)
 			armor:update_inventory(player)
 		end,
 		allow_put = function(inv, listname, index, stack, player)
-			return 1
+			if minetest.get_item_group(stack:get_name(), "armor_item") >= 1 then
+				return 1
+			else
+				return 0
+			end
 		end,
 		allow_take = function(inv, listname, index, stack, player)
 			return stack:get_count()
 		end,
 		allow_move = function(inv, from_list, from_index, to_list, to_index, count, player)
 			return count
-		end,
+		end
 	})
-	if inv_mod == "inventory_plus" then
+	--[[if inv_mod == "inventory_plus" then
 		inventory_plus.register_button(player,"armor", "Armor")
-	end
-	armor_inv:set_size("armor", 6)
-	player_inv:set_size("armor", 6)
-	for i=1, 6 do
+	end--]]
+	armor_inv:set_size("armor", 5)
+	player_inv:set_size("armor", 5)
+	for i=1, 5 do
 		local stack = player_inv:get_stack("armor", i)
 		armor_inv:set_stack("armor", i, stack)
 	end
 
 	armor.player_hp[name] = 0
 	armor.def[name] = {
-		state = 0,
-		count = 0,
-		level = 0,
-		heal = 0,
-		jump = 1,
-		speed = 1,
-		gravity = 1,
-		fire = 0,
+		state=0,
+		count=0,
+		level=0,
+		heal=0,
+		jump=1,
+		speed=1,
+		gravity=1,
+		fire=0
 	}
 	armor.textures[name] = {
 		armor = "3d_armor_trans.png",
@@ -464,7 +432,7 @@ if ARMOR_DROP == true or ARMOR_DESTROY == true then
 						local meta = minetest.get_meta(vector.round(pos))
 						local owner = meta:get_string("owner")
 						local inv = meta:get_inventory()
-						for _,stack in ipairs(drop) do
+						for _, stack in ipairs(drop) do
 							if name == owner and inv:room_for_item("main", stack) then
 								inv:add_item("main", stack)
 							else
@@ -473,7 +441,7 @@ if ARMOR_DROP == true or ARMOR_DESTROY == true then
 						end
 					end
 				else
-					for _,stack in ipairs(drop) do
+					for _, stack in ipairs(drop) do
 						armor.drop_armor(pos, stack)
 					end
 				end
@@ -485,10 +453,9 @@ end
 minetest.register_globalstep(function(dtime)
 	time = time + dtime
 	if time > ARMOR_UPDATE_TIME then
-		for _,player in ipairs(minetest.get_connected_players()) do
+		for _, player in ipairs(minetest.get_connected_players()) do
 			armor:update_armor(player)
 		end
 		time = 0
 	end
 end)
-
