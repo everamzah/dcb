@@ -53,6 +53,3 @@ if CLOTHING_ENABLE_CRAFTING and minetest.get_modpath("wool") then
 	end
 	dofile(modpath.."/loom.lua")
 end
-
-
-

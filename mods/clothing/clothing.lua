@@ -165,21 +165,25 @@ minetest.register_on_joinplayer(function(player)
 			clothing:update_inventory(player)
 		end,
 		allow_put = function(inv, listname, index, stack, player)
-			return 1
+			if minetest.get_item_group(stack:get_name(), "clothing") >= 1 then
+				return 1
+			else
+				return 0
+			end
 		end,
 		allow_take = function(inv, listname, index, stack, player)
 			return stack:get_count()
 		end,
 		allow_move = function(inv, from_list, from_index, to_list, to_index, count, player)
 			return count
-		end,
+		end
 	})
 	if inv_mod == "inventory_plus" then
 		inventory_plus.register_button(player,"clothing", "Clothing")
 	end
-	clothing_inv:set_size("clothing", 6)
-	player_inv:set_size("clothing", 6)
-	for i=1, 6 do
+	clothing_inv:set_size("clothing", 4)
+	player_inv:set_size("clothing", 4)
+	for i=1, 4 do
 		local stack = player_inv:get_stack("clothing", i)
 		clothing_inv:set_stack("clothing", i, stack)
 	end	
@@ -197,4 +201,3 @@ minetest.register_on_joinplayer(function(player)
 		end, player)
 	end
 end)
-

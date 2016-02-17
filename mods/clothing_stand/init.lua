@@ -18,7 +18,7 @@ clothing_stand.set_formspec = function(name)
 	default.gui_bg_img..
 	default.gui_slots..
 	"label[0,0;Clothing]"..
-	"list[detached:"..name.."_clothing;clothing;1,0.75;6,1]"..
+	"list[detached:"..name.."_clothing;clothing;2,0.75;4,1]"..
 	"list[current_player;main;0,2.1;8,4;]"..
 	"listring[]"..
 	default.get_hotbar_bg(0,2.1)
@@ -39,7 +39,7 @@ minetest.register_node("clothing_stand:clothing_stand", {
                         "wardrobe_wardrobe_sides.png^wardrobe_wardrobe_front_overlay.png",
                         "default_pine_wood.png^wardrobe_wardrobe_front_overlay.png^clothing_inv_shirt_red.png"
 		},
-	groups = {choppy=2,oddly_breakable_by_hand=2,flammable=3,wood=1},
+	groups = {choppy=2, oddly_breakable_by_hand=2, flammable=3},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -75,8 +75,7 @@ minetest.register_craft({
 	output = "clothing_stand:clothing_stand",
 	recipe = {
 		{"group:wood", "group:wood", "group:wood"},
-		-- Change to "group:clothing" if exists
-		{"group:wood", "clothing:shirt_red", "group:wood"},
+		{"group:wood", "group:clothing", "group:wood"},
 		{"group:wood", "group:wood", "group:wood"}
 	}
 })
