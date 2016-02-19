@@ -346,7 +346,8 @@ minetest.register_on_joinplayer(function(player)
 			armor:update_inventory(player)
 		end,
 		allow_put = function(inv, listname, index, stack, player)
-			if minetest.get_item_group(stack:get_name(), "armor_item") >= 1 then
+			if string.match(stack:get_name(), "3d_armor")
+					or string.match(stack:get_name(), "shields") then
 				return 1
 			else
 				return 0

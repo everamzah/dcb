@@ -34,7 +34,11 @@ enchanting.tools = {
 		{"chestplate", "strong"},
 		{"helmet",     "strong"},
 		{"leggings",   "strong"}
-	}
+	}--[[,
+	["shields"] = {
+		"steel, bronze, mese, diamond",
+		{"shield",	"strong"}
+	}--]]
 }
 
 function enchanting.formspec(pos, num)
@@ -68,7 +72,7 @@ function enchanting.on_put(pos, listname, _, stack)
 	if listname == "tool" then
 		for k, v in pairs({"axe, pick, shovel",
 				"chestplate, leggings, helmet",
-				"sword", "boots"}) do
+				"sword", "boots"}) do --, "shield"}) do
 			if v:find(stack:get_name():match(":(%w+)")) then
 				enchanting.formspec(pos, k)
 			end
