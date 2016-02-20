@@ -1,4 +1,7 @@
-Make caverealms:thin_ice match new default:ice texture
+Show armor indicator to the right of hearts/stamina.  Remove
+air indicator, and give max breath once head is outside
+of liquid node.
 
-Show armor hud to the right of hearts/hunger.  Move air
-above hearts/hunger.
+xconnected fence posts have a low top and long bottom,
+and overlap causing z-fighting.  If default fences would
+snap and connect, then those could be used instead.
