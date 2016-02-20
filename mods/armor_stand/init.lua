@@ -84,7 +84,7 @@ minetest.register_craft({
 	output = "armor_stand:armor_stand",
 	recipe = {
 		{"group:wood", "group:wood", "group:wood"},
-		{"group:wood", "group:armor_item", "group:wood"},
+		{"group:wood", "group:armor_use", "group:wood"},
 		{"group:wood", "group:wood", "group:wood"}
 	}
 })
