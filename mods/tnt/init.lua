@@ -294,6 +294,11 @@ minetest.register_node("tnt:gunpowder", {
 	sounds = default.node_sound_leaves_defaults(),
 	
 	on_punch = function(pos, node, puncher)
+		if tnt_requires_priv and not minetest.check_player_privs(puncher:get_player_name(), {disallowednodes=true}) then
+			minetest.chat_send_player(puncher:get_player_name(),
+				"You need the disallowednodes priv to ignite Gunpowder")
+			return
+		end
 		if puncher:get_wielded_item():get_name() == "dcb:pick_admin" then
 			dcb.kill_node(pos, node, puncher)
 			return
