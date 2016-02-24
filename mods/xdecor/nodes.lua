@@ -468,18 +468,48 @@ for _, f in pairs(flowers) do
 	})
 end
 
-xdecor.register("painting", {
+xdecor.register("painting_1", {
 	description = "Painting",
-	drawtype = "signlike",
-	tiles = {"xdecor_painting.png"},
-	inventory_image = "xdecor_painting.png",
+	tiles = {"xdecor_painting_1.png"},
+	inventory_image = "xdecor_painting_empty.png",
+	wield_image = "xdecor_painting_empty.png",
 	paramtype2 = "wallmounted",
 	legacy_wallmounted = true,
-	walkable = false,
-	wield_image = "xdecor_painting.png",
-	selection_box = {type="wallmounted"},
-	groups = {dig_immediate=3, flammable=3, attached_node=1}
+	wield_image = "xdecor_painting_empty.png",
+	sunlight_propagates = true,
+	groups = {choppy=3, oddly_breakable_by_hand=2, flammable=3, attached_node=1},
+	sounds = default.node_sound_wood_defaults(),
+	node_box = {
+		type = "wallmounted",
+		wall_top = {-0.4375, 0.4375, -0.3125, 0.4375, 0.5, 0.3125},
+		wall_bottom = {-0.4375, -0.5, -0.3125, 0.4375, -0.4375, 0.3125},
+		wall_side = {-0.5, -0.3125, -0.4375, -0.4375, 0.3125, 0.4375}
+	},
+	on_construct = function(pos)
+		local node = minetest.get_node(pos)
+		local random = math.random(4)
+		if random == 1 then return end
+		minetest.set_node(pos, {name="xdecor:painting_"..random, param2=node.param2})
+	end
 })
+
+for i = 2, 4 do
+	xdecor.register("painting_"..i, {
+		tiles = {"xdecor_painting_"..i..".png"},
+		paramtype2 = "wallmounted",
+		legacy_wallmounted = true,
+		drop = "xdecor:painting_1",
+		sunlight_propagates = true,
+		groups = {choppy=3, oddly_breakable_by_hand=2, flammable=3, attached_node=1, not_in_creative_inventory=1},
+		sounds = default.node_sound_wood_defaults(),
+		node_box = {
+			type = "wallmounted",
+			wall_top = {-0.4375, 0.4375, -0.3125, 0.4375, 0.5, 0.3125},
+			wall_bottom = {-0.4375, -0.5, -0.3125, 0.4375, -0.4375, 0.3125},
+			wall_side = {-0.5, -0.3125, -0.4375, -0.4375, 0.3125, 0.4375}
+		}
+	})
+end
 
 xdecor.register("plant_pot", {
 	description = "Plant Pot",
