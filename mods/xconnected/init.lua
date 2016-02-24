@@ -6,7 +6,7 @@ dofile(minetest.get_modpath("xconnected") .. "/xconnected.lua");
 
 
 -- XPane Steel Bar
-xconnected.register_pane("xconnected:bar", "xconnected_bar.png", "default_steel_ingot", {
+xconnected.register_pane("xconnected:bar", "xconnected_bar.png", "", {
 	description = "Steel Bar",
 	tiles = {"xconnected_bar.png"},
 	drawtype = "airlike",
@@ -20,6 +20,14 @@ xconnected.register_pane("xconnected:bar", "xconnected_bar.png", "default_steel_
 	wield_image = "xconnected_bar.png",
 	groups = {cracky=2, oddly_breakable_by_hand=1, pane=1},
 	sounds = default.node_sound_stone_defaults()
+})
+minetest.register_craft({
+	output = "xconnected:bar_c4 16",
+	recipe = {
+		{"default:steel_ingot", "", "default:steel_ingot"},
+		{"default:steel_ingot", "", "default:steel_ingot"},
+		{"default:steel_ingot", "", "default:steel_ingot"}
+	}
 })
 
 -- XPane Glass Pines
