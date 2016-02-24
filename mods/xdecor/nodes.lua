@@ -468,6 +468,7 @@ for _, f in pairs(flowers) do
 	})
 end
 
+minetest.register_alias("xdecor:painting", "xdecor:painting_1")
 xdecor.register("painting_1", {
 	description = "Painting",
 	tiles = {"xdecor_painting_1.png"},
