@@ -11,14 +11,12 @@ dofile(path.."/cow.lua") -- KrupnoPavel
 dofile(path.."/rat.lua") -- PilzAdam
 dofile(path.."/sheep.lua") -- PilzAdam
 dofile(path.."/warthog.lua") -- KrupnoPavel
---dofile(path.."/bee.lua") -- KrupnoPavel
+dofile(path.."/bee.lua") -- KrupnoPavel
 dofile(path.."/bunny.lua") -- ExeterDad
 dofile(path.."/kitten.lua") -- Jordach/BFD
 
 -- Monsters
 
-dofile(path.."/goblins.lua") -- FeelsLikeGNU
-dofile(path.."/zombie.lua") -- BlockMen
 --dofile(path.."/dirtmonster.lua") -- PilzAdam
 --dofile(path.."/dungeonmaster.lua")
 --dofile(path.."/oerkki.lua")
@@ -28,12 +26,17 @@ dofile(path.."/zombie.lua") -- BlockMen
 --dofile(path.."/lava_flan.lua") -- Zeg9
 --dofile(path.."/mese_monster.lua")
 --dofile(path.."/spider.lua") -- AspireMint
+dofile(path.."/goblins.lua") -- FeelsLikeGNU
+dofile(path.."/zombie.lua") -- BlockMen
 
 -- NPC
 dofile(path.."/npc.lua") -- TenPlus1
 
 -- Mob Items
 dofile(path.."/crafts.lua")
+
+-- Spawner
+dofile(path .. "/spawner.lua")
 
 if minetest.setting_get("log_mods") then
 	minetest.log("action", "[mobs] loaded")
