@@ -5,37 +5,52 @@ protector.mod = "redo"
 protector.radius = (tonumber(minetest.setting_get("protector_radius")) or 5)
 
 protector.get_member_list = function(meta)
+
 	return meta:get_string("members"):split(" ")
 end
 
 protector.set_member_list = function(meta, list)
+
 	meta:set_string("members", table.concat(list, " "))
 end
 
 protector.is_member = function (meta, name)
-	for _, n in ipairs(protector.get_member_list(meta)) do
+
+	for _, n in pairs(protector.get_member_list(meta)) do
+
 		if n == name then
 			return true
 		end
 	end
+
 	return false
 end
 
 protector.add_member = function(meta, name)
-	if protector.is_member(meta, name) then return end
+
+	if protector.is_member(meta, name) then
+		return
+	end
+
 	local list = protector.get_member_list(meta)
+
 	table.insert(list, name)
+
 	protector.set_member_list(meta, list)
 end
 
 protector.del_member = function(meta, name)
+
 	local list = protector.get_member_list(meta)
-	for i, n in ipairs(list) do
+
+	for i, n in pairs(list) do
+
 		if n == name then
 			table.remove(list, i)
 			break
 		end
 	end
+
 	protector.set_member_list(meta, list)
 end
 
@@ -53,10 +68,10 @@ protector.generate_formspec = function(pos)
 
 	local meta = minetest.get_meta(pos)
 	local members = protector.get_member_list(meta)
-	local npp = 12
+	local npp = 12 -- max users added onto protector list
 	local i = 0
 
-	for _, member in ipairs(members) do
+	for _, member in pairs(members) do
 			if i < npp then
 				formspec = formspec .. "button["..(i%4*2)..","
 				..math.floor(i/4+2)..";1.5,.5;protector_member;"..member.."]"
@@ -73,11 +88,8 @@ protector.generate_formspec = function(pos)
 		.."button["..(i%4*2+1/3+0.9)..","..(math.floor(i/4+2))..";0.75,0.5;close_me;+]"
 	end
 
-	--formspec = formspec.."button_exit[2.5,6.2;1.5,0.5;close_me;+]"
 	return formspec
 end
-
--- ACTUAL PROTECTION SECTION
 
 -- Infolevel:
 -- 0 for no info
@@ -87,13 +99,15 @@ end
 
 protector.can_dig = function(r, pos, digger, onlyowner, infolevel)
 
-	if not digger then
+	if not digger
+	or not pos then
 		return false
 	end
 
 	-- Delprotect privileged users can override protections
 
-	if minetest.check_player_privs(digger, {delprotect=true}) and infolevel == 1 then
+	if minetest.check_player_privs(digger, {delprotect = true})
+	and infolevel == 1 then
 		return true
 	end
 
@@ -102,45 +116,74 @@ protector.can_dig = function(r, pos, digger, onlyowner, infolevel)
 	-- Find the protector nodes
 
 	local positions = minetest.find_nodes_in_area(
-		{x=pos.x-r, y=pos.y-r, z=pos.z-r},
-		{x=pos.x+r, y=pos.y+r, z=pos.z+r},
+		{x = pos.x - r, y = pos.y - r, z = pos.z - r},
+		{x = pos.x + r, y = pos.y + r, z = pos.z + r},
 		{"protector:protect", "protector:protect2"})
 
 	local meta, owner, members
-	for _, pos in ipairs(positions) do
+
+	for _, pos in pairs(positions) do
+
 		meta = minetest.get_meta(pos)
 		owner = meta:get_string("owner")
 		members = meta:get_string("members")
 
 		if owner ~= digger then 
-			if onlyowner or not protector.is_member(meta, digger) then
+
+			if onlyowner
+			or not protector.is_member(meta, digger) then
+
 				if infolevel == 1 then
-					minetest.chat_send_player(digger,"This area is owned by "..owner.." !")
+
+					minetest.chat_send_player(digger,
+					"This area is owned by " .. owner .. " !")
+
 				elseif infolevel == 2 then
-					minetest.chat_send_player(digger,"This area is owned by "..owner..".")
-					minetest.chat_send_player(digger,"Protection located at: "..minetest.pos_to_string(pos))
+
+					minetest.chat_send_player(digger,
+					"This area is owned by " .. owner .. ".")
+
+					minetest.chat_send_player(digger,
+					"Protection located at: " .. minetest.pos_to_string(pos))
+
 					if members ~= "" then
-						minetest.chat_send_player(digger,"Members: "..members..".")
+
+						minetest.chat_send_player(digger,
+						"Members: " .. members .. ".")
 					end
 				end
+
 				return false
 			end
 		end
 
 		if infolevel == 2 then
-			minetest.chat_send_player(digger,"This area is owned by "..owner..".")
-			minetest.chat_send_player(digger,"Protection located at: "..minetest.pos_to_string(positions[1]))
+
+			minetest.chat_send_player(digger,
+			"This area is owned by " .. owner .. ".")
+
+			minetest.chat_send_player(digger,
+			"Protection located at: " .. minetest.pos_to_string(pos))
+
 			if members ~= "" then
-				minetest.chat_send_player(digger, "Members: "..members..".")
+
+				minetest.chat_send_player(digger,
+				"Members: " .. members .. ".")
 			end
+
+			return false
 		end
 
 	end
 
 	if infolevel == 2 then
+
 		if #positions < 1 then
-			minetest.chat_send_player(digger, "This area is not protected.")
+
+			minetest.chat_send_player(digger,
+			"This area is not protected.")
 		end
+
 		minetest.chat_send_player(digger, "You can build here.")
 	end
 
@@ -160,23 +203,24 @@ minetest.is_protected = function(pos, digger)
 end
 
 -- Make sure protection block doesn't overlap another protector's area
+function protector.check_overlap(itemstack, placer, pointed_thing)
 
-protector.old_node_place = minetest.item_place
-function minetest.item_place(itemstack, placer, pointed_thing)
-
-	if itemstack:get_name() == "protector:protect"
-	or itemstack:get_name() == "protector:protect2" then
-		local user = placer:get_player_name()
-		if not protector.can_dig(protector.radius * 2, pointed_thing.above, user, true, 3) then
-			minetest.chat_send_player(user, "Overlaps into another protected area")
-			return protector.old_node_place(itemstack, placer, pointed_thing.above)
-		end
+	if pointed_thing.type ~= "node" then
+		return itemstack
 	end
 
-	return protector.old_node_place(itemstack, placer, pointed_thing)
-end
+	if not protector.can_dig(protector.radius * 2, pointed_thing.above,
+	placer:get_player_name(), true, 3) then
 
--- END
+		minetest.chat_send_player(placer:get_player_name(),
+			"Overlaps into above players protected area")
+
+		return
+	end
+
+	return minetest.item_place(itemstack, placer, pointed_thing)
+
+end
 
 local function after_place_node(pos, placer)
 	local meta = minetest.get_meta(pos)
@@ -289,6 +333,7 @@ minetest.register_node("protector:protect", {
 	paramtype = "light",
 	light_source = 2,
 
+	on_place = protector.check_overlap,
 	after_place_node = after_place_node,
 	on_use = on_use,
 	on_rightclick = on_rightclick,
@@ -319,6 +364,7 @@ minetest.register_node("protector:protect2", {
 		wall_side   = {-0.5, -0.5, -0.375, -0.4375, 0.5, 0.375},
 	},
 	selection_box = {type = "wallmounted"},
+	on_place = protector.check_overlap,
 	after_place_node = after_place_node,
 	on_use = on_use,
 	on_rightclick = on_rightclick,
