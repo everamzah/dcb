@@ -180,7 +180,7 @@ mobs:register_spawn("mobs:sheep_white",
 
 --compatibility (item and entity)
 minetest.register_alias("mobs:sheep", "mobs:sheep_white")
---[[ 
+
 minetest.register_entity("mobs:sheep", {
 	hp_max = 1,
 	physical = true,
@@ -201,4 +201,4 @@ minetest.register_entity("mobs:sheep", {
 
 		minetest.add_entity(pos, "mobs:sheep_white")
 	end
-})--]]
+})
