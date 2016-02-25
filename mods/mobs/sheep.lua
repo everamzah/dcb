@@ -69,7 +69,7 @@ for _, col in pairs(all_colours) do
 
 			local shpcolor = string.split(self.name,"_")[2]
 
-			if shpcolor =="dark" then
+			if shpcolor == "dark" then
 				shpcolor = shpcolor.."_"..string.split(self.name,"_")[3]
 			end
 
@@ -178,7 +178,7 @@ end
 mobs:register_spawn("mobs:sheep_white",
 	{"default:dirt_with_grass"}, 20, 10, 15000, 1, 31000, true)
 
---compatibility (item and entity)
+-- Compatibility (item and entity)
 minetest.register_alias("mobs:sheep", "mobs:sheep_white")
 
 minetest.register_entity("mobs:sheep", {
