@@ -4,7 +4,9 @@ dofile(minetest.get_modpath("mobs").."/traps.lua")
 
 local goblin_drops = {
 	"default:pick_steel",  "default:sword_steel",
-	"default:shovel_steel", "farming:bread", "bucket:bucket_water"
+	"default:shovel_steel", "farming:bread",
+	"bucket:bucket_water", "xdecor:honey",
+	"mobs:rat"
 }
 
 local goblin_sounds = {
@@ -156,7 +158,9 @@ mobs:register_mob("mobs:goblin_cobble", {
 			local name = clicker:get_player_name()
 
 			-- right clicking with gold lump drops random item from mobs.npc_drops
-			if item:get_name() == "default:gold_lump" then
+			if item:get_name() == "shop:coin"
+					or item:get_name() == "default:gold_lump"
+					or item:get_name() == "default:gold_ingot" then
 				if not minetest.setting_getbool("creative_mode") then
 					item:take_item()
 					clicker:set_wielded_item(item)
