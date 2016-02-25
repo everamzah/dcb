@@ -205,8 +205,11 @@ minetest.register_node("warps:warpstone", {
 	sunlight_propagates = true,
 	walkable = false,
 	paramtype = "light",
-	groups = {choppy=3},
-	light_source = 8,
+	paramtype2 = "facedir",
+	use_texture_alpha = true,
+	groups = {cracky=3},
+	light_source = 13,
+	sounds = default.node_sound_glass_defaults(),
 	selection_box = {
 		type = "fixed",
 		fixed = {-0.25, -0.5, -0.25,  0.25, 0.5, 0.25}
