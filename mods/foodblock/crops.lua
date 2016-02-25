@@ -48,12 +48,12 @@ minetest.register_craft({
 
 minetest.register_craft({
         output = "crops:corn_on_the_cob 4",
-        recipe = {{"foodblock:corn"}},
+        recipe = {{"foodblock:corn"}}
 })
 
 minetest.register_craft({
         output = "crops:corn_on_the_cob 2",
-        recipe = {{"foodblock:corn_slab"}},
+        recipe = {{"foodblock:corn_slab"}}
 })
 
 
@@ -86,9 +86,9 @@ minetest.register_node("foodblock:tomatoblock_slab", {
 
 minetest.register_craft({
 	output = 'foodblock:tomatoblock_slab 6',
-	recipe = {
-		{"foodblock:tomatoblock","foodblock:tomatoblock","foodblock:tomatoblock"}
-	}
+	recipe = {{"foodblock:tomatoblock",
+		"foodblock:tomatoblock",
+		"foodblock:tomatoblock"}}
 })
 
 minetest.register_craft({
@@ -122,13 +122,13 @@ minetest.register_craft({
 minetest.register_craft({
 	type = "shapeless",
 	output = "crops:tomato 5",
-	recipe = {"foodblock:tomatoblock", "farming:tomato"},
+	recipe = {"foodblock:tomatoblock", "crops:tomato"},
 })
 
 minetest.register_craft({
 	type = "shapeless",
 	output = "crops:tomato 3",
-	recipe = {"foodblock:tomatoblock_slab", "farming:tomato"},
+	recipe = {"foodblock:tomatoblock_slab", "crops:tomato"},
 })
 
 --- Carrot block ----
@@ -189,13 +189,13 @@ minetest.register_craft({
 minetest.register_craft({
 	type = "shapeless",
 	output = "crops:carrot 5",
-	recipe = {"foodblock:carrotblock", "farming:carrot"},
+	recipe = {"foodblock:carrotblock", "crops:carrot"}
 })
 
 minetest.register_craft({
 	type = "shapeless",
 	output = "crops:carrot 3",
-	recipe = {"foodblock:carrotblock_slab" , "farming:carrot"},
+	recipe = {"foodblock:carrotblock_slab" , "crops:carrot"},
 })
 
 --- Potato Block ---
