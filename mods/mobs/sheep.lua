@@ -17,7 +17,7 @@ local all_colours = {
 	{"yellow",     "Yellow",     "#e3ff0070"},
 }
 
--- Sheep by PilzAdam, texture converted to minetest by AMMOnym from Summerfield pack
+-- Sheep by PilzAdam
 
 for _, col in pairs(all_colours) do
 
