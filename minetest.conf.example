@@ -47,3 +47,15 @@
 # Write playereffects database file periodically (0 to disable)
 # Setting this value to 20, would save the file to disk every 20 seconds.
 #playereffects_autosave = 0
+
+# Spawn only peaceful mobs
+#peaceful_only = false
+
+# Disable blood
+#disable_blood = false
+
+# Mobs spawn in protected areas
+#mobs_spawn_protected = true
+
+# Remove far-away mobs
+#remove_far = false
