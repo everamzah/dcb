@@ -132,7 +132,17 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		craftbook:get_formspec(stack, pagenum, nil, 1, filter, player_name)
 	else for item in pairs(fields) do
 		 if minetest.get_craft_recipe(item).items then
-			craftbook:get_formspec(stack, pagenum, item, 1, filter, player_name)
+			if minetest.check_player_privs(player_name, {creative=true}) then
+				local add_creative_stuff = player:get_inventory():add_item("main", item .. " " ..
+						minetest.registered_items[item].stack_max)
+				if not add_creative_stuff:is_empty() then
+					--minetest.add_item(player:getpos(), add_creative_stuff)
+					minetest.chat_send_player(player_name, "Inventory could not be added!")
+				end
+				minetest.log("action", player_name .. " takes " .. item .. " " .. minetest.registered_items[item].stack_max .. " using creative priv.")
+			else
+				craftbook:get_formspec(stack, pagenum, item, 1, filter, player_name)
+			end
 		 end
 	     end
 	end
@@ -151,4 +161,3 @@ minetest.register_craftitem("xdecor:crafting_guide", {
 		craftbook:get_formspec(itemstack, 1, nil, 1, "", player_name)
 	end
 })
-
