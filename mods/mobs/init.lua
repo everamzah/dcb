@@ -18,7 +18,7 @@ dofile(path.."/kitten.lua") -- Jordach/BFD
 -- Monsters
 
 --dofile(path.."/dirtmonster.lua") -- PilzAdam
---dofile(path.."/dungeonmaster.lua")
+dofile(path.."/dungeonmaster.lua")
 --dofile(path.."/oerkki.lua")
 --dofile(path.."/sandmonster.lua")
 --dofile(path.."/stonemonster.lua")
