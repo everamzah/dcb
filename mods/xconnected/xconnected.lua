@@ -360,7 +360,7 @@ xconnected.register_fence = function( name, tiles, craft_from, def )
 			is_ground_content = false,
 			sunlight_propagates = true,
 			sounds = default.node_sound_stone_defaults(),
-			groups = {snappy=2, cracky=3, oddly_breakable_by_hand=2, pane=1, flammable=2},
+			groups = {choppy=2, oddly_breakable_by_hand=2, pane=1, flammable=2},
 		};
 	end
 	xconnected.register( name,
