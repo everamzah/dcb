@@ -1,6 +1,6 @@
 screwdriver = screwdriver or {}
 
-xconnected.register_pane("xdecor:wood_frame", "xdecor_wood_frame.png", "", {
+xconnected.register_pane("xdecor:wood_frame", "xdecor_wood_frame.png", nil, {
 	description = "Wood Frame",
 	tiles = {"xdecor_wood_frame.png"},
 	drawtype = "airlike",
@@ -16,7 +16,7 @@ xconnected.register_pane("xdecor:wood_frame", "xdecor_wood_frame.png", "", {
 	sounds = default.node_sound_wood_defaults()
 })
 
-xconnected.register_pane("xdecor:bamboo_frame", "xdecor_bamboo_frame.png", "", {
+xconnected.register_pane("xdecor:bamboo_frame", "xdecor_bamboo_frame.png", nil, {
 	description = "Bamboo Frame",
 	tiles = {"xdecor_bamboo_frame.png"},
 	drawtype = "airlike",
@@ -152,7 +152,7 @@ xdecor.register("cardboard_box", {
 	})
 end--]]
 
-xconnected.register_pane("xdecor:chainlink", "xdecor_chainlink.png", "", {
+xconnected.register_pane("xdecor:chainlink", "xdecor_chainlink.png", nil, {
 	description = "Chain Link",
 	tiles = {"xdecor_chainlink.png"},
 	drawtype = "airlike",
@@ -331,7 +331,7 @@ minetest.register_on_joinplayer(function(player)
 	inv:set_size("enderchest", 8*4)
 end)
 
-xconnected.register_fence("xdecor:fence_wrought_iron", "xdecor_wrought_iron.png", "", {
+xconnected.register_fence("xdecor:fence_wrought_iron", "xdecor_wrought_iron.png", nil, {
 	description = "Wrought Iron Fence",
 	drawtype = "fencelike",
 	groups = {cracky=2},
@@ -568,7 +568,7 @@ xdecor.register("multishelf", {
 	sounds = default.node_sound_wood_defaults()
 })
 
-xconnected.register_pane("xdecor:rust_bar", "xdecor_rust_bars.png", "", {
+xconnected.register_pane("xdecor:rust_bar", "xdecor_rust_bars.png", nil, {
 	description = "Rust Bars",
 	tiles = {"xdecor_rust_bars.png"},
 	drawtype = "airlike",

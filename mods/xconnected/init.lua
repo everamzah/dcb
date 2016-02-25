@@ -6,7 +6,7 @@ dofile(minetest.get_modpath("xconnected") .. "/xconnected.lua");
 
 
 -- XPane Steel Bar
-xconnected.register_pane("xconnected:bar", "xconnected_bar.png", "", {
+xconnected.register_pane("xconnected:bar", "xconnected_bar.png", nil, {
 	description = "Steel Bar",
 	tiles = {"xconnected_bar.png"},
 	drawtype = "airlike",
@@ -196,7 +196,7 @@ xconnected.register_wall("xconnected:wall_clay", "default_clay.png", "default:cl
 xconnected.register_wall("xconnected:wall_coal_block", "default_coal_block.png", "default:coalblock")
 
 -- Fences
-xconnected.register_fence("xconnected:fence", "default_wood.png", "", {
+xconnected.register_fence("xconnected:fence", "default_wood.png", nil, {
 	description = "Wood Fence",
 	textures = {"default_wood.png"},
 	is_ground_content = false,
@@ -220,7 +220,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_fence("xconnected:fence_pine", "default_pine_wood.png", "", {
+xconnected.register_fence("xconnected:fence_pine", "default_pine_wood.png", nil, {
 	description = "Pine Wood Fence",
 	textures = {"default_pine_wood.png"},
 	is_ground_content = false,
@@ -244,7 +244,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_fence("xconnected:fence_jungle", "default_junglewood.png", "", {
+xconnected.register_fence("xconnected:fence_jungle", "default_junglewood.png", nil, {
 	description = "Jungle Wood Fence",
 	textures = {"default_junglewood.png"},
 	is_ground_content = false,
@@ -268,7 +268,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_fence("xconnected:fence_acacia", "default_acacia_wood.png", "", {
+xconnected.register_fence("xconnected:fence_acacia", "default_acacia_wood.png", nil, {
 	description = "Acacia Wood Fence",
 	textures = {"default_acacia_wood.png"},
 	is_ground_content = false,
@@ -292,7 +292,7 @@ minetest.register_craft({
 	}
 })
 
-xconnected.register_fence("xconnected:fence_aspen", "default_aspen_wood.png", "", {
+xconnected.register_fence("xconnected:fence_aspen", "default_aspen_wood.png", nil, {
 	description = "Aspen Wood Fence",
 	textures = {"default_aspen_wood.png"},
 	is_ground_content = false,
