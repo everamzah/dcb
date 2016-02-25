@@ -1,10 +1,10 @@
-
 -- Zombie by BlockMen
 
 mobs:register_mob("mobs:zombie", {
 	type = "monster",
 	passive = false,
 	attack_type = "dogfight",
+	pathfinding = true,
 	damage = 3,
 	hp_min = 12,
 	hp_max = 35,
@@ -23,11 +23,12 @@ mobs:register_mob("mobs:zombie", {
 		attack = "mobs_zombie.3",
 		death = "mobs_zombie_death",
 	},
-	walk_velocity = 0.5,
-	run_velocity = 0.5,
+	walk_velocity = 1.5, --0.5,
+	run_velocity = 1.5, --0.5,
 	jump = true,
 	floats = 0,
 	view_range = 10,
+	reach = 2,
 	drops = {
 		{name = "mobs:rotten_flesh",
 		chance = 1, min = 2, max = 3,},
@@ -45,7 +46,7 @@ mobs:register_mob("mobs:zombie", {
 	},
 })
 
---mobs:register_spawn("mobs:zombie", {"default:dirt_with_snow", "default:dirt_with_grass"}, 0, 0, 500000, 1, 31000)
+mobs:register_spawn("mobs:zombie", {"default:stone", "default:dirt"}, 10, 0, 9000, 1, 128)
 
 mobs:register_egg("mobs:zombie", "Zombie", "zombie_head.png", 0)
 
