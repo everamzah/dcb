@@ -206,9 +206,12 @@ minetest.register_chatcommand("shop", {
 	privs = {server=true},
 	description = "Privs shop settings",
 	func = function(name, param)
-		shop.price = tonumber(param)
-	end,
+		param = tonumber(param)
+		if param then
+			shop.price = math.abs(param)
+		end
+	end
 })
 
--- shop register & coin
-dofile(minetest.get_modpath("shop").."/coin.lua")
+-- Shop Register & Coin
+dofile(minetest.get_modpath("shop") .. "/coin.lua")
