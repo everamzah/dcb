@@ -30,7 +30,7 @@ local function book_on_use(itemstack, user, pointed_thing)
 	else
 		formspec = "size[8,8]"..default.gui_bg..
 			default.gui_bg_img..
-			"label[0.5,0.5;by "..owner.."]"..
+			"label[0.5,0.7;by "..owner.."]"..
 			"label[0.5,0;"..minetest.formspec_escape(title).."]"..
 			--"tableoptions[background=#00000000;highlight=#00000000;border=false]"..
 			--"table[0.5,1.5;7.5,7;;"..minetest.formspec_escape(text):gsub("\n", ",")..";1]"
@@ -96,6 +96,13 @@ minetest.register_craft({
 	type = "shapeless",
 	output = "default:book_written",
 	recipe = { "default:book", "default:book_written" }
+})
+
+-- Clear book recipe
+minetest.register_craft({
+	type = "shapeless",
+	output = "default:book",
+	recipe = {"default:book_written", "dye:white"}
 })
 
 minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv)
