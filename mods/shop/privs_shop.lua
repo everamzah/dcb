@@ -31,23 +31,31 @@ function shop.buy(pos, listname, index, stack, player)
 	if listname == "fly" then
 		local count = stack:get_count()
 		inv:remove_item("fly", stack)
-		local p = player:get_player_name()
-		local time = count --* shop.price
+		local name = player:get_player_name()
+		local time = count * shop.price
 
-		local q = playereffects.get_player_effects(player:get_player_name())
+		local q = playereffects.get_player_effects(name)
 		for i=1, #q do
 			if q[i].effect_type_id == "fly" then
-				local countdown_fly = math.ceil(q[i].time_left)
+				print("---")
+				print(dump(q[i]))
+				print("---")
+
+				local countdown_fly = q[i].time_left
+				print("was: " .. countdown_fly)
 				local effectid_fly = playereffects.apply_effect_type("fly", time + countdown_fly, player)
+				print("is now: " .. time + countdown_fly)
 				return
 			end
-		end		
+		end
+
 		local effectid_fly = playereffects.apply_effect_type("fly", time, player)
+
 	elseif listname == "fast" then
 		local count = stack:get_count()
 		inv:remove_item("fast", stack)
 		local p = player:get_player_name()
-		local time = count --* shop.price
+		local time = count * shop.price
 
 		local q = playereffects.get_player_effects(player:get_player_name())
 		for i=1, #q do
@@ -57,6 +65,7 @@ function shop.buy(pos, listname, index, stack, player)
 				return
 			end
 		end
+
 		local effectid_fast = playereffects.apply_effect_type("fast", time, player)
 	end
 end
@@ -132,12 +141,14 @@ playereffects.register_effect_type("fast", "Fast mode available", nil, {"fast"},
 	false,
 	false)
 
+
 -- /shop chat command registration
 minetest.register_chatcommand("shop", {
 	params = "<price>",
 	privs = {server=true},
 	description = "Adjust privs shop price",
 	func = function(name, param)
+		print(dump(playereffects.get_player_effects(name)))
 		param = tonumber(param)
 		if param then
 			local price = math.floor(math.abs(param))
