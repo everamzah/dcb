@@ -1,16 +1,66 @@
-minetest.register_craftitem("shop:coin", {
-	description = "Gold Coin",
-	inventory_image = "shop_coin.png",
-	--[[
-	on_use = function(itemstack, user, pointed_thing)
-	end,
-	--]]
-	--[[
-	on_place = function(itemstack, placer, pointed_thing)
-	end,
-	--]]
+-- Crafts & Craft Items
+minetest.register_craft({
+	output = "shop:coin 9",
+	recipe = {
+		{"default:gold_ingot"},
+	}
 })
 
+minetest.register_craft({
+	output = "default:gold_ingot",
+	recipe = {
+		{"shop:coin", "shop:coin", "shop:coin"},
+		{"shop:coin", "shop:coin", "shop:coin"},
+		{"shop:coin", "shop:coin", "shop:coin"}
+	}
+})
+
+minetest.register_craft({
+	output = "shop:register",
+	recipe = {
+		{"group:wood", "group:wood", "group:wood"},
+		{"group:wood", "default:goldblock", "group:wood"},
+		{"group:wood", "group:wood", "group:wood"}
+	}
+})
+
+minetest.register_craftitem("shop:coin", {
+	description = "Gold Coin",
+	inventory_image = "shop_coin.png"
+})
+
+-- Functions
+function shop.get_register_formspec(pos)
+	local meta = minetest.get_meta(pos)
+	local spos = pos.x..","..pos.y..","..pos.z
+	local formspec =
+		"size[8,6.5]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
+		"label[2.1,0;Sell]"..
+		"label[5.15,0;For]"..
+		"button[0,1.5;1.75,1;stock;Stock]"..
+		"button[6.25,1.5;1.75,1;register;Register]"..
+		"button[3.5,1.25;1,1;ok;OK]"..
+		"list[nodemeta:"..spos..";sell;2,0.5;1,1;]"..
+		"list[nodemeta:"..spos..";buy;5,0.5;1,1;]"..
+		"list[current_player;main;0,2.75;8,4;]"
+	return formspec
+end
+
+shop.formspec_register =
+	"size[8,9]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
+	"label[0,0;Register]"..
+	"list[current_name;register;0,0.75;8,4;]"..
+	"list[current_player;main;0,5.25;8,4;]"..
+	"listring[]"
+
+shop.formspec_stock =
+	"size[8,9]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
+	"label[0,0;Stock]"..
+	"list[current_name;stock;0,0.75;8,4;]"..
+	"list[current_player;main;0,5.25;8,4;]"..
+	"listring[]"
+
+-- The shop register
 minetest.register_node("shop:register", {
 	description = "Shop Register",
 	tiles = {"xdecor_barrel_top.png^shop_coin.png",
@@ -137,61 +187,5 @@ minetest.register_node("shop:register", {
                 local owner = meta:get_string("owner") 
                 local inv = meta:get_inventory() 
                 return player:get_player_name() == owner and inv:is_empty("register") and inv:is_empty("stock") and inv:is_empty("buy") and inv:is_empty("sell")
-	end,
-
-})
-
-function shop.get_register_formspec(pos)
-	local meta = minetest.get_meta(pos)
-	local spos = pos.x..","..pos.y..","..pos.z
-	local formspec =
-		"size[8,6.5]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
-		"label[2.1,0;Sell]"..
-		"label[5.15,0;For]"..
-		"button[0,1.5;1.75,1;stock;Stock]"..
-		"button[6.25,1.5;1.75,1;register;Register]"..
-		"button[3.5,1.25;1,1;ok;OK]"..
-		"list[nodemeta:"..spos..";sell;2,0.5;1,1;]"..
-		"list[nodemeta:"..spos..";buy;5,0.5;1,1;]"..
-		"list[current_player;main;0,2.75;8,4;]"
-	return formspec
-end
-
-shop.formspec_register =
-	"size[8,9]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
-	"label[0,0;Register]"..
-	"list[current_name;register;0,0.75;8,4;]"..
-	"list[current_player;main;0,5.25;8,4;]"..
-	"listring[]"
-
-shop.formspec_stock =
-	"size[8,9]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
-	"label[0,0;Stock]"..
-	"list[current_name;stock;0,0.75;8,4;]"..
-	"list[current_player;main;0,5.25;8,4;]"..
-	"listring[]"
-
-minetest.register_craft({
-	output = "shop:coin 9",
-	recipe = {
-		{"default:gold_ingot"},
-	}
-})
-
-minetest.register_craft({
-	output = "default:gold_ingot",
-	recipe = {
-		{"shop:coin", "shop:coin", "shop:coin"},
-		{"shop:coin", "shop:coin", "shop:coin"},
-		{"shop:coin", "shop:coin", "shop:coin"}
-	}
-})
-
-minetest.register_craft({
-	output = "shop:register",
-	recipe = {
-		{"group:wood", "group:wood", "group:wood"},
-		{"group:wood", "default:goldblock", "group:wood"},
-		{"group:wood", "group:wood", "group:wood"}
-	}
+	end
 })
