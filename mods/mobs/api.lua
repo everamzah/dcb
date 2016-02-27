@@ -2502,7 +2502,8 @@ function mobs:capture_mob(self, clicker, chance_hand, chance_net, chance_lasso, 
 
 				self.object:remove()
 			else
-				minetest.chat_send_player(name, "Missed!")
+				--minetest.chat_send_player(name, "Missed!")
+				cmsg.push_message_player(clicker, "Missed!")
 			end
 		end
 	end
