@@ -6,34 +6,32 @@ to this software to the public domain worldwide. This software is
 distributed without any warranty.
 ]]
 
+
 -- Automatically kick idling players
-AFK_CHECK = false --minetest.setting_getbool("afk_check") or false
-MAX_AFK_TIME = 300 --Max time allowed afk before kick 
-AFK_CHECK_INTERVAL = 10 --Number of seconds between activity checks
-AFK_WARN_TIME = 10 --Number of seconds before being kicked that a player will start to be warned
+AFK_CHECK = minetest.setting_getbool("kick_idle_players")
+MAX_AFK_TIME = 300 -- Max time allowed afk before kick 
+AFK_CHECK_INTERVAL = 10 -- Number of seconds between activity checks
+AFK_WARN_TIME = 10 -- Number of seconds before being kicked that a player will start to be warned
 
 -- Show FIRST_TIME_JOIN_MSG on new player joins
-SHOW_FIRST_TIME_JOIN_MSG = false
-FIRST_TIME_JOIN_MSG = " has joined the server for the first time, Welcome!" --Message to broadcast to all players when a new player joins the server, will follow the players name
+SHOW_FIRST_TIME_JOIN_MSG = minetest.setting_getbool("show_newplayer_msg")
+-- Message to broadcast to all players when a new player joins the server, will follow the players name
+FIRST_TIME_JOIN_MSG = " has joined the server for the first time, Welcome!"
 
 BROADCAST_PREFIX = "[SERVER]" --All messages sent with the /broadcast command will be prefixed with this
 
-DISALLOWED_NODES = { --These nodes will be immediatly removed if they are placed. Players with the disallowednodes priv can place them
-        "tnt:tnt",
-}
-
-REMOVE_BONES = false --If true, remove bones after REMOVE_BONES_TIME seconds
-REMOVE_BONES_TIME = 1800 --Remove bones after this amount of time (seconds)
+REMOVE_BONES = false -- If true, remove bones after REMOVE_BONES_TIME seconds
+REMOVE_BONES_TIME = 1800 -- Remove bones after this amount of time (seconds)
 
 -- Kick on chat length greater than MAX_CHAT_MSG_LENGTH
-KICK_CHATSPAM = false --minetest.setting_getbool("kick_chatspam") or false
+KICK_CHATSPAM = minetest.setting_getbool("kick_chat_spammers")
 MAX_CHAT_MSG_LENGTH = 400
 
 players = {}
 checkTimer = 0
 
---dofile(minetest.get_modpath("serveressentials") .. "/settings.lua")
 
+-- Privs
 minetest.register_privilege("godmode", "Player can use godmode with the /godmode command")
 minetest.register_privilege("broadcast", "Player can use /broadcast command")
 minetest.register_privilege("kill", "Player can kill other players with the /kill command")
@@ -41,11 +39,15 @@ minetest.register_privilege("heal", "Player can heal other players with the /hea
 minetest.register_privilege("top", "Player can use the /top command")
 minetest.register_privilege("setspeed", "Player can set player speeds with the /setspeed command")
 minetest.register_privilege("whois", "Player can view other player's network information with the /whois command")
-minetest.register_privilege("disallowednodes", "Player can place nodes in the DISALLOWED_NODES table")
-minetest.register_privilege("chatspam", "Player can send chat messages longer than MAX_CHAT_MSG_LENGTH without being kicked")
+-- The check for 'disallowednodes' is now done directly in TNT mod
+minetest.register_privilege("disallowednodes", "Player can use disallowed nodes")
+
+if KICK_CHATSPAM then
+	minetest.register_privilege("chatspam", "Player can send chat messages of any length")
+end
 
 if AFK_CHECK then
-	minetest.register_privilege("canafk", "Player can remain afk without being kicked")
+	minetest.register_privilege("canafk", "Player can remain stationary without being kicked")
 end
 
 if REMOVE_BONES then
@@ -65,7 +67,7 @@ if minetest.setting_get("static_spawnpoint") then
 	minetest.register_chatcommand("spawn", {
 		params = "",
 		description = "Teleport to static spawnpoint",
-		privs = {spawn = true}, 
+		privs = {spawn=true},
 		func = function(playerName, param)
 			local spawnPoint = minetest.setting_get("static_spawnpoint") 
 			minetest.get_player_by_name(playerName):setpos(minetest.string_to_pos(spawnPoint))
@@ -97,7 +99,6 @@ minetest.register_chatcommand("motd", {
 	end 
 })
 
-
 minetest.register_chatcommand("clearinv", {
 	params = "";
 	description = "Clear your inventory",
@@ -105,7 +106,7 @@ minetest.register_chatcommand("clearinv", {
 	func = function(playerName, text)
 		local inventory = minetest.get_player_by_name(playerName):get_inventory()
 		inventory:set_list("main", {})
-	end,
+	end
 })
 
 minetest.register_chatcommand("broadcast", {
@@ -115,7 +116,7 @@ minetest.register_chatcommand("broadcast", {
 	func = function(playerName, text)
 		minetest.chat_send_all(BROADCAST_PREFIX .. " " ..  text)
 		return
-	end,
+	end
 })
 
 minetest.register_chatcommand("kill", {
@@ -123,7 +124,6 @@ minetest.register_chatcommand("kill", {
 	description = "kill specified player",
 	privs = {kill = true},
 	func = function(playerName, param)
-		
 		if #param==0 then
 			minetest.chat_send_player(playerName, "You must supply a player name")
 		elseif players[param] then
@@ -175,7 +175,6 @@ minetest.register_chatcommand("heal", {
 	description = "Heal specified player, heals self if run without arguments",
 	privs = {heal = true},
 	func = function(playerName, param)
-		
 		if #param==0 then
 			minetest.chat_send_player(playerName, "Healing player " .. playerName)
 			minetest.get_player_by_name(playerName):set_hp(20)
@@ -283,28 +282,18 @@ minetest.register_on_newplayer(function(player)
 	end
 end)
 
---[[minetest.register_on_placenode(function(pos, newNode, placer, oldnode, itemStack, pointed_thing)
-
-	for _,nodeName in pairs(DISALLOWED_NODES) do
-		if nodeName == newNode["name"] then
-			if minetest.check_player_privs(placer:get_player_name(), {disallowednodes=true}) then
-				return
-			else
-				minetest.remove_node(pos)
-				minetest.chat_send_player(placer:get_player_name(), "You cannot place the node " .. newNode["name"])
-			end
-		end
+minetest.register_on_chat_message(function(name, message)
+	if KICK_CHATSPAM and not minetest.check_player_privs(name, {chatspam=true}) and
+			string.len(message) > MAX_CHAT_MSG_LENGTH then
+		minetest.kick_player(name,
+				"You were kicked because you sent a chat message longer than " ..
+				MAX_CHAT_MSG_LENGTH ..
+				" characters. This is to prevent chat spamming.")
+		return true
 	end
 	return
-end)--]]
---[[
-minetest.register_on_chat_message(function(name, message)
-	if KICK_CHATSPAM and not minetest.check_player_privs(name, {chatspam=true}) and string.len(message) > MAX_CHAT_MSG_LENGTH then
-		minetest.kick_player(name, "You were kicked because you sent a chat message longer than " .. MAX_CHAT_MSG_LENGTH .. " characters. This is to prevent chat spamming.")
-	end
-	return 
 end)
---]]
+
 minetest.register_globalstep(function(dtime)
 	
 	--Loop through all connected players

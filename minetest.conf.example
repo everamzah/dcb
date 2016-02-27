@@ -59,3 +59,12 @@
 
 # Remove far-away mobs
 #remove_far = false
+
+# Kick idling players
+#kick_idle_players = false
+
+# Kick player on chat spam
+#kick_chat_spammers = false
+
+# Show a message to all players when a player joins for the first time
+#show_newplayer_msg = false
