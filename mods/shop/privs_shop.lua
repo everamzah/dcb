@@ -7,14 +7,19 @@ shop.price = 1
 function shop.setform(pos)
 	local spos = pos.x..","..pos.y..","..pos.z
 	local formspec =
-		"size[8,6]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
-		"label[0,0;Priv Shop]"..
-		"label[2.45,0.5;Fly for "..shop.price.."/s]"..
-		"label[4.45,0.5;Fast for "..shop.price.."/s]"..
-		"list[nodemeta:"..spos..";fly;2.5,1;1,1;]"..
-		"list[nodemeta:"..spos..";fast;4.5,1;1,1;]"..
-		"item_image[2.5,1;1,1;shop:coin]"..
-		"item_image[4.5,1;1,1;shop:coin]"..
+		"size[8,6]" ..
+		default.gui_bg ..
+		default.gui_bg_img ..
+		default.gui_slots ..
+		"label[0,0;Priv Shop]" ..
+		"label[2.45,0.25;Fly]" ..
+		"label[4.45,0.25;Fast]" ..
+		"list[nodemeta:" ..spos.. ";fly;2.5,0.75;1,1;]" ..
+		"list[nodemeta:" ..spos.. ";fast;4.5,0.75;1,1;]" ..
+		"item_image[2.5,0.75;1,1;shop:coin]" ..
+		"item_image[4.5,0.75;1,1;shop:coin]" ..
+		"label[2.45,1.75;" .. shop.price .. " sec/$]" ..
+		"label[4.45,1.75;" .. shop.price .. " sec/$]" ..
 		"list[current_player;main;0,2.25;8,4;]"
 	return formspec
 end
@@ -26,9 +31,8 @@ function shop.buy(pos, listname, index, stack, player)
 	if listname == "fly" then
 		local count = stack:get_count()
 		inv:remove_item("fly", stack)
-		--inv:add_item("register", stack)
 		local p = player:get_player_name()
-		local time = math.ceil(count / shop.price)
+		local time = count --* shop.price
 
 		local q = playereffects.get_player_effects(player:get_player_name())
 		for i=1, #q do
@@ -42,9 +46,8 @@ function shop.buy(pos, listname, index, stack, player)
 	elseif listname == "fast" then
 		local count = stack:get_count()
 		inv:remove_item("fast", stack)
-		--inv:add_item("register", stack)
 		local p = player:get_player_name()
-		local time = math.ceil(count / shop.price)
+		local time = count --* shop.price
 
 		local q = playereffects.get_player_effects(player:get_player_name())
 		for i=1, #q do
@@ -63,14 +66,13 @@ minetest.register_node("shop:privs", {
 	description = "Privs Shop",
 	tiles = {"default_sandstone.png^shop_wings.png"},
 	is_ground_content = true,
-	groups = {cracky=3, stone=1, oddly_breakable_by_hand=1},
+	groups = {cracky=3, oddly_breakable_by_hand=1},
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("infotext", "Shop for privs")
 		local inv = meta:get_inventory()
 		inv:set_size("fly", 1)
 		inv:set_size("fast", 1)
-		--inv:set_size("register", 8*4)
 	end,
 	on_rightclick = function(pos, node, clicker, itemstack)
 		minetest.show_formspec(clicker:get_player_name(), "shop:privs", shop.setform(pos))
@@ -82,13 +84,13 @@ minetest.register_node("shop:privs", {
 		local s = stack:get_name()
 		local c = stack:get_count()
 		if listname == "fly" then
-			if s == "shop:coin" and c >= shop.price then
+			if s == "shop:coin" then
 				return -1
 			else
 				return 0
 			end
 		elseif listname == "fast" then
-			if s == "shop:coin" and c >= shop.price then
+			if s == "shop:coin" then
 				return -1
 			else
 				return 0
@@ -138,7 +140,10 @@ minetest.register_chatcommand("shop", {
 	func = function(name, param)
 		param = tonumber(param)
 		if param then
-			shop.price = math.abs(param)
+			local price = math.floor(math.abs(param))
+			if price < 60 then
+				shop.price = price
+			end
 		end
 	end
 })
