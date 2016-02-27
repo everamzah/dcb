@@ -57,10 +57,10 @@ cmsg.push_message_player = function(player, text)
 				hud_elem_type = "text",
 				text = text,
 				number = cmsg.settings.color,
-				position = {x=0.5, y=0.5},
-				offset = {x=-0,y=-256},
-				direction = 3,
-				alignment = {x=0,y=1},
+				position = {x=0,y=1}, --0.5,0.5
+				offset = {x=32,y=-128}, --0,-256
+				direction = 0, -- Direction: 0: left-right, 1: right-left, 2: top-bottom, 3: bottom-top
+				alignment = {x=1,y=0},
 				scale = {x=800,y=20*cmsg.settings.max_messages},
 			})
 			cmsg.messages[pname] = {}
@@ -74,6 +74,7 @@ cmsg.push_message_player = function(player, text)
 
 		minetest.after(5, function(param)
 			local pname = param.player:get_player_name()
+			if not cmsg.messages[pname] then return end
 			for i=1, #cmsg.messages[pname] do
 				if param.msgid == cmsg.messages[pname][i].msgid then
 					table.remove(cmsg.messages[pname], i)
@@ -112,3 +113,10 @@ minetest.register_globalstep(function(dtime)
 	cmsg.steps = cmsg.steps + 1
 end)
 -- Horrible Workaround code ends here
+
+-- Test command
+minetest.register_chatcommand("cmsg", {
+	func = function(name, param)
+		cmsg.push_message_player(minetest.get_player_by_name(name), param)
+	end
+})
