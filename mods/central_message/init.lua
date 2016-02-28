@@ -40,6 +40,7 @@ local function update_display(player, pname)
 end
 
 cmsg.push_message_player = function(player, text)
+	if not player then return end
 	local function push(tbl)
 		-- Horrible Workaround code starts here
 		if not (cmsg.last_push < cmsg.steps) then
