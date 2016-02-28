@@ -4,7 +4,7 @@ cmsg.messages = {}
 cmsg.settings = {}
 cmsg.next_msgids = {}
 
-cmsg.settings.max_messages = 7
+cmsg.settings.max_messages = 5
 local setting = minetest.setting_get("central_message_max")
 if type(tonumber(setting)) == "number" then
 	cmsg.settings.max_messages = tonumber(setting)
@@ -58,9 +58,9 @@ cmsg.push_message_player = function(player, text)
 				text = text,
 				number = cmsg.settings.color,
 				position = {x=0,y=1}, --0.5,0.5
-				offset = {x=32,y=-128}, --0,-256
+				offset = {x=8,y=-191}, --0,-256
 				direction = 0, -- Direction: 0: left-right, 1: right-left, 2: top-bottom, 3: bottom-top
-				alignment = {x=1,y=0},
+				alignment = {x=1,y=1},
 				scale = {x=800,y=20*cmsg.settings.max_messages},
 			})
 			cmsg.messages[pname] = {}
@@ -72,7 +72,7 @@ cmsg.push_message_player = function(player, text)
 			update_display(player, pname)
 		end
 
-		minetest.after(5, function(param)
+		minetest.after(10, function(param) -- 5
 			local pname = param.player:get_player_name()
 			if not cmsg.messages[pname] then return end
 			for i=1, #cmsg.messages[pname] do
@@ -89,7 +89,7 @@ cmsg.push_message_player = function(player, text)
 	end
 
 	if cmsg.last_push < cmsg.steps then
-		push({player=player, text=text})
+		push{player=player, text=text}
 	else
 		minetest.after(0, push, {player=player, text=text})
 	end
