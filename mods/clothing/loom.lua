@@ -54,18 +54,18 @@ minetest.register_node("clothing:loom", {
 	end,
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
-		meta:set_string("formspec", "size[8,8;]"..
-			"bgcolor[#080808BB;true]"..
-			"background[5,5;1,1;gui_formbg.png;true]"..
-			"listcolors[#00000069;#5A5A5A;#141318;#30434C;#FFF]"..
-			"list[current_name;input;0.5,1;1,1;]"..
-			"list[current_name;output;6.5,2;1,1;]"..
-			"label[0.5,0.5;Wool]"..
-			"label[6.5,3;Clothing]"..
-			"image_button[3,1;1,1;clothing_inv_hat_grey.png;hat;]"..
-			"image_button[4,1;1,1;clothing_inv_shirt_grey.png;shirt;]"..
-			"image_button[3,2;1,1;clothing_inv_pants_grey.png;pants;]"..
-			"image_button[4,2;1,1;clothing_inv_cape_grey.png;cape;]"..
+		meta:set_string("formspec", "size[8,8;]" ..
+			--default.gui_bg .. --"bgcolor[#080808BB;true]" ..
+			default.gui_bg_img .. --"background[5,5;1,1;gui_formbg.png;true]" ..
+			default.gui_slots .. --"listcolors[#00000069;#5A5A5A;#141318;#30434C;#FFF]" ..
+			"list[current_name;input;0.5,1;1,1;]" ..
+			"list[current_name;output;6.5,2;1,1;]" ..
+			"label[0.5,0.5;Wool]" ..
+			"label[6.5,3;Clothing]" ..
+			"image_button[3,1;1,1;clothing_inv_hat_grey.png;hat;]" ..
+			"image_button[4,1;1,1;clothing_inv_shirt_grey.png;shirt;]" ..
+			"image_button[3,2;1,1;clothing_inv_pants_grey.png;pants;]" ..
+			"image_button[4,2;1,1;clothing_inv_cape_grey.png;cape;]" ..
 			"list[current_player;main;0,4;8,4;]")
 		meta:set_string("infotext", "Loom")
 		local inv = meta:get_inventory()
