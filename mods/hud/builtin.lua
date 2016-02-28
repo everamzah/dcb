@@ -9,11 +9,11 @@ HUD_SB_SIZE = {x = 24, y = 24}
 HUD_HEALTH_POS = {x = 0.5,y = 1}
 HUD_HEALTH_OFFSET = {x = -262, y = -87}
 HUD_AIR_POS = {x = 0.5, y = 1} --0.5, 1
-HUD_AIR_OFFSET = {x = 15, y = -87} -- -262, -87
+HUD_AIR_OFFSET = {x = -262, y = -110}  -- 15, -87  -- -262, -87
 HUD_HUNGER_POS = {x = 0.5, y = 1} --0.5, 1
 HUD_HUNGER_OFFSET = {x = -262, y = -87} --15, -87
-HUD_ARMOR_POS = {x = 0.5, y = 1}
-HUD_ARMOR_OFFSET = {x = -262, y = -110}
+HUD_ARMOR_POS = {x = 0.5, y = 1} -- 0.5, 1
+HUD_ARMOR_OFFSET = {x = 15, y = -87} -- -262, -110
 
 -- Reorder everything when using ItemWeel
 hud.item_wheel = minetest.setting_getbool("hud_item_wheel")
@@ -34,7 +34,7 @@ hud.read_conf()
 local damage_enabled = minetest.setting_getbool("enable_damage")
 
 hud.show_hunger = minetest.get_modpath("hunger") ~= nil
-hud.show_armor = nil --minetest.get_modpath("3d_armor") ~= nil
+hud.show_armor = minetest.get_modpath("3d_armor") ~= nil
 
 -- check if some settings are invalid
 local enable_hunger = minetest.setting_getbool("hud_hunger_enable")
@@ -90,7 +90,7 @@ if damage_enabled then
 		 	}
 		},
     })
-    --[[
+    ---[[
     hud.register("armor", {
 		hud_elem_type = "statbar",
 		position = HUD_ARMOR_POS,
@@ -100,7 +100,7 @@ if damage_enabled then
 		alignment = {x = -1, y = -1},
 		offset = HUD_ARMOR_OFFSET,
 		background = "hud_armor_bg.png",
-		autohide_bg = true,
+		--autohide_bg = true, --FIXME This crashes if true
 		max = 20,
     })
     --]]
