@@ -2452,7 +2452,8 @@ function mobs:capture_mob(self, clicker, chance_hand, chance_net, chance_lasso, 
 		if self.tamed == false
 		and force_take == false then
 
-			minetest.chat_send_player(name, "Not tamed!")
+			--minetest.chat_send_player(name, "Not tamed!")
+			cmsg.push_message_player(clicker, "Not tamed!")
 
 			return
 		end
@@ -2461,7 +2462,8 @@ function mobs:capture_mob(self, clicker, chance_hand, chance_net, chance_lasso, 
 		if self.owner ~= name
 		and force_take == false then
 
-			minetest.chat_send_player(name, self.owner.." is owner!")
+			--minetest.chat_send_player(name, self.owner.." is owner!")
+			cmsg.push_message_player(clicker, self.owner .. " is owner!")
 
 			return
 		end
@@ -2541,7 +2543,11 @@ function mobs:feed_tame(self, clicker, feed_count, breed, tame)
 
 			if self.htimer < 1 then
 
-				minetest.chat_send_player(clicker:get_player_name(),
+				--[[minetest.chat_send_player(clicker:get_player_name(),
+					self.name:split(":")[2]
+					.. " at full health (" .. tostring(self.health) .. ")")--]]
+
+				cmsg.push_message_player(clicker,
 					self.name:split(":")[2]
 					.. " at full health (" .. tostring(self.health) .. ")")
 
@@ -2576,9 +2582,12 @@ function mobs:feed_tame(self, clicker, feed_count, breed, tame)
 			if tame then
 
 				if self.tamed == false then
-					minetest.chat_send_player(clicker:get_player_name(),
+					--[[minetest.chat_send_player(clicker:get_player_name(),
 						self.name:split(":")[2]
-						.. " has been tamed!")
+						.. " has been tamed!")--]]
+					cmsg.push_message_player(clicker,
+						self.name:split(":")[2]
+						.. " had been tamed!")
 				end
 
 				self.tamed = true
