@@ -135,21 +135,25 @@ protector.can_dig = function(r, pos, digger, onlyowner, infolevel)
 
 				if infolevel == 1 then
 
-					minetest.chat_send_player(digger,
-					"This area is owned by " .. owner .. " !")
+					--[[minetest.chat_send_player(digger,
+						"This area is owned by " .. owner .. " !")--]]
+					cmsg.push_message_player(minetest.get_player_by_name(digger),
+						"This area is owned by " .. owner .. "!")
 
 				elseif infolevel == 2 then
 
-					minetest.chat_send_player(digger,
-					"This area is owned by " .. owner .. ".")
+					--[[minetest.chat_send_player(digger,
+						"This area is owned by " .. owner .. ".")--]]
+					cmsg.push_message_player(minetest.get_player_by_name(digger),
+						"This area is owned by " .. owner .. ".")
 
 					minetest.chat_send_player(digger,
-					"Protection located at: " .. minetest.pos_to_string(pos))
+						"Protected by " .. owner .. " at: " .. minetest.pos_to_string(pos))
 
 					if members ~= "" then
 
 						minetest.chat_send_player(digger,
-						"Members: " .. members .. ".")
+							"Members: " .. members .. ".")
 					end
 				end
 
@@ -159,16 +163,18 @@ protector.can_dig = function(r, pos, digger, onlyowner, infolevel)
 
 		if infolevel == 2 then
 
-			minetest.chat_send_player(digger,
-			"This area is owned by " .. owner .. ".")
+			--[[minetest.chat_send_player(digger,
+				"This area is owned by " .. owner .. ".")--]]
+			cmsg.push_message_player(minetest.get_player_by_name(digger),
+				"This area is owned by " .. owner .. ".")
 
 			minetest.chat_send_player(digger,
-			"Protection located at: " .. minetest.pos_to_string(pos))
+				"Protected by " .. owner .. " at: " .. minetest.pos_to_string(pos))
 
 			if members ~= "" then
 
 				minetest.chat_send_player(digger,
-				"Members: " .. members .. ".")
+					"Members: " .. members .. ".")
 			end
 
 			return false
@@ -180,11 +186,15 @@ protector.can_dig = function(r, pos, digger, onlyowner, infolevel)
 
 		if #positions < 1 then
 
-			minetest.chat_send_player(digger,
-			"This area is not protected.")
+			--[[minetest.chat_send_player(digger,
+				"This area is not protected.")--]]
+			cmsg.push_message_player(minetest.get_player_by_name(digger),
+				"This area is not protected.")
 		end
 
-		minetest.chat_send_player(digger, "You can build here.")
+		--minetest.chat_send_player(digger, "You can build here.")
+		cmsg.push_message_player(minetest.get_player_by_name(digger),
+			"You can build here.")
 	end
 
 	return true
@@ -212,8 +222,10 @@ function protector.check_overlap(itemstack, placer, pointed_thing)
 	if not protector.can_dig(protector.radius * 2, pointed_thing.above,
 	placer:get_player_name(), true, 3) then
 
-		minetest.chat_send_player(placer:get_player_name(),
-			"Overlaps into above players protected area")
+		--[[minetest.chat_send_player(placer:get_player_name(),
+			"Overlaps into above players protected area")--]]
+		cmsg.push_message_player(placer,
+			"Overlaps into a protected area.")
 
 		return
 	end
