@@ -115,8 +115,9 @@ minetest.register_globalstep(function(dtime)
 end)
 -- Horrible Workaround code ends here
 
--- Test command
+-- Test commanda
 minetest.register_chatcommand("cmsg", {
+	privs = {server=true},
 	func = function(name, param)
 		cmsg.push_message_player(minetest.get_player_by_name(name), param)
 	end
