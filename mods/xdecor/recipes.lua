@@ -79,13 +79,6 @@ minetest.register_craft({
 	recipe = {"default:book", "dye:blue"}
 })
 
-minetest.register_craft({
-	output = "xdecor:cardboard_box",
-	recipe = {
-		{"default:paper", "default:paper", "default:paper"},
-		{"default:paper", "default:paper", "default:paper"}
-	}
-})
 
 minetest.register_craft({
 	output = "xdecor:cauldron_empty",
@@ -104,14 +97,6 @@ minetest.register_craft({
 		{"group:stick", "", "group:stick"}
 	}
 })
-	
-minetest.register_craft({
-	output = "xdecor:chandelier",
-	recipe = {
-		{"default:gold_ingot", "default:gold_ingot", "default:gold_ingot"},
-		{"default:torch", "default:torch", "default:torch"}
-	}
-})
 
 minetest.register_craft({
 	output = "xdecor:coalstone_tile 4",
@@ -120,8 +105,8 @@ minetest.register_craft({
 		{"default:stone", "default:coalblock"}
 	}
 })
---[[
-minetest.register_craft({
+
+--[[minetest.register_craft({
 	output = "xdecor:cobble_wall_ln 6",
 	recipe = {
 		{"default:cobble", "default:cobble", "default:cobble"},
@@ -135,16 +120,7 @@ minetest.register_craft({
 		{"default:mossycobble", "default:mossycobble", "default:mossycobble"},
 		{"default:mossycobble", "default:mossycobble", "default:mossycobble"}
 	}
-})
---]]
-minetest.register_craft({
-	output = "xdecor:crate",
-	recipe = {
-		{"group:wood", "group:wood", "group:stick"},
-		{"group:wood", "group:stick", "group:wood"},
-		{"group:stick", "group:wood", "group:wood"}
-	}
-})
+})--]]
 
 minetest.register_craft({
 	output = "xdecor:cobweb",
@@ -187,14 +163,6 @@ minetest.register_craft({
 		{"", "default:book", ""},
 		{"default:diamond", "default:obsidian", "default:diamond"},
 		{"default:obsidian", "default:obsidian", "default:obsidian"}
-	}
-})
-
-minetest.register_craft({
-	output = "xdecor:fence_wrought_iron_c4 2",
-	recipe = {
-		{"default:iron_lump", "default:iron_lump", "default:iron_lump"},
-		{"default:iron_lump", "default:iron_lump", "default:iron_lump"}
 	}
 })
 
@@ -248,13 +216,6 @@ minetest.register_craft({
 	}
 })
 
-minetest.register_craftitem("xdecor:honey", {
-	description = "Honey",
-	inventory_image = "xdecor_honey.png",
-	groups = {not_in_creative_inventory=1},
-	on_use = minetest.item_eat(2)
-})
-
 minetest.register_craft({
 	output = "xdecor:ivy 4",
 	recipe = {
@@ -290,14 +251,6 @@ minetest.register_craft({
 	}
 })
 	
-minetest.register_craft({
-	output = "xdecor:metal_cabinet",
-	recipe = {
-		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
-		{"default:paper", "default:paper", "default:paper"},
-		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}
-	}
-})
 
 --[[minetest.register_craft({
 	output = "xdecor:moonbrick",
