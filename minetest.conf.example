@@ -74,3 +74,6 @@
 
 # Color of system messages pushed by central_message
 #central_message_color = 0xFFFFFF
+
+# Players can sprint when holding Use (default [E])
+#enable_sprinting = false
