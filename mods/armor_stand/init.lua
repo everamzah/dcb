@@ -88,3 +88,5 @@ minetest.register_craft({
 		{"group:wood", "group:wood", "group:wood"}
 	}
 })
+
+minetest.register_alias("armor_stand", "armor_stand:armor_stand")
