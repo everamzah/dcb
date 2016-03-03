@@ -73,7 +73,7 @@ cmsg.push_message_player = function(player, text)
 			update_display(player, pname)
 		end
 
-		minetest.after(10, function(param) -- 5
+		minetest.after(5, function(param)
 			local pname = param.player:get_player_name()
 			if not cmsg.messages[pname] then return end
 			for i=1, #cmsg.messages[pname] do
