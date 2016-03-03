@@ -142,12 +142,6 @@ minetest.register_chatcommand("shop", {
 	privs = {server=true},
 	description = "Adjust privs shop price",
 	func = function(name, param)
-		--[[
-		for i=1, #playereffects.get_player_effects(name) do
-			print(playereffects.get_remaining_effect_time(playereffects.get_player_effects(name)[i].effect_id))
-		end
-		--]]
-		
 		param = tonumber(param)
 		if param then
 			local price = math.floor(math.abs(param))
@@ -156,4 +150,13 @@ minetest.register_chatcommand("shop", {
 			end
 		end
 	end
+})
+
+minetest.register_craft({
+	output = "shop:privs",
+	recipe = {
+		{"group:wood", "default:mese", "group:wood"},
+		{"group:wood", "default:goldblock", "group:wood"},
+		{"group:wood", "default:diamondblock", "group:wood"}
+		}
 })
