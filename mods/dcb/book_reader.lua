@@ -26,8 +26,14 @@ end
 
 minetest.register_node("dcb:book_reader", {
 	description = "Book Reader",
-	tiles = {"default_wood.png^default_book.png"},
-	groups = {snappy=2, cracky=2},
+	tiles = {"xdecor_wood.png^default_book.png",
+		"xdecor_wood.png",
+		"xdecor_wood.png^default_book.png",
+		"xdecor_wood.png^default_book.png",
+		"xdecor_wood.png^default_book.png",
+		"xdecor_wood.png^default_book.png"},
+	groups = {cracky=2, choppy=3, oddly_breakable_by_hand=1},
+	paramtype2 = "facedir",
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("infotext", "")
