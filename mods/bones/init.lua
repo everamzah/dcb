@@ -138,6 +138,13 @@ minetest.register_craft({
 	recipe = {"bones:bone", "bones:bone"}
 })
 
+minetest.register_craft({
+	type = "cooking",
+	output = "bones:bone",
+	recipe = "mobs:rotten_flesh",
+	cooktime = 7
+})
+
 local function may_replace(pos, player)
 	local node_name = minetest.get_node(pos).name
 	local node_definition = minetest.registered_nodes[node_name]
