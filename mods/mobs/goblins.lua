@@ -864,13 +864,13 @@ mobs:register_egg("mobs:goblin_king", "Goblin King Egg", "default_mossycobble.pn
 
 
 -- register_spawn(name, nodes, max_light, min_light, chance, active_object_count, max_height)
---[[
+---[[
 mobs:register_spawn("mobs:goblin_cobble", {
 	"default:cobble",
 	--"default:mossycobble",
 	--"default:desert_cobble"
 	},
-	0, 0, 500000, 4, -16
+	0, 0, 5000, 4, -16
 )
 
 mobs:register_spawn("mobs:goblin_digger", {
@@ -878,7 +878,7 @@ mobs:register_spawn("mobs:goblin_digger", {
 	"default:mossycobble",
 	--"default:desert_cobble"
 	},
-	0, 0, 500000, 4, -16
+	0, 0, 5000, 4, -16
 )
 
 mobs:register_spawn("mobs:goblin_coal", {
@@ -886,7 +886,7 @@ mobs:register_spawn("mobs:goblin_coal", {
 	--"default:mossycobble",
 	--"default:desert_cobble"
 	},
-	0, 0, 500000, 3, -16
+	0, 0, 5000, 3, -16
 )
 
 mobs:register_spawn("mobs:goblin_iron", {
@@ -894,7 +894,7 @@ mobs:register_spawn("mobs:goblin_iron", {
 	--"default:mossycobble",
 	--"default:desert_cobble"
 	},
-	0, 0, 500000, 3, -16
+	0, 0, 10000, 3, -16
 )
 
 mobs:register_spawn("mobs:goblin_copper", {
@@ -902,7 +902,7 @@ mobs:register_spawn("mobs:goblin_copper", {
 	--"default:mossycobble",
 	--"default:desert_cobble"
 	},
-	0, 0, 500000, 3, -16
+	0, 0, 10000, 3, -16
 )
 
 mobs:register_spawn("mobs:goblin_gold", {
@@ -910,7 +910,7 @@ mobs:register_spawn("mobs:goblin_gold", {
 	--"default:mossycobble",
 	--"default:desert_cobble"
 	},
-	0, 0, 500000, 2, -64
+	0, 0, 15000, 2, -64
 )
 
 mobs:register_spawn("mobs:goblin_diamond", {
@@ -918,7 +918,7 @@ mobs:register_spawn("mobs:goblin_diamond", {
 	--"default:mossycobble",
 	--"default:desert_cobble"
 	},
-	0, 0, 500000, 2, -128
+	0, 0, 25000, 2, -128
 )
 
 mobs:register_spawn("mobs:goblin_king", {
@@ -926,7 +926,7 @@ mobs:register_spawn("mobs:goblin_king", {
 	--"default:mossycobble",
 	--"default:desert_cobble"
 	},
-	0, 0, 500000, 1, -64
+	0, 0, 50000, 1, -64
 )
 --]]
 

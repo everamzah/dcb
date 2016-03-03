@@ -28,6 +28,7 @@ dofile(path.."/dungeonmaster.lua")
 --dofile(path.."/spider.lua") -- AspireMint
 dofile(path.."/goblins.lua") -- FeelsLikeGNU
 dofile(path.."/zombie.lua") -- BlockMen
+dofile(path.."/greenslimes.lua") -- TomasJLuis
 
 -- NPC
 dofile(path.."/npc.lua") -- TenPlus1
