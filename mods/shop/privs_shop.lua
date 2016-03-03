@@ -67,9 +67,15 @@ end
 minetest.register_alias("shop:shop", "shop:privs")
 minetest.register_node("shop:privs", {
 	description = "Privs Shop",
-	tiles = {"default_sandstone.png^shop_wings.png"},
+	tiles = {"xdecor_barrel_top.png^shop_wings.png",
+		"xdecor_barrel_top.png",
+		"xdecor_barrel_top.png^shop_wings.png",
+		"xdecor_barrel_top.png^shop_wings.png",
+		"xdecor_barrel_top.png^shop_wings.png",
+		"xdecor_barrel_top.png^shop_wings.png"},
 	is_ground_content = true,
-	groups = {cracky=3, oddly_breakable_by_hand=1},
+	groups = {cracky=2, choppy=3, oddly_breakable_by_hand=1},
+	paramtype2 = "facedir",
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("infotext", "Shop for privs")
