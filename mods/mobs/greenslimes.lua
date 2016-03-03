@@ -119,6 +119,7 @@ mobs:spawn_specific("mobs:greenmedium", {"default:junglegrass"},{"air","default:
 mobs:spawn_specific("mobs:greensmall", {"default:junglegrass"},{"air","default:junglegrass"}, 4, 4, 30, 15000, 8, 0, 32000)--]]
 
 --mobs:register_spawn(name, nodes, max_light, min_light, chance, active_object_count, max_height)
-mobs:register_spawn("mobs:greenmedium", {"default:mossycobble"}, 20, 4, 10000, 8, 32000)
-mobs:register_spawn("mobs:greensmall", {"default:mossycobble"}, 20, 4, 10000, 8, 32000)
+mobs:register_spawn("mobs:greenbig", {"default:junglegrass"}, 15, 5, 5000, 4, 30000)
+mobs:register_spawn("mobs:greenmedium", {"default:junglegrass"}, 15, 5, 10000, 4, 30000)
+mobs:register_spawn("mobs:greensmall", {"default:junglegrass"}, 15, 5, 15000, 4, 30000)
 
