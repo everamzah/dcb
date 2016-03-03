@@ -30,8 +30,8 @@ minetest.register_privilege("home", "Can use /sethome and /home")
 local changed = false
 
 minetest.register_chatcommand("home", {
-    description = "Teleport you to your home point or name if teleport priv",
-    params = "[name]",
+    description = "Go to your home",
+    params = "<name>",
     privs = {home=true},
     func = function(name, param)
         local player = minetest.get_player_by_name(name)
@@ -42,16 +42,20 @@ minetest.register_chatcommand("home", {
 	if param ~= "" and minetest.check_player_privs(name, {teleport=true}) then
 	    if homepos[param] then
 		player:setpos(homepos[param])
-	        return true, "Teleported to "..param.."'s home."
+		cmsg.push_message_player(player, "Teleported to "..param.."'s home")
+	        return true --, "Teleported to "..param.."'s home."
 	    else
-		return false, param.." has no home set."
+		cmsg.push_message_player(player, param.." has no home set.")
+		return false --, param.." has no home set."
 	    end
 	else
             if homepos[player:get_player_name()] then
 	        player:setpos(homepos[player:get_player_name()])
-		return true, "Teleported to home!"
+		cmsg.push_message_player(player, "Teleported to home!")
+		return true --, "Teleported to home!"
 	    else
-		return false, "Set a home using /sethome"
+		cmsg.push_message_player(player, "Set a home using /sethome")
+		return false --, "Set a home using /sethome"
 	    end
 	end
     end,
@@ -60,8 +64,9 @@ minetest.register_chatcommand("home", {
 dcb.sethome = function(player)
 	local name = player:get_player_name()
 	local pos = player:getpos()
-	homepos[player:get_player_name()] = pos
-	minetest.chat_send_player(name, "Home set!")
+	homepos[name] = pos
+	--minetest.chat_send_player(name, "Home set!")
+	cmsg.push_message_player(player, "Home set!")
 	changed = true
 	if changed then
 		local output = io.open(homes_file, "w")
@@ -74,13 +79,14 @@ dcb.sethome = function(player)
 end
 
 minetest.register_chatcommand("sethome", {
-    description = "Set your home point",
+    description = "Set your home",
     privs = {home=true},
     func = function(name)
         local player = minetest.get_player_by_name(name)
-        local pos = player:getpos()
+	dcb.sethome(player)
+        --[[local pos = player:getpos()
         homepos[player:get_player_name()] = pos
-        minetest.chat_send_player(name, "Home set!")
+        --minetest.chat_send_player(name, "Home set!")
         changed = true
         if changed then
                 local output = io.open(homes_file, "w")
@@ -89,8 +95,8 @@ minetest.register_chatcommand("sethome", {
             end
             io.close(output)
             changed = false
-        end
-    end,
+        end--]]
+    end
 })
 
 dcb.get_formspec = function(player)
@@ -121,20 +127,23 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if fields.home then
 		if not minetest.check_player_privs(
 				player_name, {home=true}) then
-			minetest.chat_send_player(player_name,
-				"You lack the necessary privilege: home")
+			--[[minetest.chat_send_player(player_name,
+				"You lack the necessary privilege: home")--]]
+			cmsg.push_message_player(player, "You lack the necessary privilege: home")
 			return
 		end
 		if homepos[player_name] then
 			player:setpos(homepos[player_name])
-			minetest.chat_send_player(
-				player_name, "Teleported to home!")
+			--[[minetest.chat_send_player(
+				player_name, "Teleported to home!")--]]
+			cmsg.push_message_player(player, "Teleported to home!")
 		else
 			local pos = player:getpos()
 			homepos[player_name] = pos
-			minetest.chat_send_player(
+			--[[minetest.chat_send_player(
 				player_name,
-				"Home set!  Use /sethome to set a new one.")
+				"Home set!  Use /sethome to set a new one.")--]]
+			cmsg.push_message_player(player, "Home set! Use /sethome again to change location")
 			changed = true
 			if changed then
 				local output = io.open(homes_file, "w")
@@ -150,13 +159,15 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if fields.spawn then
 		if not minetest.check_player_privs(
 				player_name, {spawn=true}) then
-			minetest.chat_send_player(player_name,
-				"You lack the necessary privilege: spawn")
+			--[[minetest.chat_send_player(player_name,
+				"You lack the necessary privilege: spawn")--]]
+			cmsg.push_message_player(player, "You lack the necessary privilege: spawn")
 			return
 		end
 		local spawnpos = minetest.setting_get_pos("static_spawnpoint")
 		if not spawnpos then return end
 		player:setpos(spawnpos)
-		minetest.chat_send_player(player_name, "Teleported to spawn!")
+		--minetest.chat_send_player(player_name, "Teleported to spawn!")
+		cmsg.push_message_player(player, "Teleported to spawn!")
 	end
 end)
