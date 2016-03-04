@@ -142,7 +142,7 @@ minetest.register_craft({
 	type = "cooking",
 	output = "bones:bone",
 	recipe = "mobs:rotten_flesh",
-	cooktime = 7
+	cooktime = 2
 })
 
 local function may_replace(pos, player)
