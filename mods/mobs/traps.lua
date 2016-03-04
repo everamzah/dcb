@@ -6,16 +6,24 @@ minetest.register_node("mobs:mossycobble_trap", {
 	description = "Messy Gobblestone",
 	tiles = {"default_mossycobble.png"},
 	is_ground_content = false,
-	groups = {cracky = 2, stone = 1},
+	groups = {cracky=2, liquid=3},
 	sounds = default.node_sound_stone_defaults(),
+	liquid_viscosity = 8,
+	liquidtype = "source",
+	liquid_alternative_flowing = "mobs:mossycobble_trap",
+	liquid_alternative_source = "mobs:mossycobble_trap",
+	liquid_renewable = false,
+	liquid_range = 0,
+	walkable = false,
+	selection_box = {type="regular"},
 	paramtype = "light",
-	light_source = 3,
+	light_source = 3
 })
 
 minetest.register_node("mobs:stone_with_coal_trap", {
 	description = "Coal Trap",
 	tiles = {"default_cobble.png^default_mineral_coal.png"},
-	groups = {cracky = 1, level = 2},
+	groups = {cracky=1, level=2},
 	drop = 'default:coal_lump',
 	is_ground_content = false,
 	sounds = default.node_sound_stone_defaults(),
@@ -28,8 +36,7 @@ minetest.register_node("mobs:stone_with_coal_trap", {
 					 end
 				end
 		end
-	end,
-
+	end
 })
 
 minetest.register_node("mobs:stone_with_iron_trap", {
@@ -99,7 +106,7 @@ minetest.register_node("mobs:stone_with_diamond_trap", {
 				if math.random(0,100) < 75 then -- chance player will get hurt mining this
 					if puncher:get_hp() > 0 then
 						puncher:set_hp(puncher:get_hp()-1)
-						minetest.sound_play("goblins_goblin_pick", {pos = pos, gain = 0.5, max_hear_distance = 10})
+						minetest.sound_play("goblins_goblin_pick", {pos=pos, gain=0.5, max_hear_distance=10})
 					 end
 				end
 		end
@@ -214,59 +221,65 @@ bucket.register_liquid(
 --[[ too bad we can't keep track of what physics are set too by other mods...]]
 minetest.register_abm({
 	nodenames = {"mobs:mossycobble_trap"},
-	interval = 1,
+	interval = 1.0,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		for _,object in ipairs(minetest.env:get_objects_inside_radius(pos, 0.95)) do -- IDKWTF this is but it works
-				if object:is_player() then
-					object:set_physics_override({speed = 0.1})
-					minetest.after(1, function() -- this effect is temporary
-						object:set_physics_override({speed = 1})  -- we'll just set it to 1 and be done.
-					end)
-				end
-		end
-	end})
-
-minetest.register_abm({
-	nodenames = {"mobs:stone_with_coal_trap"},
-	interval = 1,
-	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
-		for _,object in ipairs(minetest.env:get_objects_inside_radius(pos, 3)) do
+		for _, object in pairs(minetest.get_objects_inside_radius(pos, 0.95)) do -- IDKWTF this is but it works
 			if object:is_player() then
-				minetest.set_node(pos, {name="fire:basic_flame"})
 				if object:get_hp() > 0 then
-					object:set_hp(object:get_hp()-2)
-					minetest.sound_play("default_dig_crumbly", {pos = pos, gain = 0.5, max_hear_distance = 10})
-					minetest.after(6, function() --this hell ends after a few seconds
-						minetest.set_node(pos, {name = "air"})
-					end)
+					--object:set_physics_override({speed=0.1})
+					--[[minetest.after(0.1, function() -- this effect is temporary
+						object:set_physics_override({speed=1})  -- we'll just set it to 1 and be done.
+					end)--]]
+					object:set_hp(object:get_hp()-1)
 				end
 			end
 		end
-	end})
+	end
+})
+
+minetest.register_abm({
+	nodenames = {"mobs:stone_with_coal_trap"},
+	interval = 1.0,
+	chance = 1,
+	action = function(pos, node, active_object_count, active_object_count_wider)
+		for _, object in pairs(minetest.get_objects_inside_radius(pos, 1.5)) do
+			if object:is_player() then
+				minetest.set_node(pos, {name="fire:permanent_flame"})
+				if object:get_hp() > 0 then
+					object:set_hp(object:get_hp()-1)
+					minetest.sound_play("default_dig_crumbly", {pos=pos, gain=0.5, max_hear_distance=10})
+					--[[minetest.after(3, function() --this hell ends after a few seconds
+						minetest.set_node(pos, {name = "air"})
+					end)--]]
+				end
+			end
+		end
+	end
+})
 
 
 -- summon a metallic goblin?
 -- pit of iron razors?
 minetest.register_abm({
 	nodenames = {"mobs:stone_with_iron_trap"},
-	interval = 2,
+	interval = 2.0,
 	chance = 2, --this may be a dud
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		for _,object in ipairs(minetest.env:get_objects_inside_radius(pos, 2)) do
+		for _, object in pairs(minetest.get_objects_inside_radius(pos, 1.5)) do
 			if object:is_player() then
 				if object:get_hp() > 0 then
 					object:set_hp(object:get_hp()-1)
-					minetest.sound_play("goblins_goblin_pick", {pos = pos, gain = 0.5, max_hear_distance = 10})
+					minetest.sound_play("goblins_goblin_pick", {pos=pos, gain=0.5, max_hear_distance=10})
 				 end
 			end
 		end
-	end})
+	end
+})
 
 local function lightning_effects(pos, radius)
 	minetest.add_particlespawner({
-		amount = 30,
+		amount = 15,
 		time = 1,
 		minpos = vector.subtract(pos, radius / 2),
 		maxpos = vector.add(pos, radius / 2),
@@ -276,8 +289,8 @@ local function lightning_effects(pos, radius)
 		maxacc = vector.new(),
 		minexptime = 1,
 		maxexptime = 3,
-		minsize = 16,
-		maxsize = 32,
+		minsize = 4, --16
+		maxsize = 16, --32
 		texture = "goblins_lightning.png",
 	})
 end
@@ -285,39 +298,41 @@ end
 --[[ based on dwarves cactus]]
 minetest.register_abm({
 	nodenames = {"mobs:stone_with_copper_trap"},
-	interval = 1,
+	interval = 1.0,
 	chance = 2,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		for _,object in ipairs(minetest.env:get_objects_inside_radius(pos, 3)) do
+		for _, object in pairs(minetest.get_objects_inside_radius(pos, 1.5)) do
 			if object:is_player() then
 				if object:get_hp() > 0 then
 					object:set_hp(object:get_hp()-1)
 					-- sprite
-					lightning_effects(pos, 3)
-					minetest.sound_play("goblins_goblin_pick", {pos = pos, gain = 0.5, max_hear_distance = 10})
+					lightning_effects(pos, 2)
+					minetest.sound_play("goblins_goblin_pick", {pos=pos, gain=0.5, max_hear_distance=10})
 				end
 			end
 		end
-	end})
+	end
+})
 
 minetest.register_abm({
 	nodenames = {"mobs:stone_with_gold_trap"},
-	interval = 1,
+	interval = 1.0,
 	chance = 2,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		for _,object in ipairs(minetest.env:get_objects_inside_radius(pos, 2)) do
+		for _, object in pairs(minetest.get_objects_inside_radius(pos, 1.5)) do
 			if object:is_player() then
 				minetest.set_node(pos, {name="mobs:molten_gold_source"})
 				if object:get_hp() > 0 then
-					object:set_hp(object:get_hp()-2)
-					minetest.sound_play("default_dig_crumbly", {pos = pos, gain = 0.5, max_hear_distance = 10})
-					minetest.after(6, function() --this hell ends after a few seconds
-						minetest.set_node(pos, {name = "air"})
-					end)	
+					object:set_hp(object:get_hp()-1)
+					minetest.sound_play("default_dig_crumbly", {pos=pos, gain=0.5, max_hear_distance=10})
+					--[[minetest.after(3, function() --this hell ends after a few seconds
+						minetest.set_node(pos, {name="air"})
+					end)--]]	
 				 end
 			end
 		end
-	end})
+	end
+})
 
 local setting = minetest.setting_getbool("enable_tnt")
 --[[
@@ -331,35 +346,37 @@ if (not minetest.is_singleplayer() and setting ~= true) or (minetest.is_singlepl
 	-- wimpier trap for non-tnt settings
 	minetest.register_abm({
 		nodenames = {"mobs:stone_with_diamond_trap"},
-		interval = 1,
+		interval = 1.0,
 		chance = 1,
 		action = function(pos, node, active_object_count, active_object_count_wider)
-			for _,object in ipairs(minetest.env:get_objects_inside_radius(pos, 3)) do
+			for _, object in pairs(minetest.get_objects_inside_radius(pos, 1.5)) do
 				if object:is_player() then
 					minetest.set_node(pos, {name="default:lava_source"})
 					if object:get_hp() > 0 then
 						object:set_hp(object:get_hp()-2)
-						minetest.sound_play("default_dig_crumbly", {pos = pos, gain = 0.5, max_hear_distance = 10})
-						minetest.after(6, function() --this hell ends after a few seconds
+						minetest.sound_play("default_dig_crumbly", {pos=pos, gain=0.5, max_hear_distance=10})
+						--[[minetest.after(6, function() --this hell ends after a few seconds
 							minetest.set_node(pos, {name = "air"})
-						end)	
+						end)--]]	
 					end
 				end
 			end
-		end})
+		end
+	})
 else
 	-- 5... 4... 3... 2... 1...
 	minetest.register_abm({
 		nodenames = {"mobs:stone_with_diamond_trap"},
-		interval = 1,
+		interval = 1.0,
 		chance = 1,
 		action = function(pos, node, active_object_count, active_object_count_wider)
-			for _,object in ipairs(minetest.env:get_objects_inside_radius(pos, 3)) do
+			for _, object in pairs(minetest.get_objects_inside_radius(pos, 1.5)) do
 				if object:is_player() then
 					minetest.set_node(pos, {name="tnt:tnt_burning"})
 					minetest.get_node_timer(pos):start(5)
-					minetest.sound_play("tnt_ignite", {pos = pos, gain = 0.5, max_hear_distance = 10})
+					minetest.sound_play("tnt_ignite", {pos=pos, gain=0.5, max_hear_distance=10})
 				end
 			end
-		end})
+		end
+	})
 end
