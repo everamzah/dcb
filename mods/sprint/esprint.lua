@@ -16,7 +16,7 @@ minetest.register_on_joinplayer(function(player)
 	players[playerName] = {
 		sprinting = false,
 		timeOut = 0, 
-		stamina = SPRINT_STAMINA, 
+		stamina = hunger[playerName].lvl, --SPRINT_STAMINA, 
 		shouldSprint = false,
 	}
 	--[[
@@ -49,7 +49,11 @@ minetest.register_globalstep(function(dtime)
 		local player = minetest.get_player_by_name(playerName)
 		if player ~= nil then
 			--Check if the player should be sprinting
-			if player:get_player_control()["aux1"] and player:get_player_control()["up"] then
+			if player:get_player_control()["aux1"] and
+					(player:get_player_control()["up"] or
+					player:get_player_control()["down"] or
+					player:get_player_control()["jump"] or
+					player:get_player_control()["sneak"]) then
 				players[playerName]["shouldSprint"] = true
 			else
 				players[playerName]["shouldSprint"] = false
@@ -86,7 +90,11 @@ minetest.register_globalstep(function(dtime)
 			--Lower the player's stamina by dtime if he/she is sprinting and set his/her state to 0 if stamina is zero
 			if playerInfo["sprinting"] == true then 
 				playerInfo["stamina"] = playerInfo["stamina"] - dtime
-				if playerInfo["stamina"] <= 0 then
+				--hunger[playerName].lvl = hunger[playerName].lvl - dtime
+				hunger.update_hunger(player, hunger[playerName].lvl - dtime)
+				--print(hunger[playerName].lvl)
+				--if playerInfo["stamina"] <= 0 then
+				if hunger[playerName].lvl < 1 then
 					playerInfo["stamina"] = 0
 					setSprinting(playerName, false)
 				end
