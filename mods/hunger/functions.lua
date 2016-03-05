@@ -105,9 +105,9 @@ function hunger.setSprinting(playerName, sprinting) --Sets the state of a player
 	if hunger.players[playerName] then
 		hunger.players[playerName]["sprinting"] = sprinting
 		if sprinting == true then
-			player:set_physics_override({speed=2}), --, jump=1.5})
+			player:set_physics_override({speed=2}) --, jump=1.5})
 		elseif sprinting == false then
-			player:set_physics_override({speed=1}), --, jump=1})
+			player:set_physics_override({speed=1}) --, jump=1})
 		end
 		return true
 	end
