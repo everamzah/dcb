@@ -105,9 +105,9 @@ function hunger.setSprinting(playerName, sprinting) --Sets the state of a player
 	if hunger.players[playerName] then
 		hunger.players[playerName]["sprinting"] = sprinting
 		if sprinting == true then
-			player:set_physics_override({speed=2, jump=1.5})
+			player:set_physics_override({speed=2}), --, jump=1.5})
 		elseif sprinting == false then
-			player:set_physics_override({speed=1, jump=1})
+			player:set_physics_override({speed=1}), --, jump=1})
 		end
 		return true
 	end
@@ -156,7 +156,7 @@ local function hunger_globaltimer(dtime)
 			local name = player:get_player_name()
 			local tab = hunger[name]
 			if tab then
-				local air = player:get_breath() or 0
+				--local air = player:get_breath() or 0
 				local hp = player:get_hp()
 
 				-- heal player by 1 hp if not dead and saturation is > 15 (of 30) player is not drowning
