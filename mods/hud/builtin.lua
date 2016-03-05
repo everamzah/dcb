@@ -49,31 +49,29 @@ if damage_enabled then
 		position = HUD_HEALTH_POS,
 		size = HUD_SB_SIZE,
 		text = "hud_heart_fg.png",
-		number = 0, --20,
+		number = 0,
 		alignment = {x = -1, y = -1},
 		offset = HUD_HEALTH_OFFSET,
-		background = nil, --"hud_heart_bg.png",
+		background = nil,
 		events = {
 			{
 				type = "damage",
 				func = function(player)
-					hud.change_item(player, "health", {number = player:get_hp()})
+					hud.change_item(player, "health", {number=player:get_hp()})
 					if hunger[player:get_player_name()].lvl > player:get_hp() then
-						hud.change_item(player, "hunger", {number = player:get_hp()})
-						hunger[player:get_player_name()].lvl = player:get_hp()
-						--print(hunger[player:get_player_name()].lvl)
+						hud.change_item(player, "hunger", {number=player:get_hp()})
+						hunger.update_hunger(player, player:get_hp())
 					end
 				end
 		 	}
-		},
+		}
     })
-
     hud.register("air", {
 		hud_elem_type = "statbar",
 		position = HUD_AIR_POS,
 		size = HUD_SB_SIZE,
 		text = "hud_air_fg.png",
-		number = 0,
+		number = 20,
 		alignment = {x = -1, y = -1},
 		offset = HUD_AIR_OFFSET,
 		background = nil,
@@ -85,26 +83,21 @@ if damage_enabled then
 					if air > 10 then
 						air = 0
 					end
-					hud.change_item(player, "air", {number = air * 2})
+					hud.change_item(player, "air", {number=air*2})
 				end
 		 	}
-		},
+		}
     })
-    ---[[
     hud.register("armor", {
 		hud_elem_type = "statbar",
 		position = HUD_ARMOR_POS,
 		size = HUD_SB_SIZE,
 		text = "hud_armor_fg.png",
-		number = 0,
+		number = 20,
 		alignment = {x = -1, y = -1},
 		offset = HUD_ARMOR_OFFSET,
-		background = "hud_armor_bg.png",
-		--autohide_bg = true, --FIXME This crashes if true
-		max = 20,
+		background = nil
     })
-    --]]
-
     hud.register("hunger", {
 		hud_elem_type = "statbar",
 		position = HUD_HUNGER_POS,
@@ -113,8 +106,7 @@ if damage_enabled then
 		number = 0,
 		alignment = {x = -1, y = -1},
 		offset = HUD_HUNGER_OFFSET,
-		background = nil, --"hud_hunger_bg.png",
-		max = 0
+		background = nil
     })
 else
 	hud.show_armor = false

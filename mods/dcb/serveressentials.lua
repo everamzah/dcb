@@ -175,14 +175,20 @@ minetest.register_chatcommand("heal", {
 	description = "Heal specified player, heals self if run without arguments",
 	privs = {heal = true},
 	func = function(playerName, param)
+		local player = minetest.get_player_by_name(playerName)
 		if #param==0 then
-			minetest.chat_send_player(playerName, "Healing player " .. playerName)
-			minetest.get_player_by_name(playerName):set_hp(20)
+			--minetest.chat_send_player(playerName, "Healing player " .. playerName)
+			cmsg.push_message_player(player, "Healing player " .. playerName)
+			player:set_hp(20)
+			hunger.update_hunger(player, 20)
 		elseif players[playerName] and param and players[param] then
-			minetest.chat_send_player(playerName, "Healing player " .. param)
+			--minetest.chat_send_player(playerName, "Healing player " .. param)
+			cmsg.push_message_player(player, "Healing player " .. param)
 			minetest.get_player_by_name(param):set_hp(20)
+			hunger.update_hunger(minetest.get_player_by_name(param), 20)
 		else
-			minetest.chat_send_player(playerName, "Player " .. param .. " cannot not be found")
+			--minetest.chat_send_player(playerName, "Player " .. param .. " cannot not be found")
+			cmsg.push_message_player(player, "Player " .. param .. " cannot be found")
 		end
 		return
 	end
@@ -331,6 +337,7 @@ minetest.register_globalstep(function(dtime)
 			if players[playerName]["godMode"] then
 				player:set_hp(20)
 				player:set_breath(11)
+				hunger.update_hunger(player, 20)
 			end
 		end
 	end

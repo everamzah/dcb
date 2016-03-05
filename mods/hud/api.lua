@@ -5,7 +5,7 @@ hud.breath_events = {}
 
 -- keep id handling internal
 local hud_id = {}	-- hud item ids
---local sb_bg = {}	-- statbar background ids
+local sb_bg = {}	-- statbar background ids
 
 -- localize often used table
 local items = hud.registered_items
@@ -37,7 +37,6 @@ function hud.register(name, def)
 
 	-- actually register
 	-- add background first since draworder is based on id :\
-	--[[
 	if def.hud_elem_type == "statbar" and def.background ~= nil then
 		sb_bg[name] = table.copy(def)
 		sb_bg[name].text = def.background
@@ -45,7 +44,6 @@ function hud.register(name, def)
 			sb_bg[name].number = def.max
 		end
 	end
-	--]]
 	-- add item itself
 	items[name] = def
 
@@ -87,6 +85,10 @@ function hud.swap_statbar(player, item1, item2)
 	local p_name = player:get_player_name()
 	local elem1 = hud_id[p_name.."_"..item1]
 	local elem2 = hud_id[p_name.."_"..item2]
+
+	if not elem1 or not elem2 or not elem1.id or not elem2.id then
+		return false
+	end
 
 	player:hud_change(elem2.id, "offset", def1.offset)
 	player:hud_change(elem1.id, "offset", def2.offset)
@@ -217,6 +219,7 @@ local function add_hud_item(player, name, def)
 end
 
 minetest.register_on_joinplayer(function(player)
+
 	-- first: hide the default statbars
 	local hud_flags = player:hud_get_flags()
 	hud_flags.healthbar = false
@@ -224,11 +227,9 @@ minetest.register_on_joinplayer(function(player)
 	player:hud_set_flags(hud_flags)
 
 	-- now add the backgrounds for statbars
-	--[[
 	for _,item in pairs(sb_bg) do
 		add_hud_item(player, _.."_bg", item)
 	end
-	--]]
 	-- and finally the actual HUD items
 	for _,item in pairs(items) do
 		add_hud_item(player, _, item)
@@ -238,8 +239,8 @@ minetest.register_on_joinplayer(function(player)
 	--[[
 	if minetest.get_modpath("crafting") == nil then
 	    minetest.after(0.5, function()
-		player:hud_set_hotbar_image("gui_hotbar.png")
-		player:hud_set_hotbar_selected_image("gui_hotbar_selected.png")
+		player:hud_set_hotbar_image("hud_hotbar.png")
+		player:hud_set_hotbar_selected_image("hud_hotbar_selected.png")
 	    end)
 	end
 	--]]
