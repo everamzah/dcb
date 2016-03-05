@@ -1,7 +1,0 @@
-Show armor indicator to the right of hearts/stamina.  Remove
-air indicator, and give max breath once head is outside
-of liquid node.
-
-xconnected fence posts have a low top and long bottom,
-and overlap causing z-fighting.  If default fences would
-snap and connect, then those could be used instead.
