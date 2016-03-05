@@ -12,11 +12,10 @@ local staminaHud = {}
 
 minetest.register_on_joinplayer(function(player)
 	local playerName = player:get_player_name()
-
 	players[playerName] = {
 		sprinting = false,
 		timeOut = 0, 
-		stamina = hunger[playerName].lvl, --SPRINT_STAMINA, 
+		stamina = hunger[playerName].lvl,
 		shouldSprint = false,
 	}
 	--[[
@@ -36,16 +35,18 @@ minetest.register_on_joinplayer(function(player)
 	end
 	--]]
 end)
+
 minetest.register_on_leaveplayer(function(player)
 	local playerName = player:get_player_name()
 	players[playerName] = nil
 end)
+
 minetest.register_globalstep(function(dtime)
 	--Get the gametime
 	local gameTime = minetest.get_gametime()
 
 	--Loop through all connected players
-	for playerName,playerInfo in pairs(players) do
+	for playerName, playerInfo in pairs(players) do
 		local player = minetest.get_player_by_name(playerName)
 		if player ~= nil then
 			--Check if the player should be sprinting
@@ -89,9 +90,9 @@ minetest.register_globalstep(function(dtime)
 			
 			--Lower the player's stamina by dtime if he/she is sprinting and set his/her state to 0 if stamina is zero
 			if playerInfo["sprinting"] == true then 
-				playerInfo["stamina"] = playerInfo["stamina"] - dtime
+				playerInfo["stamina"] = playerInfo["stamina"] - dtime / 2
 				--hunger[playerName].lvl = hunger[playerName].lvl - dtime
-				hunger.update_hunger(player, hunger[playerName].lvl - dtime)
+				hunger.update_hunger(player, hunger[playerName].lvl - dtime / 2)
 				--print(hunger[playerName].lvl)
 				--if playerInfo["stamina"] <= 0 then
 				if hunger[playerName].lvl < 1 then
@@ -100,12 +101,15 @@ minetest.register_globalstep(function(dtime)
 				end
 			
 			--Increase player's stamina if he/she is not sprinting and his/her stamina is less than SPRINT_STAMINA
-			elseif playerInfo["sprinting"] == false and playerInfo["stamina"] < SPRINT_STAMINA then
-				playerInfo["stamina"] = playerInfo["stamina"] + dtime
+			elseif playerInfo["sprinting"] == false and playerInfo["stamina"] < player:get_hp() then --hunger[playerName].lvl then --SPRINT_STAMINA then
+				--playerInfo["stamina"] = playerInfo["stamina"] + dtime
+				if gameTime % 0.2 == 0 then
+					hunger.update_hunger(player, hunger[playerName].lvl + dtime)
+				end
 			end
 			-- Cap stamina at SPRINT_STAMINA
-			if playerInfo["stamina"] > SPRINT_STAMINA then
-				playerInfo["stamina"] = SPRINT_STAMINA
+			if playerInfo["stamina"] > hunger[playerName].lvl then --SPRINT_STAMINA then
+				playerInfo["stamina"] = hunger[playerName].lvl --SPRINT_STAMINA
 			end
 			
 			--Update the players's hud sprint stamina bar
