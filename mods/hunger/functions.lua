@@ -100,6 +100,19 @@ function hunger.handle_node_actions(pos, oldnode, player, ext)
 	hunger[name].exhaus = exhaus
 end
 
+function hunger.setSprinting(playerName, sprinting) --Sets the state of a player (0=stopped/moving, 1=sprinting)
+	local player = minetest.get_player_by_name(playerName)
+	if hunger.players[playerName] then
+		hunger.players[playerName]["sprinting"] = sprinting
+		if sprinting == true then
+			player:set_physics_override({speed=2, jump=1.5})
+		elseif sprinting == false then
+			player:set_physics_override({speed=1, jump=1})
+		end
+		return true
+	end
+	return false
+end
 
 -- Time based hunger functions
 local hunger_timer = 0
@@ -112,7 +125,7 @@ local function hunger_globaltimer(dtime)
 	action_timer = action_timer + dtime
 
 	if action_timer > HUNGER_MOVE_TICK then
-		for _,player in ipairs(minetest.get_connected_players()) do
+		for _, player in ipairs(minetest.get_connected_players()) do
 			local controls = player:get_player_control()
 			-- Determine if the player is walking
 			if controls.up or controls.down or controls.left or controls.right then
@@ -124,7 +137,7 @@ local function hunger_globaltimer(dtime)
 
 	-- lower saturation by 1 point after <HUNGER_TICK> second(s)
 	if hunger_timer > HUNGER_TICK then
-		for _,player in ipairs(minetest.get_connected_players()) do
+		for _, player in ipairs(minetest.get_connected_players()) do
 			local name = player:get_player_name()
 			local tab = hunger[name]
 			if tab then
@@ -147,19 +160,82 @@ local function hunger_globaltimer(dtime)
 				local hp = player:get_hp()
 
 				-- heal player by 1 hp if not dead and saturation is > 15 (of 30) player is not drowning
-				if tonumber(tab.lvl) > HUNGER_HEAL_LVL and hp > 0 and air > 0 then
-					player:set_hp(hp + HUNGER_HEAL)
+				--[[
+				if tonumber(tab.lvl) < hp and hunger.players[name]["sprinting"] == false and air > 0 then
+					hunger.update_hunger(player, hunger[name].lvl + 1)
 				end
+				--]]
 
-				-- or damage player by 1 hp if saturation is < 2 (of 30)
+				-- or damage player by 1 hp if saturation is < 2
 				if tonumber(tab.lvl) < HUNGER_STARVE_LVL then
 					player:set_hp(hp - HUNGER_STARVE)
 				end
 			end
 		end
-
 		health_timer = 0
 	end
+
+	--Get the gametime
+	local gameTime = minetest.get_gametime()
+
+	--Loop through all connected players
+	for playerName, playerInfo in pairs(hunger.players) do
+		local player = minetest.get_player_by_name(playerName)
+		if player ~= nil then
+			--Check if the player should be sprinting
+			if player:get_player_control()["aux1"] and
+					(player:get_player_control()["up"] or
+					player:get_player_control()["down"] or
+					player:get_player_control()["jump"] or
+					player:get_player_control()["sneak"]) then
+				hunger.players[playerName]["shouldSprint"] = true
+			else
+				hunger.players[playerName]["shouldSprint"] = false
+			end
+			
+			--If the player is sprinting, create particles behind him/her 
+			if playerInfo["sprinting"] == true and gameTime % 0.1 == 0 then
+				local numParticles = math.random(1, 2)
+				local playerPos = player:getpos()
+				local playerNode = minetest.get_node({x=playerPos["x"], y=playerPos["y"]-1, z=playerPos["z"]})
+				if playerNode["name"] ~= "air" then
+					for i=1, numParticles, 1 do
+						minetest.add_particle({
+							pos = {
+								x=playerPos["x"]+math.random(-1,1)*math.random()/2,
+								y=playerPos["y"]+0.1,
+								z=playerPos["z"]+math.random(-1,1)*math.random()/2
+							},
+							vel = {x=0, y=5, z=0},
+							acc = {x=0, y=-13, z=0},
+							expirationtime = math.random(),
+							size = math.random()+0.5,
+							collisiondetection = true,
+							vertical = false,
+							texture = "sprint_particle.png"
+						})
+					end
+				end
+			end
+
+			--Adjust player states
+			if hunger.players[playerName]["shouldSprint"] == true then --Stopped
+				hunger.setSprinting(playerName, true)
+			elseif hunger.players[playerName]["shouldSprint"] == false then
+				hunger.setSprinting(playerName, false)
+			end
+			
+			--Lower the player's stamina if sprinting
+			if playerInfo["sprinting"] == true then 
+				hunger.update_hunger(player, hunger[playerName].lvl - dtime / 4)
+				if hunger[playerName].lvl < 1 then
+					hunger.setSprinting(playerName, false)
+				end
+			
+			end
+		end
+	end
+
 end
 
 if minetest.setting_getbool("enable_damage") then
