@@ -227,7 +227,7 @@ minetest.register_craft({
 
 --- egg block ----
 minetest.register_node("foodblock:eggblock", {
-	description = "EggBlock",
+	description = "Egg Block",
 	tiles = {"foodblock_egg_top.png","foodblock_egg_bottom.png","foodblock_egg_side.png"},
 	paramtype = "light",
 	drawtype = "nodebox",
@@ -261,7 +261,7 @@ minetest.register_craft({
 })--]]
 
 minetest.register_node("foodblock:eggblock_slab", {
-	description = "Half Egg block",
+	description = "Egg Block Half",
 	drawtype = "nodebox",
 	paramtype = "light",
 	tiles = {"foodblock_egg_htop.png","foodblock_egg_bottom.png","foodblock_egg_side.png"},

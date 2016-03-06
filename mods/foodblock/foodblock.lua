@@ -60,14 +60,14 @@ minetest.register_craft({
 --[[ APPLE ]]--
 
 minetest.register_node("foodblock:appleblock", {
-	description = "AppleBlock",
+	description = "Apple Block",
 	tiles = {"foodblock_appleblock_top.png","foodblock_appleblock_bottom.png","foodblock_appleblock_side.png"},
 	groups = {crumbly=2},
 	sounds = default.node_sound_dirt_defaults(),
 })
 
 minetest.register_node("foodblock:appleblock_slab", {
-	description = "Half Appleblock",
+	description = "Apple Block Half",
 	drawtype = "nodebox",
 	paramtype = "light",
 	tiles = {"foodblock_appleblock_halftop.png","foodblock_appleblock_bottom.png","foodblock_appleblock_side.png"},
@@ -130,7 +130,7 @@ minetest.register_node("foodblock:redmushroomblock", {
 })
 
 minetest.register_node("foodblock:redmushroomblock_slab", {
-        description = "Red Mushroom Half Block",
+        description = "Red Mushroom Block Half",
         drawtype = "nodebox",
         paramtype = "light",
         tiles = {"foodblock_mushroomR_top.png",
@@ -192,7 +192,7 @@ minetest.register_craft({
 
 ---- Brown Mushroom block ----
 minetest.register_node("foodblock:brownmushroomblock", {
-        description = "BrownMushroomBlock",
+        description = "Brown Mushroom Block",
         drawtype = "nodebox",
         paramtype = "light",
         tiles = {"foodblock_mushroomB_top.png","foodblock_mushroomB_bottom.png","foodblock_mushroomB_side.png"},
@@ -209,7 +209,7 @@ minetest.register_node("foodblock:brownmushroomblock", {
 })
 
 minetest.register_node("foodblock:brownmushroomblock_slab", {
-        description = "Half BrownMushrromblock",
+        description = "Brown Mushrioom Block Half",
         drawtype = "nodebox",
         paramtype = "light",
         tiles = {"foodblock_mushroomB_top.png","foodblock_mushroomB_bottom.png","foodblock_mushroomB_hside.png"},

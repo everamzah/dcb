@@ -154,7 +154,7 @@ minetest.register_craft({
 
 -- Pancake Item
 minetest.register_node("foodblock:pancake_item", {
-	description = "pancake",
+	description = "Pancake",
 	drawtype = "plantlike",
 	paramtype = "light",
 	tiles = {"foodblock_pancake_item.png"},

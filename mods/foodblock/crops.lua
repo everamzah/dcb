@@ -144,7 +144,7 @@ minetest.register_node("foodblock:carrotblock", {
 })
 
 minetest.register_node("foodblock:carrotblock_slab", {
-	description = "Tomato Block Half",
+	description = "Carrot Block Half",
 	drawtype = "nodebox",
 	paramtype = "light",
 	tiles = {"foodblock_carrot_htop.png",
