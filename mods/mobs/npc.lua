@@ -108,7 +108,7 @@ mobs:register_mob("mobs:npc", {
 	end,
 })
 
-mobs:register_spawn("mobs:npc", {"default:apple", "shop:register"}, 20, 0, 7000, 2, 31000)
+mobs:register_spawn("mobs:npc", {"default:apple", "shop:register"}, 20, 0, 1000, 2, 31000)
 --mobs:spawn_specific("mobs:npc", {"default:brick"}, {"air"}, 0, 15, 1, 1, 1, 0, 200, true)
 
 mobs:register_egg("mobs:npc", "NPC", "default_brick.png", 1)
