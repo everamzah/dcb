@@ -43,15 +43,14 @@ mobs:register_mob("mobs:zombie", {
 		run_start = 168,		run_end = 188,
 --		punch_start = 168,		punch_end = 188,
 	env_damage_timer = 2
-	},
+	}
 })
+mobs:register_egg("mobs:zombie", "Zombie", "zombie_head.png", 0)
 
 mobs:register_spawn("mobs:zombie", {"default:stone", "default:dirt"}, 10, 0, 13000, 1, 128)
-
-mobs:register_egg("mobs:zombie", "Zombie", "zombie_head.png", 0)
 
 minetest.register_craftitem("mobs:rotten_flesh", {
 	description = "Zombie Meat",
 	inventory_image = "mobs_rotten_flesh.png",
-	on_use = minetest.item_eat(1),
+	on_use = minetest.item_eat(1)
 })

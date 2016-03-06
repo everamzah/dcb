@@ -138,7 +138,7 @@ function effect(pos, amount, texture, max_size)
 		minpos = pos,
 		maxpos = pos,
 		minvel = {x = -0, y = -2, z = -0},
-		maxvel = {x = 2,  y = 2,  z = 2},
+		maxvel = {x = 2,  y = 0,  z = 2},  -- 2, 2, 2
 		minacc = {x = -4, y = -4, z = -4},
 		maxacc = {x = 4, y = 4, z = 4},
 		minexptime = 0.1,
@@ -2389,7 +2389,6 @@ end
 
 -- Spawn Egg
 function mobs:register_egg(mob, desc, background, addegg)
-
 	local invimg = background
 
 	if addegg == 1 then
@@ -2427,7 +2426,7 @@ function mobs:register_egg(mob, desc, background, addegg)
 			end
 
 			return itemstack
-		end,
+		end
 	})
 end
 
