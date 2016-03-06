@@ -111,6 +111,7 @@ mobs:register_mob("mobs:npc", {
 --mobs:register_spawn("mobs:npc", {"default:apple", "shop:register"}, 20, 0, 1000, 2, 31000)
 --mobs:spawn_specific("mobs:npc", {"default:brick"}, {"air"}, 0, 15, 1, 1, 1, 0, 200, true)
 
-mobs:spawn_specific("mobs:npc", {"default:apple", "shop:register", "default:goldblock"}, {"air"}, 0, 15, 30, 1000, 2, -31000, 31000, true)
+mobs:spawn_specific("mobs:npc", {"default:apple"}, {"air", "group:leaves"}, 0, 15, 30, 1000, 5, -31000, 31000)
+mobs:spawn_specific("mobs:npc", {"shop:register"}, {"air"}, 0, 15, 30, 100, 2, -31000, 31000)
 
 mobs:register_egg("mobs:npc", "NPC", "default_brick.png", 1)
