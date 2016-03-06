@@ -2,9 +2,13 @@
 -- Npc by TenPlus1
 
 mobs.npc_drops = {
+	--[[
 	"default:pick_steel", "mobs:meat", "default:sword_steel",
 	"default:shovel_steel", "farming:bread", "bucket:bucket_water",
 	"default:book"
+	--]]
+	"crops:tomato_seed", "crops:potato_eyes", "crops:green_bean_seed",
+	"crops:melon_seed", "crops:carrot_seeds", "crops:corn"
 }
 
 mobs:register_mob("mobs:npc", {
@@ -68,7 +72,9 @@ mobs:register_mob("mobs:npc", {
 		local item = clicker:get_wielded_item()
 
 		-- right clicking with gold lump drops random item from mobs.npc_drops
-		if item:get_name() == "default:gold_lump" then
+		if item:get_name() == "default:gold_lump" or
+				item:get_name() == "default:gold_ingot" or
+				item:get_name() == "shop:coin" then
 
 			if not minetest.setting_getbool("creative_mode") then
 				item:take_item()
@@ -102,7 +108,7 @@ mobs:register_mob("mobs:npc", {
 	end,
 })
 
-mobs:register_spawn("mobs:npc", {"default:apple", "shop:register"}, 20, 0, 7000, 1, 31000)
+mobs:register_spawn("mobs:npc", {"default:apple", "shop:register"}, 20, 0, 7000, 2, 31000)
 --mobs:spawn_specific("mobs:npc", {"default:brick"}, {"air"}, 0, 15, 1, 1, 1, 0, 200, true)
 
-mobs:register_egg("mobs:npc", "Npc", "default_brick.png", 1)
+mobs:register_egg("mobs:npc", "NPC", "default_brick.png", 1)
