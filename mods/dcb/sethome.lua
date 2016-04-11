@@ -158,13 +158,13 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         end
 	if fields.spawn then
 		if not minetest.check_player_privs(
-				player_name, {spawn=true}) then
+				player_name, {spawn = true}) then
 			--[[minetest.chat_send_player(player_name,
 				"You lack the necessary privilege: spawn")--]]
 			cmsg.push_message_player(player, "You lack the necessary privilege: spawn")
 			return
 		end
-		local spawnpos = minetest.setting_get_pos("static_spawnpoint")
+		local spawnpos = minetest.setting_get_pos("static_spawnpoint") or {x = 0, y = 0, z = 0}
 		if not spawnpos then return end
 		player:setpos(spawnpos)
 		--minetest.chat_send_player(player_name, "Teleported to spawn!")

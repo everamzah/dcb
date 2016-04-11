@@ -150,9 +150,9 @@ local function hunger_globaltimer(dtime)
 		hunger_timer = 0
 	end
 
-	-- heal or damage player, depending on saturation
+	-- heal or damage player, depending on satiation
 	if health_timer > HUNGER_HEALTH_TICK then
-		for _,player in ipairs(minetest.get_connected_players()) do
+		for _, player in ipairs(minetest.get_connected_players()) do
 			local name = player:get_player_name()
 			local tab = hunger[name]
 			if tab then
@@ -176,7 +176,7 @@ local function hunger_globaltimer(dtime)
 	end
 
 	--Get the gametime
-	local gameTime = minetest.get_gametime()
+	--local gameTime = minetest.get_gametime()
 
 	--Loop through all connected players
 	for playerName, playerInfo in pairs(hunger.players) do
@@ -194,7 +194,7 @@ local function hunger_globaltimer(dtime)
 			end
 			
 			--If the player is sprinting, create particles behind him/her 
-			if playerInfo["sprinting"] == true and gameTime % 0.1 == 0 then
+			--[[if playerInfo["sprinting"] == true and gameTime % 0.1 == 0 then
 				local numParticles = math.random(1, 2)
 				local playerPos = player:getpos()
 				local playerNode = minetest.get_node({x=playerPos["x"], y=playerPos["y"]-1, z=playerPos["z"]})
@@ -216,7 +216,7 @@ local function hunger_globaltimer(dtime)
 						})
 					end
 				end
-			end
+			end]]
 
 			--Adjust player states
 			if hunger.players[playerName]["shouldSprint"] == true then --Stopped

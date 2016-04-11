@@ -61,20 +61,19 @@ if REMOVE_BONES then
 	})
 end
 
-if minetest.setting_get("static_spawnpoint") then
+--if minetest.setting_get("static_spawnpoint") then
 	minetest.register_privilege("spawn", "Player can teleport to static spawnpoint using /spawn command")
 	
 	minetest.register_chatcommand("spawn", {
-		params = "",
 		description = "Teleport to static spawnpoint",
-		privs = {spawn=true},
-		func = function(playerName, param)
-			local spawnPoint = minetest.setting_get("static_spawnpoint") 
+		privs = {spawn = true},
+		func = function(playerName)
+			local spawnPoint = minetest.setting_get("static_spawnpoint") or "0, 0, 0"
 			minetest.get_player_by_name(playerName):setpos(minetest.string_to_pos(spawnPoint))
 			return
 		end
 	})
-end
+--end
 
 minetest.register_chatcommand("ping", {
 	params = "",

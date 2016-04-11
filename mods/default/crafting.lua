@@ -41,6 +41,16 @@ minetest.register_craft({
 		{'group:wood'},
 	}
 })
+
+minetest.register_craft({
+	output = 'default:sign_wall_steel 3',
+	recipe = {
+		{'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot'},
+		{'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot'},
+		{'', 'group:stick', ''},
+	}
+})
+
 --[[
 minetest.register_craft({
 	output = 'default:fence_wood 2',
@@ -51,7 +61,7 @@ minetest.register_craft({
 })
 --]]
 minetest.register_craft({
-	output = 'default:sign_wall',
+	output = 'default:sign_wall_wood 3',
 	recipe = {
 		{'group:wood', 'group:wood', 'group:wood'},
 		{'group:wood', 'group:wood', 'group:wood'},
@@ -364,11 +374,11 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "default:chest_locked",
+	output = 'default:chest_locked',
 	recipe = {
-		{"group:wood", "group:wood", "group:wood"},
-		{"group:wood", "default:steel_ingot", "group:wood"},
-		{"group:wood", "group:wood", "group:wood"},
+		{'group:wood', 'group:wood', 'group:wood'},
+		{'group:wood', 'default:steel_ingot', 'group:wood'},
+		{'group:wood', 'group:wood', 'group:wood'},
 	}
 })
 
@@ -521,6 +531,13 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+	output = 'default:clay_lump 4',
+	recipe = {
+		{'default:clay'},
+	}
+})
+
+minetest.register_craft({
 	output = 'default:brick',
 	recipe = {
 		{'default:clay_brick', 'default:clay_brick'},
@@ -561,11 +578,20 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = 'default:ladder',
+	output = 'default:ladder_wood 3',
 	recipe = {
 		{'group:stick', '', 'group:stick'},
 		{'group:stick', 'group:stick', 'group:stick'},
 		{'group:stick', '', 'group:stick'},
+	}
+})
+
+minetest.register_craft({
+	output = 'default:ladder_steel 15',
+	recipe = {
+		{'default:steel_ingot', '', 'default:steel_ingot'},
+		{'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot'},
+		{'default:steel_ingot', '', 'default:steel_ingot'},
 	}
 })
 
@@ -794,7 +820,7 @@ minetest.register_craft({
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "default:sign_wall",
+	recipe = "default:sign_wall_wood",
 	burntime = 10,
 })
 

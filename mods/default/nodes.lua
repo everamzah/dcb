@@ -14,7 +14,7 @@ language (for example pinewood and pine wood) the underscore form should be used
 
 Stone
 -----
-(1. Material 2. Cobble variant 3. Brick variant [4. Modified forms])
+(1. Material 2. Cobble variant 3. Brick variant 4. Modified forms)
 
 default:stone
 default:cobble
@@ -33,7 +33,7 @@ default:obsidianbrick
 
 Soft / Non-Stone
 ----------------
-(1. Material [2. Modified forms])
+(1. Material 2. Modified forms)
 
 default:dirt
 default:dirt_with_grass
@@ -55,7 +55,7 @@ default:ice
 
 Trees
 -----
-(1. Trunk 2. Fabricated trunk 3. Leaves 4. Sapling [5. Fruits])
+(1. Trunk 2. Fabricated trunk 3. Leaves 4. Sapling 5. Fruits)
 
 default:tree
 default:wood
@@ -82,9 +82,10 @@ default:aspen_tree
 default:aspen_wood
 default:aspen_leaves
 default:aspen_sapling
+
 Ores
 ----
-(1. In stone 2. Block)
+(1. In stone 2. Blocks)
 
 default:stone_with_coal
 default:coalblock
@@ -107,6 +108,7 @@ default:diamondblock
 
 Plantlife (non-cubic)
 ---------------------
+
 default:cactus
 default:papyrus
 default:dry_shrub
@@ -1509,11 +1511,13 @@ minetest.register_node("default:chest_locked", {
 	end,
     on_metadata_inventory_put = function(pos, listname, index, stack, player)
 		minetest.log("action", player:get_player_name() ..
-			" moves stuff to locked chest at " .. minetest.pos_to_string(pos))
+			" moves " .. stack:get_name() ..
+			" to locked chest at " .. minetest.pos_to_string(pos))
 	end,
     on_metadata_inventory_take = function(pos, listname, index, stack, player)
 		minetest.log("action", player:get_player_name() ..
-			" takes stuff from locked chest at " .. minetest.pos_to_string(pos))
+			" takes " .. stack:get_name()  ..
+			" from locked chest at " .. minetest.pos_to_string(pos))
 	end,
 	on_rightclick = function(pos, node, clicker)
 		local meta = minetest.get_meta(pos)
@@ -1555,43 +1559,16 @@ minetest.register_node("default:bookshelf", {
 		inv:set_size("books", 8 * 2)
 	end,
 	can_dig = function(pos,player)
-		local meta = minetest.get_meta(pos);
-		local inv = meta:get_inventory()
+		local inv = minetest.get_meta(pos):get_inventory()
 		return inv:is_empty("books")
 	end,
-
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		local to_stack = inv:get_stack(listname, index)
-		if listname == "books" then
-			if minetest.get_item_group(stack:get_name(), "book") ~= 0
-					and to_stack:is_empty() then
-				return 1
-			else
-				return 0
-			end
+	allow_metadata_inventory_put = function(pos, listname, index, stack)
+		if minetest.get_item_group(stack:get_name(), "book") ~= 0 then
+			return stack:get_count()
 		end
+		return 0
 	end,
-
-	allow_metadata_inventory_move = function(pos, from_list, from_index,
-			to_list, to_index, count, player)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		local stack = inv:get_stack(from_list, from_index)
-		local to_stack = inv:get_stack(to_list, to_index)
-		if to_list == "books" then
-			if minetest.get_item_group(stack:get_name(), "book") ~= 0
-					and to_stack:is_empty() then
-				return 1
-			else
-				return 0
-			end
-		end
-	end,
-
-	on_metadata_inventory_move = function(pos, from_list, from_index,
-			to_list, to_index, count, player)
+	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 		minetest.log("action", player:get_player_name() ..
 			" moves stuff in bookshelf at " .. minetest.pos_to_string(pos))
 	end,
@@ -1605,56 +1582,67 @@ minetest.register_node("default:bookshelf", {
 	end,
 })
 
+local function register_sign(material, desc, def)
+	minetest.register_node("default:sign_wall_" .. material, {
+		description = desc .. " Sign",
+		drawtype = "nodebox",
+		tiles = {"default_sign_wall_" .. material .. ".png"},
+		inventory_image = "default_sign_" .. material .. ".png",
+		wield_image = "default_sign_" .. material .. ".png",
+		paramtype = "light",
+		paramtype2 = "wallmounted",
+		sunlight_propagates = true,
+		is_ground_content = false,
+		walkable = false,
+		node_box = {
+			type = "wallmounted",
+			wall_top    = {-0.4375, 0.4375, -0.3125, 0.4375, 0.5, 0.3125},
+			wall_bottom = {-0.4375, -0.5, -0.3125, 0.4375, -0.4375, 0.3125},
+			wall_side   = {-0.5, -0.3125, -0.4375, -0.4375, 0.3125, 0.4375},
+		},
+		groups = def.groups,
+		legacy_wallmounted = true,
+		sounds = def.sounds,
 
-minetest.register_node("default:sign_wall", {
-	description = "Sign",
-	drawtype = "nodebox",
-	tiles = {"default_sign.png"},
-	inventory_image = "default_sign_wall.png",
-	wield_image = "default_sign_wall.png",
-	paramtype = "light",
-	paramtype2 = "wallmounted",
-	sunlight_propagates = true,
-	is_ground_content = false,
-	walkable = false,
-	node_box = {
-		type = "wallmounted",
-		wall_top    = {-0.4375, 0.4375, -0.3125, 0.4375, 0.5, 0.3125},
-		wall_bottom = {-0.4375, -0.5, -0.3125, 0.4375, -0.4375, 0.3125},
-		wall_side   = {-0.5, -0.3125, -0.4375, -0.4375, 0.3125, 0.4375},
-	},
-	groups = {choppy = 2, dig_immediate = 2, attached_node = 1},
-	legacy_wallmounted = true,
-	sounds = default.node_sound_defaults(),
+		on_construct = function(pos)
+			--local n = minetest.get_node(pos)
+			local meta = minetest.get_meta(pos)
+			meta:set_string("formspec", "field[text;;${text}]")
+			meta:set_string("infotext", "\"\"")
+		end,
+		on_receive_fields = function(pos, formname, fields, sender)
+			--print("Sign at "..minetest.pos_to_string(pos).." got "..dump(fields))
+			local player_name = sender:get_player_name()
+			if minetest.is_protected(pos, player_name) then
+				minetest.record_protection_violation(pos, player_name)
+				return
+			end
+			local meta = minetest.get_meta(pos)
+			if not fields.text then return end
+			minetest.log("action", (player_name or "") .. " wrote \"" ..
+				fields.text .. "\" to sign at " .. minetest.pos_to_string(pos))
+			meta:set_string("text", fields.text)
+			meta:set_string("infotext", '"' .. fields.text .. '"')
+		end,
+	})
+end
 
-	on_construct = function(pos)
-		--local n = minetest.get_node(pos)
-		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec", "field[text;;${text}]")
-		meta:set_string("infotext", "\"\"")
-	end,
-	on_receive_fields = function(pos, formname, fields, sender)
-		--print("Sign at "..minetest.pos_to_string(pos).." got "..dump(fields))
-		if minetest.is_protected(pos, sender:get_player_name()) then
-			minetest.record_protection_violation(pos, sender:get_player_name())
-			return
-		end
-		local meta = minetest.get_meta(pos)
-		if not fields.text then return end
-		minetest.log("action", (sender:get_player_name() or "") .. " wrote \"" ..
-			fields.text .. "\" to sign at " .. minetest.pos_to_string(pos))
-		meta:set_string("text", fields.text)
-		meta:set_string("infotext", '"' .. fields.text .. '"')
-	end,
+register_sign("wood", "Wooden", {
+	sounds = default.node_sound_wood_defaults(),
+	groups = {choppy = 2, attached_node = 1, flammable = 2, oddly_breakable_by_hand = 3}
 })
 
+register_sign("steel", "Steel", {
+	sounds = default.node_sound_defaults(),
+	groups = {cracky = 2, attached_node = 1}
+})
 
-minetest.register_node("default:ladder", {
-	description = "Ladder",
+minetest.register_node("default:ladder_wood", {
+	description = "Wooden Ladder",
 	drawtype = "signlike",
-	tiles = {"default_ladder.png"},
-	inventory_image = "default_ladder.png",
-	wield_image = "default_ladder.png",
+	tiles = {"default_ladder_wood.png"},
+	inventory_image = "default_ladder_wood.png",
+	wield_image = "default_ladder_wood.png",
 	paramtype = "light",
 	paramtype2 = "wallmounted",
 	sunlight_propagates = true,
@@ -1670,6 +1658,28 @@ minetest.register_node("default:ladder", {
 	groups = {choppy = 2, oddly_breakable_by_hand = 3, flammable = 2},
 	legacy_wallmounted = true,
 	sounds = default.node_sound_wood_defaults(),
+})
+
+minetest.register_node("default:ladder_steel", {
+	description = "Steel Ladder",
+	drawtype = "signlike",
+	tiles = {"default_ladder_steel.png"},
+	inventory_image = "default_ladder_steel.png",
+	wield_image = "default_ladder_steel.png",
+	paramtype = "light",
+	paramtype2 = "wallmounted",
+	sunlight_propagates = true,
+	walkable = false,
+	climbable = true,
+	is_ground_content = false,
+	selection_box = {
+		type = "wallmounted",
+		--wall_top = = <default>
+		--wall_bottom = = <default>
+		--wall_side = = <default>
+	},
+	groups = {cracky = 2},
+	sounds = default.node_sound_stone_defaults(),
 })
 
 --[[
