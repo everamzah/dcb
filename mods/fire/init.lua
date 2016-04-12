@@ -8,7 +8,6 @@ fire = {}
 -- Register flame nodes
 
 minetest.register_node("fire:basic_flame", {
-	description = "Basic Flame",
 	drawtype = "firelike",
 	tiles = {
 		{
@@ -28,7 +27,7 @@ minetest.register_node("fire:basic_flame", {
 	buildable_to = true,
 	sunlight_propagates = true,
 	damage_per_second = 4,
-	groups = {igniter = 2, dig_immediate = 3},
+	groups = {igniter = 2, dig_immediate = 3, not_in_creative_inventory = 1},
 	drop = "",
 
 	on_construct = function(pos)
@@ -71,6 +70,38 @@ minetest.register_node("fire:permanent_flame", {
 	end,
 })
 
+minetest.register_tool("fire:flint_and_steel", {
+	description = "Flint and Steel",
+	inventory_image = "fire_flint_steel.png",
+	on_use = function(itemstack, user, pointed_thing)
+		local player_name = user:get_player_name()
+		local pt = pointed_thing
+
+		if pt.type == "node" and minetest.get_node(pt.above).name == "air" then
+			itemstack:add_wear(1000)
+			local node_under = minetest.get_node(pt.under).name
+
+			if minetest.get_item_group(node_under, "flammable") >= 1 then
+				if not minetest.is_protected(pt.above, player_name) then
+					minetest.set_node(pt.above, {name = "fire:basic_flame"})
+				else
+					minetest.chat_send_player(player_name, "This area is protected")
+				end
+			end
+		end
+
+		if not minetest.setting_getbool("creative_mode") then
+			return itemstack
+		end
+	end
+})
+
+minetest.register_craft({
+	output = "fire:flint_and_steel",
+	recipe = {
+		{"default:flint", "default:steel_ingot"}
+	}
+})
 
 -- Get sound area of position
 
@@ -204,7 +235,7 @@ else
 		nodenames = {"group:flammable"},
 		neighbors = {"group:igniter"},
 		interval = 7,
-		chance = 16,
+		chance = 12,
 		catch_up = false,
 		action = function(p0, node, _, _)
 			-- If there is water or stuff like that around node, don't ignite
@@ -223,18 +254,22 @@ else
 	minetest.register_abm({
 		nodenames = {"fire:basic_flame"},
 		interval = 5,
-		chance = 16,
+		chance = 6,
 		catch_up = false,
 		action = function(p0, node, _, _)
 			-- If there are no flammable nodes around flame, remove flame
-			if not minetest.find_node_near(p0, 1, {"group:flammable"}) then
+			local p = minetest.find_node_near(p0, 1, {"group:flammable"})
+			if not p then
 				minetest.remove_node(p0)
 				return
 			end
 			if math.random(1, 4) == 1 then
 				-- remove flammable nodes around flame
-				local p = minetest.find_node_near(p0, 1, {"group:flammable"})
-				if p then
+				local node = minetest.get_node(p)
+				local def = minetest.registered_nodes[node.name]
+				if def.on_burn then
+					def.on_burn(p)
+				else
 					minetest.remove_node(p)
 					nodeupdate(p)
 				end
