@@ -1,7 +1,7 @@
 -- TODO: This file/item belongs to CBD
 
 function dcb.get_reader_formspec(pos)
-	local spos = pos.x..","..pos.y..","..pos.z
+	local spos = pos.x .. "," .. pos.y .. "," .. pos.z
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 
@@ -9,33 +9,81 @@ function dcb.get_reader_formspec(pos)
 
 	local data = minetest.deserialize(book)
 	local page, page_max, cpp = 1, 1, 650
-	local formspec =
-		"size[8,8]" .. default.gui_bg ..
-		default.gui_bg_img ..
+	local formspec = "size[8,8]" .. default.gui_bg .. default.gui_bg_img ..
 		"label[0.5,0.5;by " .. data.owner .. "]" ..
-		--[[
-		"label[0.5,0;"..minetest.formspec_escape(data.title).."]"..
-		"textarea[0.5,1.5;7.5,7;;"..minetest.formspec_escape(data.text)..";]"
-		--]]
-		
-			"tablecolumns[color;text]" ..
-			"tableoptions[background=#00000000;highlight=#00000000;border=false]" ..
-			"table[0.4,0;7,0.5;title;#FFFF00," .. minetest.formspec_escape(data.title) .. "]" ..
-			"textarea[0.5,1.5;7.5,7;;" .. minetest.formspec_escape(data.text:sub(
-				(cpp * page) - cpp, cpp * page)) .. ";]" ..
-			"button[2.4,7.6;0.8,0.8;book_prev;<]" ..
-			"label[3.2,7.7;Page " .. page .. " of " .. page_max .. "]" ..
-			"button[4.9,7.6;0.8,0.8;book_next;>]"
+		"tablecolumns[color;text]" ..
+		"tableoptions[background=#00000000;highlight=#00000000;border=false]" ..
+		"table[0.4,0;7,0.5;title;#FFFF00," .. minetest.formspec_escape(data.title) .. "]" ..
+		"textarea[0.5,1.5;7.5,7;;" .. minetest.formspec_escape(data.text:sub(
+			(cpp * page) - cpp, cpp * page)) .. ";]" --[[..
+		"button[2.4,7.6;0.8,0.8;book_prev;<]" ..
+		"label[3.2,7.7;Page " .. page .. " of " .. page_max .. "]" ..
+		"button[4.9,7.6;0.8,0.8;book_next;>]"]]
 	return formspec
 end
 
+--[[minetest.register_on_player_receive_fields(function(player, formname, fields)
+	if formname ~= "dcb:book_reader" then
+		return
+	end
+	local inv = player:get_inventory()
+	local stack = player:get_wielded_item()
+
+		local new_stack, data
+		if stack:get_name() ~= "default:book_written" then
+			local count = stack:get_count()
+			if count == 1 then
+				stack:set_name("default:book_written")
+			else
+				stack:set_count(count - 1)
+				new_stack = ItemStack("default:book_written")
+			end
+		else
+			data = minetest.deserialize(stack:get_metadata())
+		end
+
+		if not data then data = {} end
+		data.title = fields.title
+		data.text = fields.text
+		data.text_len = fields.text:len()
+		data.page = 1
+		data.chars_per_page = 650
+		data.page_max = math.ceil(data.text_len / data.chars_per_page)
+		data.owner = player:get_player_name()
+		local data_str = minetest.serialize(data)
+
+
+	if fields.book_next or fields.book_prev then
+		local data = minetest.deserialize(stack:get_metadata())
+		if not data.page then
+			return
+		end
+
+		if fields.book_next then
+			data.page = data.page + 1
+			if data.page > data.page_max then
+				data.page = 1
+			end
+		else
+			data.page = data.page - 1
+			if data.page == 0 then
+				data.page = data.page_max
+			end
+		end
+
+		local data_str = minetest.serialize(data)
+		stack:set_metadata(data_str)
+		book_on_use(stack, player)
+	end
+end)]]
+
 function dcb.get_reader_list_formspec(pos)
-	local spos = pos.x..","..pos.y..","..pos.z
+	local spos = pos.x .. "," .. pos.y .. "," .. pos.z
 	local formspec =
-		"size[8,5]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
-		"label[0,0;Book Reader]"..
-		"list[nodemeta:"..spos..";book;3.5,0;1,1;]" ..
-		"list[current_player;main;0,1.25;8,4;]"..
+		"size[8,5]" .. default.gui_bg .. default.gui_bg_img .. default.gui_slots ..
+		"label[0,0;Book Reader]" ..
+		"list[nodemeta:" .. spos .. ";book;3.5,0;1,1;]" ..
+		"list[current_player;main;0,1.25;8,4;]" ..
 		"listring[]"
 	return formspec
 end
@@ -60,7 +108,7 @@ minetest.register_node("dcb:book_reader", {
 		local owner = placer:get_player_name()
 
 		meta:set_string("owner", owner)
-		meta:set_string("infotext", owner.."'s Book Reader")
+		meta:set_string("infotext", owner .. "'s Book Reader")
 		local inv = meta:get_inventory()
 		inv:set_size("book", 1)
 	end,
