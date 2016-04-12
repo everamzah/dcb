@@ -1,14 +1,12 @@
 local clothes = {
 	["shirt"] = {"clothing:shirt_red", "clothing:shirt_magenta"},
-	["pants"] = {"clothing:pants_blue", "clothing:pants_cyan"},
+	["pants"] = {"clothing:pants_blue", "clothing:pants_cyan"}
 }
 
 minetest.register_on_newplayer(function(player)
 	if minetest.setting_getbool("give_initial_stuff") then
 		local name = player:get_player_name()
 		local player_inv = player:get_inventory()
-		local shirt = clothes.shirt[math.random(1, #clothes.shirt)]
-		local pants = clothes.pants[math.random(1, #clothes.pants)]
 		minetest.log("action", "Giving initial stuff to player " .. name)
 
 		player_inv:add_item("main", "default:pick_steel")
@@ -20,9 +18,12 @@ minetest.register_on_newplayer(function(player)
 		player_inv:add_item("main", "wool:blue")
 		player_inv:add_item("main", "default:goldblock")
 
----[[
-		minetest.after(0.1, function ()
-			local clothing_inv = minetest.get_inventory({type="detached", name=name.."_clothing"})
+		-- Give new players some clothes
+		-- TODO: Make a separate setting for clothing
+		local shirt = clothes.shirt[math.random(1, #clothes.shirt)]
+		local pants = clothes.pants[math.random(1, #clothes.pants)]
+		minetest.after(0.1, function()
+			local clothing_inv = minetest.get_inventory({type = "detached", name = name .. "_clothing"})
 			if clothing_inv then
 				clothing_inv:add_item("clothing", shirt)
 				clothing_inv:add_item("clothing", pants)
@@ -33,7 +34,5 @@ minetest.register_on_newplayer(function(player)
 				minetest.log("action", name .. " may be missing initial clothing.")
 			end
 		end)
---]]
-
 	end
 end)
