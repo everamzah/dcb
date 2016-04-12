@@ -1,15 +1,31 @@
+-- TODO: This file/item belongs to CBD
+
 function dcb.get_reader_formspec(pos)
 	local spos = pos.x..","..pos.y..","..pos.z
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 
 	local book = inv:get_stack("book", 1):get_metadata()
+
 	local data = minetest.deserialize(book)
+	local page, page_max, cpp = 1, 1, 650
 	local formspec =
-		"size[8,8]"..default.gui_bg..
-		"label[0.5,0.5;by "..data.owner.."]"..
+		"size[8,8]" .. default.gui_bg ..
+		default.gui_bg_img ..
+		"label[0.5,0.5;by " .. data.owner .. "]" ..
+		--[[
 		"label[0.5,0;"..minetest.formspec_escape(data.title).."]"..
 		"textarea[0.5,1.5;7.5,7;;"..minetest.formspec_escape(data.text)..";]"
+		--]]
+		
+			"tablecolumns[color;text]" ..
+			"tableoptions[background=#00000000;highlight=#00000000;border=false]" ..
+			"table[0.4,0;7,0.5;title;#FFFF00," .. minetest.formspec_escape(data.title) .. "]" ..
+			"textarea[0.5,1.5;7.5,7;;" .. minetest.formspec_escape(data.text:sub(
+				(cpp * page) - cpp, cpp * page)) .. ";]" ..
+			"button[2.4,7.6;0.8,0.8;book_prev;<]" ..
+			"label[3.2,7.7;Page " .. page .. " of " .. page_max .. "]" ..
+			"button[4.9,7.6;0.8,0.8;book_next;>]"
 	return formspec
 end
 
@@ -18,7 +34,7 @@ function dcb.get_reader_list_formspec(pos)
 	local formspec =
 		"size[8,5]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
 		"label[0,0;Book Reader]"..
-		"list[nodemeta:"..spos..";book;3.5,0;1,1;]"..
+		"list[nodemeta:"..spos..";book;3.5,0;1,1;]" ..
 		"list[current_player;main;0,1.25;8,4;]"..
 		"listring[]"
 	return formspec
@@ -32,7 +48,7 @@ minetest.register_node("dcb:book_reader", {
 		"xdecor_wood.png^default_book.png",
 		"xdecor_wood.png^default_book.png",
 		"xdecor_wood.png^default_book.png"},
-	groups = {cracky=2, choppy=3, oddly_breakable_by_hand=1},
+	groups = {cracky = 2, choppy = 3, oddly_breakable_by_hand = 1},
 	paramtype2 = "facedir",
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -86,7 +102,7 @@ minetest.register_node("dcb:book_reader", {
 	end,
 	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 		return 0
-	end,
+	end
 })
 
 minetest.register_craft({
