@@ -31,7 +31,6 @@ minetest.register_alias("flowers:flower_dandelion_white", "flowers:dandelion_whi
 local function add_simple_flower(name, desc, box, f_groups)
 	-- Common flowers' groups
 	f_groups.snappy = 3
-	f_groups.flammable = 2
 	f_groups.flower = 1
 	f_groups.flora = 1
 	f_groups.attached_node = 1
@@ -76,8 +75,8 @@ end
 minetest.register_abm({
 	nodenames = {"group:flora"},
 	neighbors = {"default:dirt_with_grass", "default:desert_sand"},
-	interval = 50,
-	chance = 25,
+	interval = 13,
+	chance = 96,
 	action = function(pos, node)
 		pos.y = pos.y - 1
 		local under = minetest.get_node(pos)
@@ -134,7 +133,7 @@ minetest.register_node("flowers:mushroom_red", {
 	sunlight_propagates = true,
 	walkable = false,
 	buildable_to = true,
-	groups = {snappy = 3, flammable = 3, attached_node = 1},
+	groups = {snappy = 3, attached_node = 1},
 	sounds = default.node_sound_leaves_defaults(),
 	on_use = minetest.item_eat(-5),
 	selection_box = {
@@ -153,7 +152,7 @@ minetest.register_node("flowers:mushroom_brown", {
 	sunlight_propagates = true,
 	walkable = false,
 	buildable_to = true,
-	groups = {snappy = 3, flammable = 3, attached_node = 1},
+	groups = {snappy = 3, attached_node = 1},
 	sounds = default.node_sound_leaves_defaults(),
 	on_use = minetest.item_eat(1),
 	selection_box = {
@@ -218,6 +217,7 @@ minetest.register_node("flowers:waterlily", {
 	liquids_pointable = true,
 	walkable = false,
 	buildable_to = true,
+	sunlight_propagates = true,
 	groups = {snappy = 3, flower = 1},
 	sounds = default.node_sound_leaves_defaults(),
 	node_box = {
@@ -229,22 +229,16 @@ minetest.register_node("flowers:waterlily", {
 		fixed = {-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5}
 	},
 
-	after_place_node = function(pos, placer, itemstack, pointed_thing)
-		local find_water = minetest.find_nodes_in_area({x = pos.x - 1, y = pos.y, z = pos.z - 1},
-			{x = pos.x + 1, y = pos.y, z = pos.z + 1}, "default:water_source")
-		local find_river_water = minetest.find_nodes_in_area({x = pos.x - 1, y = pos.y, z = pos.z - 1},
-			{x = pos.x + 1, y = pos.y, z = pos.z + 1}, "default:river_water_source")
-		if #find_water ~= 0 then
-			minetest.set_node(pos, {name = "default:water_source"})
-			pos.y = pos.y + 1
+	on_place = function(itemstack, _, pointed_thing)
+		local pos = pointed_thing.above
+		local node = minetest.get_node(pointed_thing.under).name
+		local def = minetest.registered_nodes[node]
+		if def and def.liquidtype == "source" and minetest.get_item_group(node, "water") > 0 then
 			minetest.set_node(pos, {name = "flowers:waterlily", param2 = math.random(0, 3)})
-		elseif #find_river_water ~= 0 then
-			minetest.set_node(pos, {name = "default:river_water_source"})
-			pos.y = pos.y + 1
-			minetest.set_node(pos, {name = "flowers:waterlily", param2 = math.random(0, 3)})
-		else
-			minetest.remove_node(pos)
-			return true
+			if not minetest.setting_getbool("creative_mode") then
+				itemstack:take_item()
+				return itemstack
+			end
 		end
 	end
 })
