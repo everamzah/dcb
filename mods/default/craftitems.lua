@@ -51,7 +51,7 @@ local function book_on_use(itemstack, user)
 			"button[4.9,7.6;0.8,0.8;book_next;>]"
 	end
 
-	minetest.show_formspec(user:get_player_name(), "default:book", formspec)
+	minetest.show_formspec(player_name, "default:book", formspec)
 end
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
