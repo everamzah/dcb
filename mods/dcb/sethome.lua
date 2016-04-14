@@ -55,7 +55,7 @@ minetest.register_chatcommand("home", {
 		return true --, "Teleported to home!"
 	    else
 		cmsg.push_message_player(player, "Set a home using /sethome")
-		return false --, "Set a home using /sethome"
+		return false
 	    end
 	end
     end,
@@ -63,9 +63,12 @@ minetest.register_chatcommand("home", {
 
 dcb.sethome = function(player)
 	local name = player:get_player_name()
+	if not minetest.check_player_privs(name, {home = true}) then
+		cmsg.push_message_player(player, "You lack the home priv!")
+		return
+	end
 	local pos = player:getpos()
 	homepos[name] = pos
-	--minetest.chat_send_player(name, "Home set!")
 	cmsg.push_message_player(player, "Home set!")
 	changed = true
 	if changed then
@@ -80,7 +83,7 @@ end
 
 minetest.register_chatcommand("sethome", {
     description = "Set your home",
-    privs = {home=true},
+    privs = {home = true},
     func = function(name)
         local player = minetest.get_player_by_name(name)
 	dcb.sethome(player)
