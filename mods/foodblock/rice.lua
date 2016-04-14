@@ -37,7 +37,7 @@ minetest.register_craft({
 
 --Onigiri Item
 minetest.register_node("foodblock:onigiri_item", {
-	description = "onigiri",
+	description = "Onigiri",
 	drawtype = "plantlike",
 	paramtype = "light",
 	tiles = {"foodblock_onigiri_item.png"},
@@ -161,7 +161,7 @@ minetest.register_craft({
 
 --nigirisushi Item
 minetest.register_node("foodblock:nigirisushi_item", {
-	description = "nigirisushi",
+	description = "NigiriSushi",
 	drawtype = "plantlike",
 	paramtype = "light",
 	tiles = {"foodblock_nigirisushi_item.png"},
