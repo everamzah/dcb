@@ -40,12 +40,12 @@ minetest.register_node("clothing:loom", {
 	},
 	--[[
 	after_place_node = function(pos, placer)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		meta:set_string("owner", (placer:get_player_name() or ""))
 		meta:set_string("infotext", "Loom (owned by " .. (placer:get_player_name() or "") .. ")")
 	end,--]]
 	can_dig = function(pos,player)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		if not inv:is_empty("input") or not inv:is_empty("output") then
 			return false
@@ -53,7 +53,7 @@ minetest.register_node("clothing:loom", {
 		return true
 	end,
 	on_construct = function(pos)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", "size[8,8;]" ..
 			--default.gui_bg .. --"bgcolor[#080808BB;true]" ..
 			default.gui_bg_img .. --"background[5,5;1,1;gui_formbg.png;true]" ..
@@ -73,7 +73,7 @@ minetest.register_node("clothing:loom", {
 		inv:set_size("output", 1)
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
-		local meta = minetest.env:get_meta(pos)
+		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		if inv:is_empty("input") then
 			return
