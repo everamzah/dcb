@@ -131,13 +131,19 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "xdecor:desertstone_tile",
+	type = "shapeless",
+	output = "default:desert_cobble 2",
+	recipe = {"xdecor:desertstone_tile"}
+})
+
+minetest.register_craft({
+	output = "xdecor:desertstone_tile 2",
 	recipe = {
 		{"default:desert_cobble", "default:desert_cobble"},
 		{"default:desert_cobble", "default:desert_cobble"}
 	}
 })
-	
+
 minetest.register_craft({
 	output = "xdecor:empty_shelf",
 	recipe = {
@@ -355,13 +361,19 @@ minetest.register_craft({
 })
 	
 minetest.register_craft({
+	type = "shapeless",
+	output = "default:cobble 2",
+	recipe = {"xdecor:stone_tile"}
+})
+
+minetest.register_craft({
 	output = "xdecor:stone_tile 2",
 	recipe = {
 		{"default:cobble", "default:cobble"},
 		{"default:cobble", "default:cobble"}
 	}
 })
-	
+
 minetest.register_craft({
 	output = "xdecor:stone_rune 4",
 	recipe = {
@@ -447,6 +459,12 @@ minetest.register_craft({
 		{"group:stick", "default:glass", "group:stick"},
 		{"group:stick", "group:stick", "group:stick"}
 	}
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "default:wood 2",
+	recipe = {"xdecor:wood_tile"}
 })
 
 minetest.register_craft({
