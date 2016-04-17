@@ -17,11 +17,13 @@ minetest.register_node("crops:corn", {
 	tiles = { "crops_corn_base_seed.png" },
 	drawtype = "mesh",
 	visual = "mesh",
+	waving = 1,
 	mesh = "crops_orthogonal_plant.obj",
 	sunlight_propagates = true,
 	use_texture_alpha = true,
 	walkable = true,
 	paramtype = "light",
+	node_placement_prediction = "crops:corn_base_seed",
 	groups = { snappy=3,flammable=3,flora=1,attached_node=1 },
 	drop = {},
 	sounds = default.node_sound_leaves_defaults(),
@@ -66,6 +68,7 @@ minetest.register_node("crops:corn_base_seed", {
 	visual = "mesh",
 	description = "Corn Plant",
 	drawtype = "mesh",
+	waving = 1,
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_base_seed.png" },
 	use_texture_alpha = true,
@@ -100,6 +103,7 @@ minetest.register_node("crops:corn_base_1", {
 	drawtype = "mesh",
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_base_1.png" },
+	waving = 1,
 	use_texture_alpha = true,
 	walkable = false,
 	sunlight_propagates = true,
@@ -198,6 +202,7 @@ minetest.register_node("crops:corn_top_1", {
 	drawtype = "mesh",
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_base_1.png" },
+	waving = 1,
 	use_texture_alpha = true,
 	walkable = false,
 	sunlight_propagates = true,
@@ -234,6 +239,7 @@ minetest.register_node("crops:corn_top_2", {
 	drawtype = "mesh",
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_top_1.png" },
+	waving = 1,
 	use_texture_alpha = true,
 	walkable = false,
 	sunlight_propagates = true,
@@ -272,6 +278,7 @@ minetest.register_node("crops:corn_top_3", {
 	drawtype = "mesh",
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_top_2.png" },
+	waving = 1,
 	use_texture_alpha = true,
 	walkable = false,
 	sunlight_propagates = true,
@@ -290,8 +297,7 @@ minetest.register_node("crops:corn_top_3", {
 		for i = 1,math.random(2 - (damage / 100), 4 - (3 * (damage / 100))) do
 			table.insert(drops, ('crops:corn_cob'))
 		end
-		minetest.set_node(pos, { name = "crops:corn_top_4" })
-		minetest.set_node(below, { name = "crops:corn_base_3" })
+		crops.die(below)
 		core.handle_node_drops(pos, drops, digger)
 	end
 })
@@ -302,6 +308,7 @@ minetest.register_node("crops:corn_top_4", {
 	drawtype = "mesh",
 	mesh = "crops_orthogonal_plant.obj",
 	tiles = { "crops_corn_top_3.png" },
+	waving = 1,
 	use_texture_alpha = true,
 	walkable = false,
 	sunlight_propagates = true,

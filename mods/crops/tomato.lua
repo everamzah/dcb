@@ -23,6 +23,7 @@ minetest.register_node("crops:tomato_seed", {
 	use_texture_alpha = true,
 	walkable = false,
 	paramtype = "light",
+	node_placement_prediction = "crops:tomato_plant_1",
 	groups = { snappy=3,flammable=3,flora=1,attached_node=1 },
 	drop = {},
 	sounds = default.node_sound_leaves_defaults(),
@@ -55,7 +56,7 @@ minetest.register_node("crops:tomato_plant_" .. stage , {
 	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
-		fixed = {-0.5, -0.5, -0.5,  0.5, -0.5 + (((math.min(stage, 4)) + 1) / 5), 0.5}
+		fixed = {-0.45, -0.5, -0.45,  0.45, -0.6 + (((math.min(stage, 4)) + 1) / 5), 0.45}
 	}
 })
 end
@@ -72,6 +73,10 @@ minetest.register_node("crops:tomato_plant_5" , {
 	groups = { snappy=3, flammable=3, flora=1, attached_node=1, not_in_creative_inventory=1 },
 	drop = {},
 	sounds = default.node_sound_leaves_defaults(),
+	selection_box = {
+		type = "fixed",
+		fixed = {-0.45, -0.5, -0.45,  0.45, 0.45, 0.45}
+	},
 	on_dig = function(pos, node, digger)
 		local drops = {}
 		for i = 1, math.random(1, 2) do
@@ -85,8 +90,7 @@ minetest.register_node("crops:tomato_plant_5" , {
 			minetest.swap_node(pos, { name = "crops:tomato_plant_4"})
 			meta:set_int("crops_tomato_ttl", ttl - 1)
 		else
-			minetest.swap_node(pos, { name = "crops:tomato_plant_6"})
-			meta:set_int("crops_tomato_ttl", 0)
+			crops.die(pos)
 		end
 	end
 })
@@ -103,6 +107,10 @@ minetest.register_node("crops:tomato_plant_6", {
 	groups = { snappy=3, flammable=3, flora=1, attached_node=1, not_in_creative_inventory=1 },
 	drop = {},
 	sounds = default.node_sound_leaves_defaults(),
+	selection_box = {
+		type = "fixed",
+		fixed = {-0.45, -0.5, -0.45,  0.45, 0.45, 0.45}
+	},
 })
 
 minetest.register_craftitem("crops:tomato", {
@@ -162,8 +170,7 @@ minetest.register_abm({
 			minetest.swap_node(pos, { name = "crops:tomato_plant_5" })
 			meta:set_int("crops_tomato_ttl", ttl)
 		else
-			-- no luck, plant dead!
-			minetest.set_node(pos, { name = "crops:tomato_plant_6" })
+			crops.die(pos)
 		end
 	end
 })
