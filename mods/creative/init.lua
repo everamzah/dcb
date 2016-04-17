@@ -151,6 +151,7 @@ creative.set_crafting_formspec = function(player)
 end
 
 minetest.register_on_joinplayer(function(player)
+	-- TODO: Add creative button
 	-- If in creative mode, modify player's inventory forms
 	if not minetest.setting_getbool("creative_mode") then
 		return

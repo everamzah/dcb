@@ -3,17 +3,13 @@
 -- Backwards compatibility with jordach's 16-color wool mod
 minetest.register_alias("wool:dark_blue", "wool:blue")
 minetest.register_alias("wool:gold", "wool:yellow")
--- Compatibility with w3c colors
-minetest.register_alias("wool:gray", "wool:grey")
-minetest.register_alias("wool:darkgray", "wool:dark_grey")
-minetest.register_alias("wool:darkgreen", "wool:dark_green")
 
 local wool = {}
 -- This uses a trick: you can first define the recipes using all of the base
 -- colors, and then some recipes using more specific colors for a few non-base
 -- colors available. When crafting, the last recipes will be checked first.
 wool.dyes = {
-	{"white",      "White",      nil},
+	{"white",      "White",      "basecolor_white"},
 	{"grey",       "Grey",       "basecolor_grey"},
 	{"black",      "Black",      "basecolor_black"},
 	{"red",        "Red",        "basecolor_red"},

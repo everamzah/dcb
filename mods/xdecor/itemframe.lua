@@ -112,10 +112,6 @@ xdecor.register("frame", {
 		return itemstack
 	end,
 	on_punch = function(pos, node, puncher)
-		if puncher:get_wielded_item():get_name() == "dcb:pick_admin" then
-			dcb.kill_node(pos, node, puncher)
-			return
-		end
 		local meta = minetest.get_meta(pos)
 		local player = puncher:get_player_name()
 		if player ~= meta:get_string("owner") then return end
