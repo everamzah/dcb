@@ -279,10 +279,6 @@ local function on_punch(pos, node, puncher)
 	if not protector.can_dig(1, pos, puncher:get_player_name(), true, 1) then
 		return
 	end
-	if puncher:get_wielded_item():get_name() == "dcb:pick_admin" then
-		dcb.kill_node(pos, node, puncher)
-		return
-	end
 	minetest.add_entity(pos, "protector:display")
 end
 

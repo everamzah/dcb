@@ -8,12 +8,10 @@ if minetest.setting_getbool("print_fields") then
 	end)
 end
 
-dofile(modpath.."/tools.lua")
 dofile(modpath.."/overrides.lua")
 dofile(modpath.."/book_reader.lua")		-- Send to cbd
 --dofile(modpath.."/post_office.lua")		-- Send to cbd
 dofile(modpath.."/give_initial_stuff.lua")
-dofile(modpath.."/creative.lua")
 dofile(modpath.."/nopvp.lua")
 dofile(modpath.."/legacy_replacer.lua")
 dofile(modpath.."/crafting.lua")		-- Fence post, send to cbd?

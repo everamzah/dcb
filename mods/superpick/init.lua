@@ -52,8 +52,10 @@ minetest.register_craftitem("superpick:wand", {
 	description = "Wand Setter & Swapper",
 	inventory_image = "default_stick.png^default_flint.png^default_obsidian_shard.png",
 	on_use = function(itemstack, user, pointed_thing)
+		if not minetest.check_player_privs(user, {superpick = true}) then
+			return
+		end
 		if user:get_player_control().sneak then
-			print("swap?")
 			minetest.swap_node(pointed_thing.under, {name = "air"})
 		else
 			minetest.remove_node(pointed_thing.under)

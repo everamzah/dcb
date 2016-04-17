@@ -81,10 +81,6 @@ minetest.register_node("bones:bones", {
 		meta:set_string("owner", owner)
 	end,
 	on_punch = function(pos, node, player)
-		if player:get_wielded_item():get_name() == "dcb:pick_admin" then
-			dcb.kill_node(pos, node, player)
-			return
-		end
 		if(not is_owner(pos, player:get_player_name())) then
 			return
 		end
