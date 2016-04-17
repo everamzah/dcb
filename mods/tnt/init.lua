@@ -321,9 +321,9 @@ minetest.register_node("tnt:gunpowder", {
 	sounds = default.node_sound_leaves_defaults(),
 	
 	on_punch = function(pos, node, puncher)
-		if tnt_requires_priv and not minetest.check_player_privs(puncher:get_player_name(), {disallowednodes=true}) then
-			minetest.chat_send_player(puncher:get_player_name(),
-				"You need the disallowednodes priv to ignite Gunpowder")
+		local name = puncher:get_player_name()
+		if tnt_requires_priv and not minetest.check_player_privs(name, {disallowednodes = true}) then
+			cmsg.push_message_player(puncher, "You lack the disallowednodes priv!")
 			return
 		end
 		if puncher:get_wielded_item():get_name() == "default:torch" then
@@ -453,6 +453,11 @@ function tnt.register_tnt(def)
 		groups = {dig_immediate = 2, mesecon = 2, tnt = 1},
 		sounds = default.node_sound_wood_defaults(),
 		on_punch = function(pos, node, puncher)
+			local name = puncher:get_player_name()
+			if tnt_requires_priv and not minetest.check_player_privs(name, {disallowednodes = true}) then
+				cmsg.push_message_player(puncher, "You lack the disallowednodes priv!")
+				return
+			end
 			if puncher:get_wielded_item():get_name() == "default:torch" then
 				minetest.set_node(pos, {name = name .. "_burning"})
 			end
