@@ -7,14 +7,14 @@ minetest.register_tool("superpick:pick", {
 		full_punch_interval = 0.1,
 		max_drop_level = 3,
 		groupcaps = {
-			unbreakable =   {times={[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
-			dig_immediate = {times={[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
-			fleshy =	{times={[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
-			choppy =	{times={[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
-			bendy =		{times={[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
-			cracky =	{times={[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
-			crumbly =	{times={[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
-			snappy =	{times={[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3}
+			unbreakable =   {times = {[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
+			dig_immediate = {times = {[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
+			fleshy =	{times = {[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
+			choppy =	{times = {[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
+			bendy =		{times = {[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
+			cracky =	{times = {[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
+			crumbly =	{times = {[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3},
+			snappy =	{times = {[1] = 0, [2] = 0, [3] = 0}, uses = 0, maxlevel = 3}
 		},
 		damage_groups = {fleshy = 1000}
 	}
@@ -47,6 +47,19 @@ local function kill_node(pos, node, puncher)
 		nodeupdate(pos)
 	end
 end
+
+minetest.register_craftitem("superpick:wand", {
+	description = "Wand Setter & Swapper",
+	inventory_image = "default_stick.png^default_flint.png^default_obsidian_shard.png",
+	on_use = function(itemstack, user, pointed_thing)
+		if user:get_player_control().sneak then
+			print("swap?")
+			minetest.swap_node(pointed_thing.under, {name = "air"})
+		else
+			minetest.remove_node(pointed_thing.under)
+		end
+	end
+})
 
 minetest.register_on_punchnode(function(pos, node, puncher)
 	kill_node(pos, node, puncher)
