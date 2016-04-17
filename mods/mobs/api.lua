@@ -312,7 +312,8 @@ do_env_damage = function(self)
 
 		self.object:set_hp(self.object:get_hp() - self.light_damage)
 
-		effect(pos, 5, "tnt_smoke.png")
+		--effect(pos, 5, "tnt_smoke.png")
+		effect(pos, 5, "smoke_puff.png")
 	end
 
 	if self.water_damage ~= 0
@@ -930,7 +931,8 @@ minetest.register_entity(name, {
 				minetest.log("action",
 					"lifetimer expired, removed " .. self.name)
 
-				effect(pos, 15, "tnt_smoke.png")
+				--effect(pos, 15, "tnt_smoke.png")
+				effect(pos, 15, "smoke_puff.png")
 
 				self.object:remove()
 
@@ -982,7 +984,8 @@ minetest.register_entity(name, {
 
 						self.object:set_hp(self.object:get_hp() - math.floor(d - 5))
 
-						effect(pos, 5, "tnt_smoke.png")
+						--effect(pos, 5, "tnt_smoke.png")
+						effect(pos, 5, "smoke_puff.png")
 
 						if check_for_death(self) then
 							return
@@ -1533,7 +1536,8 @@ minetest.register_entity(name, {
 
 						self.object:remove()
 
-						effect(pos, 15, "tnt_smoke.png", 5)
+						--effect(pos, 15, "tnt_smoke.png", 5)
+						effect(pos, 15, "smoke_puff.png", 5)
 
 						return
 					end
@@ -2280,7 +2284,8 @@ function mobs:explosion(pos, radius, fire, smoke, sound)
 					minetest.set_node(p, {name = "air"})
 
 					if smoke > 0 then
-						effect(p, 2, "tnt_smoke.png", 5)
+						--effect(p, 2, "tnt_smoke.png", 5)
+						effect(p, 2, "smoke_puff.png", 5)
 					end
 				end
 			end

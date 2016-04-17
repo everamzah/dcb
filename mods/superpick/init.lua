@@ -73,5 +73,3 @@ minetest.override_item(node, {
 end
 		end)
 	end)
-
-print("hi")  -- This doesn't print.
