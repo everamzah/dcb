@@ -97,8 +97,7 @@ local function crops_beanpole_on_dig(pos, node, digger)
 		for i = 1,math.random(3 - (2 * (damage / 100)),7 - (6 * (damage / 100))) do
 			table.insert(drops, "crops:green_bean")
 		end
-		minetest.set_node(bottom, { name = "crops:beanpole_plant_base_6"})
-		minetest.set_node(top, { name = "crops:beanpole_plant_top_4"})
+		crops.die(bottom)
 	elseif bottom_n.name == "crops:beanpole_plant_base_6" and top_n.name == "crops:beanpole_plant_top_4" then
 		-- harvested beans
 		for i = 1,math.random(3,4) do
@@ -159,6 +158,7 @@ minetest.register_node("crops:beanpoles", {
 	groups = { snappy=3,flammable=3,flora=1,attached_node=1 },
 	drop = {},
 	sounds = default.node_sound_leaves_defaults(),
+	node_placement_prediction = "crops:beanpole_base",
 
 	on_place = function(itemstack, placer, pointed_thing)
                 local under = minetest.get_node(pointed_thing.under)
@@ -182,6 +182,7 @@ minetest.register_craftitem("crops:green_bean_seed", {
 	description = "Green Bean Seed",
 	inventory_image = "crops_green_bean_seed.png",
 	wield_image = "crops_green_bean_seed.png",
+	node_placement_prediction = "", -- disabled, prediction assumes pointed_think.above!
 
 	on_place = function(itemstack, placer, pointed_thing)
 		local under = minetest.get_node(pointed_thing.under)

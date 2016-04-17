@@ -21,7 +21,12 @@ minetest.register_node("crops:potato_eyes", {
 	use_texture_alpha = true,
 	walkable = false,
 	paramtype = "light",
+	node_placement_prediction = "crops:potato_plant_1",
 	groups = { snappy=3,flammable=3,flora=1,attached_node=1 },
+	selection_box = {
+		type = "fixed",
+		fixed = {-0.45, -0.5, -0.45,  0.45, -0.4, 0.45}
+	},
 
 	on_place = function(itemstack, placer, pointed_thing)
 		local under = minetest.get_node(pointed_thing.under)
@@ -51,7 +56,7 @@ minetest.register_node("crops:potato_plant_" .. stage , {
 	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
 		type = "fixed",
-		fixed = {-0.5, -0.5, -0.5,  0.5, -0.5 + (((math.min(stage, 4)) + 1) / 5), 0.5}
+		fixed = {-0.45, -0.5, -0.45,  0.45, -0.6 + (((math.min(stage, 4)) + 1) / 5), 0.45}
 	}
 })
 end
@@ -125,7 +130,7 @@ minetest.register_abm({
 		local meta = minetest.get_meta(pos)
 		local damage = meta:get_int("crops_damage")
 		if damage == 100 then
-			minetest.set_node(pos, { name = "crops:potato_plant_5" })
+			crops.die(pos)
 			return
 		end
 		local n = string.gsub(node.name, "3", "4")
