@@ -135,15 +135,11 @@ protector.can_dig = function(r, pos, digger, onlyowner, infolevel)
 
 				if infolevel == 1 then
 
-					--[[minetest.chat_send_player(digger,
-						"This area is owned by " .. owner .. " !")--]]
 					cmsg.push_message_player(minetest.get_player_by_name(digger),
 						"This area is owned by " .. owner .. "!")
 
 				elseif infolevel == 2 then
 
-					--[[minetest.chat_send_player(digger,
-						"This area is owned by " .. owner .. ".")--]]
 					cmsg.push_message_player(minetest.get_player_by_name(digger),
 						"This area is owned by " .. owner .. ".")
 
@@ -163,8 +159,6 @@ protector.can_dig = function(r, pos, digger, onlyowner, infolevel)
 
 		if infolevel == 2 then
 
-			--[[minetest.chat_send_player(digger,
-				"This area is owned by " .. owner .. ".")--]]
 			cmsg.push_message_player(minetest.get_player_by_name(digger),
 				"This area is owned by " .. owner .. ".")
 
@@ -183,16 +177,11 @@ protector.can_dig = function(r, pos, digger, onlyowner, infolevel)
 	end
 
 	if infolevel == 2 then
-
 		if #positions < 1 then
-
-			--[[minetest.chat_send_player(digger,
-				"This area is not protected.")--]]
 			cmsg.push_message_player(minetest.get_player_by_name(digger),
 				"This area is not protected.")
 		end
 
-		--minetest.chat_send_player(digger, "You can build here.")
 		cmsg.push_message_player(minetest.get_player_by_name(digger),
 			"You can build here.")
 	end
@@ -222,8 +211,6 @@ function protector.check_overlap(itemstack, placer, pointed_thing)
 	if not protector.can_dig(protector.radius * 2, pointed_thing.above,
 	placer:get_player_name(), true, 3) then
 
-		--[[minetest.chat_send_player(placer:get_player_name(),
-			"Overlaps into above players protected area")--]]
 		cmsg.push_message_player(placer,
 			"Overlaps into a protected area.")
 
@@ -358,7 +345,7 @@ minetest.register_node("protector:protect2", {
 	wield_image = "protector_logo.png",
 	inventory_image = "protector_logo.png",
 	sounds = default.node_sound_stone_defaults(),
-	groups = {dig_immediate=2,unbreakable=1},
+	groups = {dig_immediate = 2, unbreakable = 1},
 	paramtype = 'light',
 	paramtype2 = "wallmounted",
 	light_source = 2,
@@ -395,9 +382,9 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "protector:protect2 4",
 	recipe = {
-		{"default:stone","default:stone","default:stone"},
-		{"default:stone","default:copper_ingot","default:stone"},
-		{"default:stone","default:stone","default:stone"},
+		{"default:stone", "default:stone", "default:stone"},
+		{"default:stone", "default:copper_ingot", "default:stone"},
+		{"default:stone", "default:stone", "default:stone"},
 	}
 })
 
@@ -405,7 +392,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 
 	if string.sub(formname, 0, string.len("protector:node_")) == "protector:node_" then
 
-		local pos_s = string.sub(formname, string.len("protector:node_")+1)
+		local pos_s = string.sub(formname, string.len("protector:node_") + 1)
 		local pos = minetest.string_to_pos(pos_s)
 		local meta = minetest.get_meta(pos)
 
@@ -447,9 +434,10 @@ end)
 
 minetest.register_entity("protector:display", {
 	physical = false,
-	collisionbox = {0,0,0,0,0,0},
+	collisionbox = {0, 0, 0, 0, 0, 0},
 	visual = "wielditem",
-	visual_size = {x=1.0/1.5,y=1.0/1.5}, -- wielditem seems to be scaled to 1.5 times original node size
+	-- wielditem seems to be scaled to 1.5 times original node size
+	visual_size = {x = 1.0 / 1.5, y = 1.0 / 1.5},
 	textures = {"protector:display_node"},
 	on_step = function(self, dtime)
 		self.timer = (self.timer or 0) + dtime
@@ -459,7 +447,8 @@ minetest.register_entity("protector:display", {
 	end,
 })
 
--- Display-zone node, Do NOT place the display as a node, it is made to be used as an entity (see above)
+-- Display-zone node, Do NOT place the display as a node,
+-- it is made to be used as an entity (see above)
 local x = protector.radius
 minetest.register_node("protector:display_node", {
 	tiles = {"protector_display.png"},
@@ -486,7 +475,7 @@ minetest.register_node("protector:display_node", {
 		type = "regular",
 	},
 	paramtype = "light",
-	groups = {dig_immediate=3,not_in_creative_inventory=1},
+	groups = {dig_immediate = 3, not_in_creative_inventory = 1},
 	drop = "",
 })
 
