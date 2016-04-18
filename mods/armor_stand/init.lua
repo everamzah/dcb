@@ -24,10 +24,11 @@ armor_stand.set_formspec = function(name)
 	default.gui_slots ..
 	"label[0,0;Armor]" ..
 	"list[detached:" .. name .. "_armor;armor;1.5,0.75;5,1]" ..
-	"label[1.5,0;Level: " .. armor.def[name].level.. "]" ..
-	"label[3.5,0;Heal: " .. armor.def[name].heal.. "]" ..
-	"label[5.5,0;Fire: " .. armor.def[name].fire.. "]" ..
-	"list[current_player;main;0,2.1;8,4;]" ..
+	"label[1.5,0;Level: " .. armor.def[name].level .. "]" ..
+	"label[3.5,0;Heal: " .. armor.def[name].heal .. "]" ..
+	"label[5.5,0;Fire: " .. armor.def[name].fire .. "]" ..
+	"list[current_player;main;0,2.1;8,1;]" ..
+	"list[current_player;main;0,3.35;8,3;8]" ..
 	"listring[]" ..
 	default.get_hotbar_bg(0, 2.1)
 end

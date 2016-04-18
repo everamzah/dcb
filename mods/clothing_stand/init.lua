@@ -13,14 +13,15 @@ clothing.set_player_clothing = function(self, player)
 end
 
 clothing_stand.set_formspec = function(name)
-	clothing_stand[name].formspec = "size[8,6]"..
-	default.gui_bg..
-	default.gui_bg_img..
-	default.gui_slots..
-	"label[0,0;Clothing]"..
-	"list[detached:"..name.."_clothing;clothing;2,0.75;4,1]"..
-	"list[current_player;main;0,2.1;8,4;]"..
-	"listring[]"..
+	clothing_stand[name].formspec = "size[8,6]" ..
+	default.gui_bg ..
+	default.gui_bg_img ..
+	default.gui_slots ..
+	"label[0,0;Clothing]" ..
+	"list[detached:" .. name .. "_clothing;clothing;2,0.75;4,1]" ..
+	"list[current_player;main;0,2.1;8,1;]" ..
+	"list[current_player;main;0,3.35;8,3;8]" ..
+	"listring[]" ..
 	default.get_hotbar_bg(0,2.1)
 end
 
