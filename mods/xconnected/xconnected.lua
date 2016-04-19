@@ -283,12 +283,15 @@ xconnected.register_pane = function( name, tiles, craft_from, def )
 	if( not( def )) then
 		def = {
 			description = name.." Pane",
-			textures = {tiles,tiles,tiles,tiles},
+			--textures = {tiles, tiles, tiles, tiles},
+			tiles = {tiles, tiles, tiles, tiles},
+			inventory_image = tiles,
+			wield_image = tiles,
 			is_ground_content = false,
 			sunlight_propagates = true,
 			use_texture_alpha = true,
 			sounds = default.node_sound_glass_defaults(),
-			groups = {snappy=2, cracky=3, oddly_breakable_by_hand=3, pane=1},
+			groups = {snappy = 2, cracky = 3, oddly_breakable_by_hand = 3, pane = 1},
 		};
 	end
 	xconnected.register( name,
@@ -320,7 +323,8 @@ xconnected.register_wall = function( name, tiles, craft_from, def )
 	if( not( def )) then
 		def = { 
 			description = name.." Wall",
-			textures = {tiles,tiles,tiles,tiles},
+			--textures = {tiles,tiles,tiles,tiles},
+			tiles = {tiles,tiles,tiles,tiles},
 			is_ground_content = false,
 			sunlight_propagates = true,
 			sounds = default.node_sound_stone_defaults(),
@@ -356,7 +360,8 @@ xconnected.register_fence = function( name, tiles, craft_from, def )
 	if( not( def )) then
 		def = { 
 			description = name.." Wall",
-			textures = {tiles,tiles,tiles,tiles},
+			--textures = {tiles,tiles,tiles,tiles},
+			tiles = {tiles,tiles,tiles,tiles},
 			is_ground_content = false,
 			sunlight_propagates = true,
 			sounds = default.node_sound_stone_defaults(),
