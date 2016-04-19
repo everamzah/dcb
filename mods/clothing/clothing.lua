@@ -22,7 +22,7 @@ end
 
 -- Clothing API
 
-local inv_mod = nil
+local inv_mod = "inventory_plus" --nil
 
 clothing = {
 	formspec = "size[8,8.5]list[detached:player_name_clothing;clothing;0,1;2,3;]"
@@ -112,6 +112,7 @@ clothing.get_clothing_formspec = function(self, name)
 end
 
 clothing.update_inventory = function(self, player)
+	--[[
 	local name = player:get_player_name()
 	if inv_mod == "unified_inventory" then
 		if unified_inventory.current_page[name] == "clothing" then
@@ -128,10 +129,12 @@ clothing.update_inventory = function(self, player)
 			player:set_inventory_formspec(formspec)
 		end
 	end
+	--]]
 end
 
 -- Register Callbacks
 
+--[[
 minetest.register_on_player_receive_fields(function(player, formname, fields)
 	local name = player:get_player_name()
 	if inv_mod == "inventory_plus" and fields.clothing then
@@ -140,6 +143,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		return
 	end
 end)
+--]]
 
 minetest.register_on_joinplayer(function(player)
 	multiskin:init(player)
@@ -178,9 +182,9 @@ minetest.register_on_joinplayer(function(player)
 			return count
 		end
 	})
-	if inv_mod == "inventory_plus" then
+	--[[if inv_mod == "inventory_plus" then
 		inventory_plus.register_button(player,"clothing", "Clothing")
-	end
+	end]]
 	clothing_inv:set_size("clothing", 4)
 	player_inv:set_size("clothing", 4)
 	for i=1, 4 do

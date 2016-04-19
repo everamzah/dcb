@@ -56,7 +56,7 @@ end
 
 -- Armor API
 
-local inv_mod = nil
+local inv_mod = "inventory_plus" --nil
 local time = 0
 
 armor = {
@@ -257,8 +257,8 @@ armor.get_armor_formspec = function(self, name)
 end
 --]]
 
----[[
 armor.update_inventory = function(self, player)
+--[[
 	local name = armor:get_valid_player(player, "[set_player_armor]")
 	if not name or inv_mod == "inventory_enhanced" then
 		return
@@ -278,8 +278,8 @@ armor.update_inventory = function(self, player)
 			player:set_inventory_formspec(formspec)
 		end
 	end
-end
 --]]
+end
 
 armor.get_valid_player = function(self, player, msg)
 	msg = msg or ""
