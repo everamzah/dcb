@@ -227,7 +227,7 @@ local function hunger_globaltimer(dtime)
 			
 			--Lower the player's stamina if sprinting
 			if playerInfo["sprinting"] == true then 
-				hunger.update_hunger(player, hunger[playerName].lvl - dtime / 4)
+				hunger.update_hunger(player, hunger[playerName].lvl - dtime / 8)
 				if hunger[playerName].lvl < 1 then
 					hunger.setSprinting(playerName, false)
 				end
@@ -248,11 +248,11 @@ local food = hunger.food
 
 function hunger.register_food(name, hunger_change, replace_with_item, poisen, heal, sound)
 	food[name] = {}
-	food[name].saturation = hunger_change	-- hunger points added
-	food[name].replace = replace_with_item	-- what item is given back after eating
-	food[name].poisen = poisen				-- time its poisening
-	food[name].healing = heal				-- amount of HP
-	food[name].sound = sound				-- special sound that is played when eating
+	food[name].saturation = hunger_change	-- Hunger points added
+	food[name].replace = replace_with_item	-- What item is given back after eating
+	food[name].poisen = poisen		-- Time its poisening
+	food[name].healing = heal		-- Amount of HP
+	food[name].sound = sound		-- Special sound that is played when eating
 end
 
 -- Poison player
