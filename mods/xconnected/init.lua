@@ -11,7 +11,7 @@ xconnected.register_pane("xconnected:bar", "xconnected_bar.png", nil, {
 	tiles = {"xconnected_bar.png"},
 	drawtype = "airlike",
 	paramtype = "light",
-	textures = {
+	tiles = {
 		"xconnected_bar.png",
 		"xconnected_bar.png",
 		"xconnected_space.png"
@@ -198,19 +198,19 @@ xconnected.register_wall("xconnected:wall_coal_block", "default_coal_block.png",
 -- Fences
 xconnected.register_fence("xconnected:fence", "default_wood.png", nil, {
 	description = "Wood Fence",
-	textures = {"default_wood.png"},
+	tiles = {"default_wood.png"},
 	is_ground_content = false,
 	sunlight_propagates = true,
 	sounds = default.node_sound_wood_defaults(),
 	inventory_image = "default_fence_overlay.png^default_wood.png^default_fence_overlay.png^[makealpha:255,126,126",
+	wield_image = "default_fence_overlay.png^default_wood.png^default_fence_overlay.png^[makealpha:255,126,126",
 	groups = {
-		choppy=2,
-		oddly_breakable_by_hand=2,
-		pane=1,
-		flammable=2
+		choppy = 2,
+		oddly_breakable_by_hand = 2,
+		pane = 1,
+		flammable = 2
 	}
 })
-
 minetest.register_craft({
 	output = "xconnected:fence_c4 6",
 	recipe = {
@@ -221,19 +221,19 @@ minetest.register_craft({
 
 xconnected.register_fence("xconnected:fence_pine", "default_pine_wood.png", nil, {
 	description = "Pine Wood Fence",
-	textures = {"default_pine_wood.png"},
+	tiles = {"default_pine_wood.png"},
 	is_ground_content = false,
 	sunlight_propagates = true,
 	sounds = default.node_sound_wood_defaults(),
 	inventory_image = "default_fence_overlay.png^default_pine_wood.png^default_fence_overlay.png^[makealpha:255,126,126",
+	wield_image = "default_fence_overlay.png^default_pine_wood.png^default_fence_overlay.png^[makealpha:255,126,126",
 	groups = {
-		choppy=2,
-		oddly_breakable_by_hand=2,
-		pane=1,
-		flammable=2
+		choppy = 2,
+		oddly_breakable_by_hand = 2,
+		pane = 1,
+		flammable = 2
 	}
 })
-
 minetest.register_craft({
 	output = "xconnected:fence_pine_c4 6",
 	recipe = {
@@ -244,19 +244,19 @@ minetest.register_craft({
 
 xconnected.register_fence("xconnected:fence_jungle", "default_junglewood.png", nil, {
 	description = "Jungle Wood Fence",
-	textures = {"default_junglewood.png"},
+	tiles = {"default_junglewood.png"},
 	is_ground_content = false,
 	sunlight_propagates = true,
 	sounds = default.node_sound_wood_defaults(),
 	inventory_image = "default_fence_overlay.png^default_junglewood.png^default_fence_overlay.png^[makealpha:255,126,126",
+	wield_image = "default_fence_overlay.png^default_junglewood.png^default_fence_overlay.png^[makealpha:255,126,126",
 	groups = {
-		choppy=2,
-		oddly_breakable_by_hand=2,
-		pane=1,
-		flammable=2
+		choppy = 2,
+		oddly_breakable_by_hand = 2,
+		pane = 1,
+		flammable = 2
 	}
 })
-
 minetest.register_craft({
 	output = "xconnected:fence_jungle_c4 6",
 	recipe = {
@@ -267,19 +267,19 @@ minetest.register_craft({
 
 xconnected.register_fence("xconnected:fence_acacia", "default_acacia_wood.png", nil, {
 	description = "Acacia Wood Fence",
-	textures = {"default_acacia_wood.png"},
+	tiles = {"default_acacia_wood.png"},
 	is_ground_content = false,
 	sunlight_propagates = true,
 	sounds = default.node_sound_wood_defaults(),
 	inventory_image = "default_fence_overlay.png^default_acacia_wood.png^default_fence_overlay.png^[makealpha:255,126,126",
+	wield_image = "default_fence_overlay.png^default_acacia_wood.png^default_fence_overlay.png^[makealpha:255,126,126",
 	groups = {
-		choppy=2,
-		oddly_breakable_by_hand=2,
-		pane=1,
-		flammable=2
+		choppy = 2,
+		oddly_breakable_by_hand = 2,
+		pane = 1,
+		flammable = 2
 	}
 })
-
 minetest.register_craft({
 	output = "xconnected:fence_acacia_c4 6",
 	recipe = {
@@ -290,19 +290,19 @@ minetest.register_craft({
 
 xconnected.register_fence("xconnected:fence_aspen", "default_aspen_wood.png", nil, {
 	description = "Aspen Wood Fence",
-	textures = {"default_aspen_wood.png"},
+	tiles = {"default_aspen_wood.png"},
 	is_ground_content = false,
 	sunlight_propagates = true,
 	sounds = default.node_sound_wood_defaults(),
 	inventory_image = "default_fence_overlay.png^default_aspen_wood.png^default_fence_overlay.png^[makealpha:255,126,126",
+	wield_image = "default_fence_overlay.png^default_aspen_wood.png^default_fence_overlay.png^[makealpha:255,126,126",
 	groups = {
-		choppy=2,
-		oddly_breakable_by_hand=2,
-		pane=1,
-		flammable=2
+		choppy = 2,
+		oddly_breakable_by_hand = 2,
+		pane = 1,
+		flammable = 2
 	}
 })
-
 minetest.register_craft({
 	output = "xconnected:fence_aspen_c4 6",
 	recipe = {
