@@ -29,7 +29,8 @@ armor_stand.set_formspec = function(name)
 	"label[5.5,0;Fire: " .. armor.def[name].fire .. "]" ..
 	"list[current_player;main;0,2.1;8,1;]" ..
 	"list[current_player;main;0,3.35;8,3;8]" ..
-	"listring[]" ..
+	"listring[detached:" .. name .. "_armor;armor]" ..
+	"listring[current_player;main]" ..
 	default.get_hotbar_bg(0, 2.1)
 end
 

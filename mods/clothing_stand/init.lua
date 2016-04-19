@@ -21,7 +21,8 @@ clothing_stand.set_formspec = function(name)
 	"list[detached:" .. name .. "_clothing;clothing;2,0.75;4,1]" ..
 	"list[current_player;main;0,2.1;8,1;]" ..
 	"list[current_player;main;0,3.35;8,3;8]" ..
-	"listring[]" ..
+	"listring[detached:" .. name .. "_clothing;clothing]" ..
+	"listring[current_player;main]" ..
 	default.get_hotbar_bg(0,2.1)
 end
 
