@@ -30,7 +30,8 @@ minetest.override_item("fire:basic_flame", {
                         minetest.log("info", name ..
 					" tried to place fire at " ..
 					minetest.pos_to_string(pos))
-                        minetest.chat_send_player(name, "You lack required priv: fgfire")
+                        --minetest.chat_send_player(name, "You lack required priv: fgfire")
+			cmsg.push_message_player(placer, "You need the fgfire priv to place fire")
                 end
         end,
         -- Normal players can now only get fire:basic_flame via a giveme
@@ -58,7 +59,8 @@ minetest.override_item("bucket:bucket_lava",{
                 if lava_requires_priv and not minetest.check_player_privs(name, {fglava=true}) then
                         minetest.remove_node(pos)
                         minetest.log("info", name .. " tried to place lava at " .. minetest.pos_to_string(pos))
-                        minetest.chat_send_player(name, "You lack the required priv: fglava")
+                        --minetest.chat_send_player(name, "You lack the required priv: fglava")
+			cmsg.push_message_player(placer, "You need the fglava priv to place lava")
                         return {name="bucket:bucket_lava"}
 		end
 

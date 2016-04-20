@@ -75,6 +75,10 @@ minetest.register_tool("fire:flint_and_steel", {
 	inventory_image = "fire_flint_steel.png",
 	on_use = function(itemstack, user, pointed_thing)
 		local player_name = user:get_player_name()
+		if not minetest.check_player_privs(player_name, {fgfire = true}) then
+			cmsg.push_message_player(user, "You need the fgfire priv to use Flint and Steel")
+			return
+		end
 		local pt = pointed_thing
 
 		if pt.type == "node" and minetest.get_node(pt.above).name == "air" then
