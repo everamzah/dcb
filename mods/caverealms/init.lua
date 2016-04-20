@@ -122,6 +122,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	end
 	
 	local c_water = minetest.get_content_id("default:water_source")
+	local c_river = minetest.get_content_id("default:river_water_source")
 	local c_lava = minetest.get_content_id("default:lava_source")
 	local c_ice = minetest.get_content_id("default:ice")
 	local c_thinice = minetest.get_content_id("caverealms:thin_ice")
@@ -191,6 +192,10 @@ minetest.register_on_generated(function(minp, maxp, seed)
 			for x = x0, x1 do -- for each node do
 				if (nvals_cave[nixyz] + nvals_wave[nixyz])/2 > tcave then --if node falls within cave threshold
 					data[vi] = c_air --hollow it out to make the cave
+				elseif (nvals_cave[nixyz] + nvals_wave[nixyz])/2 > tcave - 0.2 then
+					if data[vi] == c_lava or data[vi] == c_water or data[vi] == c_river then
+						data[vi] = c_air
+					end
 				end
 				--increment indices
 				nixyz = nixyz + 1
