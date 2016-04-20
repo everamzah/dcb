@@ -255,14 +255,15 @@ minetest.register_craft({
 		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}
 	}
 })
-	
 
---[[minetest.register_craft({
-	output = "xdecor:moonbrick",
+minetest.register_craft({
+	output = "xdecor:letterbox",
 	recipe = {
-		{"default:brick", "default:stone"}
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+		{"dye:red", "default:book", "dye:red"},
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}
 	}
-})--]]
+})
 
 minetest.register_craft({
 	output = "xdecor:multishelf",
