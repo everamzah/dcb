@@ -1,44 +1,25 @@
 local path = minetest.get_modpath("mobs")
 
--- Mob Api
-
-dofile(path.."/api.lua")
+dofile(path .. "/api.lua")
+dofile(path .. "/crafts.lua")
+dofile(path .. "/spawner.lua")
+dofile(path .. "/traps.lua")
 
 -- Animals
-
-dofile(path.."/chicken.lua") -- JKmurray
-dofile(path.."/cow.lua") -- KrupnoPavel
-dofile(path.."/rat.lua") -- PilzAdam
-dofile(path.."/sheep.lua") -- PilzAdam
-dofile(path.."/warthog.lua") -- KrupnoPavel
-dofile(path.."/bee.lua") -- KrupnoPavel
-dofile(path.."/bunny.lua") -- ExeterDad
-dofile(path.."/kitten.lua") -- Jordach/BFD
+dofile(path .. "/chicken.lua") -- JKmurray
+dofile(path .. "/cow.lua") -- KrupnoPavel
+dofile(path .. "/rat.lua") -- PilzAdam
+dofile(path .. "/sheep.lua") -- PilzAdam
+dofile(path .. "/warthog.lua") -- KrupnoPavel
+dofile(path .. "/bee.lua") -- KrupnoPavel
+dofile(path .. "/bunny.lua") -- ExeterDad
+dofile(path .. "/kitten.lua") -- Jordach/BFD
 
 -- Monsters
+dofile(path .. "/dungeonmaster.lua")
+dofile(path .. "/goblins.lua") -- FeelsLikeGNU
+dofile(path .. "/zombie.lua") -- BlockMen
+dofile(path .. "/slimes.lua") -- TomasJLuis
 
---dofile(path.."/dirtmonster.lua") -- PilzAdam
-dofile(path.."/dungeonmaster.lua")
---dofile(path.."/oerkki.lua")
---dofile(path.."/sandmonster.lua")
---dofile(path.."/stonemonster.lua")
---dofile(path.."/treemonster.lua")
---dofile(path.."/lava_flan.lua") -- Zeg9
---dofile(path.."/mese_monster.lua")
---dofile(path.."/spider.lua") -- AspireMint
-dofile(path.."/goblins.lua") -- FeelsLikeGNU
-dofile(path.."/zombie.lua") -- BlockMen
-dofile(path.."/greenslimes.lua") -- TomasJLuis
-
--- NPC
-dofile(path.."/npc.lua") -- TenPlus1
-
--- Mob Items
-dofile(path.."/crafts.lua")
-
--- Spawner
-dofile(path .. "/spawner.lua")
-
-if minetest.setting_get("log_mods") then
-	minetest.log("action", "[mobs] loaded")
-end
+-- NPCs
+dofile(path .. "/npc.lua") -- TenPlus1

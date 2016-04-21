@@ -1,4 +1,3 @@
-dofile(minetest.get_modpath("mobs").."/traps.lua")
 
 -- Npc by TenPlus1 converted for FLG Goblins :D
 
