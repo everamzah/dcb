@@ -420,9 +420,9 @@ if ARMOR_DROP == true or ARMOR_DESTROY == true then
 		armor:set_player_armor(player)
 		if inv_mod == "unified_inventory" then
 			unified_inventory.set_inventory_formspec(player, "craft")
-		elseif inv_mod == "inventory_plus" then
+		--[[elseif inv_mod == "inventory_plus" then
 			local formspec = inventory_plus.get_formspec(player,"main")
-			inventory_plus.set_inventory_formspec(player, formspec)
+			inventory_plus.set_inventory_formspec(player, formspec)]]
 		else
 			armor:update_inventory(player)
 		end
