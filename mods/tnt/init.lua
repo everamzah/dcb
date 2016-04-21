@@ -7,7 +7,7 @@ if (not singleplayer and setting ~= true) or
 	return
 end
 
--- loss probabilities array (one in X will be lost)
+-- Loss probabilities array (one in X will be lost)
 local loss_prob = {}
 
 loss_prob["default:cobble"] = 3
@@ -217,7 +217,7 @@ local function tnt_explode(pos, radius, ignore_protection, ignore_on_blast)
 	local p1 = vector.subtract(pos, radius)
 	local p2 = vector.add(pos, radius)
 	local minp, maxp = vm:read_from_map(p1, p2)
-	local a = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
+	local a = VoxelArea:new{MinEdge = minp, MaxEdge = maxp}
 	local data = vm:get_data()
 
 	local drops = {}
@@ -310,29 +310,38 @@ minetest.register_node("tnt:gunpowder", {
 	is_ground_content = false,
 	sunlight_propagates = true,
 	walkable = false,
-	tiles = {"tnt_gunpowder_straight.png", "tnt_gunpowder_curved.png", "tnt_gunpowder_t_junction.png", "tnt_gunpowder_crossing.png"},
+	tiles = {
+		"tnt_gunpowder_straight.png",
+		"tnt_gunpowder_curved.png",
+		"tnt_gunpowder_t_junction.png",	
+		"tnt_gunpowder_crossing.png"
+	},
 	inventory_image = "tnt_gunpowder_inventory.png",
 	wield_image = "tnt_gunpowder_inventory.png",
 	selection_box = {
 		type = "fixed",
 		fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2},
 	},
-	groups = {dig_immediate = 2, attached_node = 1, connect_to_raillike = minetest.raillike_group("gunpowder")},
+	groups = {
+		dig_immediate = 2,
+		attached_node = 1,
+		connect_to_raillike = minetest.raillike_group("gunpowder")
+	},
 	sounds = default.node_sound_leaves_defaults(),
 	
 	on_punch = function(pos, node, puncher)
-		local name = puncher:get_player_name()
-		if tnt_requires_priv and not minetest.check_player_privs(name, {disallowednodes = true}) then
-			cmsg.push_message_player(puncher, "You lack the disallowednodes priv!")
-			return
-		end
+		local player_name = puncher:get_player_name()
 		if puncher:get_wielded_item():get_name() == "default:torch" then
-			tnt.burn(pos)
+			if tnt_requires_priv and not minetest.check_player_privs(player_name, {disallowednodes = true}) then
+				cmsg.push_message_player(puncher, "You lack the disallowednodes priv!")
+			else
+				tnt.burn(pos)
+			end
 		end
 	end,
 	on_blast = function(pos, intensity)
 		tnt.burn(pos)
-	end,
+	end
 })
 
 minetest.register_node("tnt:gunpowder_burning", {
@@ -382,7 +391,11 @@ minetest.register_node("tnt:gunpowder_burning", {
 		fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2},
 	},
 	drop = "",
-	groups = {dig_immediate = 2, attached_node = 1, connect_to_raillike = minetest.raillike_group("gunpowder")},
+	groups = {
+		dig_immediate = 2,
+		attached_node = 1,
+		connect_to_raillike = minetest.raillike_group("gunpowder")
+	},
 	sounds = default.node_sound_leaves_defaults(),
 	on_timer = function(pos, elapsed)
 		for dx = -1, 1 do
@@ -400,12 +413,12 @@ minetest.register_node("tnt:gunpowder_burning", {
 		end
 		minetest.remove_node(pos)
 	end,
-	-- unaffected by explosions
+	-- Unaffected by explosions
 	on_blast = function() end,
 	on_construct = function(pos)
 		minetest.sound_play("tnt_gunpowder_burning", {pos = pos, gain = 2})
 		minetest.get_node_timer(pos):start(1)
-	end,
+	end
 })
 
 minetest.register_abm({
@@ -413,7 +426,7 @@ minetest.register_abm({
 	neighbors = {"fire:basic_flame", "default:lava_source", "default:lava_flowing"},
 	interval = 4,
 	chance = 1,
-	action = tnt.burn,
+	action = tnt.burn
 })
 
 minetest.register_craft({
@@ -425,9 +438,9 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "tnt:tnt",
 	recipe = {
-		{"",           "group:wood",    ""},
+		{"", "group:wood", ""},
 		{"group:wood", "tnt:gunpowder", "group:wood"},
-		{"",           "group:wood",    ""}
+		{"", "group:wood", ""}
 	}
 })
 
@@ -453,13 +466,13 @@ function tnt.register_tnt(def)
 		groups = {dig_immediate = 2, mesecon = 2, tnt = 1},
 		sounds = default.node_sound_wood_defaults(),
 		on_punch = function(pos, node, puncher)
-			local name = puncher:get_player_name()
-			if tnt_requires_priv and not minetest.check_player_privs(name, {disallowednodes = true}) then
-				cmsg.push_message_player(puncher, "You lack the disallowednodes priv!")
-				return
-			end
+			local player_name = puncher:get_player_name()
 			if puncher:get_wielded_item():get_name() == "default:torch" then
-				minetest.set_node(pos, {name = name .. "_burning"})
+				if tnt_requires_priv and not minetest.check_player_privs(player_name, {disallowednodes = true}) then
+					cmsg.push_message_player(puncher, "You lack the disallowednodes priv!")
+				else
+					minetest.set_node(pos, {name = name .. "_burning"})
+				end
 			end
 		end,
 		on_blast = function(pos, intensity)
@@ -495,7 +508,7 @@ function tnt.register_tnt(def)
 		on_timer = function(pos, elapsed)
 			tnt.boom(pos, def)
 		end,
-		-- unaffected by explosions
+		-- Unaffected by explosions
 		on_blast = function() end,
 		on_construct = function(pos)
 			minetest.sound_play("tnt_ignite", {pos = pos})
@@ -507,6 +520,5 @@ end
 tnt.register_tnt({
 	name = "tnt:tnt",
 	description = "TNT",
-	radius = radius,
+	radius = radius
 })
-
