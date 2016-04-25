@@ -12,6 +12,20 @@ xconnected.register_pane("xdecor:bamboo_frame", "xdecor_bamboo_frame.png", nil, 
 	sounds = default.node_sound_leaves_defaults()
 })
 
+xconnected.register_pane("xdecor:chainlink", "xdecor_chainlink.png", nil, {
+	description = "Chain Link",
+	tiles = {"xdecor_chainlink.png"},
+	drawtype = "airlike",
+	paramtype = "light",
+	textures = {"xdecor_chainlink.png", "xdecor_chainlink.png", "xconnected_space.png"},
+	inventory_image = "xdecor_chainlink.png",
+	wield_image = "xdecor_chainlink.png",
+	groups = {cracky=3, oddly_breakable_by_hand=2, pane=1},
+	recipe = {{"default:steel_ingot", "", "default:steel_ingot"},
+		  {"", "default:steel_ingot", ""},
+		  {"default:steel_ingot", "", "default:steel_ingot"} }
+})
+
 xdecor.register("baricade", {
 	description = "Baricade",
 	drawtype = "plantlike",
@@ -63,19 +77,18 @@ xdecor.register("candle", {
 	inventory_image = "xdecor_candle_inv.png",
 	wield_image = "xdecor_candle_wield.png",
 	paramtype2 = "wallmounted",
-	legacy_wallmounted = true,
 	walkable = false,
 	groups = {dig_immediate=3, attached_node=1},
 	tiles = {{name = "xdecor_candle_floor.png",
 			animation = {type="vertical_frames", length=1.5}},
-		{name = "xdecor_candle_ceiling.png",
+		{name = "xdecor_candle_floor.png",
 			animation = {type="vertical_frames", length=1.5}},
 		{name = "xdecor_candle_wall.png",
 			animation = {type="vertical_frames", length=1.5}}
 	},
 	selection_box = {
 		type = "wallmounted",
-		wall_top = {-0.3, -0.4, -0.3, 0.3, 0.5, 0.3},
+		wall_top = {-0.25, -0.5, -0.25, 0.25, 0.1, 0.25},
 		wall_bottom = {-0.25, -0.5, -0.25, 0.25, 0.1, 0.25},
 		wall_side = {-0.5, -0.35, -0.15, -0.15, 0.4, 0.15}
 	}
@@ -85,15 +98,12 @@ xdecor.register("chair", {
 	description = "Chair",
 	tiles = {"xdecor_wood.png"},
 	sounds = default.node_sound_wood_defaults(),
-	groups = {choppy=3, oddly_breakable_by_hand=2, flammable=3},
+	groups = {choppy=3, oddly_breakable_by_hand=2, flammable=2},
 	on_rotate = screwdriver.rotate_simple,
 	node_box = xdecor.pixelbox(16, {
-		{3,  0, 11,   2, 16, 2},
-		{11, 0, 11,   2, 16, 2},
-		{5,  9, 11.5, 6,  6, 1},
-		{3,  0,  3,   2,  6, 2},
-		{11, 0,  3,   2,  6, 2},
-		{3,  6,  3,   10, 2, 8}
+		{3,  0, 11,   2, 16, 2}, {11, 0, 11,  2, 16, 2},
+		{5,  9, 11.5, 6,  6, 1}, {3,  0,  3,  2,  6, 2},
+		{11, 0,  3,   2,  6, 2}, {3,  6,  3, 10, 2, 8}
 	}),
 	can_dig = xdecor.sit_dig,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
@@ -102,22 +112,6 @@ xdecor.register("chair", {
 	end
 })
 
-xconnected.register_pane("xdecor:chainlink", "xdecor_chainlink.png", nil, {
-	description = "Chain Link",
-	tiles = {"xdecor_chainlink.png"},
-	drawtype = "airlike",
-	paramtype = "light",
-	textures = {"xdecor_chainlink.png", "xdecor_chainlink.png", "xconnected_space.png"},
-	inventory_image = "xdecor_chainlink.png",
-	wield_image = "xdecor_chainlink.png",
-	groups = {cracky=3, oddly_breakable_by_hand=2, pane=1},
-	recipe = { {"default:steel_ingot", "", "default:steel_ingot"},
-		   {"", "default:steel_ingot", ""},
-		   {"default:steel_ingot", "", "default:steel_ingot"} }
-})
-
--- The following nodedef is licensed under WTFPL for granting a possible re-use
--- in Minetest Game (https://github.com/minetest/minetest_game). 
 xdecor.register("cobweb", {
 	description = "Cobweb",
 	drawtype = "plantlike",
@@ -244,7 +238,7 @@ xdecor.register("enderchest", {
 	tiles = {"xdecor_enderchest_top.png", "xdecor_enderchest_top.png",
 		 "xdecor_enderchest_side.png", "xdecor_enderchest_side.png",
 		 "xdecor_enderchest_side.png", "xdecor_enderchest_front.png"},
-	groups = {cracky=1, choppy=1, oddly_breakable_by_hand=1},
+	groups = {cracky=1, choppy=1},
 	sounds = default.node_sound_stone_defaults(),
 	on_rotate = screwdriver.rotate_simple,
 	on_construct = function(pos)
@@ -285,7 +279,6 @@ xdecor.register("ivy", {
 	groups = {dig_immediate=3, flammable=3, plant=1},
 	paramtype2 = "wallmounted",
 	selection_box = {type="wallmounted"},
-	legacy_wallmounted = true,
 	tiles = {"xdecor_ivy.png"},
 	inventory_image = "xdecor_ivy.png",
 	wield_image = "xdecor_ivy.png",
@@ -294,21 +287,15 @@ xdecor.register("ivy", {
 
 xdecor.register("lantern", {
 	description = "Lantern",
-	light_source = 12,
-	drawtype = "torchlike",
-	inventory_image = "xdecor_lantern_floor.png",
-	wield_image = "xdecor_lantern_floor.png", 
+	light_source = 13,
+	drawtype = "plantlike",
+	inventory_image = "xdecor_lantern_inv.png",
+	wield_image = "xdecor_lantern_inv.png",
 	paramtype2 = "wallmounted",
-	legacy_wallmounted = true,
 	walkable = false,
 	groups = {dig_immediate=3, attached_node=1},
-	tiles = {"xdecor_lantern_floor.png", "xdecor_lantern_ceiling.png", "xdecor_lantern.png"},
-	selection_box = {
-		type = "wallmounted",
-		wall_top = {-0.25, -0.4, -0.25, 0.25, 0.5, 0.25},
-		wall_bottom = {-0.25, -0.5, -0.25, 0.25, 0.4, 0.25},
-		wall_side = {-0.5, -0.5, -0.15, 0.5, 0.5, 0.15}
-	}
+	tiles = {{name = "xdecor_lantern.png", animation = {type="vertical_frames", length=1.5}}},
+	selection_box = xdecor.pixelbox(16, {{4, 0, 4, 8, 16, 8}})
 })
 
 for _, l in pairs({"iron", "wooden"}) do
