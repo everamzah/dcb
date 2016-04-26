@@ -10,6 +10,8 @@ of the license, or (at your option) any later version.
 
 --]]
 
+screwdriver = screwdriver or {}
+
 local faces = {
 	[1] = { x = -1, z = 0, r = 3, o = 1, m = 14 },
 	[2] = { x = 1, z = 0, r = 1, o = 3,  m = 16 },
@@ -60,7 +62,8 @@ minetest.register_node("crops:melon_plant_" .. stage , {
 	selection_box = {
 		type = "fixed",
 		fixed = {-0.5, -0.5, -0.5,  0.5, -0.5 + (((math.min(stage, 4)) + 1) / 5), 0.5}
-	}
+	},
+	--on_rotate = screwdriver.disallow
 })
 end
 
@@ -78,6 +81,7 @@ minetest.register_node("crops:melon_plant_5_attached", {
 	groups = { snappy=3, flammable=3, flora=1, attached_node=1, not_in_creative_inventory=1 },
 	drop = "crops:melon_seed",
 	sounds = default.node_sound_leaves_defaults(),
+	on_rotate = screwdriver.disallow
 })
 
 
@@ -131,7 +135,8 @@ minetest.register_node("crops:melon", {
 		end
 		core.handle_node_drops(pos, drops, digger)
 		minetest.remove_node(pos)
-	end
+	end,
+	--on_rotate = screwdriver.disallow
 })
 
 --
