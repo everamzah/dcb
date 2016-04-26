@@ -1,6 +1,7 @@
+--[[
 local bookshelf_formspec = 
-	"size[8,7;]"..
-        default.gui_bg..
+	"size[8,7;]" ..
+        default.gui_bg ..
         default.gui_bg_img..
         default.gui_slots..
         "list[context;books;0,0.3;8,2;]"..
@@ -36,6 +37,7 @@ minetest.override_item("default:bookshelf", {
 		return 1
 	end,
 })
+--]]
 
 local vessels_shelf_formspec =
         "size[8,7;]"..
