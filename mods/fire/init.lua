@@ -72,6 +72,10 @@ minetest.register_node("fire:permanent_flame", {
 		if minetest.check_player_privs(placer:get_player_name(), {fgfire = true}) then
 			minetest.set_node(pos, {name = "fire:permanent_flame"})
 			fire.update_sounds_around(pos)
+			if not minetest.setting_getbool("creative_mode") then
+				itemstack:take_item()
+				return itemstack
+			end
 		else
 			cmsg.push_message_player(placer, "You need the fgfire priv to place fire")
 		end
