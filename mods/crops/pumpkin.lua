@@ -18,11 +18,7 @@ local faces = {
 }
 
 minetest.register_node("crops:pumpkin_seed", {
-<<<<<<< HEAD
 	description = "Pumpkin Seed",
-=======
-	description = "pumpkin seed",
->>>>>>> 2fa854dcc13bfd5267ada757f5374a98035d50ed
 	inventory_image = "crops_pumpkin_seed.png",
 	wield_image = "crops_pumpkin_seed.png",
 	tiles = { "crops_pumpkin_plant_1.png" },
@@ -50,11 +46,7 @@ minetest.register_node("crops:pumpkin_seed", {
 
 for stage = 1, 6 do
 minetest.register_node("crops:pumpkin_plant_" .. stage , {
-<<<<<<< HEAD
 	description = "Pumpkin Plant",
-=======
-	description = "pumpkin plant",
->>>>>>> 2fa854dcc13bfd5267ada757f5374a98035d50ed
 	tiles = { "crops_pumpkin_plant_" .. stage .. ".png" },
 	drawtype = "plantlike",
 	waving = 1,
@@ -75,11 +67,7 @@ end
 minetest.register_node("crops:pumpkin_plant_5_attached", {
 	visual = "mesh",
 	mesh = "crops_plant_extra_face.obj",
-<<<<<<< HEAD
 	description = "Pumpkin Plant",
-=======
-	description = "pumpkin plant",
->>>>>>> 2fa854dcc13bfd5267ada757f5374a98035d50ed
 	tiles = { "crops_pumpkin_stem.png", "crops_pumpkin_plant_4.png" },
 	drawtype = "mesh",
 	paramtype2 = "facedir",
@@ -94,11 +82,7 @@ minetest.register_node("crops:pumpkin_plant_5_attached", {
 
 
 minetest.register_craftitem("crops:roasted_pumpkin", {
-<<<<<<< HEAD
 	description = "Roasted Pumpkin",
-=======
-	description = "Roasted pumpkin",
->>>>>>> 2fa854dcc13bfd5267ada757f5374a98035d50ed
 	inventory_image = "crops_roasted_pumpkin.png",
 	on_use = minetest.item_eat(2)
 })
