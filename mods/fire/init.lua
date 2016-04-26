@@ -1,4 +1,4 @@
--- minetest/fire/init.lua
+-- dcb/mods/fire/init.lua
 
 -- Global namespace for functions
 
@@ -66,6 +66,16 @@ minetest.register_node("fire:permanent_flame", {
 	groups = {igniter = 2, dig_immediate = 3},
 	drop = "",
 
+	on_place = function(itemstack, placer, pointed_thing)
+		local pos = minetest.get_pointed_thing_position(pointed_thing, true)
+
+		if minetest.check_player_privs(placer:get_player_name(), {fgfire = true}) then
+			minetest.set_node(pos, {name = "fire:permanent_flame"})
+			fire.update_sounds_around(pos)
+		else
+			cmsg.push_message_player(placer, "You need the fgfire priv to place fire")
+		end
+	end,
 	on_blast = function()
 	end,
 })

@@ -14,6 +14,7 @@ end
 -- [fire_restricted]
 minetest.register_privilege("fgfire", "Player can place fire")
 
+--[[
 minetest.override_item("fire:basic_flame", {
         on_construct = nil,
         on_place = function(itemstack, placer, pointed_thing)
@@ -37,6 +38,7 @@ minetest.override_item("fire:basic_flame", {
         -- Normal players can now only get fire:basic_flame via a giveme
         groups = {igniter=2, dig_immediate=3, not_in_creative_inventory=1},
 })
+--]]
 
 -- [lava_restricted]
 minetest.register_privilege("fglava", "Player can use lava bucket")
