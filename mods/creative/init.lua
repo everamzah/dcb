@@ -1,6 +1,6 @@
 -- dcb/mods/creative/init.lua
 
-minetest.register_privilege("creative", "Can you /creative command")
+minetest.register_privilege("creative", "Can enable creative inventory, and place unlimited nodes")
 
 creative = {}
 local player_inventory = {}
@@ -16,7 +16,9 @@ creative.init_creative_inventory = function(player)
 
 	minetest.create_detached_inventory("creative_" .. player_name, {
 		allow_move = function(inv, from_list, from_index, to_list, to_index, count, player)
-			if minetest.setting_getbool("creative_mode") and not to_list == "main" then
+			if (minetest.setting_getbool("creative_mode")
+					or minetest.check_player_privs(player:get_player_name(), {creative = true}))
+					and not to_list == "main" then
 				return count
 			else
 				return 0
@@ -26,7 +28,8 @@ creative.init_creative_inventory = function(player)
 			return 0
 		end,
 		allow_take = function(inv, listname, index, stack, player)
-			if minetest.setting_getbool("creative_mode") then
+			if (minetest.setting_getbool("creative_mode")
+					or minetest.check_player_privs(player:get_player_name(), {creative = true})) then
 				return -1
 			else
 				return 0
@@ -88,7 +91,8 @@ local trash = minetest.create_detached_inventory("creative_trash", {
 	-- Allow the stack to be placed and remove it in on_put()
 	-- This allows the creative inventory to restore the stack
 	allow_put = function(inv, listname, index, stack, player)
-		if minetest.setting_getbool("creative_mode") then
+		if (minetest.setting_getbool("creative_mode")
+				or minetest.check_player_privs(player:get_player_name(), {creative = true})) then
 			return stack:get_count()
 		else
 			return 0
@@ -153,21 +157,38 @@ creative.set_crafting_formspec = function(player)
 end
 
 minetest.register_on_joinplayer(function(player)
-	-- TODO: Add creative button
 	-- If in creative mode, modify player's inventory forms
-	if not minetest.setting_getbool("creative_mode") then
+	if not (minetest.setting_getbool("creative_mode")
+			or minetest.check_player_privs(player:get_player_name(), {creative = true})) then
 		return
 	end
 	creative.init_creative_inventory(player)
 	creative.set_creative_formspec(player, 0)
 end)
 
+minetest.register_chatcommand("creative", {
+	description = "Enable creative inventory",
+	params = "<on> | <off>",
+	privs = {creative = true},
+	func = function(name, param)
+		local player = minetest.get_player_by_name(name)
+		if param == "off" then
+			player:set_inventory_formspec(dcb.get_formspec())
+		else
+			creative.init_creative_inventory(player)
+			creative.set_creative_formspec(player, 0)
+		end
+	end
+})
+
 minetest.register_on_player_receive_fields(function(player, formname, fields)
-	if formname ~= "" or not minetest.setting_getbool("creative_mode") then
+	local player_name = player:get_player_name()
+	if not player_inventory[player_name] then return end
+	if formname ~= "" or not (minetest.setting_getbool("creative_mode") 
+				or minetest.check_player_privs(player_name, {creative = true})) then
 		return
 	end
 
-	local player_name = player:get_player_name()
 	local inv = player_inventory[player_name]
 
 	if fields.quit then
@@ -238,12 +259,19 @@ if minetest.setting_getbool("creative_mode") then
 			damage_groups = {fleshy = 10},
 		}
 	})
+end
 
-	minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack)
+minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack)
+	if (minetest.setting_getbool("creative_mode")
+			or minetest.check_player_privs(placer:get_player_name(), {creative = true})) then
 		return true
-	end)
+	end
+end)
 
-	function minetest.handle_node_drops(pos, drops, digger)
+local old_handle_node_drops = minetest.handle_node_drops
+function minetest.handle_node_drops(pos, drops, digger)
+	if (minetest.setting_getbool("creative_mode")
+			or minetest.check_player_privs(digger:get_player_name(), {creative = true})) then
 		if not digger or not digger:is_player() then
 			return
 		end
@@ -256,5 +284,7 @@ if minetest.setting_getbool("creative_mode") then
 				end
 			end
 		end
+	else
+		return old_handle_node_drops(pos, drops, digger)
 	end
 end
