@@ -1,4 +1,6 @@
--- minetest/creative/init.lua
+-- dcb/mods/creative/init.lua
+
+minetest.register_privilege("creative", "Can you /creative command")
 
 creative = {}
 local player_inventory = {}
