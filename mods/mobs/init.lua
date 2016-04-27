@@ -2,7 +2,7 @@ local path = minetest.get_modpath("mobs")
 
 dofile(path .. "/api.lua")
 dofile(path .. "/crafts.lua")
-dofile(path .. "/spawner.lua")
+--dofile(path .. "/spawner.lua")
 dofile(path .. "/traps.lua")
 
 -- Animals
