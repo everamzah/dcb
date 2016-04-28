@@ -1423,13 +1423,14 @@ local function get_locked_chest_formspec(pos)
  return formspec
 end
 
+minetest.register_privilege("protection_bypass", "Can bypass protection")
 local function has_locked_chest_privilege(meta, player)
 	local name = ""
 	if player then
-		if minetest.check_player_privs(player, "protection_bypass") then
+		name = player:get_player_name()
+		if minetest.check_player_privs(name, {protection_bypass = true}) then
 			return true
 		end
-		name = player:get_player_name()
 	end
 	if name ~= meta:get_string("owner") then
 		return false
