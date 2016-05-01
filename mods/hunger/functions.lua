@@ -299,28 +299,30 @@ function hunger.item_eat(hunger_change, replace_with_item, poisen, heal, sound)
     return function(itemstack, user, pointed_thing)
 	if itemstack:take_item() ~= nil and user ~= nil then
 		local name = user:get_player_name()
-		local sat = tonumber(hunger[name].lvl)
-		local hp = user:get_hp()
-		-- Saturation
-		if sat < HUNGER_MAX and hunger_change then
-			sat = sat + hunger_change
-			if hp < sat then
-				user:set_hp(sat)
+		if minetest.setting_getbool("enable_damage") then
+			sat = tonumber(hunger[name].lvl)
+			local hp = user:get_hp()
+			-- Saturation
+			if sat < HUNGER_MAX and hunger_change then
+				sat = sat + hunger_change
+				if hp < sat then
+					user:set_hp(sat)
+				end
+				hunger.update_hunger(user, sat)
 			end
-			hunger.update_hunger(user, sat)
-		end
-		-- Healing
-		if hp < 20 and heal then
-			hp = hp + heal
-			if hp > 20 then
-				hp = 20
+			-- Healing
+			if hp < 20 and heal then
+				hp = hp + heal
+				if hp > 20 then
+					hp = 20
+				end
+				user:set_hp(hp)
 			end
-			user:set_hp(hp)
-		end
-		-- Poison
-		if poisen then
-			hud.change_item(user, "hunger", {text = "hunger_statbar_poisen.png"})
-			poisenp(1.0, poisen, 0, user)
+			-- Poison
+			if poisen then
+				hud.change_item(user, "hunger", {text = "hunger_statbar_poisen.png"})
+				poisenp(1.0, poisen, 0, user)
+			end
 		end
 
 		-- eating sound
