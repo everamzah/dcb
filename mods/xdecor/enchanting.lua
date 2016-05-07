@@ -5,81 +5,59 @@ screwdriver = screwdriver or {}
 local mese_cost = 1
 
 -- Force of the enchantments.
-enchanting.uses = 1.2
-enchanting.times = 0.1
-enchanting.damages = 1
-enchanting.strength = 1.2
-enchanting.speed = 0.2
-enchanting.jump = 0.2
-
--- Enchanted tools registration.
--- Available enchantments: durable, fast, sharp, strong, speed.
-enchanting.tools = {
-	--[[ Registration format:
-	 	[Mod name] = {
-	 		materials,
-	 		{tool name, enchantments}
-		 }
-	]]
-	["default"] = {
-		"steel, bronze, mese, diamond",
-		{"axe",	   "durable, fast"}, 
-		{"pick",   "durable, fast"}, 
-		{"shovel", "durable, fast"},
-		{"sword",  "sharp"}
-	},
-	["3d_armor"] = {
-		"steel, bronze, gold, diamond",
-		{"boots",      "strong, speed"},
-		{"chestplate", "strong"},
-		{"helmet",     "strong"},
-		{"leggings",   "strong"}
-	}--[[,
-	["shields"] = {
-		"steel, bronze, mese, diamond",
-		{"shield",	"strong"}
-	}--]]
-}
+enchanting.uses     = 1.2  -- Durability
+enchanting.times    = 0.1  -- Efficiency
+enchanting.damages  = 1    -- Sharpness
+enchanting.strength = 1.2  -- Armor strength (3d_armor only)
+enchanting.speed    = 0.2  -- Player speed (3d_armor only)
+enchanting.jump     = 0.2  -- Player jumping (3d_armor only)
 
 function enchanting.formspec(pos, num)
+	local meta = minetest.get_meta(pos)
 	local formspec = [[ size[9,9;]
 			background[0,0;9,9;ench_ui.png;true]
 			list[context;tool;0.9,2.9;1,1;]
 			list[context;mese;2,2.9;1,1;]
 			list[current_player;main;0.5,4.5;8,4;]
 			image[2,2.9;1,1;mese_layout.png]
-			tooltip[sharp;Your sword inflicts more damage]
-			tooltip[durable;Your tool is more resistant]
-			tooltip[fast;Your tool is more powerful]
+			tooltip[sharp;Your weapon inflicts more damages]
+			tooltip[durable;Your tool last longer]
+			tooltip[fast;Your tool digs faster]
 			tooltip[strong;Your armor is more resistant]
 			tooltip[speed;Your speed is increased] ]]
 			..default.gui_slots..default.get_hotbar_bg(0.5,4.5)
 
-	local tool_enchs = {
+	local enchant_buttons = {
 		[[ image_button[3.9,0.85;4,0.92;bg_btn.png;fast;Efficiency]
 		image_button[3.9,1.77;4,1.12;bg_btn.png;durable;Durability] ]],
 		"image_button[3.9,0.85;4,0.92;bg_btn.png;strong;Strength]",
 		"image_button[3.9,2.9;4,0.92;bg_btn.png;sharp;Sharpness]",
 		[[ image_button[3.9,0.85;4,0.92;bg_btn.png;strong;Strength]
-		image_button[3.9,1.77;4,1.12;bg_btn.png;speed;Speed] ]] }
+		image_button[3.9,1.77;4,1.12;bg_btn.png;speed;Speed] ]]
+	}
 
-	formspec = formspec..(tool_enchs[num] or "")
-	minetest.get_meta(pos):set_string("formspec", formspec)
+	formspec = formspec..(enchant_buttons[num] or "")
+	meta:set_string("formspec", formspec)
 end
 
 function enchanting.on_put(pos, listname, _, stack)
 	if listname == "tool" then
-		for k, v in pairs({"axe, pick, shovel",
-				"chestplate, leggings, helmet",
-				"sword", "boots"}) do --, "shield"}) do
-			if v:find(stack:get_name():match(":(%w+)")) then
-				enchanting.formspec(pos, k)
+		local stackname = stack:get_name()
+		local tool_groups = {
+			"axe, pick, shovel",
+			"chestplate, leggings, helmet",
+			"sword", "boots"
+		}
+
+		for idx, tools in pairs(tool_groups) do
+			if tools:find(stackname:match(":(%w+)")) then
+				enchanting.formspec(pos, idx)
 			end
 		end
 	end
 end
 
-function enchanting.fields(pos, _, fields)
+function enchanting.fields(pos, _, fields, sender)
 	if fields.quit then return end
 	local inv = minetest.get_meta(pos):get_inventory()
 	local tool = inv:get_stack("tool", 1)
@@ -89,6 +67,7 @@ function enchanting.fields(pos, _, fields)
 	local enchanted_tool = (mod or "")..":enchanted_"..(name or "").."_"..next(fields)
 
 	if mese:get_count() >= mese_cost and minetest.registered_tools[enchanted_tool] then
+		minetest.sound_play("xdecor_enchanting", {to_player=sender:get_player_name(), gain=0.8})
 		tool:replace(enchanted_tool)
 		tool:add_wear(orig_wear)
 		mese:take_item(mese_cost)
@@ -131,20 +110,64 @@ function enchanting.construct(pos)
 	local inv = meta:get_inventory()
 	inv:set_size("tool", 1)
 	inv:set_size("mese", 1)
+
+	minetest.add_entity({x=pos.x, y=pos.y+0.85, z=pos.z}, "xdecor:book_open")
+	local timer = minetest.get_node_timer(pos)
+	timer:start(5.0)
+end
+
+function enchanting.destruct(pos)
+	for _, obj in pairs(minetest.get_objects_inside_radius(pos, 0.9)) do
+		if obj and obj:get_luaentity() and
+				obj:get_luaentity().name == "xdecor:book_open" then
+			obj:remove() break
+		end
+	end
+end
+
+function enchanting.timer(pos)
+	local node = minetest.get_node(pos)
+	local num = #minetest.get_objects_inside_radius(pos, 0.9)
+
+	if num == 0 then
+		minetest.add_entity({x=pos.x, y=pos.y+0.85, z=pos.z}, "xdecor:book_open")
+	end
+
+	local minp = {x=pos.x-2, y=pos.y, z=pos.z-2}
+	local maxp = {x=pos.x+2, y=pos.y+1, z=pos.z+2}
+	local bookshelves = minetest.find_nodes_in_area(minp, maxp, "default:bookshelf")
+	if #bookshelves == 0 then return true end
+
+	local bookshelf_pos = bookshelves[math.random(1, #bookshelves)]
+	local x = pos.x - bookshelf_pos.x
+	local y = bookshelf_pos.y - pos.y
+	local z = pos.z - bookshelf_pos.z
+
+	if tostring(x..z):find(2) then
+		minetest.add_particle({
+			pos = bookshelf_pos,
+			velocity = {x=x, y=2-y, z=z},
+			acceleration = {x=0, y=-2.2, z=0},
+			expirationtime = 1,
+			size = 2,
+			texture = "xdecor_glyph"..math.random(1,18)..".png"
+		})
+	end
+	return true
 end
 
 xdecor.register("enchantment_table", {
 	description = "Enchantment Table",
-	tiles = {
-		"xdecor_enchantment_top.png", "xdecor_enchantment_bottom.png",
-		"xdecor_enchantment_side.png", "xdecor_enchantment_side.png",
-		"xdecor_enchantment_side.png", "xdecor_enchantment_side.png"
-	},
-	groups = {cracky=1, oddly_breakable_by_hand=1, level=1},
+	tiles = {"xdecor_enchantment_top.png",  "xdecor_enchantment_bottom.png",
+		 "xdecor_enchantment_side.png", "xdecor_enchantment_side.png",
+		 "xdecor_enchantment_side.png", "xdecor_enchantment_side.png"},
+	groups = {cracky=1, level=1},
 	sounds = default.node_sound_stone_defaults(),
 	on_rotate = screwdriver.rotate_simple,
 	can_dig = enchanting.dig,
+	on_timer = enchanting.timer,
 	on_construct = enchanting.construct,
+	on_destruct = enchanting.destruct,
 	on_receive_fields = enchanting.fields,
 	on_metadata_inventory_put = enchanting.on_put,
 	on_metadata_inventory_take = enchanting.on_take,
@@ -152,16 +175,31 @@ xdecor.register("enchantment_table", {
 	allow_metadata_inventory_move = function() return 0 end
 })
 
+minetest.register_entity("xdecor:book_open", {
+	visual = "sprite",
+	visual_size = {x=0.75, y=0.75},
+	collisionbox = {0},
+	physical = false,
+	textures = {"xdecor_book_open.png"},
+	on_activate = function(self)
+		local pos = self.object:getpos()
+		local pos_under = {x=pos.x, y=pos.y-1, z=pos.z}
+
+		if minetest.get_node(pos_under).name ~= "xdecor:enchantment_table" then
+			self.object:remove()
+		end
+	end
+})
+
 local function cap(S) return S:gsub("^%l", string.upper) end
 
-for mod, defs in pairs(enchanting.tools) do
-for material in defs[1]:gmatch("[%w_]+") do
-for _, tooldef in next, defs, 1 do
-for enchant in tooldef[2]:gmatch("[%w_]+") do
-	local tool, group = tooldef[1], ""
-	local original_tool = minetest.registered_tools[mod..":"..tool.."_"..material]
+function enchanting:register_tools(mod, def)
+	for tool in pairs(def.tools) do
+	for material in def.materials:gmatch("[%w_]+") do
+	for enchant in def.tools[tool].enchants:gmatch("[%w_]+") do
+		local original_tool = minetest.registered_tools[mod..":"..tool.."_"..material]
+		if not original_tool then break end
 
-	if original_tool then
 		if original_tool.tool_capabilities then
 			local original_damage_groups = original_tool.tool_capabilities.damage_groups
 			local original_groupcaps = original_tool.tool_capabilities.groupcaps
@@ -169,13 +207,13 @@ for enchant in tooldef[2]:gmatch("[%w_]+") do
 			local fleshy = original_damage_groups.fleshy
 			local full_punch_interval = original_tool.tool_capabilities.full_punch_interval
 			local max_drop_level = original_tool.tool_capabilities.max_drop_level
-			group = tostring(next(original_groupcaps))
+			local group = next(original_groupcaps)
 
 			if enchant == "durable" then
 				groupcaps[group].uses = math.ceil(original_groupcaps[group].uses * enchanting.uses)
 			elseif enchant == "fast" then
-				for i = 1, 3 do
-					groupcaps[group].times[i] = original_groupcaps[group].times[i] - enchanting.times
+				for i, time in pairs(original_groupcaps[group].times) do
+					groupcaps[group].times[i] = time - enchanting.times
 				end
 			elseif enchant == "sharp" then
 				fleshy = fleshy + enchanting.damages
@@ -219,7 +257,27 @@ for enchant in tooldef[2]:gmatch("[%w_]+") do
 			})
 		end
 	end
+	end
+	end
 end
-end
-end
-end
+
+enchanting:register_tools("default", {
+	materials = "steel, bronze, mese, diamond",
+	tools = {
+		axe    = {enchants = "durable, fast"},
+		pick   = {enchants = "durable, fast"}, 
+		shovel = {enchants = "durable, fast"},
+		sword  = {enchants = "sharp"}
+	}
+})
+
+enchanting:register_tools("3d_armor", {
+	materials = "steel, bronze, gold, diamond",
+	tools = {
+		boots      = {enchants = "strong, speed"},
+		chestplate = {enchants = "strong"},
+		helmet     = {enchants = "strong"},
+		leggings   = {enchants = "strong"}
+	}
+})
+
