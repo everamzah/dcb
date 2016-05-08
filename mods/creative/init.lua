@@ -1,6 +1,9 @@
 -- dcb/mods/creative/init.lua
 
-minetest.register_privilege("creative", "Can enable creative inventory, and place unlimited nodes")
+minetest.register_privilege("creative", {
+	description = "Can enable creative inventory, and place unlimited nodes",
+	give_to_singleplayer = false
+})
 
 creative = {}
 local player_inventory = {}
