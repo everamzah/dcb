@@ -1599,7 +1599,7 @@ minetest.register_node("default:bookshelf", {
 		if minetest.is_protected(pos, player:get_player_name()) then
 			return 0
 		end
-		return stack:get_count()
+		return count --stack:get_count()
 	end,
 	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 		minetest.log("action", player:get_player_name() ..

@@ -43,7 +43,7 @@ minetest.register_node("vessels:shelf", {
 		if minetest.is_protected(pos, player:get_player_name()) then
 			return 0
 		end
-		return stack:get_count()
+		return count
 	end,
 	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
 		if minetest.is_protected(pos, player:get_player_name()) then
