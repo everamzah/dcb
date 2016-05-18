@@ -350,8 +350,8 @@ function worktable.take(_, listname, _, stack, player)
 	return stack:get_count()
 end
 
-function worktable.move(pos, _, _, to_list, _, count)
-	if to_list == "storage" then
+function worktable.move(pos, from_list, _, to_list, _, count)
+	if to_list == "storage" and from_list ~= "forms" then
 		return count
 	elseif to_list == "trash" then
 		trash_delete(pos)
