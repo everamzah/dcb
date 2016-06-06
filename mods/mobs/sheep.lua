@@ -175,8 +175,10 @@ for _, col in pairs(all_colours) do
 
 end
 
+--[[
 mobs:register_spawn("mobs:sheep_white",
 	{"default:dirt_with_grass"}, 20, 10, 15000, 1, 31000, true)
+--]]
 
 -- Compatibility (item and entity)
 minetest.register_alias("mobs:sheep", "mobs:sheep_white")

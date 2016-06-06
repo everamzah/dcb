@@ -52,7 +52,9 @@ mobs:register_mob("mobs:dungeon_master", {
 	},
 })
 
+--[[
 mobs:register_spawn("mobs:dungeon_master", {"caverealms:stone_with_algae", "caverealms:stone_with_moss", "default:stone_with_coal"}, 3, 0, 36000, 2, -450)
+--]]
 
 mobs:register_egg("mobs:dungeon_master", "Dungeon Master", "fire_basic_flame.png", 1)
 

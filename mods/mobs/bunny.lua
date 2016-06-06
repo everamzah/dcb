@@ -78,7 +78,9 @@ mobs:register_mob("mobs:bunny", {
 	damage = 5,
 })
 
+--[[
 mobs:register_spawn("mobs:bunny",
 	{"default:dirt_with_grass"}, 20, 10, 15000, 2, 31000, true)
+--]]
 
 mobs:register_egg("mobs:bunny", "Bunny", "mobs_bunny_inv.png", 0)

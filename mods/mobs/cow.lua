@@ -92,8 +92,10 @@ mobs:register_mob("mobs:cow", {
 	end,
 })
 
+--[[
 mobs:register_spawn("mobs:cow",
 	{"default:dirt_with_grass"}, 20, 10, 15000, 2, 31000, true)
+--]]
 
 mobs:register_egg("mobs:cow", "Cow", "default_grass.png", 1)
 

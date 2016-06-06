@@ -53,8 +53,10 @@ mobs:register_mob("mobs:pumba", {
 	end,
 })
 
+--[[
 mobs:register_spawn("mobs:pumba",
 	{"default:dirt_with_grass"}, 20, 10, 15000, 2, 31000, true)
+--]]
 
 mobs:register_egg("mobs:pumba", "Warthog", "wool_pink.png", 1)
 
