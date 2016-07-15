@@ -12,6 +12,11 @@ enchanting.strength = 1.2  -- Armor strength (3d_armor only)
 enchanting.speed    = 0.2  -- Player speed (3d_armor only)
 enchanting.jump     = 0.2  -- Player jumping (3d_armor only)
 
+local function debug(pos, listname, stack, player, name)
+	minetest.log("action", name .. ", " .. listname .. ": " .. player:get_player_name() .. " with " ..
+		stack:get_name() .. " at " .. minetest.pos_to_string(pos))
+end
+
 function enchanting.formspec(pos, num)
 	local meta = minetest.get_meta(pos)
 	local formspec = [[ size[9,9;]
@@ -40,7 +45,8 @@ function enchanting.formspec(pos, num)
 	meta:set_string("formspec", formspec)
 end
 
-function enchanting.on_put(pos, listname, _, stack)
+function enchanting.on_put(pos, listname, index, stack, player)
+	debug(pos, listname, stack, player, "on_put")
 	if listname == "tool" then
 		local stackname = stack:get_name()
 		local tool_groups = {
@@ -57,7 +63,11 @@ function enchanting.on_put(pos, listname, _, stack)
 	end
 end
 
-function enchanting.fields(pos, _, fields, sender)
+function enchanting.fields(pos, formname, fields, sender)
+	minetest.log("action", sender:get_player_name() .. " at " ..
+			minetest.pos_to_string(pos) ..
+			" sends the following fields:")
+	minetest.log("action", "\n" .. dump(fields))
 	if fields.quit then return end
 	local inv = minetest.get_meta(pos):get_inventory()
 	local tool = inv:get_stack("tool", 1)
@@ -88,7 +98,8 @@ local function allowed(tool)
 	return false
 end
 
-function enchanting.put(_, listname, _, stack)
+function enchanting.put(pos, listname, index, stack, player)
+	debug(pos, listname, stack, player, "put")
 	local item = stack:get_name():match("[^:]+$")
 	if listname == "mese" and item == "mese_crystal" then
 		return stack:get_count()
@@ -98,7 +109,8 @@ function enchanting.put(_, listname, _, stack)
 	return 0
 end
 
-function enchanting.on_take(pos, listname)
+function enchanting.on_take(pos, listname, index, stack, player)
+	debug(pos, listname, stack, player, "on_take")
 	if listname == "tool" then enchanting.formspec(pos, nil) end
 end
 
