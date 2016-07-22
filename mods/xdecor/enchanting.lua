@@ -92,6 +92,7 @@ function enchanting.dig(pos)
 end
 
 local function allowed(tool)
+	if not tool then return end
 	for item in pairs(minetest.registered_tools) do
 		if item:find("enchanted_"..tool) then return true end
 	end
