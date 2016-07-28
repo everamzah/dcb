@@ -1,0 +1,3 @@
+[submodule "mods/books"]
+	path = mods/books
+	url = https://github.com/everamzah/books.git
