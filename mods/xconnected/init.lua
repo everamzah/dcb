@@ -11,11 +11,6 @@ xconnected.register_pane("xconnected:bar", "xconnected_bar.png", nil, {
 	tiles = {"xconnected_bar.png"},
 	drawtype = "airlike",
 	paramtype = "light",
-	tiles = {
-		"xconnected_bar.png",
-		"xconnected_bar.png",
-		"xconnected_space.png"
-	},
 	inventory_image = "xconnected_bar.png",
 	wield_image = "xconnected_bar.png",
 	groups = {cracky=2, oddly_breakable_by_hand=1, pane=1},
