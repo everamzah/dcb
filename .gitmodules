@@ -1,3 +1,6 @@
 [submodule "mods/books"]
 	path = mods/books
 	url = https://github.com/everamzah/books.git
+[submodule "mods/mailbox"]
+	path = mods/mailbox
+	url = https://github.com/everamzah/mailbox.git
