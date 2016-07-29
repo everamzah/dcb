@@ -481,6 +481,7 @@ minetest.register_node("protector:display_node", {
 
 -- Register Protected Doors
 
+--[[
 local function on_rightclick(pos, dir, check_name, replace, replace_dir, params)
 	pos.y = pos.y+dir
 	if not minetest.get_node(pos).name == check_name then
@@ -507,37 +508,44 @@ local function on_rightclick(pos, dir, check_name, replace, replace_dir, params)
 		minetest.sound_play(snd_2, {pos = pos, gain = 0.3, max_hear_distance = 10})
 	end
 end
+--]]
 
 -- Protected Wooden Door
 
-local name = "protector:door_wood"
+local name = "door_wood"
 
-doors.register_door(name, {
+doors.register("protector:" .. name, {
 	description = "Protected Wooden Door",
 	inventory_image = "doors_wood.png^protector_logo.png",
 	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2,door=1},
-	tiles_bottom = {"doors_wood_b.png^protector_logo.png", "doors_brown.png"},
-	tiles_top = {"doors_wood_a.png", "doors_brown.png"},
+	tiles = {{name = "doors_door_wood.png^protector_logo.png", backface_culling = true}},
 	sounds = default.node_sound_wood_defaults(),
 	sunlight = false,
 })
 
-minetest.override_item(name.."_b_1", {
-	on_rightclick = function(pos, node, clicker)
-		if not minetest.is_protected(pos, clicker:get_player_name()) then
-			on_rightclick(pos, 1, name.."_t_1", name.."_b_2", name.."_t_2", {1,2,3,0})
+--[[
+minetest.override_item("doors:" .. name .. "_a", {
+	on_rightclick = function(pos, node, clicker, itemstack)
+		local on_rightclick = minetest.registered_nodes["doors:door_wood_a"].on_rightclick
+		if minetest.is_protected(pos, clicker:get_player_name()) then
+			return
 		end
+		return on_rightclick(pos, node, clicker, itemstack)
 	end,
 })
 
-minetest.override_item(name.."_t_1", {
-	on_rightclick = function(pos, node, clicker)
-		if not minetest.is_protected(pos, clicker:get_player_name()) then
-			on_rightclick(pos, -1, name.."_b_1", name.."_t_2", name.."_b_2", {1,2,3,0})
+minetest.override_item("doors:" .. name .. "_b", {
+	on_rightclick = function(pos, node, clicker, itemstack)
+		local on_rightclick = minetest.registered_nodes["doors:door_wood_b"].on_rightclick
+		if minetest.is_protected(pos, clicker:get_player_name()) then
+			return
 		end
+		return on_rightclick(pos, node, clicker, itemstack)
 	end,
 })
+--]]
 
+--[[
 minetest.override_item(name.."_b_2", {
 	on_rightclick = function(pos, node, clicker)
 		if not minetest.is_protected(pos, clicker:get_player_name()) then
@@ -553,6 +561,7 @@ minetest.override_item(name.."_t_2", {
 		end
 	end,
 })
+--]]
 
 minetest.register_craft({
 	output = name,
@@ -572,34 +581,40 @@ minetest.register_craft({
 
 -- Protected Steel Door
 
-local name = "protector:door_steel"
+local name = "door_steel"
 
-doors.register_door(name, {
+doors.register("protector:" .. name, {
 	description = "Protected Steel Door",
-	inventory_image = "doors_steel.png^protector_logo.png",
+	inventory_image = "doors_door_steel.png^protector_logo.png",
 	groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2,door=1},
-	tiles_bottom = {"doors_steel_b.png^protector_logo.png", "doors_grey.png"},
-	tiles_top = {"doors_steel_a.png", "doors_grey.png"},
+	tiles = {{name = "doors_door_steel.png^protector_logo.png", backface_culling=true}},
 	sounds = default.node_sound_wood_defaults(),
 	sunlight = false,
 })
 
-minetest.override_item(name.."_b_1", {
-	on_rightclick = function(pos, node, clicker)
-		if not minetest.is_protected(pos, clicker:get_player_name()) then
-			on_rightclick(pos, 1, name.."_t_1", name.."_b_2", name.."_t_2", {1,2,3,0})
+--[[
+minetest.override_item("doors:" .. name .. "_a", {
+	on_rightclick = function(pos, node, clicker, itemstack)
+		local on_rightclick = minetest.registered_nodes["doors:door_steel_a"].on_rightclick
+		if minetest.is_protected(pos, clicker:get_player_name()) then
+			return
 		end
+		return on_rightclick(pos, node, clicker, itemstack)
 	end,
 })
 
-minetest.override_item(name.."_t_1", {
-	on_rightclick = function(pos, node, clicker)
-		if not minetest.is_protected(pos, clicker:get_player_name()) then
-			on_rightclick(pos, -1, name.."_b_1", name.."_t_2", name.."_b_2", {1,2,3,0})
+minetest.override_item("doors:" .. name .. "_b", {
+	on_rightclick = function(pos, node, clicker, itemstack)
+		local on_rightclick = minetest.registered_nodes["doors:door_steel_b"].on_rightclick
+		if minetest.is_protected(pos, clicker:get_player_name()) then
+			return
 		end
+		return on_rightclick(pos, node, clicker, itemstack)
 	end,
 })
+--]]
 
+--[[
 minetest.override_item(name.."_b_2", {
 	on_rightclick = function(pos, node, clicker)
 		if not minetest.is_protected(pos, clicker:get_player_name()) then
@@ -615,6 +630,7 @@ minetest.override_item(name.."_t_2", {
 		end
 	end,
 })
+--]]
 
 minetest.register_craft({
 	output = name,
