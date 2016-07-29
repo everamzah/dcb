@@ -215,8 +215,9 @@ for _, d in pairs(door_types) do
 		description = string.gsub(d[1]:gsub("^%l", string.upper), "_r", " R").." Door",
 		inventory_image = "xdecor_"..d[1].."_door_inv.png",
 		groups = {choppy=3, flammable=2, door=1},
-		tiles_bottom = {"xdecor_"..d[1].."_door_b.png", "xdecor_"..d[2]..".png"},
-		tiles_top = {"xdecor_"..d[1].."_door_a.png", "xdecor_"..d[2]..".png"},
+		--tiles_bottom = {"xdecor_"..d[1].."_door_b.png", "xdecor_"..d[2]..".png"},
+		--tiles_top = {"xdecor_"..d[1].."_door_a.png", "xdecor_"..d[2]..".png"},
+		tiles = {"xdecor_" .. d[1] .. "_door"},
 		only_placer_can_open = door_access(d[1]),
 		sounds = default.node_sound_wood_defaults(),
 		sunlight = false
