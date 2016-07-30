@@ -10,6 +10,7 @@ of the license, or (at your option) any later version.
 
 --]]
 
+--[[
 minetest.register_node("crops:corn", {
 	description = "Corn",
 	inventory_image = "crops_corn.png",
@@ -40,17 +41,20 @@ minetest.register_node("crops:corn", {
 		return itemstack
 	end
 })
+--]]
 
 minetest.register_craftitem("crops:corn_cob", {
 	description = "Corn Cob",
 	inventory_image = "crops_corn_cob.png",
 })
 
+--[[
 minetest.register_craft({
 	type = "shapeless",
 	output = "crops:corn",
 	recipe = { "crops:corn_cob" }
 })
+--]]
 
 minetest.register_craftitem("crops:corn_on_the_cob", {
 	description = "Corn on the Cob",
@@ -64,6 +68,7 @@ minetest.register_craft({
 	recipe = "crops:corn_cob"
 })
 
+--[[
 minetest.register_node("crops:corn_base_seed", {
 	visual = "mesh",
 	description = "Corn Plant",
@@ -347,4 +352,4 @@ crops.register({ name = "crops:corn_base_seed", properties = properties })
 crops.register({ name = "crops:corn_base_1", properties = properties })
 crops.register({ name = "crops:corn_base_2", properties = properties })
 crops.register({ name = "crops:corn_base_3", properties = properties })
-
+--]]
