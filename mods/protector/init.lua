@@ -517,7 +517,7 @@ local name = "door_wood"
 doors.register("protector:" .. name, {
 	description = "Protected Wooden Door",
 	inventory_image = "doors_item_wood.png^protector_logo.png",
-	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2,door=1},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, door = 1},
 	tiles = {{name = "protector_door_wood.png", backface_culling = true}},
 	sounds = default.node_sound_wood_defaults(),
 	sunlight = false,
@@ -586,7 +586,7 @@ local name = "door_steel"
 doors.register("protector:" .. name, {
 	description = "Protected Steel Door",
 	inventory_image = "doors_item_steel.png^protector_logo.png",
-	groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2,door=1},
+	groups = {cracky = 1, level = 2, door = 1},
 	tiles = {{name = "protector_door_steel.png", backface_culling = true}},
 	sounds = default.node_sound_wood_defaults(),
 	sunlight = false,
