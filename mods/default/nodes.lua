@@ -246,7 +246,7 @@ minetest.register_node("default:desert_stonebrick", {
 minetest.register_node("default:sandstone", {
 	description = "Sandstone",
 	tiles = {"default_sandstone.png"},
-	groups = {crumbly = 2, cracky = 3},
+	groups = {crumbly = 1, cracky = 3},
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -1451,7 +1451,6 @@ minetest.register_node("default:chest", {
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", chest_formspec)
-		meta:set_string("infotext", "Chest")
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8*4)
 	end,
@@ -1475,6 +1474,8 @@ minetest.register_node("default:chest", {
 			" takes " .. stack:get_name() ..
 			" from chest at " .. minetest.pos_to_string(pos))
 	end,
+	on_blast = function(pos)
+	end,
 })
 
 minetest.register_node("default:chest_locked", {
@@ -1495,7 +1496,6 @@ minetest.register_node("default:chest_locked", {
 	end,
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
-		meta:set_string("infotext", "Locked Chest")
 		meta:set_string("owner", "")
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8 * 4)
@@ -1537,7 +1537,7 @@ minetest.register_node("default:chest_locked", {
 			" takes " .. stack:get_name()  ..
 			" from locked chest at " .. minetest.pos_to_string(pos))
 	end,
-	on_rightclick = function(pos, node, clicker)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local meta = minetest.get_meta(pos)
 		if has_locked_chest_privilege(meta, clicker) then
 			minetest.show_formspec(
@@ -1546,6 +1546,7 @@ minetest.register_node("default:chest_locked", {
 				get_locked_chest_formspec(pos)
 			)
 		end
+		return itemstack
 	end,
 	on_blast = function() end,
 })
@@ -1565,7 +1566,9 @@ local bookshelf_formspec =
 
 minetest.register_node("default:bookshelf", {
 	description = "Bookshelf",
-	tiles = {"default_wood.png", "default_wood.png", "default_bookshelf.png"},
+	tiles = {"default_wood.png", "default_wood.png", "default_wood.png",
+		"default_wood.png", "default_bookshelf.png", "default_bookshelf.png"},
+	paramtype2 = "facedir",
 	is_ground_content = false,
 	groups = {choppy = 3, oddly_breakable_by_hand = 2, flammable = 3},
 	sounds = default.node_sound_wood_defaults(),
@@ -1599,7 +1602,7 @@ minetest.register_node("default:bookshelf", {
 		if minetest.is_protected(pos, player:get_player_name()) then
 			return 0
 		end
-		return count --stack:get_count()
+		return count
 	end,
 	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 		minetest.log("action", player:get_player_name() ..
@@ -1612,6 +1615,8 @@ minetest.register_node("default:bookshelf", {
 	on_metadata_inventory_take = function(pos, listname, index, stack, player)
 		minetest.log("action", player:get_player_name() ..
 			" takes stuff from bookshelf at " .. minetest.pos_to_string(pos))
+	end,
+	on_blast = function(pos)
 	end,
 })
 
@@ -1641,7 +1646,6 @@ local function register_sign(material, desc, def)
 			--local n = minetest.get_node(pos)
 			local meta = minetest.get_meta(pos)
 			meta:set_string("formspec", "field[text;;${text}]")
-			meta:set_string("infotext", "\"\"")
 		end,
 		on_receive_fields = function(pos, formname, fields, sender)
 			--print("Sign at "..minetest.pos_to_string(pos).." got "..dump(fields))
@@ -1796,7 +1800,7 @@ minetest.register_node("default:rail", {
                 -- but how to specify the dimensions for curved and sideways rails?
                 fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2},
 	},
-	groups = {bendy = 2, dig_immediate = 2, attached_node = 1,
+	groups = {dig_immediate = 2, attached_node = 1,
 		connect_to_raillike = minetest.raillike_group("rail")},
 })
 
