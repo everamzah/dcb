@@ -1,6 +1,5 @@
 
---[[
-name tag
+-- name tag
 minetest.register_craftitem("mobs:nametag", {
 	description = "Nametag",
 	inventory_image = "mobs_nametag.png",
@@ -11,7 +10,6 @@ core.register_craft({
 	output = "mobs:nametag",
 	recipe = {"default:paper", "dye:black", "farming:string"},
 })
---]]
 
 -- leather
 minetest.register_craftitem("mobs:leather", {
