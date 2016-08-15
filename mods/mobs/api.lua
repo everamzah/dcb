@@ -11,6 +11,7 @@ local disable_blood = minetest.setting_getbool("mobs_disable_blood")
 local creative = minetest.setting_getbool("creative_mode")
 local spawn_protected = tonumber(minetest.setting_get("mobs_spawn_protected")) or 1
 local remove_far = minetest.setting_getbool("remove_far_mobs")
+local mobs_spawning = minetest.setting_getbool("mobs_enable_spawning_abms")
 
 -- pathfinding settings
 local enable_pathfinding = false
@@ -2238,95 +2239,97 @@ function mobs:spawn_specific(name, nodes, neighbors, min_light, max_light,
 
 	end
 
-	minetest.register_abm({
+	if mobs_spawning then
+		minetest.register_abm({
 
-		nodenames = nodes,
-		neighbors = neighbors,
-		interval = interval,
-		chance = chance,
+			nodenames = nodes,
+			neighbors = neighbors,
+			interval = interval,
+			chance = chance,
 
-		action = function(pos, node, aoc, active_object_count_wider)
+			action = function(pos, node, aoc, active_object_count_wider)
 
-			-- do not spawn if too many active entities in area
-			if active_object_count_wider > active_object_count
-			or not mobs.spawning_mobs[name] then
-				return
-			end
-
-			-- if toggle set to nil then ignore day/night check
-			if day_toggle ~= nil then
-
-				local tod = (minetest.get_timeofday() or 0) * 24000
-
-				if tod > 4500 and tod < 19500 then
-					-- daylight, but mob wants night
-					if day_toggle == false then
-						return
-					end
-				else
-					-- night time but mob wants day
-					if day_toggle == true then
-						return
-					end
-				end
-			end
-
-			-- spawn above node
-			pos.y = pos.y + 1
-
-			-- only spawn away from player
-			local objs = minetest.get_objects_inside_radius(pos, 10)
-
-			for _,oir in pairs(objs) do
-
-				if oir:is_player() then
+				-- do not spawn if too many active entities in area
+				if active_object_count_wider > active_object_count
+				or not mobs.spawning_mobs[name] then
 					return
 				end
+
+				-- if toggle set to nil then ignore day/night check
+				if day_toggle ~= nil then
+
+					local tod = (minetest.get_timeofday() or 0) * 24000
+
+					if tod > 4500 and tod < 19500 then
+						-- daylight, but mob wants night
+						if day_toggle == false then
+							return
+						end
+					else
+						-- night time but mob wants day
+						if day_toggle == true then
+							return
+						end
+					end
+				end
+
+				-- spawn above node
+				pos.y = pos.y + 1
+
+				-- only spawn away from player
+				local objs = minetest.get_objects_inside_radius(pos, 10)
+
+				for _,oir in pairs(objs) do
+
+					if oir:is_player() then
+						return
+					end
+				end
+
+				-- mobs cannot spawn in protected areas when enabled
+				if spawn_protected == 1
+				and minetest.is_protected(pos, "") then
+					return
+				end
+
+				-- check if light and height levels are ok to spawn
+				local light = minetest.get_node_light(pos)
+				if not light
+				or light > max_light
+				or light < min_light
+				or pos.y > max_height
+				or pos.y < min_height then
+					return
+				end
+
+				-- are we spawning inside solid nodes?
+				if minetest.registered_nodes[node_ok(pos).name].walkable == true then
+					return
+				end
+
+				pos.y = pos.y + 1
+
+				if minetest.registered_nodes[node_ok(pos).name].walkable == true then
+					return
+				end
+
+				-- spawn mob half block higher than ground
+				pos.y = pos.y - 0.5
+
+				local mob = minetest.add_entity(pos, name)
+
+				if mob and mob:get_luaentity() then
+	--				print ("[mobs] Spawned " .. name .. " at "
+	--				.. minetest.pos_to_string(pos) .. " on "
+	--				.. node.name .. " near " .. neighbors[1])
+				else
+					print ("[mobs]" .. name .. " failed to spawn at "
+					.. minetest.pos_to_string(pos))
+				end
+
 			end
-
-			-- mobs cannot spawn in protected areas when enabled
-			if spawn_protected == 1
-			and minetest.is_protected(pos, "") then
-				return
-			end
-
-			-- check if light and height levels are ok to spawn
-			local light = minetest.get_node_light(pos)
-			if not light
-			or light > max_light
-			or light < min_light
-			or pos.y > max_height
-			or pos.y < min_height then
-				return
-			end
-
-			-- are we spawning inside solid nodes?
-			if minetest.registered_nodes[node_ok(pos).name].walkable == true then
-				return
-			end
-
-			pos.y = pos.y + 1
-
-			if minetest.registered_nodes[node_ok(pos).name].walkable == true then
-				return
-			end
-
-			-- spawn mob half block higher than ground
-			pos.y = pos.y - 0.5
-
-			local mob = minetest.add_entity(pos, name)
-
-			if mob and mob:get_luaentity() then
---				print ("[mobs] Spawned " .. name .. " at "
---				.. minetest.pos_to_string(pos) .. " on "
---				.. node.name .. " near " .. neighbors[1])
-			else
-				print ("[mobs]" .. name .. " failed to spawn at "
-				.. minetest.pos_to_string(pos))
-			end
-
-		end
-	})
+		})
+	end
 end
 
 -- compatibility with older mob registration
