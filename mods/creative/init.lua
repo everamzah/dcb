@@ -50,7 +50,8 @@ creative.init_creative_inventory = function(player)
 				--print("Stack name: " .. stack_name .. ", Stack count: " .. stack:get_count())
 			end
 		end,
-	})
+	},
+	player_name) -- fix to prevent hang due to data leak
 
 	creative.update_creative_inventory(player_name)
 	--print("creative inventory size: " .. player_inventory[player_name].size)

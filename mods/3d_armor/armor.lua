@@ -360,7 +360,9 @@ minetest.register_on_joinplayer(function(player)
 		allow_move = function(inv, from_list, from_index, to_list, to_index, count, player)
 			return count
 		end
-	})
+	},
+	name) -- fix to prevent data leak on servers with many players
+
 	--[[if inv_mod == "inventory_plus" then
 		inventory_plus.register_button(player,"armor", "Armor")
 	end--]]
